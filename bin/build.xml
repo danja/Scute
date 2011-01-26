@@ -8,7 +8,7 @@
 
 	<!-- TODO get this dynamically? -->
 	<property name="root.dir" value="../" />
-   
+	<property name="creator.name" value="Danny Ayers"/>
     <property name="dist.name" value="rdftree"/>
 
     <property name="lib.dir" value="lib"/> 
@@ -75,12 +75,46 @@
  <!-- executable="/usr/local/java/bin/javac"    compiler="javac1.5" -->
     
 
-    <target name="jar">
+    <target name="jarold">
         <jar jarfile="${lib.dir}/${dist.name}.jar" basedir="${classes.dir}">
         	<fileset dir="${src.dir}" includes="com/idea/resources/*/*.gif"/>
             <fileset dir="." includes="etc/*"/>
 	</jar>
     </target>
+	
+	<target name="jar">
+	   <property name="version.num" value="0.50"/>
+	   <buildnumber file="build.num"/>
+	   <tstamp>
+	     <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+	   </tstamp>
+
+	   <manifest file="MANIFEST.MF">
+	      <attribute name="Built-By" value="${creator.name}"/>
+	      <attribute name="Main-Class" value="org.hyperdata.scute.run.Scute"/>
+	      <attribute name="Implementation-Version" 
+	             value="${version.num}-b${build.number}"/>   
+	      <attribute name="Built-Date" value="${TODAY}"/>                 
+	  </manifest>
+
+	  <jar destfile="scute.jar"
+	       basedir="."
+	       includes="**/*.class"
+	       manifest="MANIFEST.MF"
+	       />
+	</target>
+
+	<project name="TranformXml" default="TransformAll">
+		<target name="xslt2">
+			<!-- Transform one file into an HTML file -->
+			<xslt in="test.xml" out="xslt2-test.xml"
+				style="xslt2-test.xsl" force="true">
+				<classpath location="/home/ap/saxon/saxon8.jar" />
+			</xslt>
+		</target>
+		
+		<target name="TransformAll" depends="xslt2" />
+	</project>
 
 	<target name="javadoc"  depends="init" description="make javadoc">
         <javadoc
