@@ -1,0 +1,12 @@
+com.hp.hpl.jena
+java
+org.hyperdata.common.rdf
+org.hyperdata.resources.general
+org.hyperdata.resources.graph
+org.hyperdata.resources.tree
+org.hyperdata.swing
+org.hyperdata.swing.container
+org.hyperdata.swing.rdftree
+org.hyperdata.swing.rdftree.actions
+org.hyperdata.swing.rdftree.editor
+org.hyperdata.swing.treetable

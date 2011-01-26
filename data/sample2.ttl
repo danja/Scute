@@ -1,0 +1,51 @@
+# to get core system running
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix sioc:    <http://rdfs.org/sioc/ns#> .
+@prefix :       <http://hyperdata.org/agency/> .
+@prefix config:       <http://dannyayers.com/agency/> .
+# @base <http://hyperdata.org/agency/> .
+
+# what was the syntax for base URIs?
+
+# <http://hyperdata.org/agency>
+ #     a :Agency .
+      
+      
+:Agent rdfs:subClassOf rdfs:Class .
+
+:CoreAgent rdfs:subClassOf :Agent .
+
+config:Clock a :CoreAgent .
+config:Router a :CoreAgent .
+config:HttpBridge a :CoreAgent .
+config:Monitor a :CoreAgent .
+config:SemWebAgent a :CoreAgent .
+
+:objectName a rdf:Property .
+
+:role a rdf:Property .
+
+:Supervisor  rdfs:subClassOf :Agent ;
+	rdfs:label "Supervisor" ;
+	:objectName "org.agency.core.actors.Supervisor" ;
+	:role :CoreAgent ;
+	dc:description "The class of agents that supervise the running of other agents" .
+	
+:Clock  rdfs:subClassOf :Agent ;
+	rdfs:label "Clock" ;
+	:objectName "org.agency.core.actors.Clock" ;
+	:role :CoreAgent ;
+	dc:description "The class of agents that act as timekeepers" .
+	
+:Dispatcher  rdfs:subClassOf :Agent ;
+	rdfs:label "Dispatcher" ;
+	:objectName "org.agency.core.actors.Dispatcher" ;
+	:role :CoreAgent ;
+	dc:description "The class of agents that route HTTP requests and responses" .
+	
+	

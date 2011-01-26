@@ -1,0 +1,633 @@
+package org.hyperdata.scute.rdf;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.hyperdata.scute.Config;
+
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.RDFWriter;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RSS;
+
+/**
+ * Taken from com.idea.io.RdfUtils, modified for Jena 2
+ */
+public class RdfUtils {
+
+	public static void save(Model model, String filename) throws IOException {
+		setCommonPrefixes(model);
+		OutputStream os = new FileOutputStream(filename);
+		model.write(os, Config.self.getDefaultFileFormat());
+		os.close();
+	}
+
+	// public static void save(Model model, String filename, String lang,
+	// String base) {
+	// FileOutputStream fos = null;
+	// try {
+	// fos = new FileOutputStream(filename);
+	// model.write(fos, lang, base);
+	// fos.close();
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+
+	public static SimpleDateFormat isoDate = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssz");
+
+	/*
+	 * ?? Z - 1.4 only??
+	 * 
+	 * Complete date plus hours, minutes and seconds: YYYY-MM-DDThh:mm:ssTZD (eg
+	 * 1997-07-16T19:20:30+01:00)
+	 */
+
+	// public static final String RDF_FORMAT = "RDF/XML-ABBREV";
+
+	// 2003-10-29T10:05:35-05:00
+	public static Date fromIsoDate(String string) {
+		Date date = null;
+		System.out.println(string);
+		string = string.substring(0, 19) + "GMT" + string.substring(19);
+		System.out.println(string);
+		try {
+			date = isoDate.parse(string);
+		} catch (final ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+	// can use model.getProperty() directly now?
+	public static RDFNode getFirstPropertyValue(Resource resource,
+			Property property) {
+		/*
+		 * try {
+		 * 
+		 * StmtIterator test = resource.listProperties(); if
+		 * (resource.hasProperty(property)) {
+		 * 
+		 * StmtIterator iterator = resource.listProperties(property); Statement
+		 * statement = (Statement) iterator.next(); return
+		 * statement.getObject(); // changed for Jena 2 } } catch (Exception
+		 * exception) { exception.printStackTrace(); }
+		 */
+		final Statement statement = resource.getProperty(property);
+		if (statement == null)
+			return null;
+		return statement.getObject();
+	}
+
+	/*
+	 * public static Resource updateProperties(Resource resource, GraphVertex
+	 * vertex){ setProperty(resource, RSS.title, vertex.getTitle()); return
+	 * resource; }
+	 */
+
+	// approximate : returns first match
+	public static Resource getParent(Model model, RDFNode rdfNode) {
+		/*
+		 * Statement statement; // Resource parent; try { StmtIterator iterator
+		 * = model.listStatements(); while (iterator.hasNext()) { statement =
+		 * iterator.next(); if (rdfNode.equals(statement.getObject())) {
+		 * //parent = statement.getSubject(); if
+		 * (!(RDF.type).equals(statement.getPredicate())) { return
+		 * statement.getSubject(); } } } } catch (Exception exception) {
+		 * exception.printStackTrace(); } return null;
+		 */
+		if (rdfNode instanceof Property)
+			return getParentResource(model, (Property) rdfNode);
+
+		return getParentProperty(model, rdfNode);
+	}
+
+	// approximate : returns predicate of first statement with matching object
+	public static Property getParentProperty(Model model, RDFNode rdfNode) {
+		final Statement statement = getParentStatement(model, rdfNode);
+		if (statement == null)
+			return null;
+
+		return statement.getPredicate();
+		/*
+		 * Statement statement;
+		 * 
+		 * try { StmtIterator iterator = model.listStatements();
+		 * 
+		 * while(iterator.hasNext()) { statement = iterator.next();
+		 * 
+		 * if(rdfNode.equals(statement.getObject())) { //parent =
+		 * statement.getSubject();
+		 * if(!(RDF.type).equals(statement.getPredicate())) { return
+		 * statement.getPredicate(); } } } } catch(Exception exception) {
+		 * exception.printStackTrace(); }
+		 * 
+		 * return null;
+		 */
+	}
+
+	// approximate : returns object of first statement with matching predicate
+	public static Resource getParentResource(Model model, Property property) {
+		Statement statement;
+
+		try {
+			final StmtIterator iterator = model.listStatements();
+
+			while (iterator.hasNext()) {
+				statement = iterator.next();
+				// changed for Jena 2
+
+				if (property.equals(statement.getPredicate()))
+					return statement.getSubject();
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return null;
+	}
+
+	// approximate : returns first statement with matching object
+	public static Statement getParentStatement(Model model, RDFNode rdfNode) {
+		Statement statement;
+
+		try {
+			final StmtIterator iterator = model.listStatements();
+
+			while (iterator.hasNext()) {
+				statement = iterator.next();
+
+				if (rdfNode.equals(statement.getObject())) {
+					// parent = statement.getSubject();
+					if (!(RDF.type).equals(statement.getPredicate()))
+						return statement;
+				}
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+		return null;
+	}
+
+	/*
+	 * public static void setPropertyObject( Resource resource, Property
+	 * property, Resource object) { try { StmtIterator iterator =
+	 * resource.listProperties(property);
+	 * 
+	 * while (iterator.hasNext()) { iterator.next(); iterator.remove(); }
+	 * 
+	 * resource.addProperty(property, object); } catch (Exception exception) {
+	 * exception.printStackTrace(); } }
+	 */
+	public static String getProperty(Resource resource, Property property) {
+		// System.out.println("����");
+		// show(resource.getModel());
+		// show(resource);
+		// System.out.println("resource = "+resource);
+		// System.out.println("property = "+property);
+		// show(property);
+		final RDFNode node = getFirstPropertyValue(resource, property);
+		// System.out.println("node = "+node);
+		if (node == null)
+			return null;
+		return node.toString();
+	}
+
+	public static String getRdfType(Resource resource) {
+		if (resource.isAnon())
+			// @@TODO this whole lot needs improving
+			return "anon";
+		// System.out.println("resource.toSting())"+resource);
+		// show(resource);
+		final RDFNode type = getFirstPropertyValue(resource, RDF.type);
+		if (type == null)
+			return "untyped";
+		return type.toString();
+	}
+
+	// approximate : gets first match (predicate and object)
+	public static Statement getStatement(Model model, Property property,
+			RDFNode object) {
+		Statement statement;
+
+		try {
+			final StmtIterator iterator = model.listStatements();
+
+			while (iterator.hasNext()) {
+				statement = iterator.next();
+
+				if (property.equals(statement.getPredicate())
+						&& object.equals(statement.getObject()))
+					return statement;
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+		return null;
+	}
+
+	// approximate : gets first match (predicate and object)
+	public static Resource getSubject(Model model, Property property,
+			RDFNode object) {
+		final Statement statement = getStatement(model, property, object);
+		if (statement == null)
+			return null;
+		return statement.getSubject();
+	}
+
+	public static Model load(Model model, String filename, String format)
+			throws IOException {
+
+		final InputStream inputStream = new FileInputStream(filename);
+		// model.read(new FileReader(filename), "");
+		model.read(inputStream, "", format);
+		// System.out.println(modelToString(model));
+		return model;
+	}
+
+	public static Model load(String filename, String format) throws IOException {
+		return load(ModelFactory.createDefaultModel(), filename, format);
+	}
+
+	public static void main(String[] srgs) {
+		// 2003-10-29T10:05:35-05:00
+		// Date test = new Date();
+
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, 2003);
+		calendar.set(Calendar.MONTH, 10);
+		calendar.set(Calendar.DATE, 28);
+		calendar.set(Calendar.HOUR_OF_DAY, 10);
+
+		calendar.set(Calendar.MINUTE, 5);
+		calendar.set(Calendar.SECOND, 35);
+
+		calendar.set(Calendar.ZONE_OFFSET, -18000000);
+
+		final Date date = calendar.getTime();
+
+		final String iso = toIsoDate(date);
+		System.out.println("iso = " + iso);
+		final Date date2 = fromIsoDate(iso);
+		System.out.println("old: " + date + "   new:" + date2);
+	}
+
+	/*
+	 * public static RDFWriter getPrettyWriter() { RDFWriter rdfWriter = null;
+	 * RDFWriterF rdfWriterF = new RDFWriterFImpl(); try { // rdfWriter =
+	 * rdfWriterF.getWriter("RDF/XML-ABBREV"); // rdfWriter.setNsPrefix("dc",
+	 * DC_10.getURI()); // rdfWriter.setNsPrefix("rss", RSS.getURI()); //
+	 * rdfWriter.setNsPrefix("idea", IDEA.getURI()); //
+	 * rdfWriter.setNsPrefix("graphic", GRAPHIC.getURI()); //
+	 * rdfWriter.setNsPrefix("fs", FILESYSTEM.getURI()); //
+	 * rdfWriter.setNsPrefix("prj", PROJECT.getURI()); //
+	 * rdfWriter.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/"); //
+	 * rdfWriter.setNsPrefix("owl", "http://www.w3.org/2002/07/owl#"); //
+	 * rdfWriter.setNsPrefix("ibis", "http://purl.org/ibis#"); //
+	 * rdfWriter.setNsPrefix("fs", //
+	 * "http://ideagraph.org/xmlns/idea/filesystem#"); // the encoding was
+	 * screwing up, so declaration removed rdfWriter.setProperty(
+	 * "showXmlDeclaration", Boolean.FALSE); } catch (Exception exception) {
+	 * exception.printStackTrace(); }
+	 * 
+	 * return rdfWriter; }
+	 */
+
+	public static String modelToString(Model model) {
+		// System.out.println("MODEL TO STRPING");
+		if (model == null)
+			return "Null Model.";
+		final StringWriter stringOut = new StringWriter();
+		try {
+			setCommonPrefixes(model);
+			model.write(stringOut, "RDF/XML-ABBREV", RSS.getURI());
+			// http://base
+			stringOut.flush();
+			stringOut.close();
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+		return stringOut.toString();
+	}
+
+	public static void replaceLiteralValue(Model model, Literal literal,
+			String value) {
+		final Literal newLiteral = model.createLiteral(value);
+		// ((Literal)getRdfNode()).
+		final Set statements = new HashSet();
+		final StmtIterator iterator = model.listStatements(null, null, literal);
+
+		while (iterator.hasNext()) {
+			statements.add(iterator.next());
+		}
+
+		final Iterator setIterator = statements.iterator();
+		Statement statement;
+
+		while (setIterator.hasNext()) {
+			statement = (Statement) setIterator.next();
+			model.add(statement.getSubject(), statement.getPredicate(),
+					newLiteral);
+			model.remove(statement);
+		}
+	}
+
+	public static void replaceObjectResource(Statement statement,
+			Resource newObject) {
+		Statement newStatement;
+		try {
+			final Model model = statement.getModel();
+			newStatement = model.createStatement(statement.getSubject(),
+					statement.getPredicate(), newObject);
+			model.remove(statement);
+			model.add(newStatement);
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static Model replaceResource(Model model, Resource oldResource,
+			Resource newResource) {
+		try {
+			final StmtIterator statements = model.listStatements();
+			Statement statement;
+			Resource subject;
+			RDFNode object = null;
+			// buffer in List to avoid concurrent modification exception
+			final List statementList = new ArrayList();
+			while (statements.hasNext()) {
+				statementList.add(statements.next());
+			}
+
+			for (int i = 0; i < statementList.size(); i++) {
+				statement = (Statement) statementList.get(i);
+				subject = statement.getSubject();
+				object = statement.getObject();
+				if (subject.equals(oldResource)) {
+					replaceSubjectResource(statement, newResource);
+				}
+				if ((object instanceof Resource)
+						&& (oldResource.equals(object))) {
+					replaceObjectResource(statement, newResource);
+				}
+			}
+
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+		return model;
+	}
+
+	public static void replaceSubjectResource(Statement statement,
+			Resource newSubject) {
+		Statement newStatement;
+		try {
+			final Model model = statement.getModel();
+			newStatement = model.createStatement(newSubject, statement
+					.getPredicate(), statement.getObject());
+			model.remove(statement);
+			model.add(newStatement);
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Copies all properties across to new resource, just replaces type
+	 * 
+	 * @param resource
+	 * @param newType
+	 */
+	public static void replaceType(Resource resource, Resource newType) {
+
+		try {
+			final StmtIterator iterator = resource.listProperties();
+			Property property = null;
+			Statement statement = null;
+
+			while (iterator.hasNext()) {
+				statement = iterator.next();
+				property = statement.getPredicate();
+				// System.out.println("property = "+property);
+				if (property.equals(RDF.type)) {
+					break; // to stop concurrent mod exc
+				}
+
+			}
+			if (property.equals(RDF.type)) {
+				resource.getModel().remove(statement);
+				resource.addProperty(RDF.type, newType);
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static void setCommonPrefixes(Model model) {
+		model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		model.setNsPrefix("dcterms", "http://purl.org/dc/terms/");
+		model.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
+		model.setNsPrefix("tdb", "http://jena.hpl.hp.com/2008/tdb#");
+		model.setNsPrefix("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
+		model.setNsPrefix("x", "http://purl.org/stuff/");
+	}
+
+	// yuck
+	public static void setProperty(Resource resource, Property property,
+			Object value) {
+		try {
+			/*
+			 * StmtIterator iterator = resource.listProperties(property); while
+			 * (iterator.hasNext()) { iterator.next(); iterator.remove(); }
+			 */
+			resource.removeAll(property);
+			resource.addProperty(property, (String) value);
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	// //////////////
+	public static void setPropertyObject(Resource resource, Property property,
+			Resource object) {
+		try {
+			final StmtIterator iterator = resource.listProperties(property);
+
+			while (iterator.hasNext()) {
+				iterator.next();
+				iterator.remove();
+			}
+
+			resource.addProperty(property, object);
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static void setUri(Resource resource, URI uri) {
+		try {
+			final Model model = resource.getModel();
+
+			// create a new resource
+			final Resource newResource = model.createResource(uri.toString());
+
+			final StmtIterator iterator = resource.listProperties();
+
+			// copy properties from old resource
+			// buffer used to avoid concurrent modification
+			final Set statements = new HashSet();
+			while (iterator.hasNext()) {
+				final Statement stmt = iterator.next();
+				statements.add(stmt);
+				// changed for Jena 2
+				newResource.addProperty(stmt.getPredicate(), stmt.getObject());
+				// model.remove(stmt);
+			}
+			final Iterator setIterator = statements.iterator();
+			Statement statement;
+			while (setIterator.hasNext()) {
+				statement = (Statement) setIterator.next();
+				if (model.contains(statement)) {
+					model.remove(statement);
+				}
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static void show(Model model) {
+		System.out.println(modelToString(model));
+	}
+
+	public static void show(Resource resource) {
+		try {
+			final StmtIterator iterator = resource.listProperties();
+			show(iterator);
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static void show(Statement statement) {
+		show(statement.getSubject());
+		show(statement.getPredicate());
+		if (statement.getObject() instanceof Resource) {
+			show((Resource) statement.getObject());
+		} else {
+			System.out.println(statement.getObject());
+		}
+	}
+
+	public static void show(StmtIterator iterator) {
+		final StringBuffer buffer = new StringBuffer("\n--v--");
+		try { // StmtIterator iterator = resource.listProperties();
+			while (iterator.hasNext()) {
+				buffer.append("\n" + iterator.next().toString());
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+		}
+		buffer.append("\n--^--");
+		System.out.println(buffer);
+	}
+
+	public static String titleToID(String title) {
+		return title.replace(' ', '_');
+	}
+
+	// /////////////// beware of the GMT!
+	public static String toIsoDate(Date date) {
+		return isoDate.format(date);
+	}
+
+	public static String toISODate(Date date) {
+		return isoDate.format(date);
+	}
+
+	private RdfUtils() {
+	}
+
+	/*
+	 * public static RDFWriter getPrettyWriter() {
+	 * 
+	 * return RdfUtils.getPrettyWriter(); }
+	 */
+	public static String modelToString(Model model, String lang) {
+		// System.out.println("MODEL TO STRPING");
+		final StringWriter stringOut = new StringWriter();
+		try {
+			final RDFWriter rdfWriter = model.getWriter(lang);
+			/*
+			 * rdfWriter.setNsPrefix("features", FEATURES.getURI());
+			 * rdfWriter.setNsPrefix("dc", DCES.getURI());
+			 * rdfWriter.setNsPrefix("rss", RSS.getURI());
+			 * rdfWriter.setNsPrefix("idea", IDEA.getURI());
+			 * rdfWriter.setNsPrefix("graphic", GRAPHIC.getURI());
+			 * rdfWriter.setNsPrefix("fs", FILESYSTEM.getURI());
+			 * rdfWriter.setNsPrefix("prj", PROJECT.getURI());
+			 */
+			// the encoding was screwing up, so declaration removed
+			// rdfWriter.setProperty("showXmlDeclaration", Boolean.FALSE);
+			// rdfWriter.write(model, System.out, RSS.getURI());
+			rdfWriter.write(model, stringOut, RSS.getURI());
+			// model.write(stringOut, lang, RSS.getURI());
+			// http://base
+			stringOut.flush();
+			stringOut.close();
+		} catch (final Exception exception) {
+			// exception.printStackTrace();
+			// System.exit(1);
+			throw new RuntimeException(exception);
+		}
+		return stringOut.toString();
+	}
+
+	public static Model stringToModel(String string, String base, String lang)
+			throws Exception {
+		final Model model = ModelFactory.createDefaultModel();
+		final StringReader reader = new StringReader(string);
+		model.read(reader, base, lang); // base
+		return model;
+	}
+
+	// @@TODO this needs pushing out
+	public static Model stringToModelExceptionCaught(String string, String base) {
+		Model model = null;
+
+		try {
+			model = stringToModel(string, base, null);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+}

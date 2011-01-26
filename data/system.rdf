@@ -1,0 +1,200 @@
+<rdf:RDF
+    xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+    xmlns:ftrs='http://ideagraph.org/xmlns/idea/features#'>
+    <ftrs:FeatureSet rdf:about='http://ideagraph.org/xmlns/ideagraph/default/system'>
+<!-- project dirs/URLs -->
+	<rdf:_1
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='../data/system/templates/default.html'
+		ftrs:type='Filename'
+		ftrs:key='defaultHtmlTemplate'/>
+        <rdf:_2
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='publicURLRoot'
+             ftrs:value='http://ideagraph.org/'
+             ftrs:type='Filename'/>
+        <rdf:_3
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='localFileRoot'
+             ftrs:value='../data/user/'
+             ftrs:type='Filename'/>
+        <rdf:_4
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='projectsSubDir'
+             ftrs:value='projects'
+             ftrs:type='Filename'/>
+	<rdf:_5
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='default'
+		ftrs:type='Filename'
+		ftrs:key='defaultProjectName'/>
+
+<!-- feature sets -->
+        <rdf:_6
+            rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='windowsFeaturesFilename'
+             ftrs:value='../data/system/settings/windows.rdf'
+             ftrs:type='Filename'/>
+        <rdf:_7
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='windowsFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/windows'
+             ftrs:type='String'/>
+        <rdf:_8
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='userFeaturesFilename'
+             ftrs:value='../data/system/settings/user.rdf'
+             ftrs:type='Filename'/>
+        <rdf:_9
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='userFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/user'
+             ftrs:type='String'/>
+        <rdf:_10
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='projectFeaturesFilename'
+             ftrs:value='../data/system/settings/project.rdf'
+             ftrs:type='Filename'/>        
+	<rdf:_11
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='projectFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/project'
+             ftrs:type='String'/>
+
+        <rdf:_12
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='ideaTypesFeaturesFilename'
+             ftrs:value='../data/system/settings/ideatypes.rdf'
+             ftrs:type='Filename'/>        
+	<rdf:_13
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='ideaTypesFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/ideatypes'
+             ftrs:type='String'/>
+
+<!-- other system stuff -->
+        <rdf:_14
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='defaultChannelsFilename'
+             ftrs:value='../data/user/channels.rdf'
+             ftrs:type='Filename'/>
+        <rdf:_15
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='tempHtmlFilename'
+             ftrs:value='../data/temp/temp.htm'
+             ftrs:type='Filename'/>
+        <rdf:_16
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='defaultCssFilename'
+             ftrs:value='../data/system/css/default.css'
+             ftrs:type='Filename'/>
+        <rdf:_17
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='rss2rdfStylesheet'
+             ftrs:value='../data/system/xslt/rss2rdf.xsl'
+             ftrs:type='Filename'/>
+        <rdf:_18
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='tidyTempFilename'
+             ftrs:value='../data/temp/tidy.htm'
+             ftrs:type='Filename'/>
+        <rdf:_19
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='pythonHome'
+             ftrs:value='c:\\jython-2.1'
+             ftrs:type='Filename'/>
+        <rdf:_20
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='rdbLocation'
+             ftrs:value='../data/system/db/models'
+             ftrs:type='Filename'/>
+        <rdf:_21
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='port'
+             ftrs:value='8016'
+             ftrs:type='Int'/>
+        <rdf:_22
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='vocabsDirectory'
+             ftrs:value='../data/system/vocabularies'
+             ftrs:type='Filename'/>
+	
+<rdf:_23
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='http://ideagraph.org/projects'
+		ftrs:type='Filename'
+		ftrs:key='projectsURIBase'/>
+
+<rdf:_24
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='../data/user/projects/default/default.rdf'
+		ftrs:type='Filename'
+		ftrs:key='currentProjectFilename'/>
+<rdf:_25
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='http://ideagraph.org/projects/default'
+		ftrs:type='Filename'
+		ftrs:key='currentProjectFeatureSet'/>
+
+<rdf:_26
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='../data/system/python/startup.py'
+		ftrs:type='Filename'
+		ftrs:key='pythonStartupFilename'/>
+		
+<rdf:_27
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='../data/user/projects.rdf'
+		ftrs:type='Filename'
+		ftrs:key='projectsFilename'/>
+<rdf:_28
+		rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+		ftrs:value='http://ideagraph.org/projects'
+		ftrs:type='Filename'
+		ftrs:key='projectsURI'/>
+        <rdf:_29
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='toolsFeaturesFilename'
+             ftrs:value='../data/system/settings/tools.rdf'
+             ftrs:type='Filename'/>        
+	<rdf:_30
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='toolsFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/tools'
+             ftrs:type='String'/>
+             
+                <rdf:_31
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='channelsDirectory'
+             ftrs:value='../data/user/channels'
+             ftrs:type='Filename'/>
+                  <rdf:_32
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='opml2ocsStylesheet'
+             ftrs:value='../data/system/xslt/opml2ocs.xsl'
+             ftrs:type='Filename'/>
+             
+                     <rdf:_33
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='importFeaturesFilename'
+             ftrs:value='../data/system/settings/import.rdf'
+             ftrs:type='Filename'/>
+        <rdf:_34
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='importFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/import'
+             ftrs:type='String'/>
+             
+                                  <rdf:_35
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='exportFeaturesFilename'
+             ftrs:value='../data/system/settings/export.rdf'
+             ftrs:type='Filename'/>
+        <rdf:_36
+             rdf:type='http://ideagraph.org/xmlns/idea/features#Feature'
+             ftrs:key='exportFeaturesURI'
+             ftrs:value='http://ideagraph.org/xmlns/ideagraph/default/export'
+             ftrs:type='String'/>
+             
+    </ftrs:FeatureSet>
+  </rdf:RDF>

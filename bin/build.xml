@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!-- build file for RdfTree -->
+
+<project name="Box" default="dist" basedir="../">
+
+    <!--property name="libs.home" value="/java"/ -->
+
+
+	<!-- TODO get this dynamically? -->
+	<property name="root.dir" value="../" />
+   
+    <property name="dist.name" value="rdftree"/>
+
+    <property name="lib.dir" value="lib"/> 
+    <property name="src.dir" value="src"/>
+    <property name="doc.dir" value="doc"/>
+	<property name="etc.dir" value="etc" />
+	
+	<!-- do not commit me, oh my darling... -->
+    <property name="classes.dir" value="classes"/>
+    <property name="javadoc.dir" value="${doc.dir}/javadoc"/>
+    <!-- property name="zipfile" value="${dist.name}.zip"/ -->
+    <property name="dist.dir" value="dist/${dist.name}"/>
+
+	
+    <path id="classpath">
+      <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+	
+
+    <target name="clean">
+    	<delete dir="${dist.dir}"/>
+        <delete dir="${classes.dir}"/>
+        <delete dir="${javadoc.dir}"/> 
+     </target>
+        	
+    <target name="init" depends="clean">
+    	<mkdir dir="${dist.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
+    </target>
+
+
+    <target name="build" depends="init, compile, jar"/>
+
+      <!-- target name="test" depends="build, junit-tests" / tests? -->
+ 
+	<!--
+    <target name="junit-tests" depends="build">   
+    <junit haltonfailure="yes" printsummary="withOutAndErr" >
+          <classpath>
+             <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+              </fileset> 
+            <fileset dir="${libaux.dir}">
+                              <include name="**/*.jar"/>
+                        </fileset>  
+          </classpath>   
+      <test name="org.hyperdata.agency.AllTests" haltonfailure="yes" outfile="result">
+        <formatter type="plain"/>
+      </test>
+    </junit>   
+     </target> 
+     -->  
+        
+    <target name="compile">
+        <javac 
+        	srcdir="${src.dir}" 
+        	destdir="${classes.dir}" 
+        	debug="true" 
+        	classpathref="classpath"
+        	source="1.5"
+      />
+    </target>
+ <!-- executable="/usr/local/java/bin/javac"    compiler="javac1.5" -->
+    
+
+    <target name="jar">
+        <jar jarfile="${lib.dir}/${dist.name}.jar" basedir="${classes.dir}">
+        	<fileset dir="${src.dir}" includes="com/idea/resources/*/*.gif"/>
+            <fileset dir="." includes="etc/*"/>
+	</jar>
+    </target>
+
+	<target name="javadoc"  depends="init" description="make javadoc">
+        <javadoc
+            sourcepath="${src.dir}"
+            destdir="${javadoc.dir}"
+            packagenames="*"
+            classpathref="classpath"
+            additionalparam="-breakiterator -link http://jena.sourceforge.net/javadoc/ com.hp.hpl.jena -link http://jena.sourceforge.net/ARQ/javadoc/ com.hp.hpl.query -link http://java.sun.com/j2se/1.4.2/docs/api/ java" />
+    </target>
+	
+
+    <target name="dist" depends="init, build, jar, javadoc">
+        <!-- mkdir dir="${dist.root}"/ -->
+        <mkdir dir="${dist.dir}"/>
+        <copy todir="${dist.dir}" file="README.txt"/>
+        <copy todir="${dist.dir}/${dist.name}" file="${etc.dir}/editor.sh"/>
+        <copy todir="${dist.dir}/${dist.name}" file="${etc.dir}/rdftree.sh"/>
+        <copy todir="${dist.dir}" file="build.xml"/>
+        <copy todir="${dist.dir}/src">
+            <fileset dir="${src.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="${lib.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/doc">
+            <fileset dir="${doc.dir}" includes="**"/>
+        </copy>
+        <copy todir="${dist.dir}/etc">
+            <fileset dir="${etc.dir}" includes="**"/>
+        </copy>
+    	<!--
+        <zip zipfile="${zipfile}">
+            <fileset dir="${dist.root}" includes="${dist.name}/**"/>
+        </zip>
+    	-->
+    </target>
+
+    <!-- target name="test" depends="build">
+        <junit haltonfailure="true" fork="yes" printsummary="no">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*jar"/>
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <test name="com.hp.hpl.jena.eyeball.test.EyeballTestAll"/>
+        </junit>
+    </target -->
+
+</project>

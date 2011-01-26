@@ -1,0 +1,29 @@
+     @prefix : <http://purl.org/stuff/access#> .
+     @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+     @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+     @prefix sioc: <http://rdfs.org/sioc/ns#> .
+    
+    <http://danny.ayers.name/#me>     a foaf:Person;
+         foaf:holdsAccount  [
+             a sioc:User;
+             :authenticationProtocol "AdHoc";
+             :password "******";
+             :username "danja";
+             sioc:function_of  [
+                 a sioc:Role;
+                 :authenticationProtocol "AdHoc";
+                 :roleName "ADMINISTRATOR";
+                 sioc:has_scope <http://dannyayers.com> ] ];
+         foaf:mbox_sha1sum "669fe353dbef63d12ba11f69ace8acbec1ac8b17";
+         foaf:name "Danny Ayers" .
+    
+    <http://dannyayers.com>     a sioc:Forum .
+
+
+    
+
+
+ 
+    
+
+

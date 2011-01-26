@@ -1,0 +1,23 @@
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix vis:     <http://ideagraph.org/xmlns/idea/graphic#> .
+@prefix x:       <http://purl.org/stuff/> .
+
+<http://purl.org/stuff/swib/application>
+      <http://purl.org/stuff/swib/defaultFileFormat>
+              "Turtle" ;
+      <http://purl.org/stuff/swib/modelSaveDelay>
+              "2000" ;
+      <http://purl.org/stuff/swib/modelSavePeriod>
+              "6000" ;
+      <http://purl.org/stuff/swib/selectedTab>
+              "4" ;
+      <http://purl.org/stuff/swib/sync>
+              "true" ;
+      <http://purl.org/stuff/swib/textSaveDelay>
+              "4000" ;
+      <http://purl.org/stuff/swib/textSavePeriod>
+              "6000" .

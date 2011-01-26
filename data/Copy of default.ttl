@@ -1,0 +1,10 @@
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix :  <http://purl.org/stuff/> .
+
+:andy foaf:knows :brian .
+              
+:brian foaf:knows :andy .
+
+:chris foaf:name> "chris" .
+
+
