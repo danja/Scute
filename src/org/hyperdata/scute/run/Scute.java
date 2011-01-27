@@ -40,7 +40,7 @@ import org.hyperdata.scute.swing.tree.RdfTreePanel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-public class RdfEditor implements TreeSelectionListener, GeneralApplication,
+public class Scute implements TreeSelectionListener, GeneralApplication,
 		ToolsInterface, ModelContainer {
 
 	public static final Dimension FRAME_SIZE = new Dimension(800, 800);
@@ -58,7 +58,7 @@ public class RdfEditor implements TreeSelectionListener, GeneralApplication,
 	public static void main(String[] args) {
 		// WindowKit.setPlastic3DLookAndFeel();
 		// WindowKit.setNativeLookAndFeel();
-		new RdfEditor();
+		new Scute();
 	}
 
 	private final JFileChooser fileChooser;
@@ -77,7 +77,7 @@ public class RdfEditor implements TreeSelectionListener, GeneralApplication,
 	private GraphPanel graphPanel = null;
 
 
-	public RdfEditor() {
+	public Scute() {
 
 		// for bootstrapping/debugging
 		// Config.self.setDefaults();

@@ -2,7 +2,7 @@ package org.hyperdata.scute.swing;
 
 import javax.swing.JEditorPane;
 
-import org.hyperdata.scute.run.RdfEditor;
+import org.hyperdata.scute.run.Scute;
 
 public class LogPane extends JEditorPane {
 
@@ -47,7 +47,7 @@ public class LogPane extends JEditorPane {
 		setContentType("text/html");
 		text = new StringBuffer();
 		setEditable(false);
-		setBackground(RdfEditor.READ_ONLY_COLOR);
+		setBackground(Scute.READ_ONLY_COLOR);
 	}
 
 	public void clear() {

@@ -41,7 +41,7 @@ public class AutoSave extends WindowAdapter implements FocusListener,
 		System.exit(0);
 	}
 
-	public void restorePreviousState(RdfEditor rdfEditor) {
+	public void restorePreviousState(Scute rdfEditor) {
 		System.out.println("Config.self.getSelectedTab()) ="
 				+ Config.self.getSelectedTab());
 		rdfEditor.setSelectedTab(Config.self.getSelectedTab());

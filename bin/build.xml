@@ -1,11 +1,7 @@
 <?xml version="1.0"?>
-<!-- build file for RdfTree -->
-
-<project name="Box" default="dist" basedir="../">
+<project name="Scute" default="jar" basedir="../">
 
     <!--property name="libs.home" value="/java"/ -->
-
-
 	<!-- TODO get this dynamically? -->
 	<property name="root.dir" value="../" />
 	<property name="creator.name" value="Danny Ayers"/>
@@ -82,7 +78,7 @@
 	</jar>
     </target>
 	
-	<target name="jar">
+	<target name="jar" depends="compile">
 	   <property name="version.num" value="0.50"/>
 	   <buildnumber file="build.num"/>
 	   <tstamp>
@@ -97,16 +93,16 @@
 	      <attribute name="Built-Date" value="${TODAY}"/>                 
 	  </manifest>
 
-	  <jar destfile="scute.jar"
+	  <jar destfile="Scute.jar"
 	       basedir="."
 	       includes="**/*.class"
 	       manifest="MANIFEST.MF"
 	       />
 	</target>
 
+	<!--
 	<project name="TranformXml" default="TransformAll">
 		<target name="xslt2">
-			<!-- Transform one file into an HTML file -->
 			<xslt in="test.xml" out="xslt2-test.xml"
 				style="xslt2-test.xsl" force="true">
 				<classpath location="/home/ap/saxon/saxon8.jar" />
@@ -115,6 +111,7 @@
 		
 		<target name="TransformAll" depends="xslt2" />
 	</project>
+	-->
 
 	<target name="javadoc"  depends="init" description="make javadoc">
         <javadoc

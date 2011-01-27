@@ -115,8 +115,8 @@ public class RdfTreeModel extends DefaultTreeModel {
 	 * 
 	 * nodeValueField.setEditable(rdfTreeNode.isTextEditable());
 	 * if(rdfTreeNode.isTextEditable()){
-	 * nodeValueField.setBackground(RdfEditor.READ_WRITE_COLOR); }else{
-	 * nodeValueField.setBackground(RdfEditor.READ_ONLY_COLOR); } }
+	 * nodeValueField.setBackground(Scute.READ_WRITE_COLOR); }else{
+	 * nodeValueField.setBackground(Scute.READ_ONLY_COLOR); } }
 	 */
 
 	// public boolean isCellEditable(Object node, int column) {

@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hyperdata.scute.run.RdfEditor;
+import org.hyperdata.scute.run.Scute;
 import org.hyperdata.scute.swing.rdftree.RdfTreeNode;
 
 public class NodePanel extends JPanel {
@@ -24,7 +24,7 @@ public class NodePanel extends JPanel {
 		add(nodeTypeLabel);
 
 		nodeValueField = new JTextField("None Selected.");
-		nodeValueField.setBackground(RdfEditor.READ_ONLY_COLOR);
+		nodeValueField.setBackground(Scute.READ_ONLY_COLOR);
 		add(nodeValueField);
 	}
 
@@ -34,9 +34,9 @@ public class NodePanel extends JPanel {
 		System.out.println("setRdfTreeNode");
 		nodeValueField.setEditable(rdfTreeNode.isValueEditable());
 		if (rdfTreeNode.isValueEditable()) {
-			nodeValueField.setBackground(RdfEditor.READ_WRITE_COLOR);
+			nodeValueField.setBackground(Scute.READ_WRITE_COLOR);
 		} else {
-			nodeValueField.setBackground(RdfEditor.READ_ONLY_COLOR);
+			nodeValueField.setBackground(Scute.READ_ONLY_COLOR);
 		}
 	}
 
