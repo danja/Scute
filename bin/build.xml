@@ -6,7 +6,7 @@
 	<property name="root.dir" value="../" />
 	<property name="creator.name" value="Danny Ayers"/>
     <property name="dist.name" value="rdftree"/>
-
+ 
     <property name="lib.dir" value="lib"/> 
     <property name="src.dir" value="src"/>
     <property name="doc.dir" value="doc"/>
@@ -78,6 +78,7 @@
 	</jar>
     </target>
 	
+	<!-- @TODO need to add dependency libs -->
 	<target name="jar" depends="compile">
 	   <property name="version.num" value="0.50"/>
 	   <buildnumber file="build.num"/>
@@ -94,7 +95,7 @@
 	  </manifest>
 
 	  <jar destfile="Scute.jar"
-	       basedir="."
+	       basedir="${classes.dir}"
 	       includes="**/*.class"
 	       manifest="MANIFEST.MF"
 	       />
