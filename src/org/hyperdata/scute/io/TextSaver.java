@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.TimerTask;
 
 import org.hyperdata.scute.Config;
-import org.hyperdata.scute.swing.source.TextContainer;
+import org.hyperdata.scute.source.TextContainer;
 
 public class TextSaver extends TimerTask {
 
