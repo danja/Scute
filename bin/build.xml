@@ -103,7 +103,7 @@
 	
 	
 	<!-- EXECUTABLE JAR -->
-	<target name="jar" depends="compile">
+	<target name="jar" depends="clean, compile">
 	   <property name="version.num" value="0.50"/>
 	   <buildnumber file="build.num"/>
 	   <tstamp>
