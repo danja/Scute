@@ -47,6 +47,6 @@ public class TreeDemo {
 		final JFrame frame = new JFrame();
 		frame.getContentPane().add(tree);
 		frame.pack();
-		frame.show();
+		frame.setVisible(true);
 	}
 }

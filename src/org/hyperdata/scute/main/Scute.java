@@ -20,7 +20,6 @@ import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
-import org.hyperdata.scute.graph.GraphDiagramPanel;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.io.AutoSave;
 import org.hyperdata.scute.log.LogPane;
@@ -76,7 +75,6 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	private final RdfTreePanel treePanel;
 	private GraphPanel graphPanel = null;
 
-
 	public Scute() {
 
 		// for bootstrapping/debugging
@@ -105,24 +103,24 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		turtlePanel.loadModel(Models.workingModel);
 		tabs.addChangeListener(turtlePanel);
 		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
-		// JTabbedPane setBackgroundAt(int index, Color background) 
-		
+		// JTabbedPane setBackgroundAt(int index, Color background)
+
 		rdfxmlPanel = new SourcePanel(autosave, "RDF/XML");
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
 		tabs.addChangeListener(rdfxmlPanel);
 		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
-		
+
 		treePanel = new RdfTreePanel(Models.workingModel);
 		tabs.addTab("Tree", treePanel); // treePanel has scroll?
 
 		graphPanel = new GraphPanel(Models.workingModel);
-		tabs.addTab("Graph", graphPanel); 
+		tabs.addTab("Graph", graphPanel);
 
 		tabs.setSelectedIndex(0);
-//		graphPanel.scramble();
-//		graphPanel.start();
-	//	graphPanel.initialize();
+		// graphPanel.scramble();
+		// graphPanel.start();
+		// graphPanel.initialize();
 
 		final JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));

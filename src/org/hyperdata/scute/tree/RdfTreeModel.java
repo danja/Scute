@@ -12,7 +12,7 @@ public class RdfTreeModel extends DefaultTreeModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -2322361720841873199L;
-	private final DefaultTreeModel defaultTreeModel;
+	// private final DefaultTreeModel defaultTreeModel;
 	private final Model model;
 	private final RdfNodeMap nodeMap;
 
@@ -22,7 +22,7 @@ public class RdfTreeModel extends DefaultTreeModel {
 		this.model = model;
 		this.nodeMap = nodeMap;
 		nodeMap.setTreeModel(this);
-		defaultTreeModel = new DefaultTreeModel(root); // added@@
+		// defaultTreeModel = new DefaultTreeModel(root); // added@@
 	}
 
 	/**

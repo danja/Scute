@@ -6,16 +6,13 @@
 package org.hyperdata.scute.graph;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
-
 
 // it might have been better to store the RDFNode in JComponent.getClientProperty(java.lang.Object) 
 public class Node extends VisibleNode implements RDFNode {
@@ -23,7 +20,7 @@ public class Node extends VisibleNode implements RDFNode {
 	private RDFNode rdfNode;
 
 	// new RoundButton("XXXX")
-	
+
 	public Node() {
 		super();
 	}
@@ -34,9 +31,6 @@ public class Node extends VisibleNode implements RDFNode {
 		this.component = component;
 		component.setBorder(new EmptyBorder(5, 5, 5, 5));
 	}
-
-	
-	
 
 	// for adding to graph
 	public Node(Model model, String uri) { // Resource
@@ -66,7 +60,7 @@ public class Node extends VisibleNode implements RDFNode {
 			return ((Resource) rdfNode).getLocalName();
 		else if (rdfNode.isResource())
 			return "  ";
-			// ((Resource) rdfNode).getId().toString(); // 
+		// ((Resource) rdfNode).getId().toString(); //
 		else if (rdfNode.isLiteral()) {
 			String label = ((Literal) rdfNode).toString();
 			// if(label.length() > 10){ // @TODO come back to this
@@ -155,33 +149,35 @@ public class Node extends VisibleNode implements RDFNode {
 	}
 
 	public RDFNode getRDFNode() {
-		return this.rdfNode;
+		return rdfNode;
 	}
 
 	public boolean equalsRDF(RDFNode object) {
 		// URI resources & properties
-			if(object.isResource() && ((Resource)object).isURIResource()){
-				if(this.rdfNode.isResource() && ((Resource)this.rdfNode).isURIResource()){
-					if( ((Resource)this.rdfNode).getURI().equals(((Resource)object).getURI()))
-					{	return true; } else {
-						return false;
-					}
-				}				
-			}
-			// bnode
-			if(object.isAnon() && this.rdfNode.isAnon()){
-					if(   ((Resource)this.rdfNode).getId().equals(((Resource)object).getId())   ) {
-							return true; } else {
-								return false;
-				}				
-			}
-	// literal
-			if(object.isLiteral() && this.rdfNode.isLiteral()){
-				if(((Literal)object).equals(((Literal)this.rdfNode)) ||  (((Literal)object).sameValueAs((Literal)this.rdfNode)) ){
+		if (object.isResource() && ((Resource) object).isURIResource()) {
+			if (rdfNode.isResource() && ((Resource) rdfNode).isURIResource()) {
+				if (((Resource) rdfNode).getURI().equals(
+						((Resource) object).getURI()))
 					return true;
-				}
+				else
+					return false;
 			}
-	
+		}
+		// bnode
+		if (object.isAnon() && rdfNode.isAnon()) {
+			if (((Resource) rdfNode).getId()
+					.equals(((Resource) object).getId()))
+				return true;
+			else
+				return false;
+		}
+		// literal
+		if (object.isLiteral() && rdfNode.isLiteral()) {
+			if (((Literal) object).equals((rdfNode))
+					|| (((Literal) object).sameValueAs((Literal) rdfNode)))
+				return true;
+		}
+
 		return false;
 	}
 }

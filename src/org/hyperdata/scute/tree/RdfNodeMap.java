@@ -21,7 +21,7 @@ public class RdfNodeMap {
 	private Map<Literal, AbstractRdfTreeNode> literals;
 	private Model model;
 
-	private Map models;
+	private Map<RDFNode, AbstractRdfTreeNode> models;
 
 	private Map<Resource, AbstractRdfTreeNode> resources;
 	private RootNode rootNode;
@@ -221,7 +221,7 @@ public class RdfNodeMap {
 	}
 
 	private void initMaps() {
-		models = new HashMap();
+		models = new HashMap<RDFNode, AbstractRdfTreeNode>();
 		resources = new HashMap<Resource, AbstractRdfTreeNode>();
 		statements = new HashMap<Statement, AbstractRdfTreeNode>();
 		literals = new HashMap<Literal, AbstractRdfTreeNode>();

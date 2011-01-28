@@ -95,7 +95,7 @@ public class DocumentPane extends JScrollPane implements KeyListener {
 	public void loadFile(String filename) {
 		try {
 			final File file = new File(filename);
-			setPage(file.toURL());
+			setPage(file.toURI().toURL()); // needed to escape chars
 			editorPane.setCaretPosition(0); // scroll to top
 			repaint(); // //
 		} catch (final IOException exception) {

@@ -6,10 +6,8 @@ package org.hyperdata.scute.graph;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * @author danny
@@ -46,29 +44,29 @@ public class GraphSet {
 
 	public Node addNode(Node node) {
 		nodes.add(node);
-//		node.setN(nodes.size() - 1);
+		// node.setN(nodes.size() - 1);
 		return node;
 	}
 
 	public Edge addEdge(Edge edge) {
 		edges.add(edge);
-	//	edge.setN(nodes.size() - 1);
+		// edge.setN(nodes.size() - 1);
 		return edge;
 	}
-	
-//	public int addEdge(Edge edge) {
-//		edges.add(edge);
-//		edge.setN(nodes.size() - 1);
-//		return edges.size() - 1;
-//	}
-	
-	public Iterator nodeIterator() {
+
+	// public int addEdge(Edge edge) {
+	// edges.add(edge);
+	// edge.setN(nodes.size() - 1);
+	// return edges.size() - 1;
+	// }
+
+	public Iterator<Node> nodeIterator() {
 		return nodes.iterator();
 	}
 
-//	public int getNnodes() {
-//		return nodes.size();
-//	}
+	// public int getNnodes() {
+	// return nodes.size();
+	// }
 
 	public int getNedges() {
 		return edges.size();
@@ -91,7 +89,8 @@ public class GraphSet {
 		for (int i = 0; i < nodes.size(); i++) {
 			node = nodes.get(i);
 			// RDFNode existing = node.getRDFNode();
-if(node.equalsRDF(object)) return node;
+			if (node.equalsRDF(object))
+				return node;
 		}
 		return null;
 	}

@@ -14,7 +14,7 @@
       <http://purl.org/stuff/swib/modelSavePeriod>
               "6000" ;
       <http://purl.org/stuff/swib/selectedTab>
-              "0" ;
+              "3" ;
       <http://purl.org/stuff/swib/sync>
               "true" ;
       <http://purl.org/stuff/swib/textSaveDelay>

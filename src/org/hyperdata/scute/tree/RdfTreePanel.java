@@ -17,7 +17,6 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**
@@ -40,7 +39,7 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 	private EditMenu editMenu;
 
 	protected JPopupMenu popupMenu;
-	private String selectedUrl;
+	// private String selectedUrl;
 
 	private JTree tree;
 	private RdfTreeModel treeModel;
@@ -134,8 +133,8 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 
 		if ((object == null) || !(object instanceof ResourceNode))
 			return;
-		final ResourceNode node = (ResourceNode) object;
-		selectedUrl = node.getResource().getURI();
+		// final ResourceNode node = (ResourceNode) object;
+		// selectedUrl = node.getResource().getURI();
 		// tree.scrollPathToVisible(path);
 		tree.revalidate();
 	}

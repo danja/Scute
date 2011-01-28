@@ -17,7 +17,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
-	private List children;
+	private List<TreeNode> children;
 
 	private Resource resource;
 
@@ -33,7 +33,8 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
-	public Enumeration children() {
+	@SuppressWarnings("unchecked") // javax.swing.tree.TreeNode is old-fashioned
+	public Enumeration<?> children() {
 		return (new Vector(getChildren())).elements();
 	}
 
@@ -76,9 +77,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
-	public List getChildren() {
+	public List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
-			children = new ArrayList();
+			children = new ArrayList<TreeNode>();
 
 			try {
 				// System.out.println("GRET class= "+ getClass());

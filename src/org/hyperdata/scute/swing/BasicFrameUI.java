@@ -37,6 +37,6 @@ public class BasicFrameUI {
 		System.out.println("show");
 		frame.pack();
 		// frame.setSize(400, 400);
-		frame.show();
+		frame.setVisible(true);
 	}
 }

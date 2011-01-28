@@ -9,6 +9,7 @@ import org.hyperdata.resources.tree.TreeIcons;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
@@ -20,7 +21,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		this.literal = literal;
 	}
 
-	public Enumeration children() {
+	public Enumeration<Resource> children() { // @TODO change to Iterator<Resource> ?
 		return null;
 	}
 

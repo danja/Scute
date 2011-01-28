@@ -339,14 +339,14 @@ public class RdfUtils {
 			String value) {
 		final Literal newLiteral = model.createLiteral(value);
 		// ((Literal)getRdfNode()).
-		final Set statements = new HashSet();
+		final Set<Statement> statements = new HashSet<Statement>();
 		final StmtIterator iterator = model.listStatements(null, null, literal);
 
 		while (iterator.hasNext()) {
 			statements.add(iterator.next());
 		}
 
-		final Iterator setIterator = statements.iterator();
+		final Iterator<Statement> setIterator = statements.iterator();
 		Statement statement;
 
 		while (setIterator.hasNext()) {
@@ -378,8 +378,9 @@ public class RdfUtils {
 			Statement statement;
 			Resource subject;
 			RDFNode object = null;
+			
 			// buffer in List to avoid concurrent modification exception
-			final List statementList = new ArrayList();
+			final List<Statement> statementList = new ArrayList<Statement>();
 			while (statements.hasNext()) {
 				statementList.add(statements.next());
 			}
@@ -501,7 +502,7 @@ public class RdfUtils {
 
 			// copy properties from old resource
 			// buffer used to avoid concurrent modification
-			final Set statements = new HashSet();
+			final Set<Statement> statements = new HashSet<Statement>();
 			while (iterator.hasNext()) {
 				final Statement stmt = iterator.next();
 				statements.add(stmt);
@@ -509,7 +510,7 @@ public class RdfUtils {
 				newResource.addProperty(stmt.getPredicate(), stmt.getObject());
 				// model.remove(stmt);
 			}
-			final Iterator setIterator = statements.iterator();
+			final Iterator<Statement> setIterator = statements.iterator();
 			Statement statement;
 			while (setIterator.hasNext()) {
 				statement = (Statement) setIterator.next();

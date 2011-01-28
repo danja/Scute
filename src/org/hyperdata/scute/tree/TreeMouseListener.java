@@ -7,7 +7,6 @@ import javax.swing.Action;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
-
 /**
  * Picks up mouse events on the RDF tree view
  * 

@@ -4,8 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 public class VisibleNode {
-	
-	// @TODO change to Point2D.Double()  ??
+
+	// @TODO change to Point2D.Double() ??
 	private double x;
 	private double y;
 
@@ -16,13 +16,14 @@ public class VisibleNode {
 
 	private String label;
 
-//	private int n = -1;
+	// private int n = -1;
 
 	protected JButton component;
 
 	public VisibleNode() {
-		
+
 	}
+
 	public VisibleNode(JButton component) {
 		// component = new JLabel("X", TreeIcons.resourceIcon, JLabel.CENTER);
 		this.component = component;

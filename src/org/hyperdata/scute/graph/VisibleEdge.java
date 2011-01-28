@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 public class VisibleEdge {
@@ -24,6 +23,7 @@ public class VisibleEdge {
 	}
 
 	public void setCenter(int x, int y) {
-		component.setLocation(x-component.getWidth()/2, y-component.getHeight()/2);
+		component.setLocation(x - component.getWidth() / 2, y
+				- component.getHeight() / 2);
 	}
 }

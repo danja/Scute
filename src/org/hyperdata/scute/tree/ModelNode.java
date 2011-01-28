@@ -17,7 +17,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class ModelNode extends ResourceNode implements RdfTreeNode {
-	private List children;
+	private List<TreeNode> children;
 	private final Model model;
 	private RdfNodeMap nodeMap;
 
@@ -43,10 +43,12 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
+	 * 
 	 */
 	@Override
-	public Enumeration children() {
-		return (new Vector(getChildren())).elements();
+	@SuppressWarnings("unchecked") // javax.swing.tree.TreeNode is old-fashioned
+	public Enumeration<?> children() { // Can make Iterator<type>? what type?
+		return (new Vector(getChildren())).elements(); // Can make Array<type>? what type? 
 	}
 
 	@Override
@@ -98,9 +100,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 	}
 
 	@Override
-	public List getChildren() {
+	public List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
-			children = new ArrayList();
+			children = new ArrayList<TreeNode>();
 
 			try {
 				final StmtIterator iterator = model.listStatements();

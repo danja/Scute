@@ -1,20 +1,15 @@
 package org.hyperdata.scute.graph;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Iterator;
 
-import javax.swing.Action;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.hyperdata.scute.main.GraphDemo;
-
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -32,8 +27,6 @@ public class GraphDiagramPanel extends JPanel {
 
 	private final GraphSet graphSet;
 
-	private final Model model;
-
 	private final GraphLayout graphLayout;
 
 	private boolean running;
@@ -42,10 +35,9 @@ public class GraphDiagramPanel extends JPanel {
 		super();
 		setSize(800, 800);
 
-		this.model = model;
 		graphSet = new GraphSet();
 		interpret(model);
-		
+
 		graphLayout = new GraphLayout(this, graphSet);
 		setBackground(Color.white);
 		addMouseListener(new MouseHandler(this));
@@ -54,7 +46,7 @@ public class GraphDiagramPanel extends JPanel {
 	public void initialize() {
 		// @TODO scramble on startup kills display!
 		// interpret(model);
-	    // scramble();
+		// scramble();
 	}
 
 	/*
@@ -82,19 +74,15 @@ public class GraphDiagramPanel extends JPanel {
 		} catch (final Exception exception) {
 			exception.printStackTrace();
 		}
-		// requestFocusInWindow(false); // takes the focus off nodes - doesn't work!
+		// requestFocusInWindow(false); // takes the focus off nodes - doesn't
+		// work!
 	}
-	
+
 	public synchronized void scramble() {
 		Dimension d = getSize();
 		Iterator<Node> nIterator = graphSet.nodeIterator();
-		while(nIterator.hasNext()){
+		while (nIterator.hasNext()) {
 			Node n = nIterator.next();
-		// int nn = graphSet.getNnodes();
-		// for (int i = 0; i < nn; i++) { // @TODO tidy
-			// Node n = getNode(i);
-
-			// Node n = panel.nodes[i];
 			if (!n.isFixed()) {
 				n.setX(10 + (d.width - 20) * Math.random());
 				n.setY(10 + (d.height - 20) * Math.random());
@@ -104,40 +92,38 @@ public class GraphDiagramPanel extends JPanel {
 
 	private Node addLiteral(Literal literal) {
 		Node node = graphSet.getNodeContaining(literal);
-		if (node == null){
-		JButton button = new JButton();
-		node = new Node(literal,button);
-		button.setText(node.getString());
-		button.setBackground(Color.green);
-		add(button);
-		node.setX(getWidth() * Math.random());
-		node.setY(getHeight() * Math.random());
-		node.setLabel(node.getString());
+		if (node == null) {
+			JButton button = new JButton();
+			node = new Node(literal, button);
+			button.setText(node.getString());
+			button.setBackground(Color.green);
+			add(button);
+			node.setX(getWidth() * Math.random());
+			node.setY(getHeight() * Math.random());
+			node.setLabel(node.getString());
 		}
 		return graphSet.addNode(node);
 	}
 
 	private Node addResource(Resource resource) {
 		Node node = graphSet.getNodeContaining(resource);
-		if (node == null){
-			
-		JButton button = new RoundButton(); // ellipse for URI nodes
-		node = new Node(resource, button);
-		button.setText(node.getString());
-		button.setBackground(Color.pink);
-		add(button);
-		node.setX(getWidth() * Math.random());
-		node.setY(getHeight() * Math.random());
-		node.setLabel(node.getString());
-		if(resource.isAnon()){ // circular for bnodes
-			((RoundButton)button).setCircular();
-		}
+		if (node == null) {
+
+			JButton button = new RoundButton(); // ellipse for URI nodes
+			node = new Node(resource, button);
+			button.setText(node.getString());
+			button.setBackground(Color.pink);
+			add(button);
+			node.setX(getWidth() * Math.random());
+			node.setY(getHeight() * Math.random());
+			node.setLabel(node.getString());
+			if (resource.isAnon()) { // circular for bnodes
+				((RoundButton) button).setCircular();
+			}
 		}
 		graphSet.addNode(node);
 		return node;
 	}
-
-	// @TODO tidy this lot up!!!
 
 	private Edge addStatement(Statement statement) {
 		Property p = statement.getPredicate();
@@ -147,18 +133,15 @@ public class GraphDiagramPanel extends JPanel {
 		((JButton) edge.getComponent()).setText(edge.getString());
 		add(edge.getComponent());
 		return graphSet.addEdge(edge);
-
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g); 
-
+		super.paintComponent(g);
 		Image image = graphLayout.getImage();
-
 		g.drawImage(image, 0, 0, null);
 		System.out.println("paint image");
-		
+
 	}
 
 	public void setPickFixed(boolean fixed) {
@@ -173,51 +156,34 @@ public class GraphDiagramPanel extends JPanel {
 		return graphSet.getNode(i);
 	}
 
-	/**
-	 * @return the nnodes
-	 */
-//	public int getNnodes() {
-//		return graphSet.getNnodes();
-//	}
-
 	public Node getPick() {
 		return graphLayout.getPick();
 	}
 
-	/**
-	 * @return the nedges
-	 */
-//	int getNedges() {
-//		return graphSet.getNedges();
-//	}
-
 	public void listEdges() {
 		graphSet.listEdges(); // for debugging
-
 	}
 
 	public void listNodes() { // for debugging
 		graphSet.listNodes();
 	}
 
-
 	public synchronized boolean isRunning() {
 		return running;
 	}
 
 	public synchronized void setRunning(boolean b) {
-		if(b){
+		if (b) {
 			scramble();
 			graphLayout.start();
 			running = true;
 		} else {
 			graphLayout.stop();
 			running = false;
-		//	repaint();
+			// repaint();
 		}
-		
 	}
-
+	
 	public Iterator<Node> nodeIterator() {
 		return graphSet.nodeIterator();
 	}

@@ -36,7 +36,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 
-	private List children;
+	private List<ResourceNode> children;
 
 	public RootNode(RdfNodeMap nodeMap) {
 		super(nodeMap, null);
@@ -47,7 +47,8 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
-	public Enumeration children() {
+	@SuppressWarnings("unchecked")// javax.swing.tree.TreeNode is old-fashioned
+	public Enumeration<?> children() {
 		return (new Vector(getChildren())).elements();
 	}
 
@@ -85,19 +86,19 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
-	protected List getChildren() {
+	protected List<ResourceNode> getChildren() {
 		// System.out.println("GET children base root node");
 		if (children == null) {
 			try {
-				children = new ArrayList();
+				children = new ArrayList<ResourceNode>();
 
 				getNodeMap().getTopModel();
-				final Iterator iterator = getNodeMap().getResources()
+				final Iterator<Resource> iterator = getNodeMap().getResources()
 						.iterator();
 				Resource resource;
 
 				while (iterator.hasNext()) {
-					resource = (Resource) iterator.next();
+					resource =  iterator.next();
 
 					children.add(getNodeMap().getResourceNode(resource));
 				}

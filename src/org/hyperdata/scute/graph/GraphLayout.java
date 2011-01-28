@@ -5,15 +5,11 @@ package org.hyperdata.scute.graph;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.Path2D.Double;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -61,8 +57,8 @@ public class GraphLayout implements Runnable {
 
 	public void run() {
 		// Thread me = Thread.currentThread();
-		//while (springs == me) {
-		while(true){
+		// while (springs == me) {
+		while (true) {
 			relax();
 			if (random && (Math.random() < CONSTANT5)) {
 				Node n = graphSet.getRandomNode();
@@ -80,7 +76,7 @@ public class GraphLayout implements Runnable {
 			} catch (InterruptedException e) {
 				// panel.repaint();
 				break;
-				
+
 			}
 		}
 	}
@@ -108,23 +104,25 @@ public class GraphLayout implements Runnable {
 		}
 
 		Iterator<Node> nIterator1 = graphSet.nodeIterator();
-		while(nIterator1.hasNext()){
+		while (nIterator1.hasNext()) {
 			Node n1 = nIterator1.next();
-			
-//		for (int i = 0; i < graphSet.getNnodes(); i++) {
-//			Node n1 = graphSet.getNode(i);
+
+			// for (int i = 0; i < graphSet.getNnodes(); i++) {
+			// Node n1 = graphSet.getNode(i);
 			double dx = 0;
 			double dy = 0;
 
 			Iterator<Node> nIterator2 = graphSet.nodeIterator();
-			while(nIterator2.hasNext()){
+			while (nIterator2.hasNext()) {
 				Node n2 = nIterator2.next();
-				if(n1.equals(n2)) continue;
-//			for (int j = 0; j < graphSet.getNnodes(); j++) {
-//				if (i == j) {
-//					continue;
-//				}
-//				Node n2 = graphSet.getNode(j);
+				if (n1.equals(n2)) {
+					continue;
+					// for (int j = 0; j < graphSet.getNnodes(); j++) {
+					// if (i == j) {
+					// continue;
+					// }
+					// Node n2 = graphSet.getNode(j);
+				}
 
 				double vx = n1.getX() - n2.getX();
 				double vy = n1.getY() - n2.getY();
@@ -146,11 +144,10 @@ public class GraphLayout implements Runnable {
 		}
 
 		Dimension d = panel.getSize();
-//		for (int i = 0; i < graphSet.getNnodes(); i++) {
 
-			Iterator<Node> nIterator = graphSet.nodeIterator();
-			while(nIterator.hasNext()){
-				Node n = nIterator.next();
+		Iterator<Node> nIterator = graphSet.nodeIterator();
+		while (nIterator.hasNext()) {
+			Node n = nIterator.next();
 
 			if (!n.isFixed()) {
 				n.setX(n.getX()
@@ -174,8 +171,8 @@ public class GraphLayout implements Runnable {
 		panel.repaint();
 	}
 
-	public synchronized Image getImage() { 
-		
+	public synchronized Image getImage() {
+
 		Dimension d = panel.getSize();
 		if ((offScreen == null) || (d.width != offScreenSize.width)
 				|| (d.height != offScreenSize.height)) {
@@ -212,12 +209,10 @@ public class GraphLayout implements Runnable {
 		}
 
 		// FontMetrics fm = offgraphics.getFontMetrics();
-		
+
 		return offScreen;
 	}
-	
-	
-	
+
 	private Path2D.Double getOriginArrow() { // arrow shape, point at origin
 		Path2D.Double arrow = new Path2D.Double();
 		arrow.moveTo(-1 * arrowScale, 0.5 * arrowScale);
@@ -278,7 +273,7 @@ public class GraphLayout implements Runnable {
 	}
 
 	public void start() {
-	//	if(springs == null){
+		// if(springs == null){
 		springs = new Thread(this);
 		// }
 		springs.start();

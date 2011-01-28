@@ -28,7 +28,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
-	private List children;
+	private List<TreeNode> children;
 	// private Property property;
 	private final Statement statement;
 
@@ -44,7 +44,8 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
-	public Enumeration children() {
+	@SuppressWarnings("unchecked")// javax.swing.tree.TreeNode is old-fashioned
+	public Enumeration<?> children() {
 		return (new Vector(getChildren())).elements();
 	}
 
@@ -81,9 +82,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
-	private List getChildren() {
+	private List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
-			children = new ArrayList();
+			children = new ArrayList<TreeNode>();
 
 			try {
 				/*

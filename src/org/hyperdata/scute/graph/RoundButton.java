@@ -13,27 +13,28 @@ public class RoundButton extends JButton {
 	 * 
 	 */
 	private static final long serialVersionUID = -5609834220696804796L;
-// private boolean circle = false;
 
-//	public RoundButton(String label) {
-//		super(label);
-//
-//		// These statements enlarge the button so that it
-//		// becomes a circle rather than an oval.
-//
-//		// This call causes the JButton not to paint
-//		// the background.
-//		// This allows us to paint a round background.
-//		setContentAreaFilled(false);
-//	}
+	// private boolean circle = false;
+
+	// public RoundButton(String label) {
+	// super(label);
+	//
+	// // These statements enlarge the button so that it
+	// // becomes a circle rather than an oval.
+	//
+	// // This call causes the JButton not to paint
+	// // the background.
+	// // This allows us to paint a round background.
+	// setContentAreaFilled(false);
+	// }
 
 	public RoundButton() {
 		setContentAreaFilled(false);
 	}
-	
-	public void setCircular(){
+
+	public void setCircular() {
 		Dimension size = getPreferredSize();
-		size.width = size.height = Math.max(size.width,size.height);
+		size.width = size.height = Math.max(size.width, size.height);
 		setPreferredSize(size);
 	}
 
