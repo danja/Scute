@@ -1,2 +1,2 @@
 export CP=../lib/antlr-2.7.5.jar:../lib/iri.jar:../lib/arq-extra.jar:../lib/jena.jar:../lib/arq.jar:../lib/jenatest.jar:lib/rdftree.jar:lib/json.jar:../lib/stax-api-1.0.jar:../lib/commons-logging-1.1.jar:../lib/junit.jar:../lib/wstx-asl-3.0.0.jar:../lib/concurrent.jar:../lib/log4j-1.2.12.jar:../lib/xercesImpl.jar:../lib/looks-2.1.4.jar:../lib/xml-apis.jar:../lib/icu4j_3_4.jar:../lib/lucene-core-2.0.0.jar
-java -cp $CP org.hyperdata.swing.rdftree.Main
+java -cp $CP org.hyperdata.scute.main.GraphDemo

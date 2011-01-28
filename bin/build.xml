@@ -7,7 +7,7 @@
 	<property name="creator.name" value="Danny Ayers"/>
     <property name="dist.name" value="scute"/>
 	<property name="package.filename" value="Scute.jar" />
-	<property name="main.class" value="org.hyperdata.scute.run.Scute" /> 
+	<property name="main.class" value="org.hyperdata.scute.main.Scute" /> 
 	
 	<!-- directory paths -->
 	<property name="root.dir" value="../" />
