@@ -1,3 +1,0 @@
-flip GraphSet over to using Arrays
-
-fill out graphPanel.interpret(model)

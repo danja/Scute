@@ -2,7 +2,7 @@
  * 
  * singleton object - more statics can be pulled out?
  */
-package org.hyperdata.scute;
+package org.hyperdata.scute.main;
 
 import java.io.IOException;
 

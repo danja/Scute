@@ -54,4 +54,10 @@ public class GraphPanel extends JPanel {
 	public synchronized void setRunning(boolean b){
 		graphDiagramPanel.setRunning(b);
 	}
+	
+//	@Override
+//	public void paintComponent(Graphics g) {
+//		super.paintComponent(g);
+//		graphDiagramPanel.paintComponent(g);
+//	}
 }

@@ -13,11 +13,11 @@ import org.hyperdata.scute.tree.RdfTreePanel;
 
 public class ToggleAction extends AbstractAction {
 
-	private GraphDiagramPanel panel;
+	private GraphDiagramPanel diagramPanel;
 
 	public ToggleAction(GraphDiagramPanel panel) {
 		super("Scramble");
-		this.panel = panel;
+		this.diagramPanel = panel;
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -28,7 +28,7 @@ public class ToggleAction extends AbstractAction {
 		} else {
 			button.setText("Scramble");
 		}
-		panel.setRunning(!panel.isRunning()); // isSelected available
+		diagramPanel.setRunning(!diagramPanel.isRunning()); // isSelected available
 		}
 	
 			

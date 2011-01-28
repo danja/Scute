@@ -20,7 +20,6 @@ import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
-import org.hyperdata.scute.Config;
 import org.hyperdata.scute.graph.GraphDiagramPanel;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.io.AutoSave;
@@ -140,7 +139,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 
 		initLogPane();
 
-		frame = new JFrame("RDF Editor");
+		frame = new JFrame("Scute (0.5 Beta)");
 		frame.addWindowListener(autosave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();

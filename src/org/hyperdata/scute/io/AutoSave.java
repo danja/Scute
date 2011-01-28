@@ -11,7 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.hyperdata.scute.Config;
+import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;

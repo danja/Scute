@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Iterator;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -86,9 +87,12 @@ public class GraphDiagramPanel extends JPanel {
 	
 	public synchronized void scramble() {
 		Dimension d = getSize();
-
-		for (int i = 0; i < getNnodes(); i++) {
-			Node n = getNode(i);
+		Iterator<Node> nIterator = graphSet.nodeIterator();
+		while(nIterator.hasNext()){
+			Node n = nIterator.next();
+		// int nn = graphSet.getNnodes();
+		// for (int i = 0; i < nn; i++) { // @TODO tidy
+			// Node n = getNode(i);
 
 			// Node n = panel.nodes[i];
 			if (!n.isFixed()) {
@@ -98,10 +102,9 @@ public class GraphDiagramPanel extends JPanel {
 		}
 	}
 
-	private int addLiteral(Literal literal) {
+	private Node addLiteral(Literal literal) {
 		Node node = graphSet.getNodeContaining(literal);
-		if (node != null)
-			return node.getN();
+		if (node == null){
 		JButton button = new JButton();
 		node = new Node(literal,button);
 		button.setText(node.getString());
@@ -109,17 +112,15 @@ public class GraphDiagramPanel extends JPanel {
 		add(button);
 		node.setX(getWidth() * Math.random());
 		node.setY(getHeight() * Math.random());
-
 		node.setLabel(node.getString());
-
+		}
 		return graphSet.addNode(node);
-
 	}
 
-	private int addResource(Resource resource) {
+	private Node addResource(Resource resource) {
 		Node node = graphSet.getNodeContaining(resource);
-		if (node != null)
-			return node.getN();
+		if (node == null){
+			
 		JButton button = new RoundButton(); // ellipse for URI nodes
 		node = new Node(resource, button);
 		button.setText(node.getString());
@@ -131,31 +132,32 @@ public class GraphDiagramPanel extends JPanel {
 		if(resource.isAnon()){ // circular for bnodes
 			((RoundButton)button).setCircular();
 		}
-		return graphSet.addNode(node);
+		}
+		graphSet.addNode(node);
+		return node;
 	}
 
 	// @TODO tidy this lot up!!!
 
-	private int addStatement(Statement statement) {
+	private Edge addStatement(Statement statement) {
 		Property p = statement.getPredicate();
 		Edge edge = new Edge(p);
 		edge.from = graphSet.getNodeContaining(statement.getSubject());
 		edge.to = graphSet.getNodeContaining(statement.getObject());
 		((JButton) edge.getComponent()).setText(edge.getString());
 		add(edge.getComponent());
-		
-		int eNumber = graphSet.addEdge(edge);
-		// System.out.println("eNumber = "+eNumber);
-		return eNumber;
+		return graphSet.addEdge(edge);
 
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+		super.paintComponent(g); 
+
 		Image image = graphLayout.getImage();
 
 		g.drawImage(image, 0, 0, null);
+		System.out.println("paint image");
 		
 	}
 
@@ -174,9 +176,9 @@ public class GraphDiagramPanel extends JPanel {
 	/**
 	 * @return the nnodes
 	 */
-	public int getNnodes() {
-		return graphSet.getNnodes();
-	}
+//	public int getNnodes() {
+//		return graphSet.getNnodes();
+//	}
 
 	public Node getPick() {
 		return graphLayout.getPick();
@@ -185,9 +187,9 @@ public class GraphDiagramPanel extends JPanel {
 	/**
 	 * @return the nedges
 	 */
-	int getNedges() {
-		return graphSet.getNedges();
-	}
+//	int getNedges() {
+//		return graphSet.getNedges();
+//	}
 
 	public void listEdges() {
 		graphSet.listEdges(); // for debugging
@@ -211,8 +213,12 @@ public class GraphDiagramPanel extends JPanel {
 		} else {
 			graphLayout.stop();
 			running = false;
-			repaint();
+		//	repaint();
 		}
 		
+	}
+
+	public Iterator<Node> nodeIterator() {
+		return graphSet.nodeIterator();
 	}
 }

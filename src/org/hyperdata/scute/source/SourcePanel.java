@@ -10,7 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.hyperdata.scute.Config;
+import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
 
 import com.hp.hpl.jena.rdf.model.Model;

@@ -4,7 +4,9 @@
 package org.hyperdata.scute.graph;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -42,21 +44,31 @@ public class GraphSet {
 		return edges.get(i);
 	}
 
-	public int addNode(Node node) {
+	public Node addNode(Node node) {
 		nodes.add(node);
-		node.setN(nodes.size() - 1);
-		return nodes.size() - 1;
+//		node.setN(nodes.size() - 1);
+		return node;
 	}
 
-	public int addEdge(Edge edge) {
+	public Edge addEdge(Edge edge) {
 		edges.add(edge);
-		edge.setN(nodes.size() - 1);
-		return edges.size() - 1;
+	//	edge.setN(nodes.size() - 1);
+		return edge;
+	}
+	
+//	public int addEdge(Edge edge) {
+//		edges.add(edge);
+//		edge.setN(nodes.size() - 1);
+//		return edges.size() - 1;
+//	}
+	
+	public Iterator nodeIterator() {
+		return nodes.iterator();
 	}
 
-	public int getNnodes() {
-		return nodes.size();
-	}
+//	public int getNnodes() {
+//		return nodes.size();
+//	}
 
 	public int getNedges() {
 		return edges.size();
@@ -101,4 +113,7 @@ if(node.equalsRDF(object)) return node;
 		}
 	}
 
+	public Node getRandomNode() {
+		return nodes.get((int) (Math.random() * nodes.size()));
+	}
 }

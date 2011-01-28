@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.8.0
-Created-By: 1.6.0_20-b20 (Sun Microsystems Inc.)
-Built-By: Danny Ayers
-Main-Class: org.hyperdata.scute.run.Scute
-Implementation-Version: 0.50-b1
-Built-Date: 2011-01-27 01:05:43
-

@@ -16,7 +16,7 @@ public class VisibleNode {
 
 	private String label;
 
-	private int n = -1;
+//	private int n = -1;
 
 	protected JButton component;
 
@@ -30,14 +30,6 @@ public class VisibleNode {
 
 	public JComponent getComponent() {
 		return component;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
 	}
 
 	public void setX(double x) {

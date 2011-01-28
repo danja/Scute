@@ -12,21 +12,11 @@ public class VisibleEdge {
 	double len;
 	private final JButton component;
 
-	private int n = -1;
-
 	public VisibleEdge() {
 		component = new JButton();
 		component.setBackground(Color.white);
 		component.setBorder(new EmptyBorder(5, 5, 5, 5));
 		// component.setContentAreaFilled(false);
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
 	}
 
 	public JComponent getComponent() {

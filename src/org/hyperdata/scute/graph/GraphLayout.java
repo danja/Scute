@@ -14,6 +14,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Path2D.Double;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
@@ -64,8 +65,7 @@ public class GraphLayout implements Runnable {
 		while(true){
 			relax();
 			if (random && (Math.random() < CONSTANT5)) {
-				Node n = graphSet.getNode((int) (Math.random() * graphSet
-						.getNnodes()));
+				Node n = graphSet.getRandomNode();
 				if (!n.isFixed()) {
 					n.setX(n.getX()
 							+ (panel.getWidth() * Math.random() - panel
@@ -107,16 +107,24 @@ public class GraphLayout implements Runnable {
 			e.from.setDy(e.from.getDy() + (-dy));
 		}
 
-		for (int i = 0; i < graphSet.getNnodes(); i++) {
-			Node n1 = graphSet.getNode(i);
+		Iterator<Node> nIterator1 = graphSet.nodeIterator();
+		while(nIterator1.hasNext()){
+			Node n1 = nIterator1.next();
+			
+//		for (int i = 0; i < graphSet.getNnodes(); i++) {
+//			Node n1 = graphSet.getNode(i);
 			double dx = 0;
 			double dy = 0;
 
-			for (int j = 0; j < graphSet.getNnodes(); j++) {
-				if (i == j) {
-					continue;
-				}
-				Node n2 = graphSet.getNode(j);
+			Iterator<Node> nIterator2 = graphSet.nodeIterator();
+			while(nIterator2.hasNext()){
+				Node n2 = nIterator2.next();
+				if(n1.equals(n2)) continue;
+//			for (int j = 0; j < graphSet.getNnodes(); j++) {
+//				if (i == j) {
+//					continue;
+//				}
+//				Node n2 = graphSet.getNode(j);
 
 				double vx = n1.getX() - n2.getX();
 				double vy = n1.getY() - n2.getY();
@@ -138,9 +146,11 @@ public class GraphLayout implements Runnable {
 		}
 
 		Dimension d = panel.getSize();
-		for (int i = 0; i < graphSet.getNnodes(); i++) {
+//		for (int i = 0; i < graphSet.getNnodes(); i++) {
 
-			Node n = graphSet.getNode(i);
+			Iterator<Node> nIterator = graphSet.nodeIterator();
+			while(nIterator.hasNext()){
+				Node n = nIterator.next();
 
 			if (!n.isFixed()) {
 				n.setX(n.getX()

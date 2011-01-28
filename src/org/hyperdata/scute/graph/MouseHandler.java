@@ -3,6 +3,7 @@ package org.hyperdata.scute.graph;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 
 public class MouseHandler implements MouseMotionListener, MouseListener {
 	private final GraphDiagramPanel graphPanel;
@@ -21,9 +22,11 @@ public class MouseHandler implements MouseMotionListener, MouseListener {
 		double bestdist = Double.MAX_VALUE;
 		int x = e.getX();
 		int y = e.getY();
-		for (int i = 0; i < graphPanel.getNnodes(); i++) {
-			Node n = graphPanel.getNode(i);
-
+//		for (int i = 0; i < graphPanel.getNnodes(); i++) {
+//			Node n = graphPanel.getNode(i); 
+Iterator<Node> nIterator = graphPanel.nodeIterator();
+		while(nIterator.hasNext()){
+			Node n = nIterator.next();
 			double dist = (n.getX() - x) * (n.getX() - x) + (n.getY() - y)
 					* (n.getY() - y);
 			if (dist < bestdist) {
