@@ -1,32 +1,18 @@
-RdfTree/Editor
+Scute
+=====
 
+@TODO
 
-
-to build, run ant
-
-for now - to run, copy the .sh files from the etc dir into the dist/rdftree dir
-chmod & run 'em
-
-rdftree.sh runs a demo of the component alone
-
-editor.sh runs the editor - 
-to see as far as it's got, open an rdf/xml file, click a couple of times on the arrow pointer next to the root icon
-
+See http://hyperdata.org/scute
 
 Revision History
 ================
 
-
-Code originally from IdeaGraph 2002 (or thereabouts), Danny Ayers  
-
-TreeTable code in editor by Philip Milne and/or Scott Violet, plus fork of jedit syntax highlighter (found on the web somewhere)
-
-Some refactoring by Brian Sletten around 2003
-
-Stripped out of IdeaGraph 2008
-
-
+many source files derived from previous projects, but radically altered, so considered new as of 2011-01-28 
 
 License
 =======
-Some kind of open source license
+
+open, TBD
+
+various libraries used, all open (@TODO check licenses)
