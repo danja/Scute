@@ -20,11 +20,11 @@ import javax.swing.JPanel;
  */
 public class GraphLayout implements Runnable {
 
-	private static final double CONSTANT1 = .1;
+	private static final double EDGE_MIN_LENGTH = .1;
 	private static final double CONSTANT2 = 1000;
 	private static final double CONSTANT3 = 10000;
 	private static final int CONSTANT4 = 500;
-	private static final double CONSTANT5 = 0.5;
+	private static final double RANDOMIZE_NODE_PROBABILITY = 0.1;
 
 	private Node pick;
 	private boolean pickfixed;
@@ -39,13 +39,11 @@ public class GraphLayout implements Runnable {
 
 	private Thread springs = null;
 	boolean stress;
-	boolean random;
+	boolean random = true;
 	private final GraphSet graphSet;
 	private final JPanel panel;
 
 	private final double arrowScale = 10;
-	// private final Line2D.Double originLine = new Line2D.Double(0, 0, 0,
-	// arrowLength);
 	private final Path2D.Double originArrow = getOriginArrow();
 
 	// private static final Path2D.Double;
@@ -60,55 +58,78 @@ public class GraphLayout implements Runnable {
 		// while (springs == me) {
 		while (true) {
 			relax();
-			if (random && (Math.random() < CONSTANT5)) {
+			if (random && (Math.random() < RANDOMIZE_NODE_PROBABILITY)) {
 				Node n = graphSet.getRandomNode();
-				if (!n.isFixed()) {
-					n.setX(n.getX()
-							+ (panel.getWidth() * Math.random() - panel
-									.getWidth() / 2));
-					n.setY(n.getY()
-							+ (panel.getHeight() * Math.random() - panel
-									.getHeight() / 2));
-				}
+				randomizeNode(n);
 			}
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// panel.repaint();
+				relax();
 				break;
 
 			}
 		}
 	}
-
-	synchronized void relax() {
-		for (int i = 0; i < graphSet.getNedges(); i++) {
-
-			Edge e = graphSet.getEdge(i);
-
-			double vx = e.to.getX() - e.from.getX();
-			double vy = e.to.getY() - e.from.getY();
-
-			double len = Math.sqrt(vx * vx + vy * vy);
-			len = (len == 0) ? CONSTANT1 : len;
-
-			double f = (graphSet.getEdge(i).len - len) / (len * CONSTANT2);
-
-			double dx = f * vx;
-			double dy = f * vy;
-
-			e.to.setDx(e.to.getDx() + dx);
-			e.to.setDy(e.to.getDy() + dy);
-			e.from.setDx(e.from.getDx() + (-dx));
-			e.from.setDy(e.from.getDy() + (-dy));
+	
+	private synchronized void randomizeNode(Node node){
+		if (!node.isFixed()) {
+			node.setX(node.getX()
+					+ (panel.getWidth() * Math.random() - panel
+							.getWidth() / 2));
+			node.setY(node.getY()
+					+ (panel.getHeight() * Math.random() - panel
+							.getHeight() / 2));
 		}
+	}
 
+	// @FIXME need to synchronize on container panel?
+	private synchronized void relax() {
+doEdges();
+
+doNodes();
+
+doNodes2();
+	}
+
+
+	/**
+	 * 
+	 */
+	private synchronized void doEdges() { // @TODO rename
+		Iterator<Edge> eIterator = graphSet.edgeIterator();
+		
+		while (eIterator.hasNext()) {
+			Edge e = eIterator.next();
+
+		double vx = e.to.getX() - e.from.getX();
+		double vy = e.to.getY() - e.from.getY();
+
+		double len = Math.sqrt(vx * vx + vy * vy);
+		
+		len = (len == 0) ? EDGE_MIN_LENGTH : len;
+
+		double f = (e.len - len) / (len * CONSTANT2);
+
+		double dx = f * vx;
+		double dy = f * vy;
+
+		e.to.setDx(e.to.getDx() + dx);
+		e.to.setDy(e.to.getDy() + dy);
+		e.from.setDx(e.from.getDx() + (-dx));
+		e.from.setDy(e.from.getDy() + (-dy));
+	}
+	}
+	
+	/**
+	 * 
+	 */
+	private synchronized void doNodes() { // @TODO rename
 		Iterator<Node> nIterator1 = graphSet.nodeIterator();
 		while (nIterator1.hasNext()) {
 			Node n1 = nIterator1.next();
 
-			// for (int i = 0; i < graphSet.getNnodes(); i++) {
-			// Node n1 = graphSet.getNode(i);
 			double dx = 0;
 			double dy = 0;
 
@@ -117,11 +138,6 @@ public class GraphLayout implements Runnable {
 				Node n2 = nIterator2.next();
 				if (n1.equals(n2)) {
 					continue;
-					// for (int j = 0; j < graphSet.getNnodes(); j++) {
-					// if (i == j) {
-					// continue;
-					// }
-					// Node n2 = graphSet.getNode(j);
 				}
 
 				double vx = n1.getX() - n2.getX();
@@ -142,7 +158,12 @@ public class GraphLayout implements Runnable {
 				n1.setDy(n1.getDy() + (dy / dlen));
 			}
 		}
-
+	}
+	
+	/**
+	 * 
+	 */
+	private synchronized void doNodes2() { // @TODO rename
 		Dimension d = panel.getSize();
 
 		Iterator<Node> nIterator = graphSet.nodeIterator();
@@ -168,8 +189,9 @@ public class GraphLayout implements Runnable {
 			n.setDx(n.getDx() / 2);
 			n.setDy(n.getDy() / 2);
 		}
-		panel.repaint();
 	}
+
+
 
 	public synchronized Image getImage() {
 
@@ -188,11 +210,10 @@ public class GraphLayout implements Runnable {
 		offGraphics.setColor(panel.getBackground());
 		offGraphics.fillRect(0, 0, d.width, d.height);
 
-		// System.out.println("graphics "+d);
-		for (int i = 0; i < graphSet.getNedges(); i++) {
-
-			Edge e = graphSet.getEdge(i);
-
+			Iterator<Edge> eIterator = graphSet.edgeIterator();
+			while (eIterator.hasNext()) {
+				Edge e = eIterator.next();
+				
 			double xx1 = e.from.getX();
 			double yy1 = e.from.getY();
 			double xx2 = e.to.getX();

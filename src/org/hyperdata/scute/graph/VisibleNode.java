@@ -6,26 +6,21 @@ import javax.swing.JComponent;
 public class VisibleNode {
 
 	// @TODO change to Point2D.Double() ??
-	private double x;
-	private double y;
+	private double x = 0;
+	private double y = 0;
 
-	private double dx;
-	private double dy;
+	private double dx = 0;
+	private double dy = 0;
 
-	private boolean fixed;
+	private boolean fixed = false;
 
-	private String label;
+	private String label = "";
 
-	// private int n = -1;
+	protected JButton component = null;
 
-	protected JButton component;
-
-	public VisibleNode() {
-
-	}
+	public VisibleNode() {}
 
 	public VisibleNode(JButton component) {
-		// component = new JLabel("X", TreeIcons.resourceIcon, JLabel.CENTER);
 		this.component = component;
 	}
 

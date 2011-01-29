@@ -19,8 +19,6 @@ public class Node extends VisibleNode implements RDFNode {
 
 	private RDFNode rdfNode;
 
-	// new RoundButton("XXXX")
-
 	public Node() {
 		super();
 	}

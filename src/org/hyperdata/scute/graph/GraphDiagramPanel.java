@@ -23,13 +23,11 @@ public class GraphDiagramPanel extends JPanel {
 
 	private static final long serialVersionUID = 3002182807894335317L;
 
-	GraphDemo graph;
-
 	private final GraphSet graphSet;
 
 	private final GraphLayout graphLayout;
 
-	private boolean running;
+	private boolean running = false;
 
 	public GraphDiagramPanel(Model model) {
 		super();
@@ -176,10 +174,10 @@ public class GraphDiagramPanel extends JPanel {
 		if (b) {
 			scramble();
 			graphLayout.start();
-			running = true;
+			this.running = true;
 		} else {
 			graphLayout.stop();
-			running = false;
+			this.running = false;
 			// repaint();
 		}
 	}

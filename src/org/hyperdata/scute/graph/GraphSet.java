@@ -44,43 +44,25 @@ public class GraphSet {
 
 	public Node addNode(Node node) {
 		nodes.add(node);
-		// node.setN(nodes.size() - 1);
 		return node;
 	}
 
 	public Edge addEdge(Edge edge) {
 		edges.add(edge);
-		// edge.setN(nodes.size() - 1);
 		return edge;
 	}
-
-	// public int addEdge(Edge edge) {
-	// edges.add(edge);
-	// edge.setN(nodes.size() - 1);
-	// return edges.size() - 1;
-	// }
 
 	public Iterator<Node> nodeIterator() {
 		return nodes.iterator();
 	}
-
-	// public int getNnodes() {
-	// return nodes.size();
-	// }
-
-	public int getNedges() {
-		return edges.size();
+	
+	public Iterator<Edge> edgeIterator() {
+		return edges.iterator();
 	}
 
-	// public int getNodeId(RDFNode subject) {
-	// for(int i=0; i<nodes.size(); i++){
-	// System.out.println(nodes.get(i).getURI()+"   "+subject.toString());
-	// if(nodes.get(i).toString().equals(subject.toString())){
-	// return i;
-	// }
-	// }
-	// return -100;
-	// }
+//	public int getNedges() {
+//		return edges.size();
+//	}
 
 	public org.hyperdata.scute.graph.Node getNodeContaining(RDFNode object) {
 
@@ -115,4 +97,6 @@ public class GraphSet {
 	public Node getRandomNode() {
 		return nodes.get((int) (Math.random() * nodes.size()));
 	}
+
+
 }
