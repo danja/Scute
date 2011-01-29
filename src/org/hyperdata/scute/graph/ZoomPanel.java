@@ -10,10 +10,10 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 /**
- * @author danny
+ * @author danja
  *
  */
-public class ZoomPanel extends JPanel {
+public class ZoomPanel extends JPanel { 
 
 	  private double zoom = 1.0;
 
