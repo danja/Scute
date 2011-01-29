@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.swing;
 
 import java.awt.event.ActionEvent;
@@ -13,21 +23,47 @@ import javax.swing.JToolBar;
 
 import org.hyperdata.resources.general.GeneralIcons;
 
+/**
+ * The Class FileToolUI.
+ */
 public class FileToolUI implements KeyListener { // implements ActionListener
 
-	private Action cloneAction;
+	/** The clone action. */
+ private Action cloneAction;
+	
+	/** The close action. */
 	private Action closeAction;
+	
+	/** The editor. */
 	private final ToolsInterface editor;
 
+	/** The exit action. */
 	private Action exitAction;
+	
+	/** The file menu. */
 	private final JMenu fileMenu;
+	
+	/** The new action. */
 	private Action newAction;
+	
+	/** The open action. */
 	private Action openAction;
+	
+	/** The save action. */
 	private Action saveAction;
 
+	/** The save as action. */
 	private Action saveAsAction;
+	
+	/** The tool bar. */
 	private final JToolBar toolBar;
 
+	/**
+	 * Instantiates a new file tool ui.
+	 * 
+	 * @param editor
+	 *            the editor
+	 */
 	public FileToolUI(ToolsInterface editor) {
 		this.editor = editor;
 		createActions();
@@ -66,6 +102,9 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 		fileMenu.add(exitAction);
 	}
 
+	/**
+	 * Creates the actions.
+	 */
 	public void createActions() {
 		newAction = new AbstractAction("New", GeneralIcons.newIcon) {
 			/**
@@ -141,34 +180,72 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 		};
 	}
 
+	/**
+	 * Gets the exit action.
+	 * 
+	 * @return the exit action
+	 */
 	public Action getExitAction() {
 		return exitAction;
 	}
 
+	/**
+	 * Gets the file menu.
+	 * 
+	 * @return the file menu
+	 */
 	public JMenu getFileMenu() {
 		return fileMenu;
 	}
 
+	/**
+	 * Gets the new action.
+	 * 
+	 * @return the new action
+	 */
 	public Action getNewAction() {
 		return newAction;
 	}
 
+	/**
+	 * Gets the open action.
+	 * 
+	 * @return the open action
+	 */
 	public Action getOpenAction() {
 		return openAction;
 	}
 
+	/**
+	 * Gets the save action.
+	 * 
+	 * @return the save action
+	 */
 	public Action getSaveAction() {
 		return saveAction;
 	}
 
+	/**
+	 * Gets the save as action.
+	 * 
+	 * @return the save as action
+	 */
 	public Action getSaveAsAction() {
 		return saveAsAction;
 	}
 
+	/**
+	 * Gets the tool bar.
+	 * 
+	 * @return the tool bar
+	 */
 	public JToolBar getToolBar() {
 		return toolBar;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	public void keyPressed(KeyEvent event) {
 
 		final int modifiers = event.getModifiers();
@@ -187,12 +264,24 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	public void keyReleased(KeyEvent event) {
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	public void keyTyped(KeyEvent event) {
 	}
 
+	/**
+	 * Sets the exit action.
+	 * 
+	 * @param action
+	 *            the new exit action
+	 */
 	public void setExitAction(Action action) {
 		exitAction = action;
 	}

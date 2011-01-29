@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.graph;
 
 import java.awt.event.MouseEvent;
@@ -5,18 +15,37 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 
+/**
+ * The Class MouseHandler.
+ */
 public class MouseHandler implements MouseMotionListener, MouseListener {
+	
+	/** The graph panel. */
 	private final GraphDiagramPanel graphPanel;
+	
+	/** The pick. */
 	private Node pick;
 
+	/**
+	 * Instantiates a new mouse handler.
+	 * 
+	 * @param graphPanel
+	 *            the graph panel
+	 */
 	public MouseHandler(GraphDiagramPanel graphPanel) {
 		this.graphPanel = graphPanel;
 		pick = graphPanel.getPick();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
 	public void mouseClicked(MouseEvent e) {
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
 	public void mousePressed(MouseEvent e) {
 		// addMouseMotionListener(this);
 		double bestdist = Double.MAX_VALUE;
@@ -42,6 +71,9 @@ public class MouseHandler implements MouseMotionListener, MouseListener {
 		e.consume();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
 	public void mouseReleased(MouseEvent e) {
 		graphPanel.removeMouseMotionListener(this);
 		if (pick != null) {
@@ -54,12 +86,21 @@ public class MouseHandler implements MouseMotionListener, MouseListener {
 		e.consume();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
 	public void mouseExited(MouseEvent e) {
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+	 */
 	public void mouseDragged(MouseEvent e) {
 		pick.setX(e.getX());
 		pick.setY(e.getY());
@@ -67,6 +108,9 @@ public class MouseHandler implements MouseMotionListener, MouseListener {
 		e.consume();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+	 */
 	public void mouseMoved(MouseEvent e) {
 	}
 

@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.tree;
 
 import java.util.ArrayList;
@@ -16,16 +26,34 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+/**
+ * The Class ModelNode.
+ */
 public class ModelNode extends ResourceNode implements RdfTreeNode {
+	
+	/** The children. */
 	private List<TreeNode> children;
+	
+	/** The model. */
 	private final Model model;
+	
+	/** The node map. */
 	private RdfNodeMap nodeMap;
 
+	/** The resource. */
 	private Resource resource;
 
 	/**
+	 * Instantiates a new model node.
 	 * 
-	 * 
+	 * @param nodeMap
+	 *            the node map
+	 * @param model
+	 *            the model
+	 * @param parentStatement
+	 *            the parent statement
+	 * @param resource
+	 *            the resource
 	 */
 	public ModelNode(RdfNodeMap nodeMap, Model model,
 			Statement parentStatement, Resource resource) {
@@ -51,6 +79,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		return (new Vector(getChildren())).elements(); // Can make Array<type>? what type? 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#delete()
+	 */
 	@Override
 	public void delete() {
 		/*
@@ -99,6 +130,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#getChildren()
+	 */
 	@Override
 	public List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
@@ -129,6 +163,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		return children;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#getIcon()
+	 */
 	@Override
 	public ImageIcon getIcon() {
 		return TreeIcons.modelIcon;
@@ -154,6 +191,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		return nodeMap;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#getNodeType()
+	 */
 	@Override
 	public int getNodeType() {
 		return RdfTreeNode.MODEL;
@@ -190,6 +230,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		return getChildren().size() == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#rename(java.lang.String)
+	 */
 	@Override
 	public void rename(String newName) {
 	}
@@ -215,6 +258,9 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		this.resource = resource;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.ResourceNode#toString()
+	 */
 	@Override
 	public String toString() {
 		return resource.getLocalName();

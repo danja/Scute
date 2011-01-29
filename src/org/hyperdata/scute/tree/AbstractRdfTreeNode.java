@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.tree;
 
 import java.io.IOException;
@@ -12,14 +22,34 @@ import com.hp.hpl.jena.rdf.model.Statement;
 
 // extends DefaultMutableTreeNode 
 
+/**
+ * The Class AbstractRdfTreeNode.
+ */
 public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 
+	/** The dirty. */
 	private boolean dirty = true;
+	
+	/** The model. */
 	private Model model;
+	
+	/** The model filename. */
 	private String modelFilename;
+	
+	/** The node map. */
 	private final RdfNodeMap nodeMap;
+	
+	/** The parent statement. */
 	private Statement parentStatement;
 
+	/**
+	 * Instantiates a new abstract rdf tree node.
+	 * 
+	 * @param nodeMap
+	 *            the node map
+	 * @param parentStatement
+	 *            the parent statement
+	 */
 	public AbstractRdfTreeNode(RdfNodeMap nodeMap, Statement parentStatement) {
 		this.nodeMap = nodeMap;
 		this.parentStatement = parentStatement;
@@ -27,12 +57,20 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		modelFilename = nodeMap.getCurrentModelFilename();
 	}
 
+	/**
+	 * Delete dialog.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean deleteDialog() {
 		final int n = JOptionPane.showConfirmDialog(null, "Delete "
 				+ toString() + "?", "Delete", JOptionPane.YES_NO_OPTION);
 		return n == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#deleteRequest()
+	 */
 	public void deleteRequest() {
 		if (deleteDialog()) {
 			// getNodeMap().deleteNode(this);
@@ -46,19 +84,31 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getModel()
+	 */
 	public Model getModel() {
 		// return nodeMap.getCurrentModel();
 		return model;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getModelFilename()
+	 */
 	public String getModelFilename() {
 		return modelFilename;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeMap()
+	 */
 	public RdfNodeMap getNodeMap() {
 		return nodeMap;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeTypeName()
+	 */
 	public String getNodeTypeName() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -75,10 +125,16 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		return "Unknown";
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getParentStatement()
+	 */
 	public Statement getParentStatement() {
 		return parentStatement;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfValue()
+	 */
 	public String getRdfValue() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -95,15 +151,26 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		return "Unknown";
 	}
 
+	/**
+	 * Gets the statement.
+	 * 
+	 * @return the statement
+	 */
 	public Statement getStatement() {
 		// dummy
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#isDirty()
+	 */
 	public boolean isDirty() {
 		return dirty;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#isValueEditable()
+	 */
 	public boolean isValueEditable() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -122,6 +189,12 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		return false;
 	}
 
+	/**
+	 * Removes the statement.
+	 * 
+	 * @param statement
+	 *            the statement
+	 */
 	public void removeStatement(Statement statement) {
 		try {
 			getModel().remove(statement);
@@ -130,6 +203,13 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		}
 	}
 
+	/**
+	 * Rename dialog.
+	 * 
+	 * @param oldName
+	 *            the old name
+	 * @return the string
+	 */
 	public String renameDialog(String oldName) {
 		System.out.println("RENAME");
 		final String input = JOptionPane.showInputDialog(null, "Rename "
@@ -138,6 +218,9 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		return input;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#renameRequest()
+	 */
 	public void renameRequest() {
 		final String newName = renameDialog(toString());
 		if ((newName == null) || newName.equals(toString()))
@@ -156,19 +239,34 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		this.dirty = dirty;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#setModel(com.hp.hpl.jena.rdf.model.Model)
+	 */
 	public void setModel(Model model) {
 		// System.out.println("setting model = " + model);
 		this.model = model;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#setModelFilename(java.lang.String)
+	 */
 	public void setModelFilename(String string) {
 		modelFilename = string;
 	}
 
+	/**
+	 * Sets the parent statement.
+	 * 
+	 * @param statement
+	 *            the new parent statement
+	 */
 	public void setParentStatement(Statement statement) {
 		parentStatement = statement;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#setRdfValue(java.lang.String)
+	 */
 	public void setRdfValue(String string) {
 		// dummy - it can't be done with all types
 	}

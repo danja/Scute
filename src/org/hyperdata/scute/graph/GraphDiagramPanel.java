@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.graph;
 
 import java.awt.Color;
@@ -19,16 +29,29 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+/**
+ * The Class GraphDiagramPanel.
+ */
 public class GraphDiagramPanel extends JPanel {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3002182807894335317L;
 
+	/** The graph set. */
 	private final GraphSet graphSet;
 
+	/** The graph layout. */
 	private final GraphLayout graphLayout;
 
+	/** The running. */
 	private boolean running = false;
 
+	/**
+	 * Instantiates a new graph diagram panel.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public GraphDiagramPanel(Model model) {
 		super();
 		setSize(800, 800);
@@ -41,6 +64,9 @@ public class GraphDiagramPanel extends JPanel {
 		addMouseListener(new MouseHandler(this));
 	}
 
+	/**
+	 * Initialize.
+	 */
 	public void initialize() {
 		// @TODO scramble on startup kills display!
 		// interpret(model);
@@ -49,6 +75,12 @@ public class GraphDiagramPanel extends JPanel {
 
 	/*
 	 * this was originally lifted from RDFNodeMap - can the two be merged?
+	 */
+	/**
+	 * Interpret.
+	 * 
+	 * @param sourceModel
+	 *            the source model
 	 */
 	public void interpret(Model sourceModel) {
 		try {
@@ -76,6 +108,9 @@ public class GraphDiagramPanel extends JPanel {
 		// work!
 	}
 
+	/**
+	 * Scramble.
+	 */
 	public synchronized void scramble() {
 		Dimension d = getSize();
 		Iterator<Node> nIterator = graphSet.nodeIterator();
@@ -88,6 +123,13 @@ public class GraphDiagramPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Adds the literal.
+	 * 
+	 * @param literal
+	 *            the literal
+	 * @return the node
+	 */
 	private Node addLiteral(Literal literal) {
 		Node node = graphSet.getNodeContaining(literal);
 		if (node == null) {
@@ -103,6 +145,13 @@ public class GraphDiagramPanel extends JPanel {
 		return graphSet.addNode(node);
 	}
 
+	/**
+	 * Adds the resource.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @return the node
+	 */
 	private Node addResource(Resource resource) {
 		Node node = graphSet.getNodeContaining(resource);
 		if (node == null) {
@@ -123,6 +172,13 @@ public class GraphDiagramPanel extends JPanel {
 		return node;
 	}
 
+	/**
+	 * Adds the statement.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @return the edge
+	 */
 	private Edge addStatement(Statement statement) {
 		Property p = statement.getPredicate();
 		Edge edge = new Edge(p);
@@ -133,6 +189,9 @@ public class GraphDiagramPanel extends JPanel {
 		return graphSet.addEdge(edge);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -142,34 +201,74 @@ public class GraphDiagramPanel extends JPanel {
 
 	}
 
+	/**
+	 * Sets the pick fixed.
+	 * 
+	 * @param fixed
+	 *            the new pick fixed
+	 */
 	public void setPickFixed(boolean fixed) {
 		graphLayout.setPickFixed(fixed);
 	}
 
+	/**
+	 * Checks if is pick fixed.
+	 * 
+	 * @return true, if is pick fixed
+	 */
 	public boolean isPickFixed() {
 		return graphLayout.isPickFixed();
 	}
 
+	/**
+	 * Gets the node.
+	 * 
+	 * @param i
+	 *            the i
+	 * @return the node
+	 */
 	public Node getNode(int i) {
 		return graphSet.getNode(i);
 	}
 
+	/**
+	 * Gets the pick.
+	 * 
+	 * @return the pick
+	 */
 	public Node getPick() {
 		return graphLayout.getPick();
 	}
 
+	/**
+	 * List edges.
+	 */
 	public void listEdges() {
 		graphSet.listEdges(); // for debugging
 	}
 
+	/**
+	 * List nodes.
+	 */
 	public void listNodes() { // for debugging
 		graphSet.listNodes();
 	}
 
+	/**
+	 * Checks if is running.
+	 * 
+	 * @return true, if is running
+	 */
 	public synchronized boolean isRunning() {
 		return running;
 	}
 
+	/**
+	 * Sets the running.
+	 * 
+	 * @param b
+	 *            the new running
+	 */
 	public synchronized void setRunning(boolean b) {
 		if (b) {
 			scramble();
@@ -182,6 +281,11 @@ public class GraphDiagramPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Node iterator.
+	 * 
+	 * @return the iterator
+	 */
 	public Iterator<Node> nodeIterator() {
 		return graphSet.nodeIterator();
 	}

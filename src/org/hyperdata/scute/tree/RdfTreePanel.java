@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.tree;
 
 import java.awt.BorderLayout;
@@ -20,6 +30,8 @@ import javax.swing.tree.TreeSelectionModel;
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**
+ * The Class RdfTreePanel.
+ * 
  * @author danny
  * 
  *         created : 05-Nov-2002
@@ -28,22 +40,34 @@ import com.hp.hpl.jena.rdf.model.Model;
  */
 public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4397360330476275899L;
 
+	/** The action. */
 	protected Action action;
 
+	/** The clicked path. */
 	protected TreePath clickedPath;
+	
+	/** The edit menu. */
 	private EditMenu editMenu;
 
+	/** The popup menu. */
 	protected JPopupMenu popupMenu;
 	// private String selectedUrl;
 
+	/** The tree. */
 	private JTree tree;
+	
+	/** The tree model. */
 	private RdfTreeModel treeModel;
 
+	/**
+	 * Instantiates a new rdf tree panel.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public RdfTreePanel(Model model) {
 		super(new BorderLayout());
 		// addFocusListener(focusListener);
@@ -52,35 +76,73 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		init();
 	}
 
+	/**
+	 * Gets the action.
+	 * 
+	 * @return the action
+	 */
 	public Action getAction() {
 		return getEditMenu().getTreeAction();
 	}
 
+	/**
+	 * Gets the cell renderer.
+	 * 
+	 * @return the cell renderer
+	 */
 	protected TreeCellRenderer getCellRenderer() {
 		return new RdfTreeCellRenderer();
 	}
 
+	/**
+	 * Gets the clicked path.
+	 * 
+	 * @return the clicked path
+	 */
 	public TreePath getClickedPath() {
 		return clickedPath;
 	}
 
+	/**
+	 * Gets the edits the menu.
+	 * 
+	 * @return the edits the menu
+	 */
 	public EditMenu getEditMenu() {
 		return editMenu;
 	}
 
+	/**
+	 * Gets the popup menu.
+	 * 
+	 * @return the popup menu
+	 */
 	public JPopupMenu getPopupMenu() {
 		return popupMenu;
 	}
 
+	/**
+	 * Gets the tree.
+	 * 
+	 * @return the tree
+	 */
 	public JTree getTree() {
 		return tree;
 	}
 
 	//
+	/**
+	 * Gets the tree model.
+	 * 
+	 * @return the tree model
+	 */
 	public RdfTreeModel getTreeModel() {
 		return treeModel;
 	}
 
+	/**
+	 * Inits the.
+	 */
 	public void init() {
 		// System.out.println("init called");
 		treeModel = (RdfTreeModel) tree.getModel();
@@ -93,12 +155,18 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		tree.invalidate();
 	}
 
+	/**
+	 * Inits the menu.
+	 */
 	public void initMenu() {
 		editMenu = new EditMenu(this);
 		popupMenu = editMenu.getPopupMenu();
 		tree.add(popupMenu);
 	}
 
+	/**
+	 * Inits the tree component.
+	 */
 	protected void initTreeComponent() {
 		ToolTipManager.sharedInstance().registerComponent(tree);
 		tree.setCellRenderer(getCellRenderer());
@@ -117,17 +185,29 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		tree.revalidate();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.Component#setSize(java.awt.Dimension)
+	 */
 	@Override
 	public void setSize(Dimension size) {
 		setPreferredSize(size);
 		tree.setSize(size);
 	}
 
+	/**
+	 * Sets the clicked path.
+	 * 
+	 * @param path
+	 *            the new clicked path
+	 */
 	public void setClickedPath(TreePath path) {
 		clickedPath = path;
 	}
 
 	// Listen for when the selection changes.
+	/* (non-Javadoc)
+	 * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+	 */
 	public void valueChanged(TreeSelectionEvent e) {
 		final Object object = tree.getLastSelectedPathComponent();
 
@@ -139,6 +219,12 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		tree.revalidate();
 	}
 
+	/**
+	 * Load model.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public void loadModel(Model model) {
 		RdfNodeMap nodeMap = new RdfNodeMap(model);
 		RootNode root = new RootNode(nodeMap);

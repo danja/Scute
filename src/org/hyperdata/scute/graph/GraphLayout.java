@@ -15,44 +15,93 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 /**
- * @author danny
+ * The Class GraphLayout.
  * 
+ * @author danny
  */
 public class GraphLayout implements Runnable {
 
+	/** The Constant EDGE_MIN_LENGTH. */
 	private static final double EDGE_MIN_LENGTH = .1;
+	
+	/** The Constant CONSTANT2. */
 	private static final double CONSTANT2 = 1000;
+	
+	/** The Constant CONSTANT3. */
 	private static final double CONSTANT3 = 10000;
+	
+	/** The Constant CONSTANT4. */
 	private static final int CONSTANT4 = 500;
+	
+	/** The Constant RANDOMIZE_NODE_PROBABILITY. */
 	private static final double RANDOMIZE_NODE_PROBABILITY = 0.1;
 
+	/** The pick. */
 	private Node pick;
+	
+	/** The pickfixed. */
 	private boolean pickfixed;
+	
+	/** The off screen. */
 	private Image offScreen;
+	
+	/** The off screen size. */
 	private Dimension offScreenSize;
+	
+	/** The off graphics. */
 	private Graphics2D offGraphics;
 
+	/** The edge color. */
 	final Color edgeColor = Color.black;
+	
+	/** The arc color1. */
 	final Color arcColor1 = Color.black;
+	
+	/** The arc color2. */
 	final Color arcColor2 = Color.pink;
+	
+	/** The arc color3. */
 	final Color arcColor3 = Color.red;
 
+	/** The springs. */
 	private Thread springs = null;
+	
+	/** The stress. */
 	boolean stress;
+	
+	/** The random. */
 	boolean random = true;
+	
+	/** The graph set. */
 	private final GraphSet graphSet;
+	
+	/** The panel. */
 	private final JPanel panel;
 
+	/** The arrow scale. */
 	private final double arrowScale = 10;
+	
+	/** The origin arrow. */
 	private final Path2D.Double originArrow = getOriginArrow();
 
 	// private static final Path2D.Double;
 
+	/**
+	 * Instantiates a new graph layout.
+	 * 
+	 * @param panel
+	 *            the panel
+	 * @param graphSet
+	 *            the graph set
+	 */
 	public GraphLayout(JPanel panel, GraphSet graphSet) {
 		this.graphSet = graphSet;
 		this.panel = panel;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		// Thread me = Thread.currentThread();
 		// while (springs == me) {
@@ -73,6 +122,12 @@ public class GraphLayout implements Runnable {
 		}
 	}
 	
+	/**
+	 * Randomize node.
+	 * 
+	 * @param node
+	 *            the node
+	 */
 	private synchronized void randomizeNode(Node node){
 		if (!node.isFixed()) {
 			node.setX(node.getX()
@@ -85,6 +140,9 @@ public class GraphLayout implements Runnable {
 	}
 
 	// @FIXME need to synchronize on container panel?
+	/**
+	 * Relax.
+	 */
 	private synchronized void relax() {
 doEdges();
 
@@ -95,7 +153,7 @@ doNodes2();
 
 
 	/**
-	 * 
+	 * Do edges.
 	 */
 	private synchronized void doEdges() { // @TODO rename
 		Iterator<Edge> eIterator = graphSet.edgeIterator();
@@ -123,7 +181,7 @@ doNodes2();
 	}
 	
 	/**
-	 * 
+	 * Do nodes.
 	 */
 	private synchronized void doNodes() { // @TODO rename
 		Iterator<Node> nIterator1 = graphSet.nodeIterator();
@@ -161,7 +219,7 @@ doNodes2();
 	}
 	
 	/**
-	 * 
+	 * Do nodes2.
 	 */
 	private synchronized void doNodes2() { // @TODO rename
 		Dimension d = panel.getSize();
@@ -193,6 +251,11 @@ doNodes2();
 
 
 
+	/**
+	 * Gets the image.
+	 * 
+	 * @return the image
+	 */
 	public synchronized Image getImage() {
 
 		Dimension d = panel.getSize();
@@ -234,6 +297,11 @@ doNodes2();
 		return offScreen;
 	}
 
+	/**
+	 * Gets the origin arrow.
+	 * 
+	 * @return the origin arrow
+	 */
 	private Path2D.Double getOriginArrow() { // arrow shape, point at origin
 		Path2D.Double arrow = new Path2D.Double();
 		arrow.moveTo(-1 * arrowScale, 0.5 * arrowScale);
@@ -242,6 +310,18 @@ doNodes2();
 		return arrow;
 	}
 
+	/**
+	 * Draw arrows.
+	 * 
+	 * @param xx1
+	 *            the xx1
+	 * @param yy1
+	 *            the yy1
+	 * @param xx2
+	 *            the xx2
+	 * @param yy2
+	 *            the yy2
+	 */
 	public void drawArrows(double xx1, double yy1, double xx2, double yy2) {
 
 		// Decided against having two arrows on the line, left here in just case
@@ -273,6 +353,18 @@ doNodes2();
 	}
 
 	// unused, left here for the moment just in case
+	/**
+	 * Draw arrows old.
+	 * 
+	 * @param xx1
+	 *            the xx1
+	 * @param yy1
+	 *            the yy1
+	 * @param xx2
+	 *            the xx2
+	 * @param yy2
+	 *            the yy2
+	 */
 	public void drawArrowsOld(double xx1, double yy1, double xx2, double yy2) {
 		offGraphics.setColor(Color.GREEN);
 
@@ -293,6 +385,9 @@ doNodes2();
 		offGraphics.drawLine((int) xx2, (int) yy2, (int) ax, (int) ay);
 	}
 
+	/**
+	 * Start.
+	 */
 	public void start() {
 		// if(springs == null){
 		springs = new Thread(this);
@@ -300,19 +395,38 @@ doNodes2();
 		springs.start();
 	}
 
+	/**
+	 * Stop.
+	 */
 	public void stop() {
 		springs.interrupt();
 		springs = null;
 	}
 
+	/**
+	 * Gets the pick.
+	 * 
+	 * @return the pick
+	 */
 	public Node getPick() {
 		return pick;
 	}
 
+	/**
+	 * Sets the pick fixed.
+	 * 
+	 * @param fixed
+	 *            the new pick fixed
+	 */
 	public void setPickFixed(boolean fixed) {
 		pickfixed = fixed;
 	}
 
+	/**
+	 * Checks if is pick fixed.
+	 * 
+	 * @return true, if is pick fixed
+	 */
 	public boolean isPickFixed() {
 		return pickfixed;
 	}

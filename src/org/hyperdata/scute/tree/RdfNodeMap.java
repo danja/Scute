@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.tree;
 
 import java.util.HashMap;
@@ -15,20 +25,44 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+/**
+ * The Class RdfNodeMap.
+ */
 public class RdfNodeMap {
+	
+	/** The current model. */
 	private Model currentModel;
+	
+	/** The current model filename. */
 	private String currentModelFilename;
+	
+	/** The literals. */
 	private Map<Literal, AbstractRdfTreeNode> literals;
+	
+	/** The model. */
 	private Model model;
 
+	/** The models. */
 	private Map<RDFNode, AbstractRdfTreeNode> models;
 
+	/** The resources. */
 	private Map<Resource, AbstractRdfTreeNode> resources;
+	
+	/** The root node. */
 	private RootNode rootNode;
 
+	/** The statements. */
 	private Map<Statement, AbstractRdfTreeNode> statements;
+	
+	/** The tree model. */
 	private TreeModel treeModel;
 
+	/**
+	 * Instantiates a new rdf node map.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public RdfNodeMap(Model model) {
 		setTopModel(model);
 
@@ -37,6 +71,14 @@ public class RdfNodeMap {
 		interpret();
 	}
 
+	/**
+	 * Adds the child model.
+	 * 
+	 * @param parentStatement
+	 *            the parent statement
+	 * @param resource
+	 *            the resource
+	 */
 	protected void addChildModel(Statement parentStatement, Resource resource) {
 		/*
 		 * // System.out.println("GOT A MODEL"); String filename = RdfUtils
@@ -49,6 +91,14 @@ public class RdfNodeMap {
 		 */
 	}
 
+	/**
+	 * Adds the literal.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @param literal
+	 *            the literal
+	 */
 	public void addLiteral(Statement statement, Literal literal) {
 		if (!literals.containsKey(literal)) {
 			final LiteralNode literalNode = new LiteralNode(this, statement,
@@ -61,10 +111,24 @@ public class RdfNodeMap {
 		}
 	}
 
+	/**
+	 * Adds the resource.
+	 * 
+	 * @param resource
+	 *            the resource
+	 */
 	public void addResource(Resource resource) {
 		addResource(null, resource);
 	}
 
+	/**
+	 * Adds the resource.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @param resource
+	 *            the resource
+	 */
 	public void addResource(Statement statement, Resource resource) {
 		// System.out.println("adding resource");
 		try {
@@ -87,6 +151,12 @@ public class RdfNodeMap {
 		}
 	}
 
+	/**
+	 * Adds the statement.
+	 * 
+	 * @param statement
+	 *            the statement
+	 */
 	public void addStatement(Statement statement) {
 		if (!statements.containsKey(statement)) {
 			// System.out.println("\nputting st " + statement);
@@ -99,15 +169,28 @@ public class RdfNodeMap {
 		}
 	}
 
+	/**
+	 * Creates the root node.
+	 */
 	public void createRootNode() {
 		// System.out.println("CREATING BASE ROOT NODE");
 		rootNode = new RootNode(this);
 	}
 
+	/**
+	 * Gets the current model.
+	 * 
+	 * @return the current model
+	 */
 	public Model getCurrentModel() {
 		return currentModel;
 	}
 
+	/**
+	 * Gets the current model filename.
+	 * 
+	 * @return the current model filename
+	 */
 	public String getCurrentModelFilename() {
 		return currentModelFilename;
 	}
@@ -116,6 +199,13 @@ public class RdfNodeMap {
 	 * public StatementTreeNode getPropertyNode(Property property) { Object
 	 * object = statements.get(property); if (object != null) { return
 	 * (StatementTreeNode) object; } return null; }
+	 */
+	/**
+	 * Gets the literal node.
+	 * 
+	 * @param literal
+	 *            the literal
+	 * @return the literal node
 	 */
 	public LiteralNode getLiteralNode(Literal literal) {
 		final Object object = literals.get(literal);
@@ -135,10 +225,22 @@ public class RdfNodeMap {
 		return literals;
 	}
 
+	/**
+	 * Gets the resource map.
+	 * 
+	 * @return the resource map
+	 */
 	public Map<Resource, AbstractRdfTreeNode> getResourceMap() {
 		return resources;
 	}
 
+	/**
+	 * Gets the resource node.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @return the resource node
+	 */
 	public ResourceNode getResourceNode(Resource resource) {
 		final Object object = resources.get(resource);
 
@@ -148,6 +250,11 @@ public class RdfNodeMap {
 		return null;
 	}
 
+	/**
+	 * Gets the resources.
+	 * 
+	 * @return the resources
+	 */
 	public Set<Resource> getResources() {
 		return resources.keySet();
 	}
@@ -168,6 +275,13 @@ public class RdfNodeMap {
 		return rootNode;
 	}
 
+	/**
+	 * Gets the statement node.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @return the statement node
+	 */
 	public StatementNode getStatementNode(Statement statement) {
 		// System.out.println("S = " + statement);
 		final Object object = statements.get(statement);
@@ -197,10 +311,22 @@ public class RdfNodeMap {
 		return model;
 	}
 
+	/**
+	 * Gets the tree model.
+	 * 
+	 * @return the tree model
+	 */
 	public TreeModel getTreeModel() {
 		return treeModel;
 	}
 
+	/**
+	 * Gets the tree node.
+	 * 
+	 * @param rdfNode
+	 *            the rdf node
+	 * @return the tree node
+	 */
 	public TreeNode getTreeNode(RDFNode rdfNode) {
 		// if (rdfNode instanceof Statement) {
 		// return getStatementNode((Statement) rdfNode);
@@ -215,11 +341,21 @@ public class RdfNodeMap {
 		return null;
 	}
 
+	/**
+	 * Gets the tree node.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @return the tree node
+	 */
 	public TreeNode getTreeNode(Statement statement) {
 
 		return getStatementNode(statement);
 	}
 
+	/**
+	 * Inits the maps.
+	 */
 	private void initMaps() {
 		models = new HashMap<RDFNode, AbstractRdfTreeNode>();
 		resources = new HashMap<Resource, AbstractRdfTreeNode>();
@@ -227,6 +363,9 @@ public class RdfNodeMap {
 		literals = new HashMap<Literal, AbstractRdfTreeNode>();
 	}
 
+	/**
+	 * Interpret.
+	 */
 	public void interpret() {
 
 		currentModel = getTopModel();
@@ -236,6 +375,12 @@ public class RdfNodeMap {
 		createRootNode();
 	}
 
+	/**
+	 * Interpret.
+	 * 
+	 * @param sourceModel
+	 *            the source model
+	 */
 	private void interpret(Model sourceModel) {
 		currentModel = sourceModel;
 		try {
@@ -261,6 +406,12 @@ public class RdfNodeMap {
 		}
 	}
 
+	/**
+	 * Load model.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public void loadModel(Model model) {
 		this.model = model;
 		initMaps();
@@ -291,6 +442,12 @@ public class RdfNodeMap {
 		}
 	}
 
+	/**
+	 * Removes the literal.
+	 * 
+	 * @param literal
+	 *            the literal
+	 */
 	public void removeLiteral(Literal literal) {
 		final LiteralNode node = (LiteralNode) literals.get(literal);
 
@@ -342,6 +499,12 @@ public class RdfNodeMap {
 	}
 
 	// note model identified by resource in parent
+	/**
+	 * Removes the model.
+	 * 
+	 * @param resource
+	 *            the resource
+	 */
 	public void removeModel(Resource resource) {
 		// MutableTreeNode node = (MutableTreeNode) models.get(resource);
 		// ((MutableTreeNode) node.getParent()).remove(node);
@@ -349,22 +512,46 @@ public class RdfNodeMap {
 		models.remove(resource);
 	}
 
+	/**
+	 * Removes the resource.
+	 * 
+	 * @param resource
+	 *            the resource
+	 */
 	public void removeResource(Resource resource) {
 		// MutableTreeNode node = (MutableTreeNode) resources.get(resource);
 		// ((MutableTreeNode) node.getParent()).remove(node);
 		resources.remove(resource);
 	}
 
+	/**
+	 * Removes the statement.
+	 * 
+	 * @param statement
+	 *            the statement
+	 */
 	public void removeStatement(Statement statement) {
 		// MutableTreeNode node = (MutableTreeNode) statements.get(statement);
 		// ((MutableTreeNode) node.getParent()).remove(node);
 		statements.remove(statement);
 	}
 
+	/**
+	 * Sets the current model.
+	 * 
+	 * @param model
+	 *            the new current model
+	 */
 	public void setCurrentModel(Model model) {
 		currentModel = model;
 	}
 
+	/**
+	 * Sets the current model filename.
+	 * 
+	 * @param string
+	 *            the new current model filename
+	 */
 	public void setCurrentModelFilename(String string) {
 		currentModelFilename = string;
 	}
@@ -419,6 +606,12 @@ public class RdfNodeMap {
 		this.model = model;
 	}
 
+	/**
+	 * Sets the tree model.
+	 * 
+	 * @param model
+	 *            the new tree model
+	 */
 	public void setTreeModel(TreeModel model) {
 		treeModel = model;
 	}

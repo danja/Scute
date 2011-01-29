@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.io;
 
 import java.io.File;
@@ -9,19 +19,35 @@ import java.util.TimerTask;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.source.TextContainer;
 
+/**
+ * The Class TextSaver.
+ */
 public class TextSaver extends TimerTask {
 
+	/** The container. */
 	private final TextContainer container;
 
+	/**
+	 * Instantiates a new text saver.
+	 * 
+	 * @param container
+	 *            the container
+	 */
 	public TextSaver(TextContainer container) {
 		this.container = container;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.TimerTask#run()
+	 */
 	@Override
 	public void run() {
 		save();
 	}
 
+	/**
+	 * Save.
+	 */
 	public void save() {
 		File file = new File(Config.TEXT_FILENAME);
 

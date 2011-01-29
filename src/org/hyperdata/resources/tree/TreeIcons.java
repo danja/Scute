@@ -1,12 +1,35 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.resources.tree;
 
 import javax.swing.ImageIcon;
 
+/**
+ * The Class TreeIcons.
+ */
 public class TreeIcons {
+	
+	/** The Constant literalIcon. */
 	public static final ImageIcon literalIcon;
+	
+	/** The Constant modelIcon. */
 	public static final ImageIcon modelIcon;
+	
+	/** The Constant propertyIcon. */
 	public static final ImageIcon propertyIcon;
+	
+	/** The Constant resourceIcon. */
 	public static final ImageIcon resourceIcon;
+	
+	/** The Constant rootIcon. */
 	public static final ImageIcon rootIcon;
 
 	static {

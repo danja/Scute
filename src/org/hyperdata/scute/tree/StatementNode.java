@@ -27,11 +27,25 @@ import org.hyperdata.scute.rdf.RdfUtils;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
 
+/**
+ * The Class StatementNode.
+ */
 public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
+	
+	/** The children. */
 	private List<TreeNode> children;
 	// private Property property;
+	/** The statement. */
 	private final Statement statement;
 
+	/**
+	 * Instantiates a new statement node.
+	 * 
+	 * @param nodeMap
+	 *            the node map
+	 * @param statement
+	 *            the statement
+	 */
 	public StatementNode(RdfNodeMap nodeMap, Statement statement) {
 		super(nodeMap, statement);
 		this.statement = statement;
@@ -49,6 +63,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return (new Vector(getChildren())).elements();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
+	 */
 	public void delete() {
 	}
 
@@ -82,6 +99,11 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
+	/**
+	 * Gets the children.
+	 * 
+	 * @return the children
+	 */
 	private List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
 			children = new ArrayList<TreeNode>();
@@ -103,6 +125,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return children;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
+	 */
 	public ImageIcon getIcon() {
 		return TreeIcons.propertyIcon;
 	}
@@ -116,6 +141,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().indexOf(node);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return RdfTreeNode.STATEMENT;
 	}
@@ -130,6 +158,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 				RdfUtils.getParent(getModel(), statement.getSubject()));
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
+	 */
 	public RDFNode getRdfNode() {
 		// return (RDFNode)statement.asResource(); // ?? is ok? cast added -
 		// change from Jena
@@ -137,6 +168,9 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return statement.getResource();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.AbstractRdfTreeNode#getStatement()
+	 */
 	@Override
 	public Statement getStatement() {
 		return statement;
@@ -151,9 +185,15 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size() == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
+	 */
 	public void rename(String newName) {
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return statement.getPredicate().getLocalName();

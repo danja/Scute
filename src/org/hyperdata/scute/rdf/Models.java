@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.rdf;
 
 import com.hp.hpl.jena.query.Dataset;
@@ -8,23 +18,42 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 
+/**
+ * The Class Models.
+ */
 public class Models {
 
+	/** The working model. */
 	public static Model workingModel = ModelFactory.createDefaultModel();
+	
+	/** The temp model. */
 	public static Model tempModel = ModelFactory.createDefaultModel();
 	// public static Model configModel = getConfigModel();
+	/** The sample model. */
 	public static Model sampleModel = getSampleModel();
 
+	/** The dataset. */
 	private final Dataset dataset = null;
 
+	/**
+	 * Close.
+	 */
 	public void close() {
 		dataset.close();
 	}
 
+	/**
+	 * Clear working model.
+	 */
 	public static void clearWorkingModel() {
 		workingModel = ModelFactory.createDefaultModel();
 	}
 
+	/**
+	 * Gets the sample model.
+	 * 
+	 * @return the sample model
+	 */
 	private static Model getSampleModel() {
 		if (sampleModel == null) {
 			sampleModel = ModelFactory.createDefaultModel();

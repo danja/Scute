@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.rdf;
 
 import java.io.FileInputStream;
@@ -37,6 +47,16 @@ import com.hp.hpl.jena.vocabulary.RSS;
  */
 public class RdfUtils {
 
+	/**
+	 * Save.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param filename
+	 *            the filename
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static void save(Model model, String filename) throws IOException {
 		setCommonPrefixes(model);
 		OutputStream os = new FileOutputStream(filename);
@@ -58,6 +78,7 @@ public class RdfUtils {
 	// }
 	// }
 
+	/** The iso date. */
 	public static SimpleDateFormat isoDate = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssz");
 
@@ -71,6 +92,13 @@ public class RdfUtils {
 	// public static final String RDF_FORMAT = "RDF/XML-ABBREV";
 
 	// 2003-10-29T10:05:35-05:00
+	/**
+	 * From iso date.
+	 * 
+	 * @param string
+	 *            the string
+	 * @return the date
+	 */
 	public static Date fromIsoDate(String string) {
 		Date date = null;
 		System.out.println(string);
@@ -85,6 +113,15 @@ public class RdfUtils {
 	}
 
 	// can use model.getProperty() directly now?
+	/**
+	 * Gets the first property value.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param property
+	 *            the property
+	 * @return the first property value
+	 */
 	public static RDFNode getFirstPropertyValue(Resource resource,
 			Property property) {
 		/*
@@ -111,6 +148,15 @@ public class RdfUtils {
 	 */
 
 	// approximate : returns first match
+	/**
+	 * Gets the parent.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param rdfNode
+	 *            the rdf node
+	 * @return the parent
+	 */
 	public static Resource getParent(Model model, RDFNode rdfNode) {
 		/*
 		 * Statement statement; // Resource parent; try { StmtIterator iterator
@@ -128,6 +174,15 @@ public class RdfUtils {
 	}
 
 	// approximate : returns predicate of first statement with matching object
+	/**
+	 * Gets the parent property.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param rdfNode
+	 *            the rdf node
+	 * @return the parent property
+	 */
 	public static Property getParentProperty(Model model, RDFNode rdfNode) {
 		final Statement statement = getParentStatement(model, rdfNode);
 		if (statement == null)
@@ -152,6 +207,15 @@ public class RdfUtils {
 	}
 
 	// approximate : returns object of first statement with matching predicate
+	/**
+	 * Gets the parent resource.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param property
+	 *            the property
+	 * @return the parent resource
+	 */
 	public static Resource getParentResource(Model model, Property property) {
 		Statement statement;
 
@@ -173,6 +237,15 @@ public class RdfUtils {
 	}
 
 	// approximate : returns first statement with matching object
+	/**
+	 * Gets the parent statement.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param rdfNode
+	 *            the rdf node
+	 * @return the parent statement
+	 */
 	public static Statement getParentStatement(Model model, RDFNode rdfNode) {
 		Statement statement;
 
@@ -204,6 +277,15 @@ public class RdfUtils {
 	 * resource.addProperty(property, object); } catch (Exception exception) {
 	 * exception.printStackTrace(); } }
 	 */
+	/**
+	 * Gets the property.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param property
+	 *            the property
+	 * @return the property
+	 */
 	public static String getProperty(Resource resource, Property property) {
 		// System.out.println("����");
 		// show(resource.getModel());
@@ -218,6 +300,13 @@ public class RdfUtils {
 		return node.toString();
 	}
 
+	/**
+	 * Gets the rdf type.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @return the rdf type
+	 */
 	public static String getRdfType(Resource resource) {
 		if (resource.isAnon())
 			// @@TODO this whole lot needs improving
@@ -231,6 +320,17 @@ public class RdfUtils {
 	}
 
 	// approximate : gets first match (predicate and object)
+	/**
+	 * Gets the statement.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param property
+	 *            the property
+	 * @param object
+	 *            the object
+	 * @return the statement
+	 */
 	public static Statement getStatement(Model model, Property property,
 			RDFNode object) {
 		Statement statement;
@@ -252,6 +352,17 @@ public class RdfUtils {
 	}
 
 	// approximate : gets first match (predicate and object)
+	/**
+	 * Gets the subject.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param property
+	 *            the property
+	 * @param object
+	 *            the object
+	 * @return the subject
+	 */
 	public static Resource getSubject(Model model, Property property,
 			RDFNode object) {
 		final Statement statement = getStatement(model, property, object);
@@ -260,6 +371,19 @@ public class RdfUtils {
 		return statement.getSubject();
 	}
 
+	/**
+	 * Load.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param filename
+	 *            the filename
+	 * @param format
+	 *            the format
+	 * @return the model
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static Model load(Model model, String filename, String format)
 			throws IOException {
 
@@ -270,10 +394,27 @@ public class RdfUtils {
 		return model;
 	}
 
+	/**
+	 * Load.
+	 * 
+	 * @param filename
+	 *            the filename
+	 * @param format
+	 *            the format
+	 * @return the model
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public static Model load(String filename, String format) throws IOException {
 		return load(ModelFactory.createDefaultModel(), filename, format);
 	}
 
+	/**
+	 * The main method.
+	 * 
+	 * @param srgs
+	 *            the arguments
+	 */
 	public static void main(String[] srgs) {
 		// 2003-10-29T10:05:35-05:00
 		// Date test = new Date();
@@ -318,6 +459,13 @@ public class RdfUtils {
 	 * return rdfWriter; }
 	 */
 
+	/**
+	 * Model to string.
+	 * 
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
 	public static String modelToString(Model model) {
 		// System.out.println("MODEL TO STRPING");
 		if (model == null)
@@ -335,6 +483,16 @@ public class RdfUtils {
 		return stringOut.toString();
 	}
 
+	/**
+	 * Replace literal value.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param literal
+	 *            the literal
+	 * @param value
+	 *            the value
+	 */
 	public static void replaceLiteralValue(Model model, Literal literal,
 			String value) {
 		final Literal newLiteral = model.createLiteral(value);
@@ -357,6 +515,14 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Replace object resource.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @param newObject
+	 *            the new object
+	 */
 	public static void replaceObjectResource(Statement statement,
 			Resource newObject) {
 		Statement newStatement;
@@ -371,6 +537,17 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Replace resource.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param oldResource
+	 *            the old resource
+	 * @param newResource
+	 *            the new resource
+	 * @return the model
+	 */
 	public static Model replaceResource(Model model, Resource oldResource,
 			Resource newResource) {
 		try {
@@ -404,6 +581,14 @@ public class RdfUtils {
 		return model;
 	}
 
+	/**
+	 * Replace subject resource.
+	 * 
+	 * @param statement
+	 *            the statement
+	 * @param newSubject
+	 *            the new subject
+	 */
 	public static void replaceSubjectResource(Statement statement,
 			Resource newSubject) {
 		Statement newStatement;
@@ -420,10 +605,12 @@ public class RdfUtils {
 	}
 
 	/**
-	 * Copies all properties across to new resource, just replaces type
+	 * Copies all properties across to new resource, just replaces type.
 	 * 
 	 * @param resource
+	 *            the resource
 	 * @param newType
+	 *            the new type
 	 */
 	public static void replaceType(Resource resource, Resource newType) {
 
@@ -450,6 +637,12 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Sets the common prefixes.
+	 * 
+	 * @param model
+	 *            the new common prefixes
+	 */
 	public static void setCommonPrefixes(Model model) {
 		model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		model.setNsPrefix("dcterms", "http://purl.org/dc/terms/");
@@ -460,6 +653,16 @@ public class RdfUtils {
 	}
 
 	// yuck
+	/**
+	 * Sets the property.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param property
+	 *            the property
+	 * @param value
+	 *            the value
+	 */
 	public static void setProperty(Resource resource, Property property,
 			Object value) {
 		try {
@@ -475,6 +678,16 @@ public class RdfUtils {
 	}
 
 	// //////////////
+	/**
+	 * Sets the property object.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param property
+	 *            the property
+	 * @param object
+	 *            the object
+	 */
 	public static void setPropertyObject(Resource resource, Property property,
 			Resource object) {
 		try {
@@ -491,6 +704,14 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Sets the uri.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param uri
+	 *            the uri
+	 */
 	public static void setUri(Resource resource, URI uri) {
 		try {
 			final Model model = resource.getModel();
@@ -523,10 +744,22 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public static void show(Model model) {
 		System.out.println(modelToString(model));
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param resource
+	 *            the resource
+	 */
 	public static void show(Resource resource) {
 		try {
 			final StmtIterator iterator = resource.listProperties();
@@ -536,6 +769,12 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param statement
+	 *            the statement
+	 */
 	public static void show(Statement statement) {
 		show(statement.getSubject());
 		show(statement.getPredicate());
@@ -546,6 +785,12 @@ public class RdfUtils {
 		}
 	}
 
+	/**
+	 * Show.
+	 * 
+	 * @param iterator
+	 *            the iterator
+	 */
 	public static void show(StmtIterator iterator) {
 		final StringBuffer buffer = new StringBuffer("\n--v--");
 		try { // StmtIterator iterator = resource.listProperties();
@@ -559,19 +804,43 @@ public class RdfUtils {
 		System.out.println(buffer);
 	}
 
+	/**
+	 * Title to id.
+	 * 
+	 * @param title
+	 *            the title
+	 * @return the string
+	 */
 	public static String titleToID(String title) {
 		return title.replace(' ', '_');
 	}
 
 	// /////////////// beware of the GMT!
+	/**
+	 * To iso date.
+	 * 
+	 * @param date
+	 *            the date
+	 * @return the string
+	 */
 	public static String toIsoDate(Date date) {
 		return isoDate.format(date);
 	}
 
+	/**
+	 * To iso date.
+	 * 
+	 * @param date
+	 *            the date
+	 * @return the string
+	 */
 	public static String toISODate(Date date) {
 		return isoDate.format(date);
 	}
 
+	/**
+	 * Instantiates a new rdf utils.
+	 */
 	private RdfUtils() {
 	}
 
@@ -579,6 +848,15 @@ public class RdfUtils {
 	 * public static RDFWriter getPrettyWriter() {
 	 * 
 	 * return RdfUtils.getPrettyWriter(); }
+	 */
+	/**
+	 * Model to string.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param lang
+	 *            the lang
+	 * @return the string
 	 */
 	public static String modelToString(Model model, String lang) {
 		// System.out.println("MODEL TO STRPING");
@@ -610,6 +888,19 @@ public class RdfUtils {
 		return stringOut.toString();
 	}
 
+	/**
+	 * String to model.
+	 * 
+	 * @param string
+	 *            the string
+	 * @param base
+	 *            the base
+	 * @param lang
+	 *            the lang
+	 * @return the model
+	 * @throws Exception
+	 *             the exception
+	 */
 	public static Model stringToModel(String string, String base, String lang)
 			throws Exception {
 		final Model model = ModelFactory.createDefaultModel();
@@ -619,6 +910,15 @@ public class RdfUtils {
 	}
 
 	// @@TODO this needs pushing out
+	/**
+	 * String to model exception caught.
+	 * 
+	 * @param string
+	 *            the string
+	 * @param base
+	 *            the base
+	 * @return the model
+	 */
 	public static Model stringToModelExceptionCaught(String string, String base) {
 		Model model = null;
 

@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.source;
 
 import java.awt.Component;
@@ -16,19 +26,35 @@ import org.hyperdata.scute.rdf.RdfUtils;
 import com.hp.hpl.jena.rdf.model.Model;
 
 // JPanel
+/**
+ * The Class SourcePanel.
+ */
 public class SourcePanel extends JEditorPane implements TextContainer,
 		ChangeListener {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -3186641002083966387L;
 	// String base = "http://hyperdata.org/base";
+	/** The model. */
 	private Model model;
+	
+	/** The refresh button. */
 	private JButton refreshButton;
+	
+	/** The scroll. */
 	protected JScrollPane scroll;
+	
+	/** The syntax. */
 	private String syntax;
 
+	/**
+	 * Instantiates a new source panel.
+	 * 
+	 * @param focusListener
+	 *            the focus listener
+	 * @param syntax
+	 *            the syntax
+	 */
 	public SourcePanel(FocusListener focusListener, String syntax) {
 		super();
 		addFocusListener(focusListener);
@@ -36,6 +62,11 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		// addChangeListener(this);
 	}
 
+	/**
+	 * Gets the refresh button.
+	 * 
+	 * @return the refresh button
+	 */
 	public JButton getRefreshButton() {
 		return refreshButton;
 	}
@@ -56,10 +87,19 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	 * parentListener.stateChanged(null); }
 	 */
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
+	 */
 	public String getSyntax() {
 		return syntax;
 	}
 
+	/**
+	 * Load model.
+	 * 
+	 * @param workingModel
+	 *            the working model
+	 */
 	public void loadModel(Model workingModel) {
 		model = workingModel;
 		// System.out.println("SYNTAX " + getSyntax());
@@ -70,10 +110,19 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 
 	}
 
+	/**
+	 * Refresh from text.
+	 */
 	public void refreshFromText() {
 		refreshFromString(getText());
 	}
 
+	/**
+	 * Refresh from string.
+	 * 
+	 * @param string
+	 *            the string
+	 */
 	public void refreshFromString(String string) {
 		final Model modelCopy = model; // er - that'll be a pointer?
 		try {
@@ -85,11 +134,20 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		}
 	}
 
+	/**
+	 * Sets the syntax.
+	 * 
+	 * @param s
+	 *            the new syntax
+	 */
 	public void setSyntax(String s) {
 		syntax = s;
 	}
 
 	// called when tabs clicked
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
 	public void stateChanged(ChangeEvent e) {
 		// System.out.println("Change "+e);
 		final Component c = ((JTabbedPane) e.getSource())
@@ -106,6 +164,9 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		loadModel(model);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
+	 */
 	@Override
 	public String getTextFilename() {
 		return Config.TEXT_FILENAME;

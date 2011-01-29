@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.source;
 
 import java.awt.Color;
@@ -18,15 +28,33 @@ import javax.swing.text.PlainView;
 import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
 
+/**
+ * The Class TurtleView.
+ */
 public class TurtleView extends PlainView {
 
+	/** The BNOD e_ pattern. */
 	private static String BNODE_PATTERN = "(_:\\w+)";
+	
+	/** The K w_ bas e_ pattern. */
 	private static String KW_BASE_PATTERN = "(@base)";
+	
+	/** The K w_ prefi x_ pattern. */
 	private static String KW_PREFIX_PATTERN = "(@prefix)";
+	
+	/** The LITERA l_ pattern. */
 	private static String LITERAL_PATTERN = "(\"\")";
+	
+	/** The NOD e_ pattern. */
 	private static String NODE_PATTERN = "(:\\w+)";
+	
+	/** The pattern colors. */
 	private static HashMap<Pattern, Color> patternColors;
+	
+	/** The SEPERATOR s_ pattern. */
 	private static String SEPERATORS_PATTERN = "(\\[|\\])";
+	
+	/** The UR i_ pattern. */
 	private static String URI_PATTERN = "(<http://.*>)";
 
 	static {
@@ -42,6 +70,12 @@ public class TurtleView extends PlainView {
 		patternColors.put(Pattern.compile(KW_BASE_PATTERN), Color.GREEN);
 	}
 
+	/**
+	 * Instantiates a new turtle view.
+	 * 
+	 * @param element
+	 *            the element
+	 */
 	public TurtleView(Element element) {
 
 		super(element);
@@ -50,6 +84,9 @@ public class TurtleView extends PlainView {
 		getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.text.PlainView#drawUnselectedText(java.awt.Graphics, int, int, int, int)
+	 */
 	@Override
 	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
 			int p1) throws BadLocationException {

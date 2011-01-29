@@ -14,15 +14,26 @@ import org.hyperdata.scute.graph.GraphPanel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+/**
+ * The Class GraphDemo.
+ */
 public class GraphDemo extends JFrame {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 117728935219563549L;
+	
+	/** The panel. */
 	private GraphPanel panel;
+	
+	/** The model. */
 	static Model model;
 
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 		String filename = "./data/default.ttl";
 
@@ -43,6 +54,9 @@ public class GraphDemo extends JFrame {
 
 	}
 
+	/**
+	 * Initialize.
+	 */
 	public void initialize() {
 		setLayout(new BorderLayout());
 
@@ -52,6 +66,11 @@ public class GraphDemo extends JFrame {
 
 	}
 
+	/**
+	 * Gets the model.
+	 * 
+	 * @return the model
+	 */
 	public Model getModel() {
 
 		return model;

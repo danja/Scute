@@ -46,16 +46,29 @@ import javax.swing.text.Utilities;
  */
 public class XmlView extends PlainView {
 
+	/** The GENERI c_ xm l_ name. */
 	private static String GENERIC_XML_NAME = "[A-Za-z\\-_]+(:[A-Za-z\\-_]+)?";
 
+	/** The pattern colors. */
 	private static HashMap<Pattern, Color> patternColors;
 
+	/** The TA g_ attribut e_ pattern. */
 	private static String TAG_ATTRIBUTE_PATTERN = "(" + GENERIC_XML_NAME
 			+ ")\\w*\\=";
+	
+	/** The TA g_ attribut e_ value. */
 	private static String TAG_ATTRIBUTE_VALUE = "\\w*\\=\\w*(\"[^\"]*\")";
+	
+	/** The TA g_ cdata. */
 	private static String TAG_CDATA = "(<\\!\\[CDATA\\[.*\\]\\]>)";
+	
+	/** The TA g_ comment. */
 	private static String TAG_COMMENT = "(<\\!--[\\w ]*-->)";
+	
+	/** The TA g_ en d_ pattern. */
 	private static String TAG_END_PATTERN = "(/>)";
+	
+	/** The TA g_ pattern. */
 	private static String TAG_PATTERN = "(</?" + GENERIC_XML_NAME + ")\\s?>?";
 
 	static {
@@ -73,6 +86,12 @@ public class XmlView extends PlainView {
 		patternColors.put(Pattern.compile(TAG_COMMENT), Color.BLUE);
 	}
 
+	/**
+	 * Instantiates a new xml view.
+	 * 
+	 * @param element
+	 *            the element
+	 */
 	public XmlView(Element element) {
 
 		super(element);
@@ -81,6 +100,9 @@ public class XmlView extends PlainView {
 		getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.text.PlainView#drawUnselectedText(java.awt.Graphics, int, int, int, int)
+	 */
 	@Override
 	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
 			int p1) throws BadLocationException {

@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.source;
 
 import javax.swing.text.Element;
@@ -5,10 +15,17 @@ import javax.swing.text.LabelView;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
+/**
+ * A factory for creating Highlighter objects.
+ */
 class HighlighterFactory implements ViewFactory {
 
+	/** The syntax. */
 	private String syntax;
 
+	/* (non-Javadoc)
+	 * @see javax.swing.text.ViewFactory#create(javax.swing.text.Element)
+	 */
 	public View create(Element elem) {
 		// System.out.println("ELEMENT= "+elem.getName()+elem);
 		final String kind = elem.getName();
@@ -23,6 +40,12 @@ class HighlighterFactory implements ViewFactory {
 		return new LabelView(elem);
 	}
 
+	/**
+	 * Sets the syntax.
+	 * 
+	 * @param syntax
+	 *            the new syntax
+	 */
 	public void setSyntax(String syntax) {
 		this.syntax = syntax;
 	}

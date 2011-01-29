@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
@@ -39,42 +49,77 @@ import org.hyperdata.scute.tree.RdfTreePanel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+/**
+ * The Class Scute.
+ */
 public class Scute implements TreeSelectionListener, GeneralApplication,
 		ToolsInterface, ModelContainer {
 
+	/** The Constant FRAME_SIZE. */
 	public static final Dimension FRAME_SIZE = new Dimension(800, 800);
 
+	/** The Constant READ_ONLY_COLOR. */
 	public static final Color READ_ONLY_COLOR = (Color) UIManager.getDefaults()
 			.get("Button.background");
 
+	/** The Constant READ_WRITE_COLOR. */
 	public static final Color READ_WRITE_COLOR = (Color) UIManager
 			.getDefaults().get("TextField.background");
 
+	/** The Constant SOURCE_PANEL_SIZE. */
 	public static final Dimension SOURCE_PANEL_SIZE = new Dimension(600, 300);
 
+	/** The Constant TREE_PANEL_SIZE. */
 	public static final Dimension TREE_PANEL_SIZE = new Dimension(600, 300);
 
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 		// WindowKit.setPlastic3DLookAndFeel();
 		// WindowKit.setNativeLookAndFeel();
 		new Scute();
 	}
 
+	/** The file chooser. */
 	private final JFileChooser fileChooser;
+	
+	/** The frame. */
 	private final JFrame frame;
 
+	/** The node panel. */
 	private NodePanel nodePanel;
 
+	/** The normal cursor. */
 	private Cursor normalCursor;
+	
+	/** The normal tree cursor. */
 	private Cursor normalTreeCursor;
 
+	/** The panel. */
 	private final JPanel panel;
+	
+	/** The rdfxml panel. */
 	private final SourcePanel rdfxmlPanel;
+	
+	/** The turtle panel. */
 	private final SourcePanel turtlePanel;
+	
+	/** The tabs. */
 	private final JTabbedPane tabs;
+	
+	/** The tree panel. */
 	private final RdfTreePanel treePanel;
+	
+	/** The graph panel. */
 	private GraphPanel graphPanel = null;
 
+	/**
+	 * Instantiates a new scute.
+	 */
 	public Scute() {
 
 		// for bootstrapping/debugging
@@ -161,27 +206,50 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
+	/**
+	 * Sets the selected tab.
+	 * 
+	 * @param index
+	 *            the new selected tab
+	 */
 	public void setSelectedTab(int index) {
 		System.out.println("setting tab = " + index);
 		tabs.setSelectedIndex(index);
 	}
 
+	/**
+	 * Gets the selected tab.
+	 * 
+	 * @return the selected tab
+	 */
 	public int getSelectedTab() {
 		return tabs.getSelectedIndex();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#cloneFile()
+	 */
 	public void cloneFile() {
 		throw new RuntimeException("not yet implemented");
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#closeFile()
+	 */
 	public void closeFile() {
 		throw new RuntimeException("not yet implemented");
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#exit()
+	 */
 	public void exit() { // is needed?
 		// frame.dispose();
 	}
 
+	/**
+	 * Inits the log pane.
+	 */
 	private void initLogPane() {
 		final LogPane log = LogPane.getLogPane();
 		final JScrollPane logScroll = new JScrollPane(log);
@@ -190,17 +258,29 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		tabs.addTab("Log", log);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintErr(java.lang.String)
+	 */
 	public void logPrintErr(String string) {
 		LogPane.err(string);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintln(java.lang.String)
+	 */
 	public void logPrintln(String string) {
 		LogPane.println(string);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#newFile()
+	 */
 	public void newFile() {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#openFile()
+	 */
 	public void openFile() {
 		final int returnVal = fileChooser.showOpenDialog(frame);
 		// Model model = ModelFactory.createDefaultModel();
@@ -243,6 +323,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		// ///////////////////////////////
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#saveAsFile()
+	 */
 	public void saveAsFile() {
 
 		try {
@@ -253,11 +336,17 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#saveFile()
+	 */
 	@Override
 	public void saveFile() {
 		// TODO save file (as Export?)
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+	 */
 	public void valueChanged(TreeSelectionEvent event) {
 		final Object object = treePanel.getTree()
 				.getLastSelectedPathComponent();
@@ -269,6 +358,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		nodePanel.setRdfTreeNode((RdfTreeNode) object);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.GeneralApplication#waitCursor(boolean)
+	 */
 	public void waitCursor(boolean wait) {
 		if (wait) {
 			normalCursor = frame.getCursor();
@@ -283,21 +375,37 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.rdf.ModelContainer#getModel()
+	 */
 	@Override
 	public Model getModel() {
 		return Models.workingModel;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelFilename()
+	 */
 	@Override
 	public String getModelFilename() {
 		return Config.WORKING_MODEL_FILENAME;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelName()
+	 */
 	@Override
 	public String getModelName() {
 		return "working model";
 	}
 
+	/**
+	 * Gets the current source panel.
+	 * 
+	 * @return the current source panel
+	 * @throws Exception
+	 *             the exception
+	 */
 	public SourcePanel getCurrentSourcePanel() throws Exception {
 		JScrollPane scroll = (JScrollPane) tabs.getSelectedComponent();
 		// System.out.println("component = "+scroll);
@@ -308,6 +416,12 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			throw new Exception("not a text panel");
 	}
 
+	/**
+	 * Sets the source text.
+	 * 
+	 * @param savedText
+	 *            the new source text
+	 */
 	public void setSourceText(String savedText) {
 		try {
 			getCurrentSourcePanel().setText(savedText);
@@ -316,6 +430,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#checkText()
+	 */
 	@Override
 	public void checkText() {
 		try {

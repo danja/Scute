@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.tree;
 
 import java.util.ArrayList;
@@ -16,11 +26,27 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+/**
+ * The Class ResourceNode.
+ */
 public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
+	
+	/** The children. */
 	private List<TreeNode> children;
 
+	/** The resource. */
 	private Resource resource;
 
+	/**
+	 * Instantiates a new resource node.
+	 * 
+	 * @param nodeMap
+	 *            the node map
+	 * @param parentStatement
+	 *            the parent statement
+	 * @param resource
+	 *            the resource
+	 */
 	public ResourceNode(RdfNodeMap nodeMap, Statement parentStatement,
 			Resource resource) {
 		super(nodeMap, parentStatement);
@@ -38,6 +64,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return (new Vector(getChildren())).elements();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
+	 */
 	public void delete() {
 		getNodeMap().removeResource(resource);
 		if (getParentStatement() != null) {
@@ -77,6 +106,11 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
+	/**
+	 * Gets the children.
+	 * 
+	 * @return the children
+	 */
 	public List<TreeNode> getChildren() {
 		if ((children == null) || isDirty()) {
 			children = new ArrayList<TreeNode>();
@@ -109,6 +143,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return children;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
+	 */
 	public ImageIcon getIcon() {
 		return TreeIcons.resourceIcon;
 	}
@@ -122,6 +159,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().indexOf(node);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return RdfTreeNode.RESOURCE;
 	}
@@ -136,6 +176,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 				RdfUtils.getParent(getModel(), resource));
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
+	 */
 	public RDFNode getRdfNode() {
 		return resource;
 	}
@@ -145,10 +188,20 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @return Resource
 	 */
+	/**
+	 * Gets the resource.
+	 * 
+	 * @return the resource
+	 */
 	public Resource getResource() {
 		return resource;
 	}
 
+	/**
+	 * Checks if is anon.
+	 * 
+	 * @return true, if is anon
+	 */
 	public boolean isAnon() {
 		return ((Resource) getRdfNode()).isAnon();
 	}
@@ -162,9 +215,15 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size() == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
+	 */
 	public void rename(String newName) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.AbstractRdfTreeNode#setRdfValue(java.lang.String)
+	 */
 	@Override
 	public void setRdfValue(String value) {
 		if (isAnon())
@@ -188,6 +247,9 @@ public class ResourceNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		this.resource = resource;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return resource.getLocalName();

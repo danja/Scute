@@ -15,15 +15,30 @@ import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 // it might have been better to store the RDFNode in JComponent.getClientProperty(java.lang.Object) 
+/**
+ * The Class Node.
+ */
 public class Node extends VisibleNode implements RDFNode {
 
+	/** The rdf node. */
 	private RDFNode rdfNode;
 
+	/**
+	 * Instantiates a new node.
+	 */
 	public Node() {
 		super();
 	}
 
 	// used when reading in data files
+	/**
+	 * Instantiates a new node.
+	 * 
+	 * @param rdfNode
+	 *            the rdf node
+	 * @param component
+	 *            the component
+	 */
 	public Node(RDFNode rdfNode, JButton component) {
 		this.rdfNode = rdfNode;
 		this.component = component;
@@ -31,27 +46,66 @@ public class Node extends VisibleNode implements RDFNode {
 	}
 
 	// for adding to graph
+	/**
+	 * Instantiates a new node.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param uri
+	 *            the uri
+	 */
 	public Node(Model model, String uri) { // Resource
 		rdfNode = model.createResource(uri);
 	}
 
+	/**
+	 * Instantiates a new node.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public Node(Model model) { // Bnode
 		rdfNode = model.createResource();
 	}
 
+	/**
+	 * Instantiates a new node.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param v
+	 *            the v
+	 * @param wellFormed
+	 *            the well formed
+	 */
 	public Node(Model model, String v, boolean wellFormed) { // Literal
 		rdfNode = model.createLiteral(v, wellFormed);
 	}
 
+	/**
+	 * Gets the string.
+	 * 
+	 * @return the string
+	 */
 	public String getString() {
 		return getString(rdfNode);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() { // keep?
 		return getString();
 	}
 
+	/**
+	 * Gets the string.
+	 * 
+	 * @param rdfNode
+	 *            the rdf node
+	 * @return the string
+	 */
 	public static String getString(RDFNode rdfNode) {
 		if (rdfNode.isURIResource())
 			// return ((Resource)rdfNode).getURI();
@@ -80,76 +134,129 @@ public class Node extends VisibleNode implements RDFNode {
 
 	// delegate to RDFNode ///////////////////////////////////////
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#as(java.lang.Class)
+	 */
 	@Override
 	public <T extends RDFNode> T as(Class<T> view) {
 		return rdfNode.as(view);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#asLiteral()
+	 */
 	@Override
 	public Literal asLiteral() {
 		return rdfNode.asLiteral();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#asResource()
+	 */
 	@Override
 	public Resource asResource() {
 		return rdfNode.asResource();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#canAs(java.lang.Class)
+	 */
 	@Override
 	public <T extends RDFNode> boolean canAs(Class<T> view) {
 		return rdfNode.canAs(view);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#getModel()
+	 */
 	@Override
 	public Model getModel() {
 		return rdfNode.getModel();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#inModel(com.hp.hpl.jena.rdf.model.Model)
+	 */
 	@Override
 	public RDFNode inModel(Model m) {
 		return rdfNode.inModel(m);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#isAnon()
+	 */
 	@Override
 	public boolean isAnon() {
 		return rdfNode.isAnon();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#isLiteral()
+	 */
 	@Override
 	public boolean isLiteral() {
 		return rdfNode.isLiteral();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#isResource()
+	 */
 	@Override
 	public boolean isResource() {
 		return rdfNode.isResource();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#isURIResource()
+	 */
 	@Override
 	public boolean isURIResource() {
 		return rdfNode.isURIResource();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.rdf.model.RDFNode#visitWith(com.hp.hpl.jena.rdf.model.RDFVisitor)
+	 */
 	@Override
 	public Object visitWith(RDFVisitor rv) {
 		return rdfNode.visitWith(rv);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.hp.hpl.jena.graph.FrontsNode#asNode()
+	 */
 	@Override
 	public com.hp.hpl.jena.graph.Node asNode() {
 		return rdfNode.asNode();
 	}
 
+	/**
+	 * Gets the uRI.
+	 * 
+	 * @return the uRI
+	 */
 	public String getURI() {
 		if (rdfNode.isResource())
 			return ((Resource) rdfNode).getURI();
 		return null;
 	}
 
+	/**
+	 * Gets the rDF node.
+	 * 
+	 * @return the rDF node
+	 */
 	public RDFNode getRDFNode() {
 		return rdfNode;
 	}
 
+	/**
+	 * Equals rdf.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return true, if successful
+	 */
 	public boolean equalsRDF(RDFNode object) {
 		// URI resources & properties
 		if (object.isResource() && ((Resource) object).isURIResource()) {

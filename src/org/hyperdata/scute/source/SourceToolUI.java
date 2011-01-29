@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.source;
 
 import java.awt.event.ActionEvent;
@@ -12,13 +22,29 @@ import javax.swing.JToolBar;
 import org.hyperdata.resources.general.GeneralIcons;
 import org.hyperdata.scute.swing.ToolsInterface;
 
+/**
+ * The Class SourceToolUI.
+ */
 public class SourceToolUI {
 
+	/** The tool menu. */
 	private final JMenu toolMenu;
+	
+	/** The tool bar. */
 	private final JToolBar toolBar;
+	
+	/** The check action. */
 	private Action checkAction;
+	
+	/** The editor. */
 	private final ToolsInterface editor;
 
+	/**
+	 * Instantiates a new source tool ui.
+	 * 
+	 * @param editor
+	 *            the editor
+	 */
 	public SourceToolUI(ToolsInterface editor) {
 		this.editor = editor;
 		createActions();
@@ -32,6 +58,9 @@ public class SourceToolUI {
 		toolMenu.add(checkAction);
 	}
 
+	/**
+	 * Creates the actions.
+	 */
 	public void createActions() {
 
 		checkAction = new AbstractAction("Check", GeneralIcons.checkUnknownIcon) {
@@ -44,10 +73,20 @@ public class SourceToolUI {
 		};
 	}
 
+	/**
+	 * Gets the tool bar.
+	 * 
+	 * @return the tool bar
+	 */
 	public JToolBar getToolBar() {
 		return toolBar;
 	}
 
+	/**
+	 * Gets the source menu.
+	 * 
+	 * @return the source menu
+	 */
 	public JMenu getSourceMenu() {
 		return toolMenu;
 	}

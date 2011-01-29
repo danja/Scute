@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.graph;
 
 import java.awt.Color;
@@ -8,10 +18,12 @@ import java.awt.geom.Ellipse2D;
 
 import javax.swing.JButton;
 
+/**
+ * The Class RoundButton.
+ */
 public class RoundButton extends JButton {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5609834220696804796L;
 
 	// private boolean circle = false;
@@ -28,10 +40,16 @@ public class RoundButton extends JButton {
 	// setContentAreaFilled(false);
 	// }
 
+	/**
+	 * Instantiates a new round button.
+	 */
 	public RoundButton() {
 		setContentAreaFilled(false);
 	}
 
+	/**
+	 * Sets the circular.
+	 */
 	public void setCircular() {
 		Dimension size = getPreferredSize();
 		size.width = size.height = Math.max(size.width, size.height);
@@ -39,6 +57,9 @@ public class RoundButton extends JButton {
 	}
 
 	// Paint the round background and label.
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (getModel().isArmed()) {
@@ -56,6 +77,9 @@ public class RoundButton extends JButton {
 	}
 
 	// Paint the border of the button using a simple stroke.
+	/* (non-Javadoc)
+	 * @see javax.swing.AbstractButton#paintBorder(java.awt.Graphics)
+	 */
 	@Override
 	protected void paintBorder(Graphics g) {
 		// g.setColor(getForeground());
@@ -63,8 +87,12 @@ public class RoundButton extends JButton {
 	}
 
 	// Hit detection.
+	/** The shape. */
 	Shape shape;
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#contains(int, int)
+	 */
 	@Override
 	public boolean contains(int x, int y) {
 		// If the button has changed size,

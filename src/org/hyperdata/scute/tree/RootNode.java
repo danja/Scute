@@ -28,6 +28,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
+ * The Class RootNode.
+ * 
  * @author danny
  * 
  *         created : 04-Dec-2002
@@ -36,8 +38,15 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 
+	/** The children. */
 	private List<ResourceNode> children;
 
+	/**
+	 * Instantiates a new root node.
+	 * 
+	 * @param nodeMap
+	 *            the node map
+	 */
 	public RootNode(RdfNodeMap nodeMap) {
 		super(nodeMap, null);
 	}
@@ -52,6 +61,9 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return (new Vector(getChildren())).elements();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
+	 */
 	public void delete() {
 		System.out.println("MUST NOT DELETE ROOT NODE");
 	}
@@ -86,6 +98,11 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size();
 	}
 
+	/**
+	 * Gets the children.
+	 * 
+	 * @return the children
+	 */
 	protected List<ResourceNode> getChildren() {
 		// System.out.println("GET children base root node");
 		if (children == null) {
@@ -110,6 +127,9 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return children;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
+	 */
 	public ImageIcon getIcon() {
 		return TreeIcons.rootIcon;
 	}
@@ -123,6 +143,9 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().indexOf(node);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
+	 */
 	public int getNodeType() {
 		return RdfTreeNode.ROOT;
 	}
@@ -136,6 +159,9 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
+	 */
 	public RDFNode getRdfNode() {
 		return null;
 	}
@@ -150,10 +176,16 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		return getChildren().size() == 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
+	 */
 	public void rename(String newName) {
 		System.out.println("MUST NOT RENAME ROOT NODE");
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "";

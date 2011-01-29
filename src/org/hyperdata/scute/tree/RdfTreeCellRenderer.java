@@ -23,6 +23,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 //import com.idea.graphic.diagram.model.Diagram;
 
 /**
+ * The Class RdfTreeCellRenderer.
+ * 
  * @author danny
  * 
  *         created : 04-Dec-2002
@@ -31,15 +33,20 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  */
 public class RdfTreeCellRenderer extends DefaultTreeCellRenderer implements
 		TableCellRenderer {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1253672782232872047L;
 
+	/**
+	 * Instantiates a new rdf tree cell renderer.
+	 */
 	public RdfTreeCellRenderer() {
 		// tutorialIcon = new ImageIcon("images/middle.gif");
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+	 */
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		/*
@@ -50,6 +57,9 @@ public class RdfTreeCellRenderer extends DefaultTreeCellRenderer implements
 		return this;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+	 */
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value,
 			boolean sel, boolean expanded, boolean leaf, int row,
@@ -64,6 +74,12 @@ public class RdfTreeCellRenderer extends DefaultTreeCellRenderer implements
 		return this;
 	}
 
+	/**
+	 * Inits the properties.
+	 * 
+	 * @param value
+	 *            the value
+	 */
 	public void initProperties(Object value) {
 
 		// setBackground(Diagram.DARK_BLUE);
