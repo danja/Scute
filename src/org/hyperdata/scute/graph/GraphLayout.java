@@ -10,81 +10,89 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * The Class GraphLayout.
  * 
- * @author danny
+ * @author danja
+ * 
+ * @FIXME threading isn't quite right, buttons in a row flash between start/stop
+ * 
+ * @TODO add edge uncrossing
+ * 
+ * @TODO check other algorithms
  */
 public class GraphLayout implements Runnable {
 
 	/** The Constant EDGE_MIN_LENGTH. */
 	private static final double EDGE_MIN_LENGTH = .1;
-	
+
 	/** The Constant CONSTANT2. */
 	private static final double CONSTANT2 = 1000;
-	
+
 	/** The Constant CONSTANT3. */
 	private static final double CONSTANT3 = 10000;
-	
+
 	/** The Constant CONSTANT4. */
 	private static final int CONSTANT4 = 500;
-	
+
 	/** The Constant RANDOMIZE_NODE_PROBABILITY. */
 	private static final double RANDOMIZE_NODE_PROBABILITY = 0.1;
 
+	private boolean running = false;
+
 	/** The pick. */
 	private Node pick;
-	
+
 	/** The pickfixed. */
 	private boolean pickfixed;
-	
+
 	/** The off screen. */
 	private Image offScreen;
-	
+
 	/** The off screen size. */
 	private Dimension offScreenSize;
-	
+
 	/** The off graphics. */
 	private Graphics2D offGraphics;
 
 	/** The edge color. */
 	final Color edgeColor = Color.black;
-	
+
 	/** The arc color1. */
 	final Color arcColor1 = Color.black;
-	
+
 	/** The arc color2. */
 	final Color arcColor2 = Color.pink;
-	
+
 	/** The arc color3. */
 	final Color arcColor3 = Color.red;
 
 	/** The springs. */
 	private Thread springs = null;
-	
+
 	/** The stress. */
 	boolean stress;
-	
+
 	/** The random. */
 	boolean random = true;
-	
+
 	/** The graph set. */
 	private final GraphSet graphSet;
-	
+
 	/** The panel. */
 	private final JPanel panel;
 
 	/** The arrow scale. */
 	private final double arrowScale = 10;
-	
+
 	/** The origin arrow. */
 	private final Path2D.Double originArrow = getOriginArrow();
-
-	// private static final Path2D.Double;
 
 	/**
 	 * Instantiates a new graph layout.
@@ -98,92 +106,131 @@ public class GraphLayout implements Runnable {
 		this.graphSet = graphSet;
 		this.panel = panel;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
+	
+	/**
+	 * 
 	 */
-	public void run() {
-		// Thread me = Thread.currentThread();
-		// while (springs == me) {
-		while (true) {
-			relax();
-			if (random && (Math.random() < RANDOMIZE_NODE_PROBABILITY)) {
-				Node n = graphSet.getRandomNode();
-				randomizeNode(n);
-			}
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// panel.repaint();
-				relax();
-				break;
+	public void init() {
+		scramble();	
+	}
 
+	public boolean isRunning() {
+		return this.running;
+	}
+
+	public void setRunning(boolean run) {
+		if (run) {
+			scramble();
+			start();
+		} else {
+			stop();
+		}
+		this.running = run;
+	}
+
+	/**
+	 * Scramble.
+	 */
+	public void scramble() {
+		Dimension d = panel.getSize();
+		Iterator<Node> nIterator = graphSet.nodeIterator();
+		while (nIterator.hasNext()) {
+			Node n = nIterator.next();
+			if (!n.isFixed()) {
+				n.setX(10 + (d.width - 20) * Math.random());
+				n.setY(10 + (d.height - 20) * Math.random());
 			}
 		}
 	}
-	
+
+	private Runnable cleanup = new Runnable() {
+		public void run() {
+			relax();
+		}
+	};
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
+	public void run() {
+		while (this.running) {
+			relax();
+			// if (random && (Math.random() < RANDOMIZE_NODE_PROBABILITY)) {
+			// Node n = graphSet.getRandomNode();
+			// randomizeNode(n);
+			// }
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// SwingUtilities.invokeLater(cleanupRunnable);
+				this.running = false;
+				break;
+			} finally {
+				// relax(); // meh
+			}
+		}
+		SwingUtilities.invokeLater(cleanup); // one last relax
+
+	}
+
 	/**
 	 * Randomize node.
 	 * 
 	 * @param node
 	 *            the node
 	 */
-	private synchronized void randomizeNode(Node node){
+	private void randomizeNode(Node node) {
 		if (!node.isFixed()) {
 			node.setX(node.getX()
-					+ (panel.getWidth() * Math.random() - panel
-							.getWidth() / 2));
+					+ (panel.getWidth() * Math.random() - panel.getWidth() / 2));
 			node.setY(node.getY()
-					+ (panel.getHeight() * Math.random() - panel
-							.getHeight() / 2));
+					+ (panel.getHeight() * Math.random() - panel.getHeight() / 2));
 		}
 	}
 
-	// @FIXME need to synchronize on container panel?
 	/**
 	 * Relax.
 	 */
-	private synchronized void relax() {
-doEdges();
-
-doNodes();
-
-doNodes2();
+	private void relax() {
+		doEdges(); // @TODO rename these
+		doNodes();
+		doNodes2();
 	}
-
 
 	/**
 	 * Do edges.
 	 */
-	private synchronized void doEdges() { // @TODO rename
+	private void doEdges() { // @TODO rename
 		Iterator<Edge> eIterator = graphSet.edgeIterator();
-		
+
 		while (eIterator.hasNext()) {
 			Edge e = eIterator.next();
 
-		double vx = e.to.getX() - e.from.getX();
-		double vy = e.to.getY() - e.from.getY();
+			double vx = e.to.getX() - e.from.getX();
+			double vy = e.to.getY() - e.from.getY();
 
-		double len = Math.sqrt(vx * vx + vy * vy);
-		
-		len = (len == 0) ? EDGE_MIN_LENGTH : len;
+			double len = Math.sqrt(vx * vx + vy * vy);
 
-		double f = (e.len - len) / (len * CONSTANT2);
+			len = (len == 0) ? EDGE_MIN_LENGTH : len;
 
-		double dx = f * vx;
-		double dy = f * vy;
+			double f = (e.len - len) / (len * CONSTANT2);
 
-		e.to.setDx(e.to.getDx() + dx);
-		e.to.setDy(e.to.getDy() + dy);
-		e.from.setDx(e.from.getDx() + (-dx));
-		e.from.setDy(e.from.getDy() + (-dy));
+			double dx = f * vx;
+			double dy = f * vy;
+
+			e.to.setDx(e.to.getDx() + dx);
+			e.to.setDy(e.to.getDy() + dy);
+			e.from.setDx(e.from.getDx() + (-dx));
+			e.from.setDy(e.from.getDy() + (-dy));
+		}
 	}
-	}
-	
+
 	/**
 	 * Do nodes.
 	 */
-	private synchronized void doNodes() { // @TODO rename
+	private void doNodes() { // @TODO rename
 		Iterator<Node> nIterator1 = graphSet.nodeIterator();
 		while (nIterator1.hasNext()) {
 			Node n1 = nIterator1.next();
@@ -217,11 +264,11 @@ doNodes2();
 			}
 		}
 	}
-	
+
 	/**
 	 * Do nodes2.
 	 */
-	private synchronized void doNodes2() { // @TODO rename
+	private void doNodes2() { // @TODO rename
 		Dimension d = panel.getSize();
 
 		Iterator<Node> nIterator = graphSet.nodeIterator();
@@ -249,14 +296,12 @@ doNodes2();
 		}
 	}
 
-
-
 	/**
 	 * Gets the image.
 	 * 
 	 * @return the image
 	 */
-	public synchronized Image getImage() {
+	public Image getImage() {
 
 		Dimension d = panel.getSize();
 		if ((offScreen == null) || (d.width != offScreenSize.width)
@@ -273,10 +318,10 @@ doNodes2();
 		offGraphics.setColor(panel.getBackground());
 		offGraphics.fillRect(0, 0, d.width, d.height);
 
-			Iterator<Edge> eIterator = graphSet.edgeIterator();
-			while (eIterator.hasNext()) {
-				Edge e = eIterator.next();
-				
+		Iterator<Edge> eIterator = graphSet.edgeIterator();
+		while (eIterator.hasNext()) {
+			Edge e = eIterator.next();
+
 			double xx1 = e.from.getX();
 			double yy1 = e.from.getY();
 			double xx2 = e.to.getX();
@@ -327,7 +372,7 @@ doNodes2();
 		// Decided against having two arrows on the line, left here in just case
 		// double arrowOneX = xx1 + (xx2 - xx1)/4;
 		// double arrowOneY = yy1 + (yy2 - yy1)/4;
-		//		
+		//
 		// AffineTransform rotateOne =
 		// AffineTransform.getRotateInstance(xx2-xx1, yy2-yy1,
 		// arrowOneX,arrowOneY);

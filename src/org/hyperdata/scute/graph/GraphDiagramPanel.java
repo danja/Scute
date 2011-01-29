@@ -31,6 +31,8 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  * The Class GraphDiagramPanel.
+ * 
+ * @TODO add zoom & drag
  */
 public class GraphDiagramPanel extends JPanel {
 
@@ -43,8 +45,7 @@ public class GraphDiagramPanel extends JPanel {
 	/** The graph layout. */
 	private final GraphLayout graphLayout;
 
-	/** The running. */
-	private boolean running = false;
+	private RdfInterpreter rdfInterpreter;
 
 	/**
 	 * Instantiates a new graph diagram panel.
@@ -56,138 +57,28 @@ public class GraphDiagramPanel extends JPanel {
 		super();
 		setSize(800, 800);
 
+		// get your data in!
 		graphSet = new GraphSet();
-		interpret(model);
+		rdfInterpreter = new RdfInterpreter(this, graphSet);
+		rdfInterpreter.interpret(model);
 
-		graphLayout = new GraphLayout(this, graphSet);
 		setBackground(Color.white);
+		
+		graphLayout = new GraphLayout(this, graphSet);
+		graphLayout.init();
+		
 		addMouseListener(new MouseHandler(this));
 	}
-
-	/**
-	 * Initialize.
-	 */
-	public void initialize() {
-		// @TODO scramble on startup kills display!
-		// interpret(model);
-		// scramble();
+	
+	public boolean isRunning() {
+		return graphLayout.isRunning();
 	}
 
-	/*
-	 * this was originally lifted from RDFNodeMap - can the two be merged?
-	 */
-	/**
-	 * Interpret.
-	 * 
-	 * @param sourceModel
-	 *            the source model
-	 */
-	public void interpret(Model sourceModel) {
-		try {
-			final StmtIterator iterator = sourceModel.listStatements();
-			Statement statement;
-			RDFNode object;
-
-			while (iterator.hasNext()) {
-				statement = iterator.next();
-
-				addResource(statement.getSubject());
-				object = statement.getObject();
-
-				if (object.isResource()) {
-					addResource((Resource) object);
-				} else {
-					addLiteral((Literal) object);
-				}
-				addStatement(statement);
-			}
-		} catch (final Exception exception) {
-			exception.printStackTrace();
-		}
-		// requestFocusInWindow(false); // takes the focus off nodes - doesn't
-		// work!
+	public void setRunning(boolean run) {
+		graphLayout.setRunning(run);
 	}
 
-	/**
-	 * Scramble.
-	 */
-	public synchronized void scramble() {
-		Dimension d = getSize();
-		Iterator<Node> nIterator = graphSet.nodeIterator();
-		while (nIterator.hasNext()) {
-			Node n = nIterator.next();
-			if (!n.isFixed()) {
-				n.setX(10 + (d.width - 20) * Math.random());
-				n.setY(10 + (d.height - 20) * Math.random());
-			}
-		}
-	}
 
-	/**
-	 * Adds the literal.
-	 * 
-	 * @param literal
-	 *            the literal
-	 * @return the node
-	 */
-	private Node addLiteral(Literal literal) {
-		Node node = graphSet.getNodeContaining(literal);
-		if (node == null) {
-			JButton button = new JButton();
-			node = new Node(literal, button);
-			button.setText(node.getString());
-			button.setBackground(Color.green);
-			add(button);
-			node.setX(getWidth() * Math.random());
-			node.setY(getHeight() * Math.random());
-			node.setLabel(node.getString());
-		}
-		return graphSet.addNode(node);
-	}
-
-	/**
-	 * Adds the resource.
-	 * 
-	 * @param resource
-	 *            the resource
-	 * @return the node
-	 */
-	private Node addResource(Resource resource) {
-		Node node = graphSet.getNodeContaining(resource);
-		if (node == null) {
-
-			JButton button = new RoundButton(); // ellipse for URI nodes
-			node = new Node(resource, button);
-			button.setText(node.getString());
-			button.setBackground(Color.pink);
-			add(button);
-			node.setX(getWidth() * Math.random());
-			node.setY(getHeight() * Math.random());
-			node.setLabel(node.getString());
-			if (resource.isAnon()) { // circular for bnodes
-				((RoundButton) button).setCircular();
-			}
-		}
-		graphSet.addNode(node);
-		return node;
-	}
-
-	/**
-	 * Adds the statement.
-	 * 
-	 * @param statement
-	 *            the statement
-	 * @return the edge
-	 */
-	private Edge addStatement(Statement statement) {
-		Property p = statement.getPredicate();
-		Edge edge = new Edge(p);
-		edge.from = graphSet.getNodeContaining(statement.getSubject());
-		edge.to = graphSet.getNodeContaining(statement.getObject());
-		((JButton) edge.getComponent()).setText(edge.getString());
-		add(edge.getComponent());
-		return graphSet.addEdge(edge);
-	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
@@ -220,16 +111,6 @@ public class GraphDiagramPanel extends JPanel {
 		return graphLayout.isPickFixed();
 	}
 
-	/**
-	 * Gets the node.
-	 * 
-	 * @param i
-	 *            the i
-	 * @return the node
-	 */
-	public Node getNode(int i) {
-		return graphSet.getNode(i);
-	}
 
 	/**
 	 * Gets the pick.
@@ -254,32 +135,6 @@ public class GraphDiagramPanel extends JPanel {
 		graphSet.listNodes();
 	}
 
-	/**
-	 * Checks if is running.
-	 * 
-	 * @return true, if is running
-	 */
-	public synchronized boolean isRunning() {
-		return running;
-	}
-
-	/**
-	 * Sets the running.
-	 * 
-	 * @param b
-	 *            the new running
-	 */
-	public synchronized void setRunning(boolean b) {
-		if (b) {
-			scramble();
-			graphLayout.start();
-			this.running = true;
-		} else {
-			graphLayout.stop();
-			this.running = false;
-			// repaint();
-		}
-	}
 	
 	/**
 	 * Node iterator.

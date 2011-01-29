@@ -1,0 +1,68 @@
+Scute Licenses 2011-
+
+Summary
+=======
+
+    * The Scute Home Page is http://hyperdata.org/scute
+    * Contact: danny.ayers@gmail.com 
+
+To encourage free distribution and reuse of Scute, the following open licenses apply to all source, binaries, documentation and data as appropriate. If any of these aren't suitable for your deployment environment, please let me know, I'll be happy to add alternatives.
+
+    * Apache License Version 2.0
+    * Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+    * Open Data Commons Attribution License 1.0 
+
+Feel free to use Scute as you see fit (although I won't be held responsible for any problems this may cause). If you find it useful, a link to the project home page will be appreciated.
+
+If you redistribute or modify the works, please include reference to these licenses. There should be a copy of this document in the software distribution called license.txt, and it appears on the Web at http://hyperdata.org/wiki/Scute:License
+
+Attribution may be provided simply via a link to the Scute Home Page. 
+
+Applications and Source Code
+============================
+
+Copyright 2011 Danny Ayers
+
+Apache License Version 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+[edit] Documentation
+
+Documentation
+=============
+
+Copyright 2011 Danny Ayers
+
+Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+
+You are free:
+
+    * to Share — to copy, distribute and transmit the work
+    * to Remix — to adapt the work 
+
+Under the following conditions:
+
+    * Attribution — You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work). 
+
+Data
+====
+
+Copyright 2011 Danny Ayers
+
+Open Data Commons Attribution License 1.0
+
+You are free:
+
+    * To Share: To copy, distribute and use the database.
+    * To Create: To produce works from the database.
+    * To Adapt: To modify, transform and build upon the database. 
+
+As long as you:
+
+    * Attribute: You must attribute any public use of the database, or works produced from the database, in the manner specified in the ODbL. For any use or redistribution of the database, or works produced from it, you must make clear to others the license of the database and keep intact any notices on the original database.
+    * Share-Alike: If you publicly use any adapted version of this database, or works produced from an adapted database, you must also offer that adapted database under the ODbL.
+    * Keep open: If you redistribute the database, or an adapted version of it, then you may use technological measures that restrict the work (such as DRM) as long as you also redistribute a version without such measures. 

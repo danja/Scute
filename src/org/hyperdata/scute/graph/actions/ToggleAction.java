@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 import org.hyperdata.scute.graph.GraphDiagramPanel;
 
@@ -27,6 +28,8 @@ public class ToggleAction extends AbstractAction {
 	
 	/** The diagram panel. */
 	private final GraphDiagramPanel diagramPanel;
+
+
 
 	/**
 	 * Instantiates a new toggle action.
@@ -50,8 +53,7 @@ public class ToggleAction extends AbstractAction {
 			} else {
 				button.setText("Scramble");
 			}
-			diagramPanel.setRunning(!diagramPanel.isRunning()); // isSelected
-																// available
+		diagramPanel.setRunning(!diagramPanel.isRunning()); 
 		}
 
 	}

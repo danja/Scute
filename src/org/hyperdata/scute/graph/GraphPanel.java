@@ -53,7 +53,6 @@ public class GraphPanel extends JPanel {
 		toolBar = new JToolBar("Graph Tools");
 		addControls();
 		add(toolBar, BorderLayout.SOUTH);
-		initialize();
 	}
 
 	/**
@@ -64,27 +63,4 @@ public class GraphPanel extends JPanel {
 		JButton toggle = new JButton(toggleAction);
 		toolBar.add(toggle);
 	}
-
-	/**
-	 * Initialize.
-	 */
-	public void initialize() {
-		graphDiagramPanel.initialize();
-	}
-
-	/**
-	 * Sets the running.
-	 * 
-	 * @param b
-	 *            the new running
-	 */
-	public synchronized void setRunning(boolean b) {
-		graphDiagramPanel.setRunning(b);
-	}
-
-	// @Override
-	// public void paintComponent(Graphics g) {
-	// super.paintComponent(g);
-	// graphDiagramPanel.paintComponent(g);
-	// }
 }

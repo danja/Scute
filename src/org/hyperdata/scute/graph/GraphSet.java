@@ -1,6 +1,14 @@
-/**
+/*
+ * Scute
  * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
  */
+
 package org.hyperdata.scute.graph;
 
 import java.util.ArrayList;
@@ -13,54 +21,24 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  * The Class GraphSet.
  * 
  * @author danny
+ * 
+ * @TODO give nodes weights L/R according to inlinks/outlinks (stick literals on the right!) - sort GraphSet?
+ * 
  */
 public class GraphSet {
-
-	// Node nodes[] = new Node[100];
-	// Edge edges[] = new Edge[200];
-
+	
 	/** The nodes. */
 	List<Node> nodes = new ArrayList<Node>();
 	
 	/** The edges. */
 	List<Edge> edges = new ArrayList<Edge>();
+	
 
 	/**
 	 * Instantiates a new graph set.
 	 */
 	public GraphSet() {
 
-	}
-
-	/**
-	 * Gets the node.
-	 * 
-	 * @param i
-	 *            the i
-	 * @return the node
-	 */
-	public Node getNode(int i) {
-		// System.out.println("size = "+nodes.size()+"  i = "+i);
-		return nodes.get(i);
-	}
-
-	// public void setNode(int nnodes, Node n) {
-	// nodes.set(nnodes,n);
-	// }
-
-	// public void setEdge(int i, Edge e) {
-	// edges.set(i,e);
-	// }
-
-	/**
-	 * Gets the edge.
-	 * 
-	 * @param i
-	 *            the i
-	 * @return the edge
-	 */
-	public Edge getEdge(int i) {
-		return edges.get(i);
 	}
 
 	/**

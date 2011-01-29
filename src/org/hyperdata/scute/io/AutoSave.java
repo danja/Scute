@@ -29,7 +29,7 @@ import org.hyperdata.scute.source.TextContainer;
 /**
  * see http://esw.w3.org/IntegrityIsJobOne
  * 
- * Currently just saves stuff afresh every 6 seconds could do with being more
+ * Currently just saves stuff afresh every 6 seconds - could do with being 
  * intelligent about when things have changed
  * 
  * @author danny

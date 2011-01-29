@@ -15,6 +15,9 @@ import javax.swing.JComponent;
 
 /**
  * The Class VisibleNode.
+ * 
+ * @TODO add popup menu
+ * 
  */
 public class VisibleNode {
 

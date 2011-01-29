@@ -18,13 +18,15 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * The Class VisibleEdge.
+ * 
+ *  @TODO add popup menu
  */
 public class VisibleEdge {
 
-	/** The len. */
+	/** length of the edge */
 	double len;
 	
-	/** The component. */
+	/** component in middle of visible edge */
 	private final JButton component;
 
 	/**
