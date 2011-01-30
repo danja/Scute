@@ -18,8 +18,13 @@ import javax.swing.JPanel;
  * 
  * A simple 3-column table display of statements in the Model
  * 
- * @FIXME implement
+ * FIXME implement
  */
 public class TriplesPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 }

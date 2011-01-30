@@ -90,6 +90,7 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
 	 */
+	@Override
 	public String getSyntax() {
 		return syntax;
 	}
@@ -148,6 +149,7 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	/* (non-Javadoc)
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
+	@Override
 	public void stateChanged(ChangeEvent e) {
 		// System.out.println("Change "+e);
 		final Component c = ((JTabbedPane) e.getSource())

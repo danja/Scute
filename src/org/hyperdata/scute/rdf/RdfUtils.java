@@ -309,7 +309,7 @@ public class RdfUtils {
 	 */
 	public static String getRdfType(Resource resource) {
 		if (resource.isAnon())
-			// @@TODO this whole lot needs improving
+			// @TODO this whole lot needs improving
 			return "anon";
 		// System.out.println("resource.toSting())"+resource);
 		// show(resource);
@@ -508,7 +508,7 @@ public class RdfUtils {
 		Statement statement;
 
 		while (setIterator.hasNext()) {
-			statement = (Statement) setIterator.next();
+			statement = setIterator.next();
 			model.add(statement.getSubject(), statement.getPredicate(),
 					newLiteral);
 			model.remove(statement);
@@ -563,7 +563,7 @@ public class RdfUtils {
 			}
 
 			for (int i = 0; i < statementList.size(); i++) {
-				statement = (Statement) statementList.get(i);
+				statement = statementList.get(i);
 				subject = statement.getSubject();
 				object = statement.getObject();
 				if (subject.equals(oldResource)) {
@@ -734,7 +734,7 @@ public class RdfUtils {
 			final Iterator<Statement> setIterator = statements.iterator();
 			Statement statement;
 			while (setIterator.hasNext()) {
-				statement = (Statement) setIterator.next();
+				statement = setIterator.next();
 				if (model.contains(statement)) {
 					model.remove(statement);
 				}
@@ -909,7 +909,7 @@ public class RdfUtils {
 		return model;
 	}
 
-	// @@TODO this needs pushing out
+	// @TODO this needs pushing out
 	/**
 	 * String to model exception caught.
 	 * 

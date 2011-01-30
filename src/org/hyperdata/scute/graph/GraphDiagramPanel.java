@@ -11,28 +11,18 @@
 package org.hyperdata.scute.graph;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Iterator;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.hyperdata.scute.main.GraphDemo;
-
-import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  * The Class GraphDiagramPanel.
  * 
- * @TODO add zoom & drag
+ * TODO add zoom & drag
  */
 public class GraphDiagramPanel extends JPanel {
 

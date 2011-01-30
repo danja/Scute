@@ -126,6 +126,7 @@ public class DocumentPane extends JScrollPane implements KeyListener {
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 		saved = false;
 	}
@@ -133,6 +134,7 @@ public class DocumentPane extends JScrollPane implements KeyListener {
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyReleased(KeyEvent e) {
 		// not needed
 	}
@@ -140,6 +142,7 @@ public class DocumentPane extends JScrollPane implements KeyListener {
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyTyped(KeyEvent e) {
 		// not needed
 	}

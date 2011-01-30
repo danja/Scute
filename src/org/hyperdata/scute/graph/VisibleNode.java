@@ -16,12 +16,12 @@ import javax.swing.JComponent;
 /**
  * The Class VisibleNode.
  * 
- * @TODO add popup menu
+ * TODO add popup menu
  * 
  */
 public class VisibleNode {
 
-	// @TODO change to Point2D.Double() ??
+	// TODO change to Point2D.Double() ??
 	/** The x. */
 	private double x = 0;
 	

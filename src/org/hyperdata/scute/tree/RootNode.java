@@ -56,6 +56,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
+	@Override
 	@SuppressWarnings("unchecked")// javax.swing.tree.TreeNode is old-fashioned
 	public Enumeration<?> children() {
 		return (new Vector(getChildren())).elements();
@@ -64,6 +65,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
 	 */
+	@Override
 	public void delete() {
 		System.out.println("MUST NOT DELETE ROOT NODE");
 	}
@@ -73,6 +75,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getAllowsChildren()
 	 */
+	@Override
 	public boolean getAllowsChildren() {
 		return true;
 	}
@@ -82,11 +85,12 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getChildAt(int)
 	 */
+	@Override
 	public TreeNode getChildAt(int childIndex) {
 		// System.out.println("root.getChildAt "+childIndex);
 		// System.out.println(".getChildAt = "+(TreeNode)
 		// getChildren().get(childIndex));
-		return (TreeNode) getChildren().get(childIndex);
+		return getChildren().get(childIndex);
 	}
 
 	/*
@@ -94,6 +98,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getChildCount()
 	 */
+	@Override
 	public int getChildCount() {
 		return getChildren().size();
 	}
@@ -130,6 +135,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
 	 */
+	@Override
 	public ImageIcon getIcon() {
 		return TreeIcons.rootIcon;
 	}
@@ -139,6 +145,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getIndex(TreeNode)
 	 */
+	@Override
 	public int getIndex(TreeNode node) {
 		return getChildren().indexOf(node);
 	}
@@ -146,6 +153,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
 	 */
+	@Override
 	public int getNodeType() {
 		return RdfTreeNode.ROOT;
 	}
@@ -155,6 +163,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getParent()
 	 */
+	@Override
 	public TreeNode getParent() {
 		return null;
 	}
@@ -162,6 +171,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
 	 */
+	@Override
 	public RDFNode getRdfNode() {
 		return null;
 	}
@@ -171,6 +181,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#isLeaf()
 	 */
+	@Override
 	public boolean isLeaf() {
 		// System.out.println("rootkids = " + getChildren().size());
 		return getChildren().size() == 0;
@@ -179,6 +190,7 @@ public class RootNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
 	 */
+	@Override
 	public void rename(String newName) {
 		System.out.println("MUST NOT RENAME ROOT NODE");
 	}

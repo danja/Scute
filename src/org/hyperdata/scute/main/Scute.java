@@ -18,15 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
@@ -140,7 +132,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 
 		panel = new JPanel(new BorderLayout());
 		panel.setPreferredSize(FRAME_SIZE);
-		tabs = new JTabbedPane(JTabbedPane.BOTTOM);
+		tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		panel.add(tabs, BorderLayout.CENTER);
 
 		turtlePanel = new SourcePanel(autosave, "Turtle");
@@ -229,6 +221,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#cloneFile()
 	 */
+	@Override
 	public void cloneFile() {
 		throw new RuntimeException("not yet implemented");
 	}
@@ -236,6 +229,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#closeFile()
 	 */
+	@Override
 	public void closeFile() {
 		throw new RuntimeException("not yet implemented");
 	}
@@ -243,6 +237,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#exit()
 	 */
+	@Override
 	public void exit() { // is needed?
 		// frame.dispose();
 	}
@@ -261,6 +256,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintErr(java.lang.String)
 	 */
+	@Override
 	public void logPrintErr(String string) {
 		LogPane.err(string);
 	}
@@ -268,6 +264,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintln(java.lang.String)
 	 */
+	@Override
 	public void logPrintln(String string) {
 		LogPane.println(string);
 	}
@@ -275,12 +272,14 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#newFile()
 	 */
+	@Override
 	public void newFile() {
 	}
 
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#openFile()
 	 */
+	@Override
 	public void openFile() {
 		final int returnVal = fileChooser.showOpenDialog(frame);
 		// Model model = ModelFactory.createDefaultModel();
@@ -326,6 +325,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.ToolsInterface#saveAsFile()
 	 */
+	@Override
 	public void saveAsFile() {
 
 		try {
@@ -347,6 +347,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
 	 */
+	@Override
 	public void valueChanged(TreeSelectionEvent event) {
 		final Object object = treePanel.getTree()
 				.getLastSelectedPathComponent();
@@ -361,6 +362,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.swing.GeneralApplication#waitCursor(boolean)
 	 */
+	@Override
 	public void waitCursor(boolean wait) {
 		if (wait) {
 			normalCursor = frame.getCursor();

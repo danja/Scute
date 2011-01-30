@@ -26,6 +26,7 @@ class HighlighterFactory implements ViewFactory {
 	/* (non-Javadoc)
 	 * @see javax.swing.text.ViewFactory#create(javax.swing.text.Element)
 	 */
+	@Override
 	public View create(Element elem) {
 		// System.out.println("ELEMENT= "+elem.getName()+elem);
 		final String kind = elem.getName();

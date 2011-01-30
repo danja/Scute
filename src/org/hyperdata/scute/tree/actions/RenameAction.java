@@ -42,6 +42,7 @@ public class RenameAction extends AbstractAction {
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		((RdfTreeNode) treePanel.getClickedPath().getLastPathComponent())
 				.renameRequest();

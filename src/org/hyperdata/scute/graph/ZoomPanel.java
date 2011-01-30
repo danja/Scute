@@ -15,7 +15,12 @@ import javax.swing.JPanel;
  */
 public class ZoomPanel extends JPanel { 
 
-	  private double zoom = 1.0;
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private double zoom = 1.0;
 
 	  private double percentage;
 
@@ -26,7 +31,8 @@ public class ZoomPanel extends JPanel {
 	    percentage = zoomPercentage / 100;
 	  }
 
-	  public void paintComponent(Graphics grp) {
+	  @Override
+	public void paintComponent(Graphics grp) {
 	    Graphics2D g2D = (Graphics2D) grp;
 	    g2D.scale(zoom, zoom);
 	    g2D.drawImage(image, 0, 0, this);

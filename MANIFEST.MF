@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.0
+Created-By: 1.6.0_20-b20 (Sun Microsystems Inc.)
+Built-By: Danny Ayers
+Main-Class: org.hyperdata.scute.main.Scute
+Implementation-Version: 0.50-b0
+Class-Path: lib/antlr-2.7.5.jar lib/arq-2.8.5.jar lib/arq-extra.jar li
+ b/commons-logging-1.1.jar lib/concurrent.jar lib/icu4j-3.4.4.jar lib/
+ iri-0.8.jar lib/jena-2.6.3-sources.jar lib/jena-2.6.3.jar lib/jgraphx
+ .jar lib/json.jar lib/junit-4.5.jar lib/junit.jar lib/log4j-1.2.14.ja
+ r lib/looks-2.1.4.jar lib/lucene-core-2.3.1.jar lib/slf4j-api-1.5.8.j
+ ar lib/slf4j-log4j12-1.5.8.jar lib/stax-api-1.0.1.jar lib/tdb-0.8.7.j
+ ar lib/wstx-asl-3.2.9.jar lib/xercesImpl-2.7.1.jar lib/xml-apis.jar
+

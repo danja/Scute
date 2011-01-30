@@ -17,8 +17,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DesertBluer;
 
 /**
@@ -141,7 +141,7 @@ public class WindowKit {
 	 */
 	public static void setPlastic3DLookAndFeel() {
 		try {
-			PlasticLookAndFeel.setCurrentTheme(new DesertBluer());
+			MetalLookAndFeel.setCurrentTheme(new DesertBluer());
 			// .setMyCurrentTheme(new DesertBluer());
 
 			UIManager

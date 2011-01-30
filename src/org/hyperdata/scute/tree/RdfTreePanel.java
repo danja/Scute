@@ -208,6 +208,7 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 	/* (non-Javadoc)
 	 * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
 	 */
+	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		final Object object = tree.getLastSelectedPathComponent();
 

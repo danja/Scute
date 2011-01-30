@@ -115,7 +115,7 @@ public class Node extends VisibleNode implements RDFNode {
 		// ((Resource) rdfNode).getId().toString(); //
 		else if (rdfNode.isLiteral()) {
 			String label = ((Literal) rdfNode).toString();
-			// if(label.length() > 10){ // @TODO come back to this
+			// if(label.length() > 10){ // TODO come back to this
 			// label = "";
 			// String[] split = label.split(" ");
 			// for(int i=0;i<split.length;i++){

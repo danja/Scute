@@ -71,6 +71,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#deleteRequest()
 	 */
+	@Override
 	public void deleteRequest() {
 		if (deleteDialog()) {
 			// getNodeMap().deleteNode(this);
@@ -87,6 +88,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getModel()
 	 */
+	@Override
 	public Model getModel() {
 		// return nodeMap.getCurrentModel();
 		return model;
@@ -95,6 +97,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getModelFilename()
 	 */
+	@Override
 	public String getModelFilename() {
 		return modelFilename;
 	}
@@ -102,6 +105,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeMap()
 	 */
+	@Override
 	public RdfNodeMap getNodeMap() {
 		return nodeMap;
 	}
@@ -109,6 +113,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeTypeName()
 	 */
+	@Override
 	public String getNodeTypeName() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -128,6 +133,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getParentStatement()
 	 */
+	@Override
 	public Statement getParentStatement() {
 		return parentStatement;
 	}
@@ -135,6 +141,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfValue()
 	 */
+	@Override
 	public String getRdfValue() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -164,6 +171,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#isDirty()
 	 */
+	@Override
 	public boolean isDirty() {
 		return dirty;
 	}
@@ -171,6 +179,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#isValueEditable()
 	 */
+	@Override
 	public boolean isValueEditable() {
 		switch (getNodeType()) {
 		case RdfTreeNode.LITERAL:
@@ -221,6 +230,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#renameRequest()
 	 */
+	@Override
 	public void renameRequest() {
 		final String newName = renameDialog(toString());
 		if ((newName == null) || newName.equals(toString()))
@@ -235,6 +245,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	 * @param dirty
 	 *            The dirty to set
 	 */
+	@Override
 	public void setDirty(boolean dirty) {
 		this.dirty = dirty;
 	}
@@ -242,6 +253,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#setModel(com.hp.hpl.jena.rdf.model.Model)
 	 */
+	@Override
 	public void setModel(Model model) {
 		// System.out.println("setting model = " + model);
 		this.model = model;
@@ -250,6 +262,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#setModelFilename(java.lang.String)
 	 */
+	@Override
 	public void setModelFilename(String string) {
 		modelFilename = string;
 	}
@@ -267,6 +280,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#setRdfValue(java.lang.String)
 	 */
+	@Override
 	public void setRdfValue(String string) {
 		// dummy - it can't be done with all types
 	}

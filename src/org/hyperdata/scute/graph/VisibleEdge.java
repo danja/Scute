@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * The Class VisibleEdge.
  * 
- *  @TODO add popup menu
+ *  TODO add popup menu
  */
 public class VisibleEdge {
 

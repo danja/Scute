@@ -64,6 +64,7 @@ public class EditMenu extends JMenu {
 			 */
 			private static final long serialVersionUID = -2988238299851150984L;
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				// move to RdfTreePanel

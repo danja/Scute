@@ -57,7 +57,7 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 	 */
 	public ModelNode(RdfNodeMap nodeMap, Model model,
 			Statement parentStatement, Resource resource) {
-		super(nodeMap, parentStatement, resource); // @@TODO
+		super(nodeMap, parentStatement, resource); // @TODO
 		this.resource = resource;
 		this.nodeMap = nodeMap;
 		this.model = model;
@@ -117,7 +117,7 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 		// System.out.println("MODEL.getChildAt = " +
 		// (TreeNode)getChildren().get(childIndex));
 
-		return (TreeNode) getChildren().get(childIndex);
+		return getChildren().get(childIndex);
 	}
 
 	/*

@@ -22,7 +22,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  * 
  * @author danny
  * 
- * @TODO give nodes weights L/R according to inlinks/outlinks (stick literals on the right!) - sort GraphSet?
+ * TODO give nodes weights L/R according to inlinks/outlinks (stick literals on the right!) - sort GraphSet?
  * 
  */
 public class GraphSet {

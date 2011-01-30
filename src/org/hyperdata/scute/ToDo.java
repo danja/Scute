@@ -16,8 +16,20 @@ package org.hyperdata.scute;
  * 
  * a dummy class to keep some of these:
  * 
- * @TODO fill out javadoc package.html files
+ * something useful
+ * TODO fill out javadoc package.html files
  * 
+ * TRIPLES TAB
+	NodeView
+for editing individual nodes, add radial tree-layout diagram
+(pop-up)
+	EdgeView
+show individual statement, allow adding wildcards to search model, e.g.
+[<#resource>] [<#property>] [Any]
+
+add zoom
+
+generate SPARQL from ? in graph view?
  *
  */
 public class ToDo {

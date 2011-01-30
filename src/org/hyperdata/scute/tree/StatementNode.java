@@ -58,6 +58,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
+	@Override
 	@SuppressWarnings("unchecked")// javax.swing.tree.TreeNode is old-fashioned
 	public Enumeration<?> children() {
 		return (new Vector(getChildren())).elements();
@@ -66,6 +67,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
 	 */
+	@Override
 	public void delete() {
 	}
 
@@ -74,6 +76,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getAllowsChildren()
 	 */
+	@Override
 	public boolean getAllowsChildren() {
 		return true;
 	}
@@ -83,11 +86,12 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getChildAt(int)
 	 */
+	@Override
 	public TreeNode getChildAt(int childIndex) {
 		// System.out.println("\nstate.getChildAt " + childIndex);
 		// System.out.println(".getChildAt = " + getChildren().get(childIndex));
 
-		return (TreeNode) getChildren().get(childIndex);
+		return getChildren().get(childIndex);
 	}
 
 	/*
@@ -95,6 +99,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getChildCount()
 	 */
+	@Override
 	public int getChildCount() {
 		return getChildren().size();
 	}
@@ -128,6 +133,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
 	 */
+	@Override
 	public ImageIcon getIcon() {
 		return TreeIcons.propertyIcon;
 	}
@@ -137,6 +143,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getIndex(TreeNode)
 	 */
+	@Override
 	public int getIndex(TreeNode node) {
 		return getChildren().indexOf(node);
 	}
@@ -144,6 +151,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
 	 */
+	@Override
 	public int getNodeType() {
 		return RdfTreeNode.STATEMENT;
 	}
@@ -153,6 +161,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#getParent()
 	 */
+	@Override
 	public TreeNode getParent() {
 		return getNodeMap().getTreeNode(
 				RdfUtils.getParent(getModel(), statement.getSubject()));
@@ -161,6 +170,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
 	 */
+	@Override
 	public RDFNode getRdfNode() {
 		// return (RDFNode)statement.asResource(); // ?? is ok? cast added -
 		// change from Jena
@@ -181,6 +191,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	 * 
 	 * @see javax.swing.tree.TreeNode#isLeaf()
 	 */
+	@Override
 	public boolean isLeaf() {
 		return getChildren().size() == 0;
 	}
@@ -188,6 +199,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
 	 */
+	@Override
 	public void rename(String newName) {
 	}
 

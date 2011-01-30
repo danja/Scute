@@ -1,7 +1,7 @@
 Scute
 =====
 
-@TODO
+TODO
 
 See http://hyperdata.org/scute
 
@@ -15,4 +15,4 @@ License
 
 open, TBD
 
-various libraries used, all open (@TODO check licenses)
+various libraries used, all open (TODO check licenses)

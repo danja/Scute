@@ -39,7 +39,7 @@ class Edge extends VisibleEdge implements Property {
 	/**
 	 * Instantiates a new edge.
 	 */
-	public Edge() { // @TODO get rid
+	public Edge() { // TODO get rid
 		super();
 	}
 

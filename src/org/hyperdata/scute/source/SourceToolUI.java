@@ -67,6 +67,7 @@ public class SourceToolUI {
 
 			private static final long serialVersionUID = -5594526147707171138L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.checkText();
 			}

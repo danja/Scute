@@ -112,6 +112,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = 7113809796782683172L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.newFile();
 			}
@@ -122,6 +123,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = 8432975088477774203L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.openFile();
 			}
@@ -132,6 +134,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = -8207182633883018396L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.saveFile();
 			}
@@ -142,6 +145,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = -1264506428886349998L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.saveAsFile();
 			}
@@ -152,6 +156,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = -3503256080186368323L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.exit();
 			}
@@ -163,6 +168,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = 5343268104742764928L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.cloneFile();
 			}
@@ -174,6 +180,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			 */
 			private static final long serialVersionUID = -8024969229356348913L;
 
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				editor.closeFile();
 			}
@@ -246,6 +253,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyPressed(KeyEvent event) {
 
 		final int modifiers = event.getModifiers();
@@ -267,12 +275,14 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyReleased(KeyEvent event) {
 	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
+	@Override
 	public void keyTyped(KeyEvent event) {
 	}
 

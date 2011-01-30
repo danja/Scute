@@ -47,6 +47,7 @@ public class RdfTreeCellRenderer extends DefaultTreeCellRenderer implements
 	/* (non-Javadoc)
 	 * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
 	 */
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		/*

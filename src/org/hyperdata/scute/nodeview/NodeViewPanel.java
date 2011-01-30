@@ -17,7 +17,7 @@ package org.hyperdata.scute.nodeview;
  * 
  * @author danja
  * 
- * @FIXME implement
+ * FIXME implement
  *
  */
 public class NodeViewPanel {

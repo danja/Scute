@@ -49,13 +49,15 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#children()
 	 */
-	public Enumeration<Resource> children() { // @TODO change to Iterator<Resource> ?
+	@Override
+	public Enumeration<Resource> children() { // TODO change to Iterator<Resource> ?
 		return null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#delete()
 	 */
+	@Override
 	public void delete() {
 		getNodeMap().removeLiteral(literal);
 
@@ -67,6 +69,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#getAllowsChildren()
 	 */
+	@Override
 	public boolean getAllowsChildren() {
 		return false;
 	}
@@ -74,6 +77,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#getChildAt(int)
 	 */
+	@Override
 	public TreeNode getChildAt(int childIndex) {
 		// System.out.println("no kids Literal");
 		return null;
@@ -82,6 +86,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#getChildCount()
 	 */
+	@Override
 	public int getChildCount() {
 		return 0;
 	}
@@ -89,6 +94,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getIcon()
 	 */
+	@Override
 	public ImageIcon getIcon() {
 		return TreeIcons.literalIcon;
 	}
@@ -96,6 +102,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
 	 */
+	@Override
 	public int getIndex(TreeNode node) {
 		return 0;
 	}
@@ -103,6 +110,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getNodeType()
 	 */
+	@Override
 	public int getNodeType() {
 		return RdfTreeNode.LITERAL;
 	}
@@ -110,6 +118,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#getParent()
 	 */
+	@Override
 	public TreeNode getParent() {
 		// return
 		// getNodeMap().getTreeNode(RdfUtils.getParent(getNodeMap().getModel(),
@@ -120,6 +129,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#getRdfNode()
 	 */
+	@Override
 	public RDFNode getRdfNode() {
 		return literal;
 	}
@@ -127,6 +137,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see javax.swing.tree.TreeNode#isLeaf()
 	 */
+	@Override
 	public boolean isLeaf() {
 		return true;
 	}
@@ -134,6 +145,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.tree.RdfTreeNode#rename(java.lang.String)
 	 */
+	@Override
 	public void rename(String newName) {
 	}
 

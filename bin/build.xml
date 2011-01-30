@@ -170,7 +170,7 @@
 	</target>
 	
 	<!-- MANIFEST.RDF -->
-	<!-- @TODO apply to this XML to generate a manifest.rdf 
+	<!-- TODO apply to this XML to generate a manifest.rdf 
 	(probably XSLT 1.0 instead)
 		<target name="manifest.rdf">
 			<xslt in="./build.xml" out="ant.rdf"

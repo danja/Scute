@@ -21,7 +21,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 /**
  * The Class SourceDemo.
  * 
- * @FIXME finish
+ * FIXME finish
  */
 public class SourceDemo {
 
@@ -45,7 +45,7 @@ public class SourceDemo {
 			exception.printStackTrace();
 		}
 
-		// @TODO show source window!!
+		// TODO show source window!!
 
 		final JFrame frame = new JFrame();
 		// frame.getContentPane().add(tree);

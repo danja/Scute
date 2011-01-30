@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -21,11 +20,11 @@ import javax.swing.SwingUtilities;
  * 
  * @author danja
  * 
- * @FIXME threading isn't quite right, buttons in a row flash between start/stop
+ * FIXME threading isn't quite right, buttons in a row flash between start/stop
  * 
- * @TODO add edge uncrossing
+ * TODO add edge uncrossing
  * 
- * @TODO check other algorithms
+ * TODO check other algorithms
  */
 public class GraphLayout implements Runnable {
 
@@ -144,6 +143,7 @@ public class GraphLayout implements Runnable {
 	}
 
 	private Runnable cleanup = new Runnable() {
+		@Override
 		public void run() {
 			relax();
 		}
@@ -154,6 +154,7 @@ public class GraphLayout implements Runnable {
 	 * 
 	 * @see java.lang.Runnable#run()
 	 */
+	@Override
 	public void run() {
 		while (this.running) {
 			relax();
@@ -194,7 +195,7 @@ public class GraphLayout implements Runnable {
 	 * Relax.
 	 */
 	private void relax() {
-		doEdges(); // @TODO rename these
+		doEdges(); // TODO rename these
 		doNodes();
 		doNodes2();
 	}
@@ -202,7 +203,7 @@ public class GraphLayout implements Runnable {
 	/**
 	 * Do edges.
 	 */
-	private void doEdges() { // @TODO rename
+	private void doEdges() { // TODO rename
 		Iterator<Edge> eIterator = graphSet.edgeIterator();
 
 		while (eIterator.hasNext()) {
@@ -230,7 +231,7 @@ public class GraphLayout implements Runnable {
 	/**
 	 * Do nodes.
 	 */
-	private void doNodes() { // @TODO rename
+	private void doNodes() { // TODO rename
 		Iterator<Node> nIterator1 = graphSet.nodeIterator();
 		while (nIterator1.hasNext()) {
 			Node n1 = nIterator1.next();
@@ -268,7 +269,7 @@ public class GraphLayout implements Runnable {
 	/**
 	 * Do nodes2.
 	 */
-	private void doNodes2() { // @TODO rename
+	private void doNodes2() { // TODO rename
 		Dimension d = panel.getSize();
 
 		Iterator<Node> nIterator = graphSet.nodeIterator();
