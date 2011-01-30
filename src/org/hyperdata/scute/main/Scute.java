@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -22,6 +24,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
+import org.hyperdata.resources.indicators.IndicatorIcons;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.io.AutoSave;
 import org.hyperdata.scute.log.LogPane;
@@ -38,6 +41,11 @@ import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.validate.Validator;
+import org.hyperdata.scute.validate.DummyValidatable;
+import org.hyperdata.scute.validate.IconSetter;
+import org.hyperdata.scute.validate.Validatable;
+import org.hyperdata.scute.validate.ValidatorSomething;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -167,8 +175,37 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		controlPanel.add(fileUI.getToolBar());
 
 		final SourceToolUI sourceUI = new SourceToolUI(this);
+		JToolBar sourceToolbar = sourceUI.getToolBar();
+		controlPanel.add(sourceToolbar); // TODO tidy up toolbars
+		
+		// FIXME document validation
+		// Set up validators
+		Validatable validatable = new DummyValidatable(); // will be a wrapper for data/syntax objects
+		final Validator validator = new Validator(validatable);
+		
+		// Set up validator button
+		JButton validatorButton = new JButton(); 
+		IconSetter iconSetter = new IconSetter(validatorButton);
+		validator.addValidationListener(iconSetter);
+		sourceToolbar.add(validatorButton);
+		
+		// temp for testing 
+		JButton vTester = new JButton("Voldemort");
+		vTester.addActionListener(new ActionListener(){
 
-		controlPanel.add(sourceUI.getToolBar());
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					validator.validate();
+				} catch (InterruptedException exception) {
+					// TODO Auto-generated catch block
+					exception.printStackTrace();
+				}
+				
+			}
+			
+		});
+		sourceToolbar.add(vTester);
 
 		panel.add(controlPanel, BorderLayout.NORTH);
 

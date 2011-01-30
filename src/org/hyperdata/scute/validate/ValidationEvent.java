@@ -11,15 +11,18 @@
 
 package org.hyperdata.scute.validate;
 
+import java.util.EventObject;
+
 import javax.swing.ImageIcon;
 
 /**
  * @author danja
  *
  */
-public class ValidatorMessage {
+public class ValidationEvent {
 
 	private int status = 0;
+	private String description = " (no report provided)";
 	
 	public int getStatus() {
 		return this.status;
@@ -36,4 +39,17 @@ public class ValidatorMessage {
 	public ImageIcon getIcon(){
 		return Validator.ICON[this.status];
 	}
+
+	/**
+	 * @param string
+	 */
+	public void setDescription(String description) {
+		this.description  = description;
+	}
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	
 }
