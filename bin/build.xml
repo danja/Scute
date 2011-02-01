@@ -220,6 +220,16 @@
     	-->
     	<!-- plus tar.gz plus self-extracting jar -->
     </target>
+	
+	<target name="test-install"><!-- FIXME implement test-install -->
+	<!-- create temp dir -->
+	<!-- download latest Scute.jar -->
+	<!-- compare downloaded Scute.jar with local copy -->
+	<!-- run it! -->
+	</target>
 
+	<target name="http-tests"><!-- FIXME implement http-tests -->
+		<!-- run a bunch of HTTP method calls to confirm functionality of headless build -->
+	</target>
 
 </project>
