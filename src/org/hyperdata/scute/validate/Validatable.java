@@ -14,6 +14,6 @@ public interface Validatable {
 	 * @return
 	 * @throws InterruptedException 
 	 */
-	public ValidationEvent validate() throws InterruptedException;
+	public StatusEvent validate() throws InterruptedException;
 
 }

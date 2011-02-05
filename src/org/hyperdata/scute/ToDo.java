@@ -23,6 +23,8 @@ package org.hyperdata.scute;
  * 
  * TODO data entry Form tab
  * 
+ * TODO check if tabs can also be JInternalFrames
+ * 
  * TODO installer jar
  * 
  * TODO installer maybe http://launch4j.sourceforge.net/

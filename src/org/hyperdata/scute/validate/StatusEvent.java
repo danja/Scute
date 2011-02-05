@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
  * @author danja
  *
  */
-public class ValidationEvent {
+public class StatusEvent {
 
 	private int status = 0;
 	private String description = " (no report provided)";
@@ -33,11 +33,11 @@ public class ValidationEvent {
 	}
 
 	public String getLabel() {
-		return Validator.LABEL[this.status];
+		return StatusMonitor.LABEL[this.status];
 	}
 	
 	public ImageIcon getIcon(){
-		return Validator.ICON[this.status];
+		return StatusMonitor.ICON[this.status];
 	}
 
 	/**

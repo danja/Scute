@@ -25,8 +25,8 @@ public class ValidatableModel implements Validatable {
 	 * @see org.hyperdata.scute.validate.Validatable#validate()
 	 */
 	@Override
-	public ValidationEvent validate() throws InterruptedException {
-		ValidationEvent event = new ValidationEvent();
+	public StatusEvent validate() throws InterruptedException {
+		StatusEvent event = new StatusEvent();
 		// FIXME implement Model validation
 		return event;
 	}

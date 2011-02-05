@@ -29,6 +29,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import org.hyperdata.scute.autosave.AutoSave;
+import org.hyperdata.scute.autosave.UserActivityListener;
+
 /**
  * The Class RdfTreePanel.
  * 
@@ -74,6 +77,13 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		loadModel(model);
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		init();
+	}
+	
+	/**
+	 * @param autoSave
+	 */
+	public void addUserActivityListener(UserActivityListener listener) {
+		// TODO to implement when RdfTreePanel supports editing
 	}
 
 	/**
@@ -239,4 +249,6 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 		ToolTipManager.sharedInstance().registerComponent(tree);
 		tree.setCellRenderer(new RdfTreeCellRenderer());
 	}
+
+
 }

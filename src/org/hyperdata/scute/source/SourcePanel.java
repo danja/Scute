@@ -20,6 +20,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.hyperdata.scute.autosave.AutoSave;
+import org.hyperdata.scute.autosave.UserActivityListener;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
 
@@ -31,6 +33,14 @@ import com.hp.hpl.jena.rdf.model.Model;
  */
 public class SourcePanel extends JEditorPane implements TextContainer,
 		ChangeListener {
+	
+	/**
+	 * @param listener
+	 * 
+	 */
+	public void addUserActivityListener(UserActivityListener listener) {
+		getDocument().addDocumentListener(listener);
+	}
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -3186641002083966387L;
@@ -55,11 +65,9 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	 * @param syntax
 	 *            the syntax
 	 */
-	public SourcePanel(FocusListener focusListener, String syntax) {
+	public SourcePanel(String syntax) {
 		super();
-		addFocusListener(focusListener);
 		this.syntax = syntax;
-		// addChangeListener(this);
 	}
 	
 	/**
@@ -70,22 +78,6 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	public JButton getRefreshButton() {
 		return refreshButton;
 	}
-
-	/*
-	 * public void stateChanged(ChangeEvent event) {
-	 * parentListener.stateChanged(event); System.out.println("STATECHANGED IN
-	 * TURTLE SOURCE PANE"); System.out.println(event.getSource()); }
-	 */
-
-	/*
-	 * 
-	 * public void actionPerformed(ActionEvent event) {
-	 * System.out.println("ACTIONPERFORMED IN TURTLE SOURCE PANE");
-	 * System.out.println(event.getSource()); if
-	 * (event.getSource().equals(refreshButton)) {
-	 * System.out.println("REFRESHING!!"); refreshFromText(); }
-	 * parentListener.stateChanged(null); }
-	 */
 
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
@@ -168,5 +160,4 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	public String getTextFilename() {
 		return Config.TEXT_FILENAME;
 	}
-
 }

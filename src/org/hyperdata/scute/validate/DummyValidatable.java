@@ -20,12 +20,12 @@ public class DummyValidatable implements Validatable {
 	 * @see org.hyperdata.scute.validate.Validatable#validate()
 	 */
 	@Override
-	public ValidationEvent validate() throws InterruptedException {
+	public StatusEvent validate() throws InterruptedException {
 		
 		// pretend to be working
 		Thread.sleep(this.duration);
 		
-		ValidationEvent event = new ValidationEvent();
+		StatusEvent event = new StatusEvent();
 		
 		event.setStatus(getRandomStatus());
 		event.setDescription("Computer says \"No.\"");
@@ -38,7 +38,7 @@ public class DummyValidatable implements Validatable {
 	}
 	
 	private int getRandomStatus() {
-		return random.nextInt(Validator.N_STATES);
+		return random.nextInt(StatusMonitor.N_STATES);
 	}
 
 }

@@ -41,11 +41,10 @@ import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.validate.StatusButton;
 import org.hyperdata.scute.validate.Validator;
 import org.hyperdata.scute.validate.DummyValidatable;
-import org.hyperdata.scute.validate.IconSetter;
 import org.hyperdata.scute.validate.Validatable;
-import org.hyperdata.scute.validate.ValidatorSomething;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -132,9 +131,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			Config.self.saveNow();
 		}
 		
-		AutoSave autosave = new AutoSave();
-		autosave.initModelSaver(this);
-		autosave.initModelSaver(Config.self);
+		AutoSave autoSave = new AutoSave();
+		autoSave.initModelSaver(this);
+		autoSave.initModelSaver(Config.self);
 
 		Models.workingModel = Models.sampleModel;
 
@@ -143,28 +142,32 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		panel.add(tabs, BorderLayout.CENTER);
  
-		turtlePanel = new SourcePanel(autosave, "Turtle");
-		
+		turtlePanel = new SourcePanel("Turtle");
+		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 		tabs.addChangeListener(turtlePanel);
 		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
 
-		rdfxmlPanel = new SourcePanel(autosave, "RDF/XML");
+		rdfxmlPanel = new SourcePanel("RDF/XML");
+		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
 		tabs.addChangeListener(rdfxmlPanel);
 		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
 
 		treePanel = new RdfTreePanel(Models.workingModel);
+		treePanel.addUserActivityListener(autoSave);
 		tabs.addTab("Tree", treePanel); // treePanel has scroll?
 
 		graphPanel = new GraphPanel(Models.workingModel);
+		graphPanel.addUserActivityListener(autoSave);
 		tabs.addTab("Graph", graphPanel);
 
 		tabs.setSelectedIndex(0);
 
-		final JPanel controlPanel = new JPanel();
+		final JPanel controlPanel = new JPanel(); // contains JToolBars
+		panel.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
 		final FileToolUI fileUI = new FileToolUI(this);
@@ -175,16 +178,22 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		JToolBar sourceToolbar = sourceUI.getToolBar();
 		controlPanel.add(sourceToolbar); // TODO tidy up toolbars
 		
+		JPanel statusPanel = new JPanel();
+		panel.add(statusPanel, BorderLayout.SOUTH);
+		
+		// Set up autosave button
+		StatusButton autoSaveButton = new StatusButton(); 
+		// statusPanel.add(autoSaveButton);
+		
 		// FIXME document validation
 		// Set up validators
 		Validatable validatable = new DummyValidatable(); // will be a wrapper for data/syntax objects
 		final Validator validator = new Validator(validatable);
 		
 		// Set up validator button
-		JButton validatorButton = new JButton(); 
-		IconSetter iconSetter = new IconSetter(validatorButton);
-		validator.addValidationListener(iconSetter);
-		sourceToolbar.add(validatorButton);
+		StatusButton validatorButton = new StatusButton(); // TODO SHOULD USE an Action?
+		validator.addStatusListener(validatorButton);
+		statusPanel.add(validatorButton);
 		
 		// temp for testing 
 		JButton vTester = new JButton("Voldemort");
@@ -202,14 +211,14 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			}
 			
 		});
-		sourceToolbar.add(vTester);
+		statusPanel.add(vTester);
 
-		panel.add(controlPanel, BorderLayout.NORTH);
+
 
 		initLogPane();
 
 		frame = new JFrame("Scute (0.5 Beta)");
-		frame.addWindowListener(autosave);
+		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
@@ -224,8 +233,8 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		if (Config.self.getSync() == false) { // previous run wasn't shut down
 			// correctly
 			System.out.println("RESTORE");
-			autosave.restorePreviousState(this);
-			tabs.addChangeListener(autosave); // so previous tab can be
+			autoSave.restorePreviousState(this);
+			tabs.addChangeListener(autoSave); // so previous tab can be
 			// restored, has to be here to
 			// miss initializing change to
 			// tab 0

@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import org.hyperdata.scute.autosave.UserActivityListener;
 import org.hyperdata.scute.graph.actions.ToggleAction;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -53,6 +54,13 @@ public class GraphPanel extends JPanel {
 		toolBar = new JToolBar("Graph Tools");
 		addControls();
 		add(toolBar, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * @param autoSave
+	 */
+	public void addUserActivityListener(UserActivityListener listener) {
+		// TODO to implement when GraphPanel supports editing
 	}
 
 	/**
