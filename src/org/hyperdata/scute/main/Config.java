@@ -6,7 +6,7 @@ package org.hyperdata.scute.main;
 
 import java.io.IOException;
 
-import org.hyperdata.scute.io.ModelSaver;
+import org.hyperdata.scute.autosave.ModelSaver;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.RdfUtils;
 

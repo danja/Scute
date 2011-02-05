@@ -25,8 +25,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
 import org.hyperdata.resources.indicators.IndicatorIcons;
+import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.graph.GraphPanel;
-import org.hyperdata.scute.io.AutoSave;
 import org.hyperdata.scute.log.LogPane;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
@@ -126,13 +126,13 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		// Config.self.setDefaults();
 		// Config.self.saveNow();
 
-		AutoSave autosave = new AutoSave();
-
 		if (Config.self.getSync()) { // previous run was shut down correctly
 			System.out.println("CLEAN");
 			Config.self.setSync(false);
 			Config.self.saveNow();
 		}
+		
+		AutoSave autosave = new AutoSave();
 		autosave.initModelSaver(this);
 		autosave.initModelSaver(Config.self);
 
@@ -142,13 +142,13 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		panel.setPreferredSize(FRAME_SIZE);
 		tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		panel.add(tabs, BorderLayout.CENTER);
-
+ 
 		turtlePanel = new SourcePanel(autosave, "Turtle");
+		
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 		tabs.addChangeListener(turtlePanel);
 		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
-		// JTabbedPane setBackgroundAt(int index, Color background)
 
 		rdfxmlPanel = new SourcePanel(autosave, "RDF/XML");
 		rdfxmlPanel.loadModel(Models.workingModel);
@@ -163,9 +163,6 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		tabs.addTab("Graph", graphPanel);
 
 		tabs.setSelectedIndex(0);
-		// graphPanel.scramble();
-		// graphPanel.start();
-		// graphPanel.initialize();
 
 		final JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
@@ -221,7 +218,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		frame.setJMenuBar(menuBar);
 		frame.setContentPane(panel);
 		frame.pack();
-		// frame.show();
+		
 		frame.setVisible(true);
 		fileChooser = new JFileChooser("./data");
 		if (Config.self.getSync() == false) { // previous run wasn't shut down

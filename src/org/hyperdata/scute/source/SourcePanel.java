@@ -61,7 +61,7 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		this.syntax = syntax;
 		// addChangeListener(this);
 	}
-
+	
 	/**
 	 * Gets the refresh button.
 	 * 
@@ -151,14 +151,9 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// System.out.println("Change "+e);
 		final Component c = ((JTabbedPane) e.getSource())
 				.getSelectedComponent();
-		// System.out.println(c);
 		if (this == c) {
-			// System.out.println("refreshing "+c);
-			// refreshFromModel();
-			// repaint();
 			System.out.println("TAB changed");
 			System.out.println("current window = " + getSyntax());
 		}

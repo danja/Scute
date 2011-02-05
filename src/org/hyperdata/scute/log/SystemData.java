@@ -14,6 +14,8 @@ package org.hyperdata.scute.log;
 		int freeMemory = (int)(runtime.freeMemory() / 1024);
 		int totalMemory = (int)(runtime.totalMemory() / 1024);
 		int usedMemory = (totalMemory - freeMemory);
+		
+		System.out.println(System.getProperty("java.class.path"));
 
  *
  */

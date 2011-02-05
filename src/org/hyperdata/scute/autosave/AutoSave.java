@@ -8,13 +8,14 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.io;
+package org.hyperdata.scute.autosave;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
+import java.util.EventObject;
 import java.util.Timer;
 
 import javax.swing.JTabbedPane;
@@ -29,14 +30,15 @@ import org.hyperdata.scute.source.TextContainer;
 /**
  * see http://esw.w3.org/IntegrityIsJobOne
  * 
- * Currently just saves stuff afresh every 6 seconds - could do with being 
- * intelligent about when things have changed
+ * Currently just saves stuff afresh every 6 seconds 
+ * TODO could do with being intelligent about when things have changed
+ * 
+ * TODO rationalize listeners
  * 
  * @author danny
  * 
  */
-public class AutoSave extends WindowAdapter implements FocusListener,
-		ChangeListener {
+public class AutoSave extends UserActivityAdapter { // 
 
 	/** The text timer. */
 	private final Timer textTimer = new Timer();
@@ -49,6 +51,22 @@ public class AutoSave extends WindowAdapter implements FocusListener,
 	
 	/** The model saver. */
 	private ModelSaver modelSaver;
+	
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.main.UserActivityListener#activityOccurred(java.util.EventObject)
+	 */
+	@Override
+	public void activityOccurred(EventObject object) {
+		reschedule();
+	}
+	
+	/**
+	 * Effectively resets clock
+	 */
+	public void reschedule(){
+		System.out.println("RESCHEDULE!!!");
+	}
+
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
@@ -123,10 +141,9 @@ public class AutoSave extends WindowAdapter implements FocusListener,
 				.getModelSaveDelay(), Config.self.getModelSavePeriod());
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
-	 */
-	@Override
+/*
+ java.awt.event.FocusListener
+ */
 	public void focusGained(FocusEvent event) {
 		TextContainer container = (TextContainer) event.getSource();
 		textSaver = new TextSaver(container);
@@ -135,20 +152,17 @@ public class AutoSave extends WindowAdapter implements FocusListener,
 						Config.self.getTextSavePeriod());
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
-	 */
 	@Override
 	public void focusLost(FocusEvent arg0) {
 
 	}
+	
 
-	/* (non-Javadoc)
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-	 */
-	@Override
+	/*  javax.swing.event.ChangeListener */
+
 	public void stateChanged(ChangeEvent event) { // from tabs
 		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
 		Config.self.setSelectedTab(tabIndex);
 	}
+
 }

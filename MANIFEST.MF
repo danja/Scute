@@ -1,14 +1,12 @@
 Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.8.0
-Created-By: 1.6.0_20-b20 (Sun Microsystems Inc.)
+Ant-Version: Apache Ant 1.7.1
+Created-By: 19.0-b09 (Sun Microsystems Inc.)
 Built-By: Danny Ayers
 Main-Class: org.hyperdata.scute.main.Scute
-Implementation-Version: 0.50-b0
-Class-Path: lib/antlr-2.7.5.jar lib/arq-2.8.5.jar lib/arq-extra.jar li
- b/commons-logging-1.1.jar lib/concurrent.jar lib/icu4j-3.4.4.jar lib/
- iri-0.8.jar lib/jena-2.6.3-sources.jar lib/jena-2.6.3.jar lib/jgraphx
- .jar lib/json.jar lib/junit-4.5.jar lib/junit.jar lib/log4j-1.2.14.ja
- r lib/looks-2.1.4.jar lib/lucene-core-2.3.1.jar lib/slf4j-api-1.5.8.j
- ar lib/slf4j-log4j12-1.5.8.jar lib/stax-api-1.0.1.jar lib/tdb-0.8.7.j
- ar lib/wstx-asl-3.2.9.jar lib/xercesImpl-2.7.1.jar lib/xml-apis.jar
+Implementation-Version: 0.50-b15
+Class-Path: antlr-2.7.5.jar:arq-2.8.7.jar:arq-extra.jar:commons-loggin
+ g-1.1.jar:concurrent.jar:icu4j-3.4.4.jar:iri-0.8.jar:jena-2.6.4.jar:j
+ son.jar:junit-4.5.jar:log4j-1.2.14.jar:looks-2.1.4.jar:lucene-core-2.
+ 3.1.jar:slf4j-api-1.5.8.jar:slf4j-log4j12-1.5.8.jar:stax-api-1.0.1.ja
+ r:tdb-0.8.7.jar:wstx-asl-3.2.9.jar:xercesImpl-2.7.1.jar:xml-apis.jar
 

@@ -19,7 +19,18 @@ package org.hyperdata.scute;
  * something useful
  * TODO fill out javadoc package.html files
  * 
- * TRIPLES TAB
+ * TODO TRIPLES TAB
+ * 
+ * TODO data entry Form tab
+ * 
+ * TODO installer jar
+ * 
+ * TODO installer maybe http://launch4j.sourceforge.net/
+ * 
+ * TODO startup wizard -
+ * 
+ * TODO Web Start
+ * 
 	NodeView
 for editing individual nodes, add radial tree-layout diagram
 (pop-up)

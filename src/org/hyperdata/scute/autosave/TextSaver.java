@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.io;
+package org.hyperdata.scute.autosave;
 
 import java.io.File;
 import java.io.FileOutputStream;
