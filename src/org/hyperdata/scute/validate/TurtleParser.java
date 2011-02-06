@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.validate;
 
 import java.io.FileInputStream;
@@ -14,8 +24,16 @@ import com.hp.hpl.jena.n3.turtle.parser.TokenMgrError;
 import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.util.FileUtils;
 
+/**
+ * The Class TurtleParser.
+ */
 public class TurtleParser {
-	/** Run the Turtle parser - produce N-triples */
+	
+	/**
+	 * Run the Turtle parser - produce N-triples.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
 			parse("http://example/BASE", System.in);
@@ -28,6 +46,12 @@ public class TurtleParser {
 		}
 	}
 
+	/**
+	 * Parses the.
+	 *
+	 * @param baseURI the base uri
+	 * @param filename the filename
+	 */
 	public static void parse(String baseURI, String filename) {
 		InputStream in = null;
 		try {
@@ -39,6 +63,12 @@ public class TurtleParser {
 		parse(baseURI, in);
 	}
 
+	/**
+	 * Parses the.
+	 *
+	 * @param baseURI the base uri
+	 * @param in the in
+	 */
 	public static void parse(String baseURI, InputStream in) {
 		Reader reader = FileUtils.asUTF8(in);
 		try {
@@ -66,6 +96,14 @@ public class TurtleParser {
 		}
 	}
 	
+	/**
+	 * Parses the string.
+	 *
+	 * @param baseURI the base uri
+	 * @param in the in
+	 * @return true, if successful
+	 * @throws TurtleParseException the turtle parse exception
+	 */
 	public static boolean parseString(String baseURI, String in) throws TurtleParseException {
 		Reader reader = new StringReader(in);
 			// FileUtils.asUTF8(in);

@@ -4,30 +4,30 @@
 package org.hyperdata.scute.autosave;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
 import java.awt.event.WindowAdapter;
 import java.util.EventObject;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 
 /**
+ * The Class UserActivityAdapter.
+ *
  * @author danny
  * 
  * An adapter combining different kinds of listeners
  * 
  * Note that DocumentEvents aren't EventObjects like other kinds of events,
  * so here they're wrapped
- *
  */
 public abstract class UserActivityAdapter extends WindowAdapter implements UserActivityListener {
 
+	/**
+	 * Activity occurred.
+	 *
+	 * @param object the object
+	 */
 	public abstract void activityOccurred(EventObject object);
 
 	 

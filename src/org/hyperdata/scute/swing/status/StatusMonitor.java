@@ -12,8 +12,9 @@ import javax.swing.ImageIcon;
 import org.hyperdata.resources.indicators.IndicatorIcons;
 
 /**
- * @author danny
+ * The Class StatusMonitor.
  *
+ * @author danny
  */
 public class StatusMonitor {
 	
@@ -36,10 +37,20 @@ public class StatusMonitor {
 	
 	private Set<StatusChangeListener> statusChangeListeners = new HashSet<StatusChangeListener>();
 
+	/**
+	 * Adds the status listener.
+	 *
+	 * @param listener the listener
+	 */
 	public void addStatusListener(StatusChangeListener listener) {
 		statusChangeListeners.add(listener);
 	}
 	
+	/**
+	 * State changed.
+	 *
+	 * @param vEvent the v event
+	 */
 	public void stateChanged(StatusEvent vEvent){
 		Iterator<StatusChangeListener> iterator = statusChangeListeners.iterator();
 		while(iterator.hasNext()){

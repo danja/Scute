@@ -15,8 +15,16 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentListener;
 
 /**
- * @author danny
+ * The listener interface for receiving userActivity events.
+ * The class that is interested in processing a userActivity
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addUserActivityListener<code> method. When
+ * the userActivity event occurs, that object's appropriate
+ * method is invoked.
  *
+ * @author danny
+ * 
  * combination of listeners for events related to user activity
  */
 public interface UserActivityListener extends EventListener, 

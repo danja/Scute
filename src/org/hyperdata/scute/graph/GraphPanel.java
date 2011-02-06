@@ -57,7 +57,9 @@ public class GraphPanel extends JPanel {
 	}
 	
 	/**
-	 * @param autoSave
+	 * Adds the user activity listener.
+	 *
+	 * @param listener the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
 		// TODO to implement when GraphPanel supports editing

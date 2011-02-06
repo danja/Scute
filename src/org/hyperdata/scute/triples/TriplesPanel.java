@@ -14,6 +14,8 @@ package org.hyperdata.scute.triples;
 import javax.swing.JPanel;
 
 /**
+ * The Class TriplesPanel.
+ *
  * @author danja
  * 
  * A simple 3-column table display of statements in the Model

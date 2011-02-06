@@ -11,16 +11,15 @@
 
 package org.hyperdata.scute.swing.status;
 
-import java.util.EventObject;
-
 import javax.swing.ImageIcon;
 
 
 /**
- * @author danja
+ * The Class StatusEvent.
  *
- * a StatusEvent has a status
+ * @author danja
  * 
+ * a StatusEvent has a status
  */
 public class StatusEvent {
 
@@ -28,32 +27,64 @@ public class StatusEvent {
 	private String description = "";
 	
 	/**
+	 * Instantiates a new status event.
+	 *
 	 * @param status initial status
 	 */
 	public StatusEvent(int status) {
 		this.status = status;
 	}
 
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
 	public void setStatus(int status) {
 		this.status = status;
 	}
 	
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
 	public int getStatus() {
 		return this.status;
 	}
 
+	/**
+	 * Gets the status string.
+	 *
+	 * @return the status string
+	 */
 	public String getStatusString() {
 		return StatusMonitor.DEFAULT_DESCRIPTION[this.status];
 	}
 	
+	/**
+	 * Gets the icon.
+	 *
+	 * @return the icon
+	 */
 	public ImageIcon getIcon(){
 		return StatusMonitor.ICON[this.status];
 	}
 
+	/**
+	 * Sets the description.
+	 *
+	 * @param description the new description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
 	public String getDescription() {
 		return this.description;
 	}

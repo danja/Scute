@@ -4,20 +4,16 @@
 package org.hyperdata.scute.swing.status;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
-
 import org.hyperdata.resources.indicators.IndicatorIcons;
-import org.hyperdata.scute.swing.RoundButton;
 
 /**
+ * The Class StatusButton.
+ *
  * @author danny
- * 
  */
 public class StatusButton extends JButton implements StatusChangeListener {
 
@@ -26,13 +22,19 @@ public class StatusButton extends JButton implements StatusChangeListener {
 	private String[] description = StatusMonitor.DEFAULT_DESCRIPTION;
 	
 	/**
-	 * @param turtleAction
+	 * Instantiates a new status button.
+	 *
 	 */
 	public StatusButton() {
 		super();
 init();
 	}
 	
+	/**
+	 * Instantiates a new status button.
+	 *
+	 * @param action the action
+	 */
 	public StatusButton(Action action) {
 		super();
 		setAction(action);
@@ -40,13 +42,12 @@ init();
 	}
 	
 	/**
-	 * @param turtleAction
-	 * @param redDescription
-	 *            description for state RED
-	 * @param amberDescription
-	 *            description for state AMBER
-	 * @param greenDescription
-	 *            description for state GREEN
+	 * Instantiates a new status button.
+	 *
+	 * @param action the action
+	 * @param redDescription description for state RED
+	 * @param amberDescription description for state AMBER
+	 * @param greenDescription description for state GREEN
 	 */
 	public StatusButton(Action action, String redDescription, String amberDescription,
 			String greenDescription) {
@@ -65,12 +66,18 @@ init();
 		setStatus(StatusMonitor.GREEN);
 	}
 	
+	/**
+	 * Inits the.
+	 */
 	private void init(){
 		setContentAreaFilled(false);
 		setStatus(StatusMonitor.GREEN);
 		setPressedIcon(IndicatorIcons.blueIcon);
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.AbstractButton#paintBorder(java.awt.Graphics)
+	 */
 	@Override
 	protected void paintBorder(Graphics g) {
 		// do nothing, only want icon
@@ -79,12 +86,11 @@ init();
 
 	
 	/**
-	 * @param redDescription
-	 *            description for state RED
-	 * @param amberDescription
-	 *            description for state AMBER
-	 * @param greenDescription
-	 *            description for state GREEN
+	 * Sets the descriptions.
+	 *
+	 * @param redDescription description for state RED
+	 * @param amberDescription description for state AMBER
+	 * @param greenDescription description for state GREEN
 	 */
 	public void setDescriptions(String redDescription, String amberDescription,
 			String greenDescription) {
@@ -93,6 +99,11 @@ init();
 		this.description[2] = greenDescription;
 	}
 
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
 	public void setStatus(int status) {
 		this.status = status;
 		setToolTipText(description[status]);

@@ -1,3 +1,13 @@
+/*
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
+ */
 package org.hyperdata.scute.graph;
 
 import java.awt.Color;
@@ -16,15 +26,22 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import org.hyperdata.scute.swing.RoundButton;
 
 /**
+ * The Class RdfInterpreter.
+ *
  * @author danny
  * 
- * Reads the nodes & arcs in a Jena Model and 
- *
+ * Reads the nodes & arcs in a Jena Model and
  */
 public class RdfInterpreter {
 	private JPanel displayPanel;
 	private GraphSet graphSet;
 
+	/**
+	 * Instantiates a new rdf interpreter.
+	 *
+	 * @param displayPanel the display panel
+	 * @param graphSet the graph set
+	 */
 	public RdfInterpreter(JPanel displayPanel, GraphSet graphSet){
 		this.displayPanel = displayPanel;
 		this.graphSet = graphSet;

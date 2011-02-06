@@ -12,13 +12,11 @@
 package org.hyperdata.scute.nodeview;
 
 /**
- * 
- * Container panel for tabs which display views associated with a single node
- * 
+ * Container panel for tabs which display views associated with a single node.
+ *
  * @author danja
  * 
  * FIXME implement
- *
  */
 public class NodeViewPanel {
 

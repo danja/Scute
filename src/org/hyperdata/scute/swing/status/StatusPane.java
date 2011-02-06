@@ -3,21 +3,24 @@
  */
 package org.hyperdata.scute.swing.status;
 
-import java.awt.Frame;
-
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 
 /**
- * @author danny
+ * The Class StatusPane.
  *
+ * @author danny
  */
 public class StatusPane extends JPanel implements StatusChangeListener {
 
 	private JTextPane textPane;
 	
+	/**
+	 * Instantiates a new status pane.
+	 *
+	 * @param statusAction the status action
+	 */
 	public StatusPane(StatusAction statusAction){
 		super();
 		statusAction.addStatusChangeListener(this);

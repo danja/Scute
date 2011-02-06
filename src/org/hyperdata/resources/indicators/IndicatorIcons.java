@@ -10,7 +10,6 @@
  */
 package org.hyperdata.resources.indicators;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**

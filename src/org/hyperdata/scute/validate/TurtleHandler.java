@@ -15,15 +15,26 @@ import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.n3.turtle.TurtleEventHandler;
 import com.hp.hpl.jena.n3.turtle.TurtleParseException;
 
-/** Emit N-triples */
+/**
+ * Emit N-triples.
+ */
 public class TurtleHandler implements TurtleEventHandler
 {
     PrintStream out = System.out ;
     int count = 0;
     
+    /**
+     * Instantiates a new turtle handler.
+     *
+     * @param out the out
+     */
     public TurtleHandler(PrintStream out) { this.out = out ; }
     
-    public void triple(int line, int col, Triple triple)
+    /* (non-Javadoc)
+     * @see com.hp.hpl.jena.n3.turtle.TurtleEventHandler#triple(int, int, com.hp.hpl.jena.graph.Triple)
+     */
+    @Override
+	public void triple(int line, int col, Triple triple)
     {
         //Check it's valid triple.
         Node s = triple.getSubject() ;
@@ -48,10 +59,20 @@ public class TurtleHandler implements TurtleEventHandler
         count++;
     }
     
+    /**
+     * Gets the count.
+     *
+     * @return the count
+     */
     public int getCount(){
     	return count;
     }
 
+    /**
+     * Output node.
+     *
+     * @param node the node
+     */
     private void outputNode(Node node)
     {
         if ( node.isURI() ) 
@@ -90,17 +111,35 @@ public class TurtleHandler implements TurtleEventHandler
         System.err.println("Illegal node: "+node) ;
     }
 
-    public void startFormula(int line, int col)
+    /* (non-Javadoc)
+     * @see com.hp.hpl.jena.n3.turtle.TurtleEventHandler#startFormula(int, int)
+     */
+    @Override
+	public void startFormula(int line, int col)
     { throw new TurtleParseException("["+line+", "+col+"] : Error: Formula found") ; }
 
-    public void endFormula(int line, int col)
+    /* (non-Javadoc)
+     * @see com.hp.hpl.jena.n3.turtle.TurtleEventHandler#endFormula(int, int)
+     */
+    @Override
+	public void endFormula(int line, int col)
     { throw new TurtleParseException("["+line+", "+col+"] : Error: Formula found") ; }
 
-    public void prefix(int line, int col, String prefix, String iri)
+    /* (non-Javadoc)
+     * @see com.hp.hpl.jena.n3.turtle.TurtleEventHandler#prefix(int, int, java.lang.String, java.lang.String)
+     */
+    @Override
+	public void prefix(int line, int col, String prefix, String iri)
     {  }
     
     static boolean applyUnicodeEscapes = true ;
     
+    /**
+     * Write string.
+     *
+     * @param s the s
+     * @param writer the writer
+     */
     private static void writeString(String s, PrintWriter writer) {
 
         for (int i = 0; i < s.length(); i++) {
@@ -128,6 +167,11 @@ public class TurtleHandler implements TurtleEventHandler
     }
     
     
+    /**
+     * Output esc.
+     *
+     * @param s the s
+     */
     public  void outputEsc(String s)
     {
         int len = s.length() ;

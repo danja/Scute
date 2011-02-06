@@ -60,10 +60,20 @@ public class GraphDiagramPanel extends JPanel {
 		addMouseListener(new MouseHandler(this));
 	}
 	
+	/**
+	 * Checks if is running.
+	 *
+	 * @return true, if is running
+	 */
 	public boolean isRunning() {
 		return graphLayout.isRunning();
 	}
 
+	/**
+	 * Sets the running.
+	 *
+	 * @param run the new running
+	 */
 	public void setRunning(boolean run) {
 		graphLayout.setRunning(run);
 	}

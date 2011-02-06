@@ -3,26 +3,24 @@
  */
 package org.hyperdata.scute.validate;
 
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.Action;
 import javax.swing.text.Document;
 
 import org.hyperdata.scute.swing.status.StatusAction;
-import org.hyperdata.scute.swing.status.StatusChangeListener;
 import org.hyperdata.scute.swing.status.StatusEvent;
 
 /**
- * @author danny
+ * The Class TurtleValidateAction.
  *
+ * @author danny
  */
 public class TurtleValidateAction extends StatusAction {
 
 	private StatusEvent status;
 
 	/**
-	 * @param turtleDocument
+	 * Instantiates a new turtle validate action.
+	 *
+	 * @param turtleDocument the turtle document
 	 */
 	public TurtleValidateAction(Document turtleDocument) {
 		Validatable validatableTurtle = new ValidatableTurtleDocument(turtleDocument); 

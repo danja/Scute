@@ -11,8 +11,6 @@
 package org.hyperdata.scute.source;
 
 import java.awt.Component;
-import java.awt.event.FocusListener;
-
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -20,7 +18,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.UserActivityListener;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
@@ -35,8 +32,9 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		ChangeListener {
 	
 	/**
-	 * @param listener
-	 * 
+	 * Adds the user activity listener.
+	 *
+	 * @param listener the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
 		getDocument().addDocumentListener(listener);
@@ -59,11 +57,8 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 
 	/**
 	 * Instantiates a new source panel.
-	 * 
-	 * @param focusListener
-	 *            the focus listener
-	 * @param syntax
-	 *            the syntax
+	 *
+	 * @param syntax the syntax
 	 */
 	public SourcePanel(String syntax) {
 		super();

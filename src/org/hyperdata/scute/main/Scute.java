@@ -15,8 +15,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -27,7 +25,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.Document;
 
-import org.hyperdata.resources.indicators.IndicatorIcons;
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.AutoSaveAction;
@@ -50,11 +47,6 @@ import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
 import org.hyperdata.scute.validate.TurtleValidateAction;
-import org.hyperdata.scute.validate.ValidatableTurtleDocument;
-import org.hyperdata.scute.validate.ValidatableRDFXMLDocument;
-import org.hyperdata.scute.validate.Validator;
-import org.hyperdata.scute.validate.Validatable;
-
 import com.hp.hpl.jena.rdf.model.Model;
 
 /**

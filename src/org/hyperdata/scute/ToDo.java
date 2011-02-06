@@ -11,9 +11,9 @@
 
 package org.hyperdata.scute;
 
-import com.hp.hpl.jena.util.FileUtils;
-
 /**
+ * The Class ToDo.
+ *
  * @author danja
  * 
  * a dummy class to keep some of these:
@@ -36,17 +36,16 @@ import com.hp.hpl.jena.util.FileUtils;
  * 
  * TODO Web Start
  * 
-	NodeView
-for editing individual nodes, add radial tree-layout diagram
-(pop-up)
-	EdgeView
-show individual statement, allow adding wildcards to search model, e.g.
-[<#resource>] [<#property>] [Any]
-
-add zoom
-
-generate SPARQL from ? in graph view?
- *
+ * NodeView
+ * for editing individual nodes, add radial tree-layout diagram
+ * (pop-up)
+ * EdgeView
+ * show individual statement, allow adding wildcards to search model, e.g.
+ * [<#resource>] [<#property>] [Any]
+ * 
+ * add zoom
+ * 
+ * generate SPARQL from ? in graph view?
  */
 public class ToDo {
 

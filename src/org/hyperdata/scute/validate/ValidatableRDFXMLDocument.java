@@ -3,34 +3,33 @@
  */
 package org.hyperdata.scute.validate;
 
-import java.io.IOException;
 import java.io.StringReader;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import com.hp.hpl.jena.n3.turtle.TurtleParseException;
 import com.hp.hpl.jena.rdf.arp.ARP;
-import com.hp.hpl.jena.rdf.model.Model;
-
-import org.openjena.riot.ErrorHandler;
-import org.xml.sax.SAXParseException;
-
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
 
 /**
+ * The Class ValidatableRDFXMLDocument.
+ *
  * @author danny
  * 
  * Wrapper around a Document with a method to validate contained Turtle syntax
  * 
  * (the method will usually be called automatically by a org.hyperdata.scute.validate.Validator)
- *
  */
 public class ValidatableRDFXMLDocument implements Validatable {
 
 	private Document document;
 
+	/**
+	 * Instantiates a new validatable rdfxml document.
+	 *
+	 * @param document the document
+	 */
 	public ValidatableRDFXMLDocument(Document document){
 		this.document = document;
 	}
@@ -50,6 +49,12 @@ public class ValidatableRDFXMLDocument implements Validatable {
 		return statusEvent;
 	}
 
+	/**
+	 * Parses the string.
+	 *
+	 * @param text the text
+	 * @return the status event
+	 */
 	public static StatusEvent parseString(String text){
 		StatusEvent statusEvent = new StatusEvent(StatusMonitor.GREEN);
 	ARP arp = new ARP();

@@ -107,16 +107,26 @@ public class GraphLayout implements Runnable {
 	}
 	
 	/**
-	 * 
+	 * Inits the.
 	 */
 	public void init() {
 		scramble();	
 	}
 
+	/**
+	 * Checks if is running.
+	 *
+	 * @return true, if is running
+	 */
 	public boolean isRunning() {
 		return this.running;
 	}
 
+	/**
+	 * Sets the running.
+	 *
+	 * @param run the new running
+	 */
 	public void setRunning(boolean run) {
 		if (run) {
 			scramble();

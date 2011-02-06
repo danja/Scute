@@ -6,16 +6,17 @@ package org.hyperdata.scute.validate;
 import org.hyperdata.scute.swing.status.StatusEvent;
 
 /**
- * @author danny
+ * The Interface Validatable.
  *
- * 
+ * @author danny
  */
 public interface Validatable {
 
 	/**
-	 * @return
-	 * @throws InterruptedException 
-	 * @throws Exception 
+	 * Validate.
+	 *
+	 * @return the status event
+	 * @throws Exception the exception
 	 */
 	public StatusEvent validate() throws Exception;
 

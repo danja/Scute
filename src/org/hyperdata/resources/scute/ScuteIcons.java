@@ -11,9 +11,6 @@
 package org.hyperdata.resources.scute;
 
 import java.awt.Image;
-import java.awt.Toolkit;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**

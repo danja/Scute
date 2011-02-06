@@ -29,7 +29,6 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.UserActivityListener;
 
 /**
@@ -80,7 +79,9 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 	}
 	
 	/**
-	 * @param autoSave
+	 * Adds the user activity listener.
+	 *
+	 * @param listener the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
 		// TODO to implement when RdfTreePanel supports editing

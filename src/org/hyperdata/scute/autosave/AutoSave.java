@@ -11,8 +11,6 @@
 package org.hyperdata.scute.autosave;
 
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.util.EventObject;
@@ -20,8 +18,6 @@ import java.util.Timer;
 
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
@@ -61,7 +57,7 @@ public class AutoSave extends UserActivityAdapter { //
 	}
 	
 	/**
-	 * Effectively resets clock
+	 * Effectively resets clock.
 	 */
 	public void reschedule(){
 		System.out.println("RESCHEDULE!!!");
@@ -144,7 +140,11 @@ public class AutoSave extends UserActivityAdapter { //
 /*
  java.awt.event.FocusListener
  */
-	public void focusGained(FocusEvent event) {
+	/* (non-Javadoc)
+ * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
+ */
+@Override
+public void focusGained(FocusEvent event) {
 		TextContainer container = (TextContainer) event.getSource();
 		textSaver = new TextSaver(container);
 		textTimer
@@ -152,6 +152,9 @@ public class AutoSave extends UserActivityAdapter { //
 						Config.self.getTextSavePeriod());
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
+	 */
 	@Override
 	public void focusLost(FocusEvent arg0) {
 
@@ -160,6 +163,10 @@ public class AutoSave extends UserActivityAdapter { //
 
 	/*  javax.swing.event.ChangeListener */
 
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
+	@Override
 	public void stateChanged(ChangeEvent event) { // from tabs
 		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
 		Config.self.setSelectedTab(tabIndex);

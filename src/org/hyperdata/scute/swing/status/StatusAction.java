@@ -4,19 +4,13 @@
 package org.hyperdata.scute.swing.status;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 
 /**
+ * The Class StatusAction.
+ *
  * @author danny
- * 
  */
 public class StatusAction extends AbstractAction implements
 		StatusChangeListener {
@@ -36,7 +30,7 @@ public class StatusAction extends AbstractAction implements
 	}
 
 	/**
-	 * 
+	 * Run task.
 	 */
 	private void runTask() {
 		Runnable task = getStatusTask();
@@ -44,12 +38,19 @@ public class StatusAction extends AbstractAction implements
 		t.start();
 	}
 
+	/**
+	 * Sets the status task.
+	 *
+	 * @param task the new status task
+	 */
 	public void setStatusTask(Runnable task) {
 		putValue("StatusTask", task);
 	}
 
 	/**
-	 * @return
+	 * Gets the status task.
+	 *
+	 * @return the status task
 	 */
 	public StatusTask getStatusTask() {
 		Object object = getValue("StatusTask");
@@ -72,7 +73,9 @@ public class StatusAction extends AbstractAction implements
 	}
 
 	/**
-	 * @param statusPane
+	 * Adds the status change listener.
+	 *
+	 * @param listener the listener
 	 */
 	public void addStatusChangeListener(StatusChangeListener listener) { // pass it on
 		getStatusTask().addStatusListener(listener);
