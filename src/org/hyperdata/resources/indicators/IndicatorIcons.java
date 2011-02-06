@@ -10,6 +10,7 @@
  */
 package org.hyperdata.resources.indicators;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -20,6 +21,7 @@ public class IndicatorIcons {
 	public static final ImageIcon greenIcon;
 	public static final ImageIcon redIcon;
 	public static final ImageIcon amberIcon;
+	public static final ImageIcon blueIcon;
 
 	static {
 		final ClassLoader loader = IndicatorIcons.class.getClassLoader();
@@ -30,5 +32,7 @@ public class IndicatorIcons {
 				.getResource("org/hyperdata/resources/indicators/red-button-medium.gif"));
 		amberIcon = new ImageIcon(loader
 				.getResource("org/hyperdata/resources/indicators/amber-button-medium.gif"));
+		blueIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/indicators/blue-button-medium.gif"));
 	}
 }

@@ -14,34 +14,19 @@ import javax.swing.event.ChangeListener;
 import org.hyperdata.resources.indicators.IndicatorIcons;
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
+import org.hyperdata.scute.swing.status.StatusTask;
 
 /**
  * @author danja
  *
  */
-public class Validator extends StatusMonitor implements Runnable {
-
-	// _________________ private members bar ______________________________
-	
+public class Validator extends StatusTask {
 	
 	private Validatable validatable;
-	
-
 	
 	public Validator(Validatable validatable) { 
 		this.validatable = validatable;
 	}
-	
-	/*
-	 * Do the validation
-	 * 
-	 * (non-Javadoc)
-	 * @see org.hyperdata.scute.validate.Validator#validate()
-	 */
-//	public void validate() { 
-//		Thread t = new Thread(this);
-//t.start();
-//	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -59,8 +44,5 @@ public class Validator extends StatusMonitor implements Runnable {
 			System.out.println("Exception in Validator");
 			exception.printStackTrace();
 		}
-		
-		
-
 	}
 }

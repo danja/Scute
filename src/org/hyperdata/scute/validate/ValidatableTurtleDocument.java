@@ -49,13 +49,16 @@ public class ValidatableTurtleDocument implements Validatable {
 	public StatusEvent parseString(String baseURI, String in)  {
 		StatusEvent statusEvent = new StatusEvent(StatusMonitor.GREEN);
 		Reader reader = new StringReader(in);
+		
 			// FileUtils.asUTF8(in);
 		try {
 			com.hp.hpl.jena.n3.turtle.parser.TurtleParser parser = new com.hp.hpl.jena.n3.turtle.parser.TurtleParser(reader);
 			// parser.setEventHandler(new TurtleEventDump()) ;
-			parser.setEventHandler(new TurtleHandler(System.out));
+			TurtleHandler handler = new TurtleHandler(System.out);
+			parser.setEventHandler(handler);
 			parser.setBaseURI(baseURI);
 			parser.parse();
+			statusEvent.setDescription(Integer.toString(handler.getCount())+" triples");
 		} catch (Throwable e) { // more general than Exception
 			System.out.println("GOT EXC "+e.getMessage());
 			statusEvent.setStatus(StatusMonitor.RED);

@@ -19,6 +19,8 @@ import com.hp.hpl.jena.n3.turtle.TurtleParseException;
 public class TurtleHandler implements TurtleEventHandler
 {
     PrintStream out = System.out ;
+    int count = 0;
+    
     public TurtleHandler(PrintStream out) { this.out = out ; }
     
     public void triple(int line, int col, Triple triple)
@@ -43,7 +45,11 @@ public class TurtleHandler implements TurtleEventHandler
         out.print(" .") ;
         out.println() ;
         out.flush() ;
-        
+        count++;
+    }
+    
+    public int getCount(){
+    	return count;
     }
 
     private void outputNode(Node node)

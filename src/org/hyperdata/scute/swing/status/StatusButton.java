@@ -3,6 +3,7 @@
  */
 package org.hyperdata.scute.swing.status;
 
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,29 +19,26 @@ import org.hyperdata.scute.swing.RoundButton;
  * @author danny
  * 
  */
-public class StatusButton extends RoundButton implements StatusChangeListener, MouseListener {
+public class StatusButton extends JButton implements StatusChangeListener {
 
 	private int status;
 
 	private String[] description = StatusMonitor.DEFAULT_DESCRIPTION;
-
+	
 	/**
-	 * @param redDescription
-	 *            description for state RED
-	 * @param amberDescription
-	 *            description for state AMBER
-	 * @param greenDescription
-	 *            description for state GREEN
+	 * @param turtleAction
 	 */
-	public StatusButton(String redDescription, String amberDescription,
-			String greenDescription) {
+	public StatusButton() {
 		super();
-		this.description[0] = redDescription;
-		this.description[1] = amberDescription;
-		this.description[2] = greenDescription;
-		setStatus(StatusMonitor.GREEN);
+init();
 	}
-
+	
+	public StatusButton(Action action) {
+		super();
+		setAction(action);
+		init();
+	}
+	
 	/**
 	 * @param turtleAction
 	 * @param redDescription
@@ -52,16 +50,47 @@ public class StatusButton extends RoundButton implements StatusChangeListener, M
 	 */
 	public StatusButton(Action action, String redDescription, String amberDescription,
 			String greenDescription) {
+		this(action);
+		setDescriptions(redDescription, amberDescription, greenDescription);
 		
-		this(redDescription, amberDescription, greenDescription);
-		setAction(action);
-		
+		if(action != null && action instanceof MouseListener){
+			addMouseListener((MouseListener) action);
+		}
+
 		Object statusTask = action.getValue("StatusTask");
 		if(statusTask != null){
-			System.out.println("got StatusTask");
+		// 	System.out.println("got StatusTask");
 			((StatusMonitor)statusTask).addStatusListener(this);
 		}
 		setStatus(StatusMonitor.GREEN);
+	}
+	
+	private void init(){
+		setContentAreaFilled(false);
+		setStatus(StatusMonitor.GREEN);
+		setPressedIcon(IndicatorIcons.blueIcon);
+	}
+	
+	@Override
+	protected void paintBorder(Graphics g) {
+		// do nothing, only want icon
+	}
+
+
+	
+	/**
+	 * @param redDescription
+	 *            description for state RED
+	 * @param amberDescription
+	 *            description for state AMBER
+	 * @param greenDescription
+	 *            description for state GREEN
+	 */
+	public void setDescriptions(String redDescription, String amberDescription,
+			String greenDescription) {
+		this.description[0] = redDescription;
+		this.description[1] = amberDescription;
+		this.description[2] = greenDescription;
 	}
 
 	public void setStatus(int status) {
@@ -80,68 +109,5 @@ public class StatusButton extends RoundButton implements StatusChangeListener, M
 	@Override
 	public void statusChanged(StatusEvent vEvent) {
 		setStatus(vEvent.getStatus());
-	}
-	
-	/**
-	 * 
-	 */
-	private void handleSingleClick() {
-		if(getAction() != null && getAction().getValue("ClickHandler") != null){
-			((ClickHandler)getAction().getValue("ClickHandler")).handleSingleClick();
-		}
-	}
-
-	/**
-	 * 
-	 */
-	private void handleDoubleClick() {
-		if(getAction() != null && getAction().getValue("ClickHandler") != null){
-			((ClickHandler)getAction().getValue("ClickHandler")).handleSingleClick();
-		} 
-	}
-
-	// mouse listener handlers
-	
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseClicked(MouseEvent mouseEvent) {
-		if(mouseEvent.getClickCount() == 2){
-			handleDoubleClick();
-		}
-		else handleSingleClick();
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// ignore
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// ignore
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// ignore
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-	 */
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-// ignore
 	}
 }

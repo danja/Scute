@@ -9,5 +9,5 @@ package org.hyperdata.scute.swing.status;
  *
  */
 public interface StatusChangeListener {
-		public void statusChanged(StatusEvent vEvent);
+		public void statusChanged(StatusEvent status);
 }

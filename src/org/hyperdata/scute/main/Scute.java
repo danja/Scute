@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,7 +28,9 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.Document;
 
 import org.hyperdata.resources.indicators.IndicatorIcons;
+import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
+import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.log.LogPane;
 import org.hyperdata.scute.rdf.ModelContainer;
@@ -40,7 +43,9 @@ import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileToolUI;
 import org.hyperdata.scute.swing.GeneralApplication;
 import org.hyperdata.scute.swing.ToolsInterface;
+import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
+import org.hyperdata.scute.swing.status.StatusPane;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
@@ -134,7 +139,6 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			Config.self.setSync(false);
 			Config.self.saveNow();
 		}
-		
 		AutoSave autoSave = new AutoSave();
 		autoSave.initModelSaver(this);
 		autoSave.initModelSaver(Config.self);
@@ -184,56 +188,38 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		JToolBar sourceToolbar = sourceUI.getToolBar();
 		controlPanel.add(sourceToolbar); // TODO tidy up toolbars
 		
-		JPanel statusPanel = new JPanel(new BorderLayout());
+		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		panel.add(statusPanel, BorderLayout.SOUTH);
+
+		// Set up autosave 
+		// FIXME merge with AutoSave stuff above
+		StatusAction autosaveAction = new AutoSaveAction();
+		StatusButton autosaveButton = new StatusButton(autosaveAction, "Unsaved", "Saving...", "Saved"); 
+		statusPanel.add(autosaveButton); 
 		
-		// Set up autosave button
-		StatusButton autoSaveButton = new StatusButton("Unsaved", "Saving", "Saved"); 
-		// statusPanel.add(autoSaveButton);
-		
-		// FIXME document validation
 		// Set up validators
-	
-		// Validatable validatableRDFXML = new ValidatableRDFXMLDocument(rdfxmlDocument); 
-		// will be a wrapper for data/syntax objects
-		
-		// final Validator rdfxmlValidator = new Validator(validatableRDFXML);
-		
-		Action turtleAction = new TurtleValidateAction(turtleDocument);
+		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
+		StatusPane validatorPane = new StatusPane(turtleAction);
 		
 		//Validatable validatableTurtle = new ValidatableTurtleDocument(turtleDocument); 
 		// final Validator rdfxmlValidator = new Validator(validatableRDFXML);
 		
 		// Set up validator button
-		StatusButton validatorButton = new StatusButton(turtleAction, "Invalid", "Unknown Validity", "Valid"); // TODO SHOULD USE an Action?
-		
-		// turtleValidator.addStatusListener(validatorButton);
-		
-		// rdfxmlValidator.addStatusListener(validatorButton);
-		statusPanel.add(validatorButton, BorderLayout.NORTH);
-		
-//		validatorButton.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// need to change depending on tab
-//				turtleValidator.validate();
-//				
-//			} 
+		StatusButton validatorButton = new StatusButton(turtleAction, "Invalid syntax", "Checking syntax...", "Valid syntax" ); 
+
+		statusPanel.add(validatorButton);
+		statusPanel.add(validatorPane);		
 			/*
-			 * validator, autosave must interrupt/be halted immediately on any actions
+			 * FIXME validator, autosave must interrupt/be halted immediately on any actions
 			 * only one can run at any given time
 			 * make singleton?
 			 */
-			
-//		});
-
-
-
 
 		initLogPane();
 
 		frame = new JFrame("Scute (0.5 Beta)");
+		frame.setIconImage(ScuteIcons.applicationIcon);
 		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
