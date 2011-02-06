@@ -11,12 +11,15 @@
 
 package org.hyperdata.scute;
 
+import com.hp.hpl.jena.util.FileUtils;
+
 /**
  * @author danja
  * 
  * a dummy class to keep some of these:
  * 
- * something useful
+ * TODO in RDF loading/parsing/reading, check  FileUtils.asUTF8(in)
+ * 
  * TODO fill out javadoc package.html files
  * 
  * TODO TRIPLES TAB

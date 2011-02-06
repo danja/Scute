@@ -1,7 +1,8 @@
 /**
  * 
  */
-package org.hyperdata.scute.validate;
+package org.hyperdata.scute.swing.status;
+
 
 /**
  * @author danny

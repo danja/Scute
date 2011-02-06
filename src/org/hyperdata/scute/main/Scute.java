@@ -21,8 +21,10 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.text.Document;
 
 import org.hyperdata.resources.indicators.IndicatorIcons;
 import org.hyperdata.scute.autosave.AutoSave;
@@ -38,12 +40,14 @@ import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileToolUI;
 import org.hyperdata.scute.swing.GeneralApplication;
 import org.hyperdata.scute.swing.ToolsInterface;
+import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
-import org.hyperdata.scute.validate.StatusButton;
+import org.hyperdata.scute.validate.TurtleValidateAction;
+import org.hyperdata.scute.validate.ValidatableTurtleDocument;
+import org.hyperdata.scute.validate.ValidatableRDFXMLDocument;
 import org.hyperdata.scute.validate.Validator;
-import org.hyperdata.scute.validate.DummyValidatable;
 import org.hyperdata.scute.validate.Validatable;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -146,6 +150,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
+		Document turtleDocument = turtlePanel.getDocument();
 		tabs.addChangeListener(turtlePanel);
 		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
 
@@ -153,6 +158,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
+		Document rdfxmlDocument = turtlePanel.getDocument();
 		tabs.addChangeListener(rdfxmlPanel);
 		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
 
@@ -178,40 +184,50 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		JToolBar sourceToolbar = sourceUI.getToolBar();
 		controlPanel.add(sourceToolbar); // TODO tidy up toolbars
 		
-		JPanel statusPanel = new JPanel();
+		JPanel statusPanel = new JPanel(new BorderLayout());
+		statusPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		panel.add(statusPanel, BorderLayout.SOUTH);
 		
 		// Set up autosave button
-		StatusButton autoSaveButton = new StatusButton(); 
+		StatusButton autoSaveButton = new StatusButton("Unsaved", "Saving", "Saved"); 
 		// statusPanel.add(autoSaveButton);
 		
 		// FIXME document validation
 		// Set up validators
-		Validatable validatable = new DummyValidatable(); // will be a wrapper for data/syntax objects
-		final Validator validator = new Validator(validatable);
+	
+		// Validatable validatableRDFXML = new ValidatableRDFXMLDocument(rdfxmlDocument); 
+		// will be a wrapper for data/syntax objects
+		
+		// final Validator rdfxmlValidator = new Validator(validatableRDFXML);
+		
+		Action turtleAction = new TurtleValidateAction(turtleDocument);
+		
+		//Validatable validatableTurtle = new ValidatableTurtleDocument(turtleDocument); 
+		// final Validator rdfxmlValidator = new Validator(validatableRDFXML);
 		
 		// Set up validator button
-		StatusButton validatorButton = new StatusButton(); // TODO SHOULD USE an Action?
-		validator.addStatusListener(validatorButton);
-		statusPanel.add(validatorButton);
+		StatusButton validatorButton = new StatusButton(turtleAction, "Invalid", "Unknown Validity", "Valid"); // TODO SHOULD USE an Action?
 		
-		// temp for testing 
-		JButton vTester = new JButton("Voldemort");
-		vTester.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					validator.validate();
-				} catch (InterruptedException exception) {
-					// TODO Auto-generated catch block
-					exception.printStackTrace();
-				}
-				
-			}
+		// turtleValidator.addStatusListener(validatorButton);
+		
+		// rdfxmlValidator.addStatusListener(validatorButton);
+		statusPanel.add(validatorButton, BorderLayout.NORTH);
+		
+//		validatorButton.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// need to change depending on tab
+//				turtleValidator.validate();
+//				
+//			} 
+			/*
+			 * validator, autosave must interrupt/be halted immediately on any actions
+			 * only one can run at any given time
+			 * make singleton?
+			 */
 			
-		});
-		statusPanel.add(vTester);
+//		});
+
 
 
 

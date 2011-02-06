@@ -17,18 +17,18 @@ import javax.swing.ImageIcon;
  */
 public class IndicatorIcons {
 	
-	public static final ImageIcon validIcon;
-	public static final ImageIcon invalidIcon;
-	public static final ImageIcon unknownIcon;
+	public static final ImageIcon greenIcon;
+	public static final ImageIcon redIcon;
+	public static final ImageIcon amberIcon;
 
 	static {
 		final ClassLoader loader = IndicatorIcons.class.getClassLoader();
 
-		validIcon = new ImageIcon(loader
-				.getResource("org/hyperdata/resources/indicators/green-button.gif"));
-		invalidIcon = new ImageIcon(loader
-				.getResource("org/hyperdata/resources/indicators/red-button.gif"));
-		unknownIcon = new ImageIcon(loader
-				.getResource("org/hyperdata/resources/indicators/amber-button.gif"));
+		greenIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/indicators/green-button-medium.gif"));
+		redIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/indicators/red-button-medium.gif"));
+		amberIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/indicators/amber-button-medium.gif"));
 	}
 }
