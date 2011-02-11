@@ -43,12 +43,12 @@ public interface ToolsInterface {
 	/**
 	 * Save as file.
 	 */
-	public void saveAsFile();
+	public void saveAs();
 
 	/**
 	 * Save file.
 	 */
-	public void saveFile();
+	public void save();
 
 	/**
 	 * Check text.

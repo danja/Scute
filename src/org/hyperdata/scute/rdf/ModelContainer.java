@@ -22,7 +22,7 @@ public class ModelContainer implements Runnable {
 	/**
 	 * Save.
 	 */
-	public void save() {
+	public void saveModelToFile() {
 		try {
 			System.out.println("ModelSaver saving " + getModelURI());
 			RdfUtils.save(getModel(), getModelFilename());
@@ -38,7 +38,7 @@ public class ModelContainer implements Runnable {
 	 */
 	@Override
 	public void run() {
-		save();
+		saveModelToFile();
 	}
 	
 	public String getModelURI() {
@@ -60,7 +60,7 @@ public class ModelContainer implements Runnable {
 	private Model model;
 	private String modelFilename;
 	private String modelURI;
-	private boolean saved;
+	private boolean savedToFile;
 
 	/**
 	 * Gets the model.
@@ -68,7 +68,7 @@ public class ModelContainer implements Runnable {
 	 * @return the model
 	 */
 	public Model getModel(){
-		return this.model;
+		return model;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ModelContainer implements Runnable {
 	 * @return the model filename
 	 */
 	public String getModelFilename(){
-		return this.modelFilename;
+		return modelFilename;
 	}
 
 	/**
@@ -86,19 +86,21 @@ public class ModelContainer implements Runnable {
 	 * @return the model name
 	 */
 	public String getModelName(){
-		return this.modelURI;
+		return modelURI;
 	}
 	
 	public boolean isSaved(){
-		return this.saved;
+		return savedToFile;
 	}
 
 	/**
 	 * @param b
 	 */
 	public void setSaved(boolean saved){
-		this.saved = saved;
+		this.savedToFile = saved;
 	}
 
-
+public void storeModel(){
+	System.out.println("STORE MODEL - implement me!");
+}
 }

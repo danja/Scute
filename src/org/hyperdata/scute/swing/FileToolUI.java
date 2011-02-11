@@ -136,7 +136,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				editor.saveFile();
+				editor.save();
 			}
 		};
 		saveAsAction = new AbstractAction("Save As...", GeneralIcons.saveAsIcon) {
@@ -147,7 +147,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				editor.saveAsFile();
+				editor.saveAs();
 			}
 		};
 		exitAction = new AbstractAction("Exit") {
@@ -266,7 +266,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			editor.newModel();
 			break;
 		case KeyEvent.VK_S:
-			editor.saveFile();
+			editor.save();
 			break;
 		default:
 		}

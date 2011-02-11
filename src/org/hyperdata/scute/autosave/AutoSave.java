@@ -117,7 +117,7 @@ public class AutoSave extends UserActivityAdapter { //
 	private void finishUp() {
 		if (modelSaver != null) {
 			modelSaver.cancel(); // clean shutdown of timed operations
-			modelSaver.save(); // final saving
+			modelSaver.doSave(); // final saving
 		}
 		if (textSaver != null) {
 			textSaver.cancel();

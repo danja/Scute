@@ -25,12 +25,12 @@ public class ModelSaver extends TimerTask {
 	 */
 	@Override
 	public void run() {
-		save();
+		doSave();
 	}
 	/**
 	 * 
 	 */
-	public void save() {
-		modelContainer.save();	
+	public void doSave() {
+		modelContainer.saveModelToFile();	
 	}
 }

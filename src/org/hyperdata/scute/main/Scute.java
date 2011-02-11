@@ -37,6 +37,7 @@ import org.hyperdata.scute.source.SourcePanel;
 import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileToolUI;
 import org.hyperdata.scute.swing.GeneralApplication;
+import org.hyperdata.scute.swing.SaveDialog;
 import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
@@ -118,6 +119,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private GraphPanel graphPanel = null;
 
 	private SystemPanel systemPanel;
+
+	private SaveDialog saveDialog = null;
 
 	/**
 	 * Instantiates a new scute.
@@ -387,27 +390,48 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * @see org.hyperdata.scute.swing.ToolsInterface#saveAsFile()
 	 */
 	@Override
-	public void saveAsFile() {
+	public void saveAs() {
 
 		try {
-			FileChooserWrapper.getFileChooser().saveDialog().toString();
+			if(saveDialog == null){
+			saveDialog = new SaveDialog(frame);
+			}
+			// saveDialog.setSize(400,200);
+			saveDialog.pack();
+			saveDialog.setVisible(true);
 		} catch (final Exception exception) {
 			System.out.println("Export aborted");
 			return;
+		}
+		String filename = saveDialog.getFilename();
+		if(filename != null){
+		setModelFilename(filename);
+		saveModelToFile();
+		}
+		String uri = saveDialog.getURI();
+		if(uri != null){
+		setModelURI(uri);
+		storeModel();
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#saveFile()
+	 * @see org.hyperdata.scute.swing.ToolsInterface#save()
 	 */
 	@Override
-	public void saveFile() {
-		// TODO save file
-		System.out.println("SAVE FILE");
-		System.out.println("CURRENT TAB = " + getSelectedTabTitle());
-
+	public void save() {
+		if(getModelURI() == null && getModelFilename() == null){
+			saveAs();
+			return;
+		}
+		if(getModelURI() != null){
+			storeModel();
+		}
+		if(getModelFilename() != null){
+			saveModelToFile();
+		}
 	}
 
 	/*

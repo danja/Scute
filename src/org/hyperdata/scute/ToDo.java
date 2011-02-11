@@ -24,7 +24,9 @@ package org.hyperdata.scute;
  * TODO check if tabs can also be JInternalFrames
  * TODO installer jar
  * TODO installer maybe http://launch4j.sourceforge.net/
- * TODO startup wizard -
+ * TODO startup wizard - enter foaf
+ * TODO some kind of hook into social network(s)
+ * TODO built-in jabber client?
  * TODO Web Start
  * TODO menus
  * TODO TRIPLES TAB
@@ -64,7 +66,8 @@ package org.hyperdata.scute;
 * 
 * 
 * Laters ----------------------
- * generate SPARQL from ? in graph view?
+ * generate SPARQL from <?> nodes in graph view?
+ * use Fresnel for form rendering
  */
 public class ToDo {
 public ToDo(){

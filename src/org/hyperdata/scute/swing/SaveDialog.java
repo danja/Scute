@@ -17,11 +17,11 @@ import java.awt.event.*;
  */
 public class SaveDialog extends JDialog implements ActionListener,
 		PropertyChangeListener {
-	private String typedText = null;
+	private String filenameText = null;
+	private String uriText = null;
 	private JTextField uriTextField;
 	private JTextField filenameTextField;
 
-	private String magicWord;
 	private JOptionPane optionPane;
 
 	private String okButtonLabel = "OK";
@@ -35,37 +35,34 @@ public class SaveDialog extends JDialog implements ActionListener,
 		// saveDialog.setSize(400,200);
 		saveDialog.pack();
 		saveDialog.setVisible(true);
-		System.out.println(saveDialog.getValidatedText());
+		System.out.println("Filename = "+saveDialog.getFilename());
+		System.out.println("URI = "+saveDialog.getURI());
 	}
 
-	/**
-	 * Returns null if the typed string was invalid; otherwise, returns the
-	 * string as the user entered it.
-	 */
-	public String getValidatedText() {
-		return typedText;
-	}
+
 
 	/** Creates the reusable dialog. */
 	public SaveDialog(final Frame frame) {
 		super(frame, true);
 		this.frame = frame;
-		// magicWord = aWord.toUpperCase();
+
 		setTitle("Save");
 
 		JPanel filenamePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		filenameTextField = new JTextField(30);
 
-		JCheckBox fileCheckBox = new JCheckBox(" Save File      "); // alignment
+		JCheckBox fileCheckBox = new JCheckBox(" Save File     "); // alignment
 																	// set with
 																	// spaces -
 																	// hacky!
 		fileCheckBox.setSelected(true);
 		// fileCheckBox.setHorizontalTextPosition(JCheckBox.LEADING);
 
-		JButton fileButton = new JButton("Select Directory");
-		Dimension buttonDimension = fileButton.getPreferredSize();
+		JButton fileButton = new JButton("Select File");
+		JButton uriButton = new JButton("Select Graph");
+		Dimension buttonDimension = uriButton.getPreferredSize();
+		fileButton.setPreferredSize(buttonDimension);
 		final JFileChooser fc = new JFileChooser();
 
 		filenamePanel.add(fileCheckBox);
@@ -75,10 +72,10 @@ public class SaveDialog extends JDialog implements ActionListener,
 		JPanel uriPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		uriTextField = new JTextField(30);
-		JCheckBox uriCheckBox = new JCheckBox(" Store Graph");
+		JCheckBox uriCheckBox = new JCheckBox("Store Graph");
 		// uriCheckBox.setHorizontalTextPosition(JCheckBox.LEADING);
-		JButton uriButton = new JButton("Select Graph");
-		uriButton.setPreferredSize(buttonDimension);
+		
+		
 		uriPanel.add(uriCheckBox);
 		uriPanel.add(uriTextField);
 		uriPanel.add(uriButton);
@@ -118,7 +115,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		// Ensure the text field always gets the first focus.
 		addComponentListener(new ComponentAdapter() {
 			public void componentShown(ComponentEvent ce) {
-				uriTextField.requestFocusInWindow();
+				filenameTextField.requestFocusInWindow();
 			}
 		});
 
@@ -131,7 +128,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		fileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int returnVal = fc.showOpenDialog(frame);
+				int returnVal = fc.showSaveDialog(frame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					filenameTextField.setText(file.getAbsolutePath());
@@ -147,7 +144,9 @@ public class SaveDialog extends JDialog implements ActionListener,
 
 	/** This method handles events for the text field. */
 	public void actionPerformed(ActionEvent e) {
-		optionPane.setValue(okButtonLabel);
+		optionPane.setValue(okButtonLabel); // needed?
+		filenameText = filenameTextField.getText();
+		uriText = filenameTextField.getText();
 	}
 
 	/**
@@ -177,22 +176,22 @@ public class SaveDialog extends JDialog implements ActionListener,
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
 			if (okButtonLabel.equals(value)) {
-				typedText = uriTextField.getText();
+				filenameText = uriTextField.getText();
 				// check text
 				if (true) {
 					clearAndHide();
 				} else {
 					// text was invalid
 					uriTextField.selectAll();
-					JOptionPane.showMessageDialog(SaveDialog.this, typedText
+					JOptionPane.showMessageDialog(SaveDialog.this, filenameText
 							+ "isn't a suitable URI.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 
-					typedText = null;
+					filenameText = null;
 					uriTextField.requestFocusInWindow();
 				}
 			} else { // user closed dialog or clicked cancel
-				typedText = null;
+				filenameText = null;
 				clearAndHide();
 			}
 		}
@@ -200,7 +199,16 @@ public class SaveDialog extends JDialog implements ActionListener,
 
 	/** This method clears the dialog and hides it. */
 	public void clearAndHide() {
+		filenameTextField.setText(null);
 		uriTextField.setText(null);
 		setVisible(false);
+	}
+
+	public String getFilename() {
+		return filenameText;
+	}
+	
+	public String getURI() {
+		return uriText;
 	}
 }

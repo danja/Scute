@@ -162,7 +162,7 @@ public class Config extends ModelContainer {
 	 */
 	public void saveNow() {
 		System.out.println("saving config");
-		(new ModelSaver(this)).save();
+		(new ModelSaver(this)).doSave();
 	}
 
 	/**
