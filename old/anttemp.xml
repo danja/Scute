@@ -1,0 +1,32 @@
+	<!-- EXE-JAR self-contained executable jar -->
+	<target name="installer" description="Creates self-executing jar">
+
+		<delete dir="${temp.dir}" />
+		<mkdir dir="${temp.dir}" />
+
+		<copy todir="${temp.dir}">
+			<fileset dir="${doc.dir}" includes="**/*" />
+			<fileset dir="${data.dir}" includes="**/*" />
+		</copy>
+
+		<unjar dest="${temp.dir}">
+			<fileset dir="lib.dir"> <!-- or patternset? -->
+				<include name="**/*" />
+			</fileset>
+		</unjar>
+
+
+		<jar destfile="${install.file}">
+	    <fileset dir="${temp.dir}" includes="**/*" />
+	    <classes dir="${classes.dir}" /><!-- Scute classes -->
+	    <!-- lib dir="path/to/lib/dir" / -->
+			<manifest file="MANIFEST.MF">
+				<attribute name="Built-By" value="${creator.name}" />
+				<attribute name="Main-Class" value="${main.class}" />
+				<attribute name="Implementation-Version" value="${version.num}-b${build.number}" />
+				<attribute name="Class-Path" value="${manifest.libs}" />
+			</manifest>
+	  </jar>
+
+	  <delete dir="${temp.dir}" />
+	</target>

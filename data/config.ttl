@@ -6,18 +6,18 @@
 @prefix vis:     <http://ideagraph.org/xmlns/idea/graphic#> .
 @prefix x:       <http://purl.org/stuff/> .
 
-<http://purl.org/stuff/swib/application>
-      <http://purl.org/stuff/swib/defaultFileFormat>
+<http://purl.org/stuff/scute/application>
+      <http://purl.org/stuff/scute/defaultFileFormat>
               "Turtle" ;
-      <http://purl.org/stuff/swib/modelSaveDelay>
+      <http://purl.org/stuff/scute/modelSaveDelay>
               "2000" ;
-      <http://purl.org/stuff/swib/modelSavePeriod>
+      <http://purl.org/stuff/scute/modelSavePeriod>
               "6000" ;
-      <http://purl.org/stuff/swib/selectedTab>
+      <http://purl.org/stuff/scute/selectedTab>
               "0" ;
-      <http://purl.org/stuff/swib/sync>
-              "true" ;
-      <http://purl.org/stuff/swib/textSaveDelay>
+      <http://purl.org/stuff/scute/sync>
+              "false" ;
+      <http://purl.org/stuff/scute/textSaveDelay>
               "4000" ;
-      <http://purl.org/stuff/swib/textSavePeriod>
+      <http://purl.org/stuff/scute/textSavePeriod>
               "6000" .

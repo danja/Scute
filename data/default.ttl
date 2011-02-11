@@ -5,11 +5,3 @@
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 @prefix x:       <http://purl.org/stuff/> .
 
-x:brian
-      foaf:knows x:andy .
-
-x:carl
-      foaf:name "carl" .
-
-x:andy
-      foaf:knows x:brian .

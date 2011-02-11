@@ -29,13 +29,11 @@ import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.graph.GraphPanel;
-import org.hyperdata.scute.log.LogPane;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.source.HighlighterEditorKit;
 import org.hyperdata.scute.source.SourcePanel;
-import org.hyperdata.scute.source.SourceToolUI;
 import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileToolUI;
 import org.hyperdata.scute.swing.GeneralApplication;
@@ -43,17 +41,19 @@ import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.swing.status.StatusPane;
+import org.hyperdata.scute.syspane.LogPane;
+import org.hyperdata.scute.syspane.LookFeelPanel;
+import org.hyperdata.scute.syspane.SystemPanel;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
 import org.hyperdata.scute.validate.TurtleValidateAction;
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * The Class Scute.
  */
-public class Scute implements TreeSelectionListener, GeneralApplication,
-		ToolsInterface, ModelContainer {
+public class Scute extends ModelContainer implements TreeSelectionListener,
+		GeneralApplication, ToolsInterface {
 
 	/** The Constant FRAME_SIZE. */
 	public static final Dimension FRAME_SIZE = new Dimension(800, 800);
@@ -86,7 +86,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 
 	/** The file chooser. */
 	private final JFileChooser fileChooser;
-	
+
 	/** The frame. */
 	private final JFrame frame;
 
@@ -95,33 +95,37 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 
 	/** The normal cursor. */
 	private Cursor normalCursor;
-	
+
 	/** The normal tree cursor. */
 	private Cursor normalTreeCursor;
 
 	/** The panel. */
 	private final JPanel panel;
-	
+
 	/** The rdfxml panel. */
 	private final SourcePanel rdfxmlPanel;
-	
+
 	/** The turtle panel. */
 	private final SourcePanel turtlePanel;
-	
+
 	/** The tabs. */
 	private final JTabbedPane tabs;
-	
+
 	/** The tree panel. */
 	private final RdfTreePanel treePanel;
-	
+
 	/** The graph panel. */
 	private GraphPanel graphPanel = null;
+
+	private SystemPanel systemPanel;
 
 	/**
 	 * Instantiates a new scute.
 	 */
 	public Scute() {
 
+		// setSystemLookFeel();
+		
 		// for bootstrapping/debugging
 		// Config.self.setDefaults();
 		// Config.self.saveNow();
@@ -131,6 +135,10 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			Config.self.setSync(false);
 			Config.self.saveNow();
 		}
+		setModel(Models.workingModel);
+		setModelFilename(Config.WORKING_MODEL_FILENAME);
+		setModelURI(Config.WORKING_MODEL_URI);
+
 		AutoSave autoSave = new AutoSave();
 		autoSave.initModelSaver(this);
 		autoSave.initModelSaver(Config.self);
@@ -141,7 +149,7 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		panel.setPreferredSize(FRAME_SIZE);
 		tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		panel.add(tabs, BorderLayout.CENTER);
- 
+
 		turtlePanel = new SourcePanel("Turtle");
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
@@ -166,7 +174,11 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		graphPanel.addUserActivityListener(autoSave);
 		tabs.addTab("Graph", graphPanel);
 
-		tabs.setSelectedIndex(0);
+		systemPanel = new SystemPanel();
+		// systemPanel.addUserActivityListener(autoSave);
+		tabs.addTab("System", new JScrollPane(systemPanel));
+
+		// tabs.setSelectedIndex(0);
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
 		panel.add(controlPanel, BorderLayout.NORTH);
@@ -176,39 +188,38 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 
 		controlPanel.add(fileUI.getToolBar());
 
-		final SourceToolUI sourceUI = new SourceToolUI(this);
-		JToolBar sourceToolbar = sourceUI.getToolBar();
-		controlPanel.add(sourceToolbar); // TODO tidy up toolbars
-		
+		// final SourceToolUI sourceUI = new SourceToolUI(this);
+		// JToolBar sourceToolbar = sourceUI.getToolBar();
+		// controlPanel.add(sourceToolbar); // TODO tidy up toolbars
+
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
-		statusPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		statusPanel.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
 		panel.add(statusPanel, BorderLayout.SOUTH);
 
-		// Set up autosave 
+		// FIXME basic Save and Load
+
+		// Set up autosave
 		// FIXME merge with AutoSave stuff above
 		StatusAction autosaveAction = new AutoSaveAction();
-		StatusButton autosaveButton = new StatusButton(autosaveAction, "Unsaved", "Saving...", "Saved"); 
-		statusPanel.add(autosaveButton); 
-		
+		StatusButton autosaveButton = new StatusButton(autosaveAction,
+				"Unsaved", "Saving...", "Saved");
+		statusPanel.add(autosaveButton);
+
 		// Set up validators
 		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
 		StatusPane validatorPane = new StatusPane(turtleAction);
-		
-		//Validatable validatableTurtle = new ValidatableTurtleDocument(turtleDocument); 
-		// final Validator rdfxmlValidator = new Validator(validatableRDFXML);
-		
+
 		// Set up validator button
-		StatusButton validatorButton = new StatusButton(turtleAction, "Invalid syntax", "Checking syntax...", "Valid syntax" ); 
+		StatusButton validatorButton = new StatusButton(turtleAction,
+				"Invalid syntax", "Checking syntax...", "Valid syntax");
 
 		statusPanel.add(validatorButton);
-		statusPanel.add(validatorPane);		
-			/*
-			 * FIXME validator, autosave must interrupt/be halted immediately on any actions
-			 * only one can run at any given time
-			 * make singleton?
-			 */
-
-		initLogPane();
+		statusPanel.add(validatorPane);
+		/*
+		 * FIXME validator, autosave must interrupt/be halted immediately on any
+		 * actions only one can run at any given time make singleton?
+		 */
 
 		frame = new JFrame("Scute (0.5 Beta)");
 		frame.setIconImage(ScuteIcons.applicationIcon);
@@ -216,12 +227,12 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
-		menuBar.add(sourceUI.getSourceMenu());
+		// menuBar.add(sourceUI.getSourceMenu());
 
 		frame.setJMenuBar(menuBar);
 		frame.setContentPane(panel);
 		frame.pack();
-		
+
 		frame.setVisible(true);
 		fileChooser = new JFileChooser("./data");
 		if (Config.self.getSync() == false) { // previous run wasn't shut down
@@ -255,7 +266,13 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		return tabs.getSelectedIndex();
 	}
 
-	/* (non-Javadoc)
+	public String getSelectedTabTitle() {
+		return tabs.getTitleAt(getSelectedTab());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#cloneFile()
 	 */
 	@Override
@@ -263,7 +280,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		throw new RuntimeException("not yet implemented");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#closeFile()
 	 */
 	@Override
@@ -271,7 +290,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		throw new RuntimeException("not yet implemented");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#exit()
 	 */
 	@Override
@@ -279,41 +300,42 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		// frame.dispose();
 	}
 
-	/**
-	 * Inits the log pane.
-	 */
-	private void initLogPane() {
-		final LogPane log = LogPane.getLogPane();
-		final JScrollPane logScroll = new JScrollPane(log);
-		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
-		LogPane.println("Ok.");
-		tabs.addTab("Log", log);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintErr(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.hyperdata.scute.swing.GeneralApplication#logPrintErr(java.lang.String
+	 * )
 	 */
 	@Override
 	public void logPrintErr(String string) {
 		LogPane.err(string);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.swing.GeneralApplication#logPrintln(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.hyperdata.scute.swing.GeneralApplication#logPrintln(java.lang.String)
 	 */
 	@Override
 	public void logPrintln(String string) {
 		LogPane.println(string);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#newFile()
 	 */
 	@Override
-	public void newFile() {
+	public void newModel() {
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#openFile()
 	 */
 	@Override
@@ -359,7 +381,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		// ///////////////////////////////
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#saveAsFile()
 	 */
 	@Override
@@ -373,16 +397,25 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#saveFile()
 	 */
 	@Override
 	public void saveFile() {
-		// TODO save file (as Export?)
+		// TODO save file
+		System.out.println("SAVE FILE");
+		System.out.println("CURRENT TAB = " + getSelectedTabTitle());
+
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event
+	 * .TreeSelectionEvent)
 	 */
 	@Override
 	public void valueChanged(TreeSelectionEvent event) {
@@ -396,7 +429,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		nodePanel.setRdfTreeNode((RdfTreeNode) object);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.GeneralApplication#waitCursor(boolean)
 	 */
 	@Override
@@ -414,32 +449,10 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModel()
-	 */
-	@Override
-	public Model getModel() {
-		return Models.workingModel;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelFilename()
-	 */
-	@Override
-	public String getModelFilename() {
-		return Config.WORKING_MODEL_FILENAME;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelName()
-	 */
-	@Override
-	public String getModelName() {
-		return "working model";
-	}
-
 	/**
 	 * Gets the current source panel.
+	 * 
+	 * TODO check this is in use
 	 * 
 	 * @return the current source panel
 	 * @throws Exception
@@ -469,7 +482,9 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#checkText()
 	 */
 	@Override
@@ -482,5 +497,13 @@ public class Scute implements TreeSelectionListener, GeneralApplication,
 			System.out.println("INVALID");
 		}
 		System.out.println("VALID");
+	}
+
+	public static void setSystemLookFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 }

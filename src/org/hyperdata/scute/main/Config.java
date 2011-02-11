@@ -21,7 +21,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  * 
  * @author danny
  */
-public class Config implements ModelContainer {
+public class Config extends ModelContainer {
 
 	// set in code
 	/** The Constant ASSEMBLER_FILENAME. */
@@ -29,43 +29,48 @@ public class Config implements ModelContainer {
 	
 	/** The Constant CONFIG_FILENAME. */
 	public static final String CONFIG_FILENAME = "data/config.ttl";
+
+	public static final String CONFIG_URI = "http://purl.org/stuff/scute/application/config";
 	
 	/** The Constant WORKING_MODEL_FILENAME. */
 	public static final String WORKING_MODEL_FILENAME = "data/default.ttl";
 	
 	/** The Constant TEXT_FILENAME. */
 	public static final String TEXT_FILENAME = "data/temp.txt";
+
+	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
 	
 	/** The base uri. */
-	public static String baseUri = "http://purl.org/stuff/swib/";
+	public static String baseUri = "http://purl.org/stuff/scute/";
 	
 	/** The swib resource. */
-	public static Resource swibResource;
+	public static Resource scuteResource;
 	
 	/** The model. */
 	public static Model model;
+	
 	static {
 		model = ModelFactory.createDefaultModel();
-		swibResource = model
-				.createResource("http://purl.org/stuff/swib/application");
+		scuteResource = model
+				.createResource("http://purl.org/stuff/scute/application");
 	}
 
 	// system until clean shutdown
 	/** The loaded. */
 	private static boolean loaded = false;
 	
-	/** The CONFI g_ format. */
+	/** The CONFIG format. */
 	private static String CONFIG_FORMAT = "Turtle";
 	
 	/** The self. */
-	public static Config self = new Config(); // seems a good name for a
-
-	// singleton
+	public static Config self = new Config(); // seems a good name for a singleton
 
 	/**
 	 * Instantiates a new config.
 	 */
 	private Config() {
+		setModel(model);
+		setModelFilename(CONFIG_FILENAME);
 	}
 
 	// only for bootstrapping, sets & saves default values
@@ -86,8 +91,8 @@ public class Config implements ModelContainer {
 	 */
 	public void setDefaults() {
 		setValue("defaultFileFormat", "Turtle");
-		setValue("modelSaveDelay", "2000");
-		setValue("modelSavePeriod", "6000");
+		setValue("modelSaveDelay", "20000");
+		setValue("modelSavePeriod", "60000");
 		setValue("textSaveDelay", "4000");
 		setValue("textSavePeriod", "6000");
 		setValue("sync", "true");
@@ -107,7 +112,7 @@ public class Config implements ModelContainer {
 			load();
 		}
 		Property property = model.createProperty(baseUri + propName);
-		Literal valueNode = model.getRequiredProperty(swibResource, property)
+		Literal valueNode = model.getRequiredProperty(scuteResource, property)
 				.getLiteral();
 		System.out.println("getting value " + propName + " = "
 				+ valueNode.getString());
@@ -126,8 +131,8 @@ public class Config implements ModelContainer {
 		System.out.println("setting value " + propName + " = " + value);
 		Property property = model.createProperty(baseUri + propName);
 		Literal valueNode = model.createLiteral(value);
-		swibResource.removeAll(property);
-		swibResource.addProperty(property, valueNode);
+		scuteResource.removeAll(property);
+		scuteResource.addProperty(property, valueNode);
 	}
 
 	/**
@@ -177,21 +182,8 @@ public class Config implements ModelContainer {
 	// ///////////////////////////////
 	// accessors for hardcoded values
 
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModel()
-	 */
-	@Override
-	public Model getModel() {
-		return model;
-	}
 
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelFilename()
-	 */
-	@Override
-	public String getModelFilename() {
-		return CONFIG_FILENAME;
-	}
+
 
 	// /////////////////////////////////////
 	// accessor methods for Config.model
@@ -286,13 +278,4 @@ public class Config implements ModelContainer {
 		setValue("selectedTab", Integer.toString(tabIndex));
 		System.out.println("getting tab = " + getSelectedTab());
 	}
-
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.rdf.ModelContainer#getModelName()
-	 */
-	@Override
-	public String getModelName() {
-		return "config";
-	}
-
 }

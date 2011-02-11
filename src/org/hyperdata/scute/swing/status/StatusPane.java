@@ -4,6 +4,7 @@
 package org.hyperdata.scute.swing.status;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 
@@ -14,7 +15,7 @@ import javax.swing.JTextPane;
  */
 public class StatusPane extends JPanel implements StatusChangeListener {
 
-	private JTextPane textPane;
+	private JTextArea textArea;
 	
 	/**
 	 * Instantiates a new status pane.
@@ -24,9 +25,9 @@ public class StatusPane extends JPanel implements StatusChangeListener {
 	public StatusPane(StatusAction statusAction){
 		super();
 		statusAction.addStatusChangeListener(this);
-		textPane = new JTextPane();
-		//textPane.setText("qwe");
-		add(textPane);
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		add(textArea);
 	}
 
 	/* (non-Javadoc)
@@ -34,7 +35,7 @@ public class StatusPane extends JPanel implements StatusChangeListener {
 	 */
 	@Override
 	public void statusChanged(StatusEvent status) {
-		textPane.setText(status.getDescription());
+		textArea.setText(status.getDescription());
 	}
 
 }

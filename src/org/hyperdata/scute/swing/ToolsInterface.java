@@ -33,7 +33,7 @@ public interface ToolsInterface {
 	/**
 	 * New file.
 	 */
-	public void newFile();
+	public void newModel();
 
 	/**
 	 * Open file.

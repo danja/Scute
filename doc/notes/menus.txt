@@ -1,0 +1,48 @@
+Menu File
+Menu Item New
+Menu Item Open...
+Menu Item Save
+Menu Item Save As...
+Menu Item Revert
+Menu Item Print Preview
+Menu Item Print...
+Menu Item Recent Files
+Menu Item Exit
+
+TODO Menu Edit
+Menu Item Undo
+Menu Item Redo
+Menu Item Cut
+Menu Item Copy
+Menu Item Paste
+Menu Item Delete
+Menu Item Select All
+Menu Item Insert Date/Time
+Menu Item Preferences
+
+Menu View
+Menu Item Toolbar
+Menu Item Status Bar
+Menu Item (layout options)
+Menu Item Fullscreen
+
+Menu Search
+Menu Item Find
+Menu Item Find Next
+Menu Item Find Previous
+Menu Item Incremental Search
+Menu Item Replace
+Menu Item Clear Highlight
+Menu Item Goto Line...
+
+Menu Tools 
+Menu Item Document Statistics
+
+Menu Help
+Menu Item Contents
+Menu Item Get Help Online...
+Menu Item Report a Problem...
+Menu Item About
+
+
+

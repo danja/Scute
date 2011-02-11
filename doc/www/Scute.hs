@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<helpset version="1.0"><title>Scute</title><maps><homeID>top</homeID><mapref location="ScuteMap.xml"/></maps><view><name>toc</name><label>Table of Contents</label><type>javax.help.TOCView</type><data>ScuteTOC.xml</data></view><view><name>index</name><label>Index</label><type>javax.help.IndexView</type><data>ScuteIndex.xml</data></view><view><name>Search</name><label>Search</label><type>javax.help.SearchView</type><data engine="oracle.help.engine.SearchEngine">Scute.idx</data></view></helpset>

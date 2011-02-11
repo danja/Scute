@@ -114,7 +114,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				editor.newFile();
+				editor.newModel();
 			}
 		};
 		openAction = new AbstractAction("Open", GeneralIcons.openIcon) {
@@ -263,7 +263,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 			return;
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_N:
-			editor.newFile();
+			editor.newModel();
 			break;
 		case KeyEvent.VK_S:
 			editor.saveFile();

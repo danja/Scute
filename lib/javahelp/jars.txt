@@ -1,0 +1,7 @@
+jhall.jar is the Sun JavaHelp package - not currently used
+
+Autohelp.jar is one of mine, the rest are from Oracle's JavaHelp kit:
+
+http://www.oracle.com/technetwork/topics/ohjintro-084010.html
+
+license covers 'free to distribute with your apps' but not sure about anything else

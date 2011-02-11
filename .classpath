@@ -22,5 +22,12 @@
 	<classpathentry kind="lib" path="lib/xercesImpl-2.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/arq-2.8.7.jar"/>
 	<classpathentry kind="lib" path="lib/jena-2.6.4.jar" sourcepath="/Jena/src"/>
+	<classpathentry kind="lib" path="lib/javahelp/ohj.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/oracle_ice.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/help-indexer.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/help-share.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/jewt.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/share.jar"/>
+	<classpathentry kind="lib" path="lib/javahelp/jhall.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

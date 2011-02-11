@@ -44,9 +44,11 @@ public class AutoSave extends UserActivityAdapter { //
 	
 	/** The model timer. */
 	private final Timer modelTimer = new Timer();
+
+	private ModelSaver modelSaver;
 	
 	/** The model saver. */
-	private ModelSaver modelSaver;
+	// private ModelSaver modelSaver;
 	
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.main.UserActivityListener#activityOccurred(java.util.EventObject)

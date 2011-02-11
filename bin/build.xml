@@ -52,7 +52,6 @@
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${javadoc.dir}" />
 		<mkdir dir="${temp.dir}" />
-		<mkdir dir="${javadoc.dir}" />
 	</target>
 
 

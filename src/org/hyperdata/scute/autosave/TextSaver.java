@@ -26,6 +26,7 @@ public class TextSaver extends TimerTask {
 
 	/** The container. */
 	private final TextContainer container;
+	private String filename;
 
 	/**
 	 * Instantiates a new text saver.
@@ -35,6 +36,10 @@ public class TextSaver extends TimerTask {
 	 */
 	public TextSaver(TextContainer container) {
 		this.container = container;
+	}
+	
+	public void setFilename(String filename){ // Config.TEXT_FILENAME
+		this.filename = filename;
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +54,7 @@ public class TextSaver extends TimerTask {
 	 * Save.
 	 */
 	public void save() {
-		File file = new File(Config.TEXT_FILENAME);
+		File file = new File(filename);
 
 		byte[] bytes = (Config.self
 				.getIdentifyingComment(container.getSyntax()) + container
