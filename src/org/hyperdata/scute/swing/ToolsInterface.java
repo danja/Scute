@@ -10,6 +10,9 @@
  */
 package org.hyperdata.scute.swing;
 
+import java.awt.Component;
+import java.awt.Frame;
+
 /**
  * The Interface ToolsInterface.
  */
@@ -54,4 +57,9 @@ public interface ToolsInterface {
 	 * Check text.
 	 */
 	public void checkText();
+
+	/**
+	 * @return
+	 */
+	public Frame getFrame();
 }

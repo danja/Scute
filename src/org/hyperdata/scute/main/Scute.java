@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -35,8 +36,9 @@ import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.source.HighlighterEditorKit;
 import org.hyperdata.scute.source.SourcePanel;
 import org.hyperdata.scute.swing.FileChooserWrapper;
-import org.hyperdata.scute.swing.FileToolUI;
+import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
+import org.hyperdata.scute.swing.HelpUI;
 import org.hyperdata.scute.swing.SaveDialog;
 import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.swing.status.StatusAction;
@@ -187,10 +189,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		panel.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
-		final FileToolUI fileUI = new FileToolUI(this);
-
+		final FileUI fileUI = new FileUI(this);
 		controlPanel.add(fileUI.getToolBar());
 
+		final HelpUI helpUI = new HelpUI(this);
+
+	//	controlPanel.add(fileUI.getToolBar());
+		
 		// final SourceToolUI sourceUI = new SourceToolUI(this);
 		// JToolBar sourceToolbar = sourceUI.getToolBar();
 		// controlPanel.add(sourceToolbar); // TODO tidy up toolbars
@@ -224,12 +229,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		 * actions only one can run at any given time make singleton?
 		 */
 
-		frame = new JFrame("Scute (0.5 Beta)");
+		frame = new JFrame("Scute");
 		frame.setIconImage(ScuteIcons.applicationIcon);
 		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
+		menuBar.add(helpUI.getHelpMenu());		
 		// menuBar.add(sourceUI.getSourceMenu());
 
 		frame.setJMenuBar(menuBar);
@@ -529,5 +535,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.swing.ToolsInterface#getFrame()
+	 */
+	@Override
+	public Frame getFrame() {
+		return frame;
 	}
 }

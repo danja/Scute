@@ -39,6 +39,8 @@ public class Config extends ModelContainer {
 	public static final String TEXT_FILENAME = "data/temp.txt";
 
 	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
+
+	public static final String VERSION_STRING = "Version 0.5 Beta";
 	
 	/** The base uri. */
 	public static String baseUri = "http://purl.org/stuff/scute/";
@@ -277,5 +279,14 @@ public class Config extends ModelContainer {
 		System.out.println("Setting tab = " + tabIndex);
 		setValue("selectedTab", Integer.toString(tabIndex));
 		System.out.println("getting tab = " + getSelectedTab());
+	}
+
+	/**
+	 * Shown by Help -> About
+	 * 
+	 * @return
+	 */
+	public static String getAboutString() {
+		return "Scute "+VERSION_STRING;
 	}
 }

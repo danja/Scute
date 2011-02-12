@@ -24,7 +24,7 @@ public class ScuteIcons {
 
 	static {
 		final ClassLoader loader = ScuteIcons.class.getClassLoader();
-		ImageIcon icon = new ImageIcon(loader.getResource("org/hyperdata/resources/tree/root16.gif"));
+		ImageIcon icon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/logo.png"));
 		applicationIcon = icon.getImage();
 	}
 

@@ -25,7 +25,7 @@ package org.hyperdata.scute;
  * TODO installer jar
  * TODO installer maybe http://launch4j.sourceforge.net/
  * TODO startup wizard - enter foaf
- * TODO some kind of hook into social network(s)
+ * TODO some kind of hook into social network(s) + pastebin?
  * TODO built-in jabber client?
  * TODO Web Start
  * TODO menus

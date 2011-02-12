@@ -26,7 +26,7 @@ import org.hyperdata.resources.general.GeneralIcons;
 /**
  * The Class FileToolUI.
  */
-public class FileToolUI implements KeyListener { // implements ActionListener
+public class FileUI implements KeyListener { // implements ActionListener
 
 	/** The clone action. */
  private Action cloneAction;
@@ -64,7 +64,7 @@ public class FileToolUI implements KeyListener { // implements ActionListener
 	 * @param editor
 	 *            the editor
 	 */
-	public FileToolUI(ToolsInterface editor) {
+	public FileUI(ToolsInterface editor) {
 		this.editor = editor;
 		createActions();
 
