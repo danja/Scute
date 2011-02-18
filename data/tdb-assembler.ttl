@@ -2,8 +2,25 @@
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
 
-[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+@prefix scute:  	 <http://purl.org/stuff/scute/> .
 
+@base <http://purl.org/stuff/scute/default/> .
+
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+    .
+# Dataset of default graph and one named graph.
 <#dataset> rdf:type         tdb:DatasetTDB ;
     tdb:location "DB" ;
-    .
+   ja:defaultGraph <#defaultModel> ;
+   ja:namedGraph
+       [ ja:graphName      <http://example.org/name1> ;
+         ja:graph          <#model1> ] ;
+   .
+
+<#modelDft> a ja:MemoryModel ;
+        ja:content [ ja:externalContent <file:Data.ttl> .
+
+<#model1>  rdf:type ja:MemoryModel ;
+   ja:content [ ja:externalContent <file:FILE-1.ttl> ] ;
+   ja:content [ ja:externalContent <file:FILE-2.ttl> ] ;
+    
