@@ -125,7 +125,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				editor.openFile();
+				editor.open();
 			}
 		};
 		saveAction = new AbstractAction("Save", GeneralIcons.saveIcon) {

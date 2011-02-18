@@ -13,12 +13,12 @@ import java.awt.event.*;
 
 /**
  * 
- * SaveDialog and OpenDialog virtually identical, but kept distinct until all requirements determined
+ * OpenDialog and OpenDialog virtually identical, but kept distinct until all requirements determined
  * 
  * @author danny
  * 
  */
-public class SaveDialog extends JDialog implements ActionListener,
+public class OpenDialog extends JDialog implements ActionListener,
 		PropertyChangeListener {
 	private String filenameText = null;
 	private String uriText = null;
@@ -34,8 +34,8 @@ public class SaveDialog extends JDialog implements ActionListener,
 	public static void main(String[] args) {
 
 		JFrame frame = new JFrame();
-		SaveDialog fileDialog = new SaveDialog(frame);
-		// saveDialog.setSize(400,200);
+		OpenDialog fileDialog = new OpenDialog(frame);
+		// OpenDialog.setSize(400,200);
 		fileDialog.pack();
 		fileDialog.setVisible(true);
 		System.out.println("Filename = "+fileDialog.getFilename());
@@ -45,17 +45,17 @@ public class SaveDialog extends JDialog implements ActionListener,
 
 
 	/** Creates the reusable dialog. */
-	public SaveDialog(final Frame frame) {
+	public OpenDialog(final Frame frame) {
 		super(frame, true);
 		this.frame = frame;
 
-		setTitle("Save");
+		setTitle("Open");
 
 		JPanel filenamePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		filenameTextField = new JTextField(30);
 
-		JCheckBox fileCheckBox = new JCheckBox(" Save File     "); // alignment
+		JCheckBox fileCheckBox = new JCheckBox(" Open File     "); // alignment
 																	// set with
 																	// spaces -
 																	// hacky!
@@ -131,7 +131,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		fileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int returnVal = fc.showSaveDialog(frame);
+				int returnVal = fc.showOpenDialog(frame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					filenameTextField.setText(file.getAbsolutePath());
@@ -186,7 +186,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 				} else {
 					// text was invalid
 					uriTextField.selectAll();
-					JOptionPane.showMessageDialog(SaveDialog.this, filenameText
+					JOptionPane.showMessageDialog(OpenDialog.this, filenameText
 							+ "isn't a suitable URI.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 

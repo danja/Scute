@@ -39,6 +39,7 @@ import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
 import org.hyperdata.scute.swing.HelpUI;
+import org.hyperdata.scute.swing.OpenDialog;
 import org.hyperdata.scute.swing.SaveDialog;
 import org.hyperdata.scute.swing.ToolsInterface;
 import org.hyperdata.scute.swing.status.StatusAction;
@@ -124,13 +125,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private SaveDialog saveDialog = null;
 
+	private OpenDialog openDialog;
+
 	/**
 	 * Instantiates a new scute.
 	 */
 	public Scute() {
 
 		// setSystemLookFeel();
-		
+
 		// for bootstrapping/debugging
 		// Config.self.setDefaults();
 		// Config.self.saveNow();
@@ -194,8 +197,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		final HelpUI helpUI = new HelpUI(this);
 
-	//	controlPanel.add(fileUI.getToolBar());
-		
+		// controlPanel.add(fileUI.getToolBar());
+
 		// final SourceToolUI sourceUI = new SourceToolUI(this);
 		// JToolBar sourceToolbar = sourceUI.getToolBar();
 		// controlPanel.add(sourceToolbar); // TODO tidy up toolbars
@@ -235,7 +238,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
-		menuBar.add(helpUI.getHelpMenu());		
+		menuBar.add(helpUI.getHelpMenu());
 		// menuBar.add(sourceUI.getSourceMenu());
 
 		frame.setJMenuBar(menuBar);
@@ -348,46 +351,49 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * @see org.hyperdata.scute.swing.ToolsInterface#openFile()
 	 */
 	@Override
-	public void openFile() {
-		final int returnVal = fileChooser.showOpenDialog(frame);
-		// Model model = ModelFactory.createDefaultModel();
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			final File file = fileChooser.getSelectedFile();
-			LogPane.println("Opening: " + file.getName());
-
-			String syntax = "Turtle";
-			if (file.getPath().toLowerCase().endsWith(".rdf")) {
-				syntax = "RDF/XML";
-			}
-
-			try {
-				final InputStream stream = new FileInputStream(file);
-				Models.clearWorkingModel();
-				Models.workingModel.read(new FileInputStream(file), "", syntax);
-				stream.close();
-			} catch (final Exception exception) {
-				logPrintErr(exception.getMessage());
-				exception.printStackTrace();
-				System.out.println(exception.getMessage());
-			}
+	public void open() {
+		if (getModelURI() == null && getModelFilename() == null) { // never been
+																	// saved
+			JOptionPane.showMessageDialog(frame,
+					"Please save current Working Graph");
+			saveAs();
 		} else {
-			LogPane.println("Open command cancelled by user.");
+			save();
 		}
+		try {
+			if (openDialog == null) {
+				openDialog = new OpenDialog(frame);
+			}
+			// saveDialog.setSize(400,200);
+			openDialog.pack();
+			openDialog.setVisible(true);
+		} catch (final Exception exception) {
+			System.out.println("Open aborted");
+			return;
+		}
+		String filename = openDialog.getFilename();
+		if (filename != null) {
+			setModelFilename(filename);
+
+			loadModelFromFile();
+		}
+		String uri = saveDialog.getURI();
+		if (uri != null) {
+			setModelURI(uri);
+			loadNamedModel();
+		}
+
+	
 		logPrintln("Loaded");
 		System.out.println("Loaded");
-
-		// turtlePanel.setModel(Models.workingModel);
-		// rdfxmlPanel.setModel(Models.workingModel);
 
 		turtlePanel.loadModel(Models.workingModel);
 		rdfxmlPanel.loadModel(Models.workingModel);
 
-		// tree = populateTree(Models.workingModel);
 		treePanel.loadModel(Models.workingModel);
 		treePanel.init();
 
-		// ///////////////////////////////
+		graphPanel.loadModel(Models.workingModel);
 	}
 
 	/*
@@ -399,8 +405,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	public void saveAs() {
 
 		try {
-			if(saveDialog == null){
-			saveDialog = new SaveDialog(frame);
+			if (saveDialog == null) {
+				saveDialog = new SaveDialog(frame);
 			}
 			// saveDialog.setSize(400,200);
 			saveDialog.pack();
@@ -410,14 +416,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 			return;
 		}
 		String filename = saveDialog.getFilename();
-		if(filename != null){
-		setModelFilename(filename);
-		saveModelToFile();
+		if (filename != null) {
+			setModelFilename(filename);
+			saveModelToFile();
 		}
 		String uri = saveDialog.getURI();
-		if(uri != null){
-		setModelURI(uri);
-		storeModel();
+		if (uri != null) {
+			setModelURI(uri);
+			storeNamedModel();
 		}
 	}
 
@@ -428,14 +434,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	@Override
 	public void save() {
-		if(getModelURI() == null && getModelFilename() == null){
+		if (getModelURI() == null && getModelFilename() == null) {
 			saveAs();
 			return;
 		}
-		if(getModelURI() != null){
-			storeModel();
+		if (getModelURI() != null) {
+			storeNamedModel();
 		}
-		if(getModelFilename() != null){
+		if (getModelFilename() != null) {
 			saveModelToFile();
 		}
 	}
@@ -537,7 +543,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#getFrame()
 	 */
 	@Override

@@ -33,10 +33,10 @@ public class GraphPanel extends JPanel {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2907914679596311549L;
-	
+
 	/** The graph diagram panel. */
-	private final GraphDiagramPanel graphDiagramPanel;
-	
+	private GraphDiagramPanel graphDiagramPanel = null;
+
 	/** The tool bar. */
 	private final JToolBar toolBar;
 
@@ -48,18 +48,24 @@ public class GraphPanel extends JPanel {
 	 */
 	public GraphPanel(Model model) {
 		super();
-		graphDiagramPanel = new GraphDiagramPanel(model);
-		setLayout(new BorderLayout());
-		add(graphDiagramPanel, BorderLayout.CENTER);
+		loadModel(model);
 		toolBar = new JToolBar("Graph Tools");
 		addControls();
 		add(toolBar, BorderLayout.SOUTH);
 	}
-	
+
+	public void loadModel(Model model) {
+		graphDiagramPanel = new GraphDiagramPanel(model);
+		setLayout(new BorderLayout());
+		add(graphDiagramPanel, BorderLayout.CENTER);
+
+	}
+
 	/**
 	 * Adds the user activity listener.
-	 *
-	 * @param listener the listener
+	 * 
+	 * @param listener
+	 *            the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
 		// TODO to implement when GraphPanel supports editing
@@ -73,4 +79,9 @@ public class GraphPanel extends JPanel {
 		JButton toggle = new JButton(toggleAction);
 		toolBar.add(toggle);
 	}
+
+	/**
+	 * @param workingModel
+	 */
+
 }

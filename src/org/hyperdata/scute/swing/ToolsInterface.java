@@ -41,7 +41,7 @@ public interface ToolsInterface {
 	/**
 	 * Open file.
 	 */
-	public void openFile();
+	public void open();
 
 	/**
 	 * Save as file.

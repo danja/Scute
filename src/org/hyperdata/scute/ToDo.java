@@ -37,6 +37,8 @@ package org.hyperdata.scute;
 * TODO Tree visualization
 * TODO Graph visualization
 * TODO add graph zoom
+* TODO allow changing graph node icon
+* TODO allow changing graph node label
 * TODO Tree editing
 * TODO Graph editing
 * TODO Basic (local) Graph Manager

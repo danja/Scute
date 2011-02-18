@@ -10,15 +10,20 @@
  */
 package org.hyperdata.scute.rdf;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.hp.hpl.jena.rdf.model.Model;
+
+import org.hyperdata.scute.syspane.LogPane;
 
 /**
  * ModelContainer - wrapper for models
  */
 public class ModelContainer implements Runnable {
-	
+
 	/**
 	 * Save.
 	 */
@@ -32,15 +37,17 @@ public class ModelContainer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
 	public void run() {
 		saveModelToFile();
 	}
-	
+
 	public String getModelURI() {
 		return this.modelURI;
 	}
@@ -67,7 +74,7 @@ public class ModelContainer implements Runnable {
 	 * 
 	 * @return the model
 	 */
-	public Model getModel(){
+	public Model getModel() {
 		return model;
 	}
 
@@ -76,7 +83,7 @@ public class ModelContainer implements Runnable {
 	 * 
 	 * @return the model filename
 	 */
-	public String getModelFilename(){
+	public String getModelFilename() {
 		return modelFilename;
 	}
 
@@ -85,22 +92,46 @@ public class ModelContainer implements Runnable {
 	 * 
 	 * @return the model name
 	 */
-	public String getModelName(){
+	public String getModelName() {
 		return modelURI;
 	}
-	
-	public boolean isSaved(){
+
+	public boolean isSaved() {
 		return savedToFile;
 	}
 
 	/**
 	 * @param b
 	 */
-	public void setSaved(boolean saved){
+	public void setSaved(boolean saved) {
 		this.savedToFile = saved;
 	}
 
-public void storeModel(){
-	System.out.println("STORE MODEL - implement me!");
-}
+	public void storeNamedModel() {
+		System.out.println("STORE MODEL - implement me!");
+	}
+
+	public void loadNamedModel() {
+		System.out.println("LOAD MODEL from URI - implement me!");
+	}
+
+	public void loadModelFromFile() {
+		File file = new File(modelFilename);
+		LogPane.println("Opening: " + file.getName());
+
+		String syntax = "Turtle";
+		if (file.getPath().toLowerCase().endsWith(".rdf")) {
+			syntax = "RDF/XML";
+		}
+
+		try {
+			final InputStream stream = new FileInputStream(file);
+			Models.clearWorkingModel();
+			Models.workingModel.read(new FileInputStream(file), "", syntax);
+			stream.close();
+		} catch (final Exception exception) {
+			LogPane.println(exception.getMessage());
+			exception.printStackTrace();
+		}
+	}
 }
