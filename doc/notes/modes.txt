@@ -1,0 +1,10 @@
+Modes
+
+Graph Editing
+Turtle etc.
+
+Querying
+SPARQL 
+
+
+

@@ -1,0 +1,13 @@
+    * Load, edit and save SPARQL queries
+    * Insert PREFIX statements into queries
+    * Configure custom namespaces so they can be quickly inserted into queries
+    * Cancel long running queries
+    * Save results to file
+    * Query local files and remote RDF documents
+    * Query RDF data held in relational databases
+    * Query online SPARQL endpoints, such as DBpedia, reyvu.com and GovTrack.
+    * Query using standard SPARQL, or the ARQ extended syntax which supports COUNT, etc.
+    * Use ARQ extension functions and property functions
+    * Apply inferencing (e.g. Jena rules, RDF Schema, OWL ontology) when running queries
+    * Configure commonly used data sources for quick access
+
