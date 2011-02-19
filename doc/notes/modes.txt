@@ -1,10 +1,18 @@
 Modes
 
+Graph Management
+
 Graph Editing
 Turtle etc.
 
 Querying
 SPARQL 
+
+Publishing
+of linked data
+
+Consuming
+
 
 
 
