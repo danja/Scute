@@ -75,7 +75,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 		JPanel uriPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		uriTextField = new JTextField(30);
-		JCheckBox uriCheckBox = new JCheckBox("Store Graph");
+		JCheckBox uriCheckBox = new JCheckBox("Open Graph");
 		// uriCheckBox.setHorizontalTextPosition(JCheckBox.LEADING);
 		
 		
