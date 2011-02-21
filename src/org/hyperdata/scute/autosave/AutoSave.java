@@ -85,8 +85,9 @@ public class AutoSave extends UserActivityAdapter { //
 	public void restorePreviousState(Scute rdfEditor) {
 		System.out.println("Config.self.getSelectedTab()) ="
 				+ Config.self.getSelectedTab());
-		rdfEditor.setSelectedTab(Config.self.getSelectedTab());
-		rdfEditor.setSourceText(getSavedText());
+//		rdfEditor.setSelectedTab(Config.self.getSelectedTab());
+//		rdfEditor.setSourceText(getSavedText());
+		
 	}
 
 	/**

@@ -11,6 +11,7 @@
 package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -113,7 +114,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private final SourcePanel turtlePanel;
 
 	/** The tabs. */
-	private final JTabbedPane tabs;
+// 	private final JTabbedPane tabs;
 
 	/** The tree panel. */
 	private final RdfTreePanel treePanel;
@@ -127,11 +128,16 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private OpenDialog openDialog;
 
+	private final CardPanel cardPanel;
+
 	/**
 	 * Instantiates a new scute.
 	 */
 	public Scute() {
 
+		// FIXME restorePreviousState BROKEN - fix!
+		// TODO restorePreviousState BROKEN - fix!
+		
 		// setSystemLookFeel();
 
 		// for bootstrapping/debugging
@@ -155,37 +161,56 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		panel = new JPanel(new BorderLayout());
 		panel.setPreferredSize(FRAME_SIZE);
-		tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		panel.add(tabs, BorderLayout.CENTER);
+		
+		// tabs = new JTabbedPane(SwingConstants.BOTTOM);
 
+		cardPanel = new CardPanel();
+
+		// panel.add(tabs, BorderLayout.CENTER);
+		panel.add(cardPanel, BorderLayout.CENTER);
+		
 		turtlePanel = new SourcePanel("Turtle");
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 		Document turtleDocument = turtlePanel.getDocument();
-		tabs.addChangeListener(turtlePanel);
-		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
+		
+//		tabs.addChangeListener(turtlePanel);
+//		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
+		
+		cardPanel.addChangeListener(turtlePanel);
+		cardPanel.add("Turtle", new JScrollPane(turtlePanel));
 
 		rdfxmlPanel = new SourcePanel("RDF/XML");
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
 		Document rdfxmlDocument = turtlePanel.getDocument();
-		tabs.addChangeListener(rdfxmlPanel);
-		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
+//		tabs.addChangeListener(rdfxmlPanel);
+//		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
+		
+		cardPanel.addChangeListener(rdfxmlPanel);
+		cardPanel.add("RDF/XML", new JScrollPane(rdfxmlPanel));
 
 		treePanel = new RdfTreePanel(Models.workingModel);
 		treePanel.addUserActivityListener(autoSave);
-		tabs.addTab("Tree", treePanel); // treePanel has scroll?
+//		tabs.addTab("Tree", treePanel); // treePanel has scroll?
 
+		// need change listener???
+		cardPanel.add("Tree", treePanel);
+		
 		graphPanel = new GraphPanel(Models.workingModel);
 		graphPanel.addUserActivityListener(autoSave);
-		tabs.addTab("Graph", graphPanel);
+//		tabs.addTab("Graph", graphPanel);
 
+		// need change listener???
+		cardPanel.add("Graph", graphPanel);
+		
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
-		tabs.addTab("System", new JScrollPane(systemPanel));
+//		tabs.addTab("System", new JScrollPane(systemPanel));
 
+		cardPanel.add("System", new JScrollPane(systemPanel));
 		// tabs.setSelectedIndex(0);
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
@@ -227,13 +252,16 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
+		
+		TaskPanel taskPanel = new TaskPanel(cardPanel);
+		panel.add(taskPanel, BorderLayout.WEST);
 		/*
 		 * FIXME validator, autosave must interrupt/be halted immediately on any
 		 * actions only one can run at any given time make singleton?
 		 */
 
 		frame = new JFrame("Scute");
-		frame.setIconImage(ScuteIcons.applicationIcon);
+		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
 		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
@@ -251,7 +279,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 			// correctly
 			System.out.println("RESTORE");
 			autoSave.restorePreviousState(this);
-			tabs.addChangeListener(autoSave); // so previous tab can be
+			
+			cardPanel.addChangeListener(autoSave);
+		//	tabs.addChangeListener(autoSave); // so previous tab can be
 			// restored, has to be here to
 			// miss initializing change to
 			// tab 0
@@ -264,23 +294,23 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * @param index
 	 *            the new selected tab
 	 */
-	public void setSelectedTab(int index) {
-		System.out.println("setting tab = " + index);
-		tabs.setSelectedIndex(index);
-	}
+//	public void setSelectedTab(int index) {
+//		System.out.println("setting tab = " + index);
+//		tabs.setSelectedIndex(index);
+//	}
 
 	/**
 	 * Gets the selected tab.
 	 * 
 	 * @return the selected tab
 	 */
-	public int getSelectedTab() {
-		return tabs.getSelectedIndex();
-	}
+//	public int getSelectedTab() {
+//		return tabs.getSelectedIndex();
+//	}
 
-	public String getSelectedTabTitle() {
-		return tabs.getTitleAt(getSelectedTab());
-	}
+//	public String getSelectedTabTitle() {
+//		return tabs.getTitleAt(getSelectedTab());
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -494,15 +524,16 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * @throws Exception
 	 *             the exception
 	 */
-	public SourcePanel getCurrentSourcePanel() throws Exception {
-		JScrollPane scroll = (JScrollPane) tabs.getSelectedComponent();
-		// System.out.println("component = "+scroll);
-		Object panel = scroll.getViewport().getView();
-		if (panel instanceof SourcePanel)
-			return (SourcePanel) panel;
-		else
-			throw new Exception("not a text panel");
-	}
+//	public SourcePanel getCurrentSourcePanel() throws Exception {
+//	
+//		JScrollPane scroll = (JScrollPane) tabs.getSelectedComponent();
+//		// System.out.println("component = "+scroll);
+//		Object panel = scroll.getViewport().getView();
+//		if (panel instanceof SourcePanel)
+//			return (SourcePanel) panel;
+//		else
+//			throw new Exception("not a text panel");
+//	}
 
 	/**
 	 * Sets the source text.
@@ -510,30 +541,30 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * @param savedText
 	 *            the new source text
 	 */
-	public void setSourceText(String savedText) {
-		try {
-			getCurrentSourcePanel().setText(savedText);
-		} catch (Exception e) {
-			// ignore
-		}
-	}
+//	public void setSourceText(String savedText) {
+//		try {
+//			getCurrentSourcePanel().setText(savedText);
+//		} catch (Exception e) {
+//			// ignore
+//		}
+//	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.hyperdata.scute.swing.ToolsInterface#checkText()
 	 */
-	@Override
-	public void checkText() {
-		try {
-			String text = getCurrentSourcePanel().getText();
-			String syntax = getCurrentSourcePanel().getSyntax();
-			RdfUtils.stringToModel(text, Config.baseUri, syntax);
-		} catch (Exception e) {
-			System.out.println("INVALID");
-		}
-		System.out.println("VALID");
-	}
+//	@Override
+//	public void checkText() {
+//		try {
+//			String text = getCurrentSourcePanel().getText();
+//			String syntax = getCurrentSourcePanel().getSyntax();
+//			RdfUtils.stringToModel(text, Config.baseUri, syntax);
+//		} catch (Exception e) {
+//			System.out.println("INVALID");
+//		}
+//		System.out.println("VALID");
+//	}
 
 	public static void setSystemLookFeel() {
 		try {

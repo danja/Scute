@@ -29,8 +29,8 @@
 	<classpathentry kind="lib" path="lib/jena/wstx-asl-3.2.9.jar"/>
 	<classpathentry kind="lib" path="lib/jena/xercesImpl-2.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/jena/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/swingx/swingx-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/Filters.jar"/>
-	<classpathentry kind="lib" path="lib/swingx/swingx-beaninfo-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/swingx/swingx-beaninfo-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/swingx/swingx-core-1.6.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

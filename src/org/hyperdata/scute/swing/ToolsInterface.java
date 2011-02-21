@@ -56,7 +56,7 @@ public interface ToolsInterface {
 	/**
 	 * Check text.
 	 */
-	public void checkText();
+	// public void checkText();
 
 	/**
 	 * @return

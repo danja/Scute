@@ -16,7 +16,7 @@
       <http://purl.org/stuff/scute/selectedTab>
               "0" ;
       <http://purl.org/stuff/scute/sync>
-              "false" ;
+              "true" ;
       <http://purl.org/stuff/scute/textSaveDelay>
               "4000" ;
       <http://purl.org/stuff/scute/textSavePeriod>

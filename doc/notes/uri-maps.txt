@@ -1,0 +1,20 @@
+Maps
+
+Endpoints
+* local URI
+* name
+* endpoint
+
+Vocabs
+* local URI
+* name
+* prefix
+* URI 
+
+Queries
+* local URI/filename for query string
+* name/title
+* endpoint
+
+
+

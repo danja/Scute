@@ -19,13 +19,16 @@ import javax.swing.ImageIcon;
 public class ScuteIcons {
 	
 	/** The Constant applicationIcon. */
-	public static final Image applicationIcon;
-	
+	public static final ImageIcon applicationIcon;
+	public static final ImageIcon rdfIcon;	
+	public static final ImageIcon sparqlIcon;	
 
 	static {
 		final ClassLoader loader = ScuteIcons.class.getClassLoader();
-		ImageIcon icon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/logo.png"));
-		applicationIcon = icon.getImage();
+		applicationIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/logo.png"));
+		
+		rdfIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/rdf-logo-16x16.png"));
+		sparqlIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/sparql-16x16.png"));
 	}
 
 	
