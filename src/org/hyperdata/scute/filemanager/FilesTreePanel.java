@@ -21,23 +21,16 @@ import java.io.File;
 /**
  * The Class FileSystemTreePanel.
  */
-public class FileSystemTreePanel extends JPanel {
+public class FilesTreePanel extends JPanel {
     private JTree tree;
-
-    /**
-     * Instantiates a new file system tree panel.
-     */
-    public FileSystemTreePanel() {
-        this( new FileSystemModel() );
-    }
 
     /**
      * Instantiates a new file system tree panel.
      *
      * @param startPath the start path
      */
-    public FileSystemTreePanel( String startPath ) {
-        this( new FileSystemModel( startPath ) );
+    public FilesTreePanel( String startPath ) {
+        this( new FilesTreeModel( startPath ) );
     }
 
     /**
@@ -45,7 +38,7 @@ public class FileSystemTreePanel extends JPanel {
      *
      * @param model the model
      */
-    public FileSystemTreePanel( FileSystemModel model ) {
+    public FilesTreePanel( FilesTreeModel model ) {
         tree = new JTree( model ) {       
             @Override
 			public String convertValueToText(Object value, boolean selected,
@@ -58,7 +51,7 @@ public class FileSystemTreePanel extends JPanel {
         //tree.setLargeModel( true );        
         tree.setRootVisible( false );
         tree.setShowsRootHandles( true );
-        tree.putClientProperty( "JTree.lineStyle", "Angled" );
+      //  tree.putClientProperty( "JTree.lineStyle", "Angled" );
 
         setLayout( new BorderLayout() );
         add( tree, BorderLayout.CENTER );
@@ -73,5 +66,3 @@ public class FileSystemTreePanel extends JPanel {
        return tree;
     }
 }
-
-

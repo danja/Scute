@@ -40,7 +40,6 @@ public class FileComparator implements Comparator<File> {
 	 * directories first, then files
 	 * alphabetical, ignoring case
 	 * 
-	 * No doubt could be more efficient, but ok for now
 	 * @param directory
 	 * @return an array of children names
 	 * 
@@ -52,17 +51,13 @@ public class FileComparator implements Comparator<File> {
 		
 		for(int i=0;i<files.size();i++){
 			sorted[i] = files.get(i).getName();
-		//	System.out.println(sorted[i]);
 		}	
 		return sorted;
 	}
 	
 	public static List<File> getSortedChildren(File directory) {
 		File[] children = directory.listFiles();
-		
 		List<File> files = Arrays.asList(children);
-	//	Set<File> sorter = new TreeSet<File>(new FileComparator());
-	//	sorter.addAll(files);
 		Collections.sort(files, new FileComparator());
 		return files;
 	}

@@ -16,7 +16,6 @@ import javax.swing.UIManager;
 public class DirectoryListModel extends AbstractListModel {
 
     protected File directory;
-   // protected String[] children;
     protected List<File> files;
     protected int rowCount;
     protected Object dirIcon;
@@ -37,9 +36,7 @@ public class DirectoryListModel extends AbstractListModel {
     public void setDirectory(File dir) {
         if (dir != null) {
             directory = dir;
-         //   children =   FileComparator.getSortedChildrenNames(dir);
             files = FileComparator.getSortedChildren(dir);
-          //  children = dir.list();
             rowCount = files.size();
         }
         else {

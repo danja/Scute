@@ -19,22 +19,17 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-
-
 
 /**
  * The Class FileExplorer.
  */
 public class FileExplorerPanel extends JPanel {
-    
 
-	public FileExplorerPanel(){
+	public FileExplorerPanel(String startPath){
 		super(new BorderLayout());
-		 FileSystemModel model = new FileSystemModel(".");
+		 FilesTreeModel model = new FilesTreeModel(startPath);
 		 DirectoryListModel directoryModel = new DirectoryListModel((File)model.getRoot());
 		 JList dirList = new JList(directoryModel);
 		 
@@ -44,28 +39,18 @@ public class FileExplorerPanel extends JPanel {
 		 dirList.addMouseListener(listMouseListener);
 		 
 		 
-	        FileSystemTreePanel fileTree = new FileSystemTreePanel(model);
+	        FilesTreePanel fileTree = new FilesTreePanel(model);
 	        fileTree.getTree().addTreeSelectionListener(new TreeListener(directoryModel));
 
 	        JScrollPane treeScroller = new JScrollPane(fileTree);
-	   //     JScrollPane tableScroller = new JScrollPane(table);
 	        JScrollPane listScroller = new JScrollPane(dirList);
 	        treeScroller.setMinimumSize(new Dimension(5, 0));
-	      //  tableScroller.setMinimumSize(new Dimension(5, 0));
-	     //   tableScroller.setBackground(Color.white);
 	        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 	                                               treeScroller,
 	                                               listScroller);
 	        splitPane.setContinuousLayout(true);
 	        add(splitPane, BorderLayout.CENTER);
 	}
-	
-    /**
-     * The main method.
-     *
-     * @param argv the arguments
-     */
- 
 
     /**
      * The listener interface for receiving tree events.
@@ -79,14 +64,14 @@ public class FileExplorerPanel extends JPanel {
      * @see TreeEvent
      */
     protected static class TreeListener implements TreeSelectionListener {
-        DirectoryListModel model;
+        DirectoryListModel dirListModel;
 
         /**
          * Instantiates a new tree listener.
          *
          */
         public TreeListener(DirectoryListModel model) {
-            this.model = model;
+            this.dirListModel = model;
         }
         
         /* (non-Javadoc)
@@ -96,10 +81,10 @@ public class FileExplorerPanel extends JPanel {
 		public void valueChanged(TreeSelectionEvent e) {
             File fileSysEntity = (File)e.getPath().getLastPathComponent();
             if (fileSysEntity.isDirectory()) {
-                model.setDirectory(fileSysEntity);
+                dirListModel.setDirectory(fileSysEntity);
             }
             else {
-                model.setDirectory(null);
+                dirListModel.setDirectory(null);
             }
         }
     }

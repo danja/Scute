@@ -24,16 +24,9 @@ import javax.swing.tree.TreePath;
 /**
  * The Class FileSystemModel.
  */
-public class FileSystemModel extends DefaultTreeModel {
+public class FilesTreeModel extends DefaultTreeModel {
 
-	String root;
-
-	/**
-	 * Instantiates a new file system model.
-	 */
-	public FileSystemModel() {
-		this(System.getProperty("user.home"));
-	}
+	private String root;
 
 	/**
 	 * Instantiates a new file system model.
@@ -41,7 +34,7 @@ public class FileSystemModel extends DefaultTreeModel {
 	 * @param startPath
 	 *            the start path
 	 */
-	public FileSystemModel(String startPath) {
+	public FilesTreeModel(String startPath) {
 		super(null);
 		root = startPath;
 	}
@@ -109,9 +102,6 @@ public class FileSystemModel extends DefaultTreeModel {
 		return false;
 	}
 
-	// public void valueForPathChanged( TreePath path, Object newValue ) {
-	// }
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -131,22 +121,8 @@ public class FileSystemModel extends DefaultTreeModel {
 				break;
 			}
 		}
-
 		return result;
 	}
-
-
-
-	/**
-	 * @param list
-	 * @return
-	 */
-//	private String[] sortFilenames(String[] list) {
-	// directory.list()
-//		Arrays.sort(list);
-//		return list;
-//
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -157,7 +133,5 @@ public class FileSystemModel extends DefaultTreeModel {
 	 */
 	@Override
 	public void valueForPathChanged(TreePath path, Object newValue) {
-		// TODO Auto-generated method stub
-
 	}
 }
