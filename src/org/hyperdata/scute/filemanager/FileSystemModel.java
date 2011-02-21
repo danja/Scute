@@ -64,7 +64,7 @@ public class FileSystemModel extends DefaultTreeModel {
 	@Override
 	public Object getChild(Object parent, int index) {
 		File directory = (File) parent;
-		String[] children = getSortedChildren(directory);
+		String[] children = FileComparator.getSortedChildrenNames(directory);
 		return new File(directory, children[index]);
 	}
 
@@ -122,7 +122,7 @@ public class FileSystemModel extends DefaultTreeModel {
 	public int getIndexOfChild(Object parent, Object child) {
 		File directory = (File) parent;
 		File fileSysEntity = (File) child;
-		String[] children = getSortedChildren(directory);
+		String[] children = FileComparator.getSortedChildrenNames(directory);
 		int result = -1;
 
 		for (int i = 0; i < children.length; ++i) {
@@ -135,29 +135,7 @@ public class FileSystemModel extends DefaultTreeModel {
 		return result;
 	}
 
-	/**
-	 * Sorts directory children
-	 * directories first, then files
-	 * alphabetical, ignoring case
-	 * 
-	 * No doubt could be more efficient, but ok for now
-	 * @param directory
-	 * @return an array of children names
-	 * 
-	 */
-	private String[] getSortedChildren(File directory) {
-		File[] children = directory.listFiles();
-		String[] sorted = new String[children.length];
-		List<File> files = Arrays.asList(children);
-		Set<File> sorter = new TreeSet<File>(new FileComparator());
-		sorter.addAll(files);
-		Iterator<File> iterator = sorter.iterator();
-		int counter = 0;
-		while(iterator.hasNext()){
-			sorted[counter++] = iterator.next().getName();
-		}	
-		return sorted;
-	}
+
 
 	/**
 	 * @param list
