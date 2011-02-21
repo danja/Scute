@@ -11,6 +11,7 @@
 package org.hyperdata.scute.source;
 
 import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ import javax.swing.event.ChangeListener;
 import org.hyperdata.scute.autosave.UserActivityListener;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.window.CardPanel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -30,11 +32,12 @@ import com.hp.hpl.jena.rdf.model.Model;
  */
 public class SourcePanel extends JEditorPane implements TextContainer,
 		ChangeListener {
-	
+
 	/**
 	 * Adds the user activity listener.
-	 *
-	 * @param listener the listener
+	 * 
+	 * @param listener
+	 *            the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
 		getDocument().addDocumentListener(listener);
@@ -45,26 +48,27 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	// String base = "http://hyperdata.org/base";
 	/** The model. */
 	private Model model;
-	
+
 	/** The refresh button. */
 	private JButton refreshButton;
-	
+
 	/** The scroll. */
 	protected JScrollPane scroll;
-	
+
 	/** The syntax. */
 	private String syntax;
 
 	/**
 	 * Instantiates a new source panel.
-	 *
-	 * @param syntax the syntax
+	 * 
+	 * @param syntax
+	 *            the syntax
 	 */
 	public SourcePanel(String syntax) {
 		super();
 		this.syntax = syntax;
 	}
-	
+
 	/**
 	 * Gets the refresh button.
 	 * 
@@ -74,7 +78,9 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 		return refreshButton;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
 	 */
 	@Override
@@ -133,22 +139,32 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	}
 
 	// called when tabs clicked
-	/* (non-Javadoc)
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent
+	 * )
 	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		final Component c = ((JTabbedPane) e.getSource())
-				.getSelectedComponent();
-		if (this == c) {
-			System.out.println("TAB changed");
-			System.out.println("current window = " + getSyntax());
+		// final Component c = ((JTabbedPane) e.getSource())
+		// .getSelectedComponent();
+		// if (this == c) {
+		// System.out.println("TAB changed");
+		// System.out.println("current window = " + getSyntax());
+		// }
+		String view = ((CardPanel) e.getSource()).getViewName();
+
+		if (this.getSyntax().equals(view)) {
+			// System.out.println("refreshing " + c);
+			loadModel(model);
 		}
-		System.out.println("refreshing " + c);
-		loadModel(model);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
 	 */
 	@Override

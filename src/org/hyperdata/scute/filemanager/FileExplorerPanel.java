@@ -10,6 +10,7 @@
  */
 package org.hyperdata.scute.filemanager;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -17,6 +18,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -28,54 +30,43 @@ import javax.swing.event.TreeSelectionListener;
 /**
  * The Class FileExplorer.
  */
-public class FileExplorer {
+public class FileExplorerPanel extends JPanel {
     
+	public FileExplorerPanel(){
+		super(new BorderLayout());
+		 FileSystemModel model = new FileSystemModel(".");
+	        DirectoryModel directoryModel = new DirectoryModel( (File)model.getRoot() );
+	        JTable table = new JTable( directoryModel );
+	        table.setShowHorizontalLines( false );
+	        table.setShowVerticalLines( false );
+	        table.setIntercellSpacing( new Dimension( 0, 2 ) );
+	        table.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+	        table.getColumn( "Type" ).setCellRenderer( new DirectoryRenderer() );
+	        table.getColumn( "Type" ).setMaxWidth( 32 );
+	        table.getColumn( "Type" ).setMinWidth( 32 );
+
+	        FileSystemTreePanel fileTree = new FileSystemTreePanel( model );
+	        fileTree.getTree().addTreeSelectionListener( new TreeListener( directoryModel ) );
+
+	        JScrollPane treeScroller = new JScrollPane( fileTree );
+	      //  JScrollPane tableScroller = JTable.createScrollPaneForTable( table );
+	        JScrollPane tableScroller = new JScrollPane( table );
+	        treeScroller.setMinimumSize( new Dimension( 5, 0 ) );
+	        tableScroller.setMinimumSize( new Dimension( 5, 0 ) );
+	        tableScroller.setBackground( Color.white );
+	        JSplitPane splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
+	                                               treeScroller,
+	                                               tableScroller );
+	        splitPane.setContinuousLayout( true );
+	        add(splitPane, BorderLayout.CENTER);
+	}
+	
     /**
      * The main method.
      *
      * @param argv the arguments
      */
-    public static void main( String[] argv ) {
-        JFrame frame = new JFrame( "File Explorer" );
-
-        frame.addWindowListener( new WindowAdapter() {
-                                     @Override
-									public void windowClosing( WindowEvent e ) {
-                                         System.exit( 0 );
-                                     }
-                                 });
-
-        FileSystemModel model = new FileSystemModel(".");
-        DirectoryModel directoryModel = new DirectoryModel( (File)model.getRoot() );
-        JTable table = new JTable( directoryModel );
-        table.setShowHorizontalLines( false );
-        table.setShowVerticalLines( false );
-        table.setIntercellSpacing( new Dimension( 0, 2 ) );
-        table.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-        table.getColumn( "Type" ).setCellRenderer( new DirectoryRenderer() );
-        table.getColumn( "Type" ).setMaxWidth( 32 );
-        table.getColumn( "Type" ).setMinWidth( 32 );
-
-        FileSystemTreePanel fileTree = new FileSystemTreePanel( model );
-        fileTree.getTree().addTreeSelectionListener( new TreeListener( directoryModel ) );
-
-        JScrollPane treeScroller = new JScrollPane( fileTree );
-      //  JScrollPane tableScroller = JTable.createScrollPaneForTable( table );
-        JScrollPane tableScroller = new JScrollPane( table );
-        treeScroller.setMinimumSize( new Dimension( 0, 0 ) );
-        tableScroller.setMinimumSize( new Dimension( 0, 0 ) );
-        tableScroller.setBackground( Color.white );
-        JSplitPane splitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
-                                               treeScroller,
-                                               tableScroller );
-        splitPane.setContinuousLayout( true );
-
-        frame.getContentPane().add( splitPane );
-
-        frame.setSize( 400, 400 );
-        frame.pack();
-        frame.setVisible(true);
-    }
+ 
 
     /**
      * The listener interface for receiving tree events.

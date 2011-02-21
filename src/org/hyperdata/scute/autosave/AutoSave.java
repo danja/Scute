@@ -11,6 +11,7 @@
 package org.hyperdata.scute.autosave;
 
 import java.awt.event.FocusEvent;
+
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.util.EventObject;
@@ -22,6 +23,7 @@ import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;
+import org.hyperdata.scute.window.CardPanel;
 
 /**
  * see http://esw.w3.org/IntegrityIsJobOne
@@ -84,7 +86,7 @@ public class AutoSave extends UserActivityAdapter { //
 	 */
 	public void restorePreviousState(Scute rdfEditor) {
 		System.out.println("Config.self.getSelectedTab()) ="
-				+ Config.self.getSelectedTab());
+				+ Config.self.getSelectedView());
 //		rdfEditor.setSelectedTab(Config.self.getSelectedTab());
 //		rdfEditor.setSourceText(getSavedText());
 		
@@ -171,8 +173,10 @@ public void focusGained(FocusEvent event) {
 	 */
 	@Override
 	public void stateChanged(ChangeEvent event) { // from tabs
-		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
-		Config.self.setSelectedTab(tabIndex);
+//		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
+//		Config.self.setSelectedTab(tabIndex);
+		String command = ((CardPanel) event.getSource()).getViewName();
+		Config.self.setSelectedView(command);
 	}
 
 }

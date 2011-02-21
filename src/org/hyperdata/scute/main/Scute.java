@@ -30,12 +30,15 @@ import javax.swing.text.Document;
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.AutoSaveAction;
+import org.hyperdata.scute.filemanager.FileExplorerPanel;
 import org.hyperdata.scute.graph.GraphPanel;
+import org.hyperdata.scute.graphmanager.GraphManagerPanel;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.source.HighlighterEditorKit;
 import org.hyperdata.scute.source.SourcePanel;
+import org.hyperdata.scute.sparql.SparqlPanel;
 import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
@@ -53,6 +56,8 @@ import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
 import org.hyperdata.scute.validate.TurtleValidateAction;
+import org.hyperdata.scute.window.CardPanel;
+import org.hyperdata.scute.window.TaskPanel;
 
 /**
  * The Class Scute.
@@ -130,6 +135,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private final CardPanel cardPanel;
 
+	private FileExplorerPanel fileExplorerPanel;
+
+	private SparqlPanel sparqlPanel;
+
+	private GraphManagerPanel graphManagerPanel;
+
+	public static ScuteHelp scuteHelp;
+
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -158,6 +171,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		autoSave.initModelSaver(Config.self);
 
 		Models.workingModel = Models.sampleModel;
+		
+		scuteHelp = new ScuteHelp();
+		
 
 		panel = new JPanel(new BorderLayout());
 		panel.setPreferredSize(FRAME_SIZE);
@@ -205,6 +221,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		// need change listener???
 		cardPanel.add("Graph", graphPanel);
+		
+		sparqlPanel = new SparqlPanel();
+		cardPanel.add("SPARQL", sparqlPanel);
+		
+		graphManagerPanel = new GraphManagerPanel();
+		cardPanel.add("Graphs", graphManagerPanel);
+		
+		fileExplorerPanel = new FileExplorerPanel();
+		cardPanel.add("Files", fileExplorerPanel);
 		
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
@@ -255,6 +280,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		
 		TaskPanel taskPanel = new TaskPanel(cardPanel);
 		panel.add(taskPanel, BorderLayout.WEST);
+		
 		/*
 		 * FIXME validator, autosave must interrupt/be halted immediately on any
 		 * actions only one can run at any given time make singleton?

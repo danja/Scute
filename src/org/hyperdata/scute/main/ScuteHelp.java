@@ -7,6 +7,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.swing.JPanel;
+
 import org.hyperdata.resources.general.GeneralIcons;
 
 import oracle.help.Help;
@@ -25,7 +27,7 @@ javax.help.search.MergingSearchEngine.class
 javax.help.search.SearchEngine.class
 
  */
-public class ScuteHelp {
+public class ScuteHelp  {
 
 	/**
 	 * @param args
@@ -34,9 +36,11 @@ public class ScuteHelp {
 		// TODO need to add close action for standalone
 	new ScuteHelp();
 	}
+
+	private Help help;
 	
 	public ScuteHelp(){
-		Help help = new Help();
+		help = new Help();
 		File file = new File("doc/www/Scute.hs");
 		URL url = null;
 		try {
@@ -51,7 +55,9 @@ public class ScuteHelp {
 			exception.printStackTrace();
 		}
 		help.addBook(helpSet);
-help.showNavigatorWindow();
 	}
-
+	
+	public void show(){
+		 help.showNavigatorWindow();
+	}
 }

@@ -265,8 +265,8 @@ public class Config extends ModelContainer {
 	 * 
 	 * @return the selected tab
 	 */
-	public int getSelectedTab() {
-		return Integer.parseInt(getValue("selectedTab"));
+	public String getSelectedView() {
+		return getValue("selectedView");
 	}
 
 	/**
@@ -275,10 +275,8 @@ public class Config extends ModelContainer {
 	 * @param tabIndex
 	 *            the new selected tab
 	 */
-	public void setSelectedTab(int tabIndex) {
-		System.out.println("Setting tab = " + tabIndex);
-		setValue("selectedTab", Integer.toString(tabIndex));
-		System.out.println("getting tab = " + getSelectedTab());
+	public void setSelectedView(String viewName) {
+		setValue("selectedView", viewName);
 	}
 
 	/**

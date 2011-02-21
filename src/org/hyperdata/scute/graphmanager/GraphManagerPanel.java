@@ -1,6 +1,7 @@
 
 package org.hyperdata.scute.graphmanager;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -10,6 +11,9 @@ import javax.swing.JPanel;
 public class GraphManagerPanel extends JPanel {
 
 	
+	public GraphManagerPanel(){
+		add(new JLabel("Graph Manager - TODO"));
+	}
 	/**
 	 * @param args
 	 */

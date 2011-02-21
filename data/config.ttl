@@ -13,8 +13,8 @@
               "2000" ;
       <http://purl.org/stuff/scute/modelSavePeriod>
               "6000" ;
-      <http://purl.org/stuff/scute/selectedTab>
-              "0" ;
+      <http://purl.org/stuff/scute/selectedView>
+              "System" ;
       <http://purl.org/stuff/scute/sync>
               "true" ;
       <http://purl.org/stuff/scute/textSaveDelay>
