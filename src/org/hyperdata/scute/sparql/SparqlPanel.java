@@ -7,20 +7,30 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.WindowConstants;
+
+import org.jdesktop.swingx.JXTitledPanel;
 
 /**
  * @author danny
  *
  */
-public class SparqlPanel extends JPanel {
+public class SparqlPanel extends JXTitledPanel {
 
 	public SparqlPanel(){
-		super(new BorderLayout());
-		setSize(800,600);
+		super();
+		super.setLayout(new BorderLayout());
+		super.setTitle("Results");
+		
 		SparqlToolbar toolbar = new SparqlToolbar();
 		add(toolbar, BorderLayout.NORTH);
+		
 		SparqlSourcePanel sourcePanel = new SparqlSourcePanel();
-		add(sourcePanel, BorderLayout.CENTER); 
+		SparqlResultsPanel resultPanel = new SparqlResultsPanel();
+		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sourcePanel, resultPanel);
+		add(splitPane, BorderLayout.CENTER); 
 	}
 	/**
 	 * @param args
@@ -28,8 +38,10 @@ public class SparqlPanel extends JPanel {
 	public static void main(String[] args) {
 		SparqlPanel sparqlPanel = new SparqlPanel();
 		final JFrame frame = new JFrame();
-		frame.getContentPane().add(sparqlPanel);
-		frame.pack();
+		frame.setSize(800,600);
+		frame.add(sparqlPanel);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	//	frame.pack();
 		frame.setVisible(true);
 	}
 
