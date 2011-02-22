@@ -12,26 +12,25 @@ import org.hyperdata.scute.filemanager.FileExplorerPanel;
 
 /**
  * @author danny
- *
+ * 
  */
 public class FileExplorerDemo {
 
-	   public static void main( String[] argv ) {
-	        JFrame frame = new JFrame( "File Explorer" );
+	public static void main(String[] argv) {
+		JFrame frame = new JFrame("File Explorer");
 
-	        frame.addWindowListener( new WindowAdapter() {
-	                                     @Override
-										public void windowClosing( WindowEvent e ) {
-	                                         System.exit( 0 );
-	                                     }
-	                                 });
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 
-	       
+		frame.getContentPane().add(
+				new FileExplorerPanel(System.getProperty("user.home")));
 
-	        frame.getContentPane().add( new FileExplorerPanel() );
-
-	        frame.setSize( 400, 400 );
-	        frame.pack();
-	        frame.setVisible(true);
-	    }
+		frame.setSize(400, 400);
+		frame.pack();
+		frame.setVisible(true);
+	}
 }

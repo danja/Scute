@@ -23,6 +23,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class Config extends ModelContainer {
 
+	public static final String DATA_DIR = "data/";
 	// set in code
 	/** The Constant ASSEMBLER_FILENAME. */
 	public static final String ASSEMBLER_FILENAME = "data/tdb-assembler.ttl";

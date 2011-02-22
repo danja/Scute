@@ -228,7 +228,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		graphManagerPanel = new GraphManagerPanel();
 		cardPanel.add("Graphs", graphManagerPanel);
 		
-		fileExplorerPanel = new FileExplorerPanel();
+		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
 		cardPanel.add("Files", fileExplorerPanel);
 		
 		systemPanel = new SystemPanel();
