@@ -15,77 +15,64 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
+
+import org.hyperdata.scute.filemanager.actions.SendToSparqlAction;
 
 /**
  * The Class FileExplorer.
  */
-public class FileExplorerPanel extends JPanel {
+public class FileExplorerPanel extends JPanel implements FileReference {
 
-	public FileExplorerPanel(String startPath){
-		super(new BorderLayout());
-		 FilesTreeModel model = new FilesTreeModel(startPath);
-		 DirectoryListModel directoryModel = new DirectoryListModel((File)model.getRoot());
-		 JList dirList = new JList(directoryModel);
-		 
-		 ListItemRenderer renderer = new ListItemRenderer();
-		 dirList.setCellRenderer(renderer);
-		 ListMouseListener  listMouseListener = new ListMouseListener();
-		 dirList.addMouseListener(listMouseListener);
-		 
-		 
-	        FilesTreePanel fileTree = new FilesTreePanel(model);
-	        fileTree.getTree().addTreeSelectionListener(new TreeListener(directoryModel));
-
-	        JScrollPane treeScroller = new JScrollPane(fileTree);
-	        JScrollPane listScroller = new JScrollPane(dirList);
-	        treeScroller.setMinimumSize(new Dimension(5, 0));
-	        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-	                                               treeScroller,
-	                                               listScroller);
-	        splitPane.setContinuousLayout(true);
-	        add(splitPane, BorderLayout.CENTER);
+	public File getCurrentFile() {
+		return this.currentFile;
 	}
 
-    /**
-     * The listener interface for receiving tree events.
-     * The class that is interested in processing a tree
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addTreeListener<code> method. When
-     * the tree event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see TreeEvent
-     */
-    protected static class TreeListener implements TreeSelectionListener {
-        DirectoryListModel dirListModel;
+	public void setCurrentFile(File currentFile) {
+		this.currentFile = currentFile;
+	}
 
-        /**
-         * Instantiates a new tree listener.
-         *
-         */
-        public TreeListener(DirectoryListModel model) {
-            this.dirListModel = model;
-        }
-        
-        /* (non-Javadoc)
-         * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
-         */
-        @Override
-		public void valueChanged(TreeSelectionEvent e) {
-            File fileSysEntity = (File)e.getPath().getLastPathComponent();
-            if (fileSysEntity.isDirectory()) {
-                dirListModel.setDirectory(fileSysEntity);
-            }
-            else {
-                dirListModel.setDirectory(null);
-            }
-        }
-    }
+	private File currentFile;
+	
+	public FileExplorerPanel(String startPath) {
+		super(new BorderLayout());
+		FilesTreeModel treeModel = new FilesTreeModel(startPath);
+		DirListModel directoryModel = new DirListModel((File) treeModel.getRoot());
+		JList dirList = new JList(directoryModel);
+
+		ListItemRenderer renderer = new ListItemRenderer();
+		dirList.setCellRenderer(renderer);
+
+		FilesTreePanel fileTree = new FilesTreePanel(treeModel);
+		
+		fileTree.getTree().addTreeSelectionListener(new TreeListener(this,directoryModel));
+		fileTree.getTree().setSelectionRow(0);
+		
+		ListMouseListener listMouseListener = new ListMouseListener(this, fileTree.getTree());
+		dirList.addMouseListener(listMouseListener);
+		
+		JScrollPane treeScroller = new JScrollPane(fileTree);
+		JScrollPane listScroller = new JScrollPane(dirList);
+		treeScroller.setMinimumSize(new Dimension(5, 0));
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroller, listScroller);
+		splitPane.setContinuousLayout(true);
+		add(splitPane, BorderLayout.CENTER);
+		add(getButtonBar(), BorderLayout.SOUTH);
+	}
+	
+//	public File getSelected(){
+//		return null;
+//	}
+
+	private JPanel getButtonBar() {
+		JPanel panel = new JPanel();
+		JButton button = new JButton("Send To SPARQL Editor");
+		button.setAction(new SendToSparqlAction(this));
+		panel.add(button);
+		return panel;
+	}
 }

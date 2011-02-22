@@ -13,19 +13,15 @@ import javax.swing.UIManager;
  * @author danny
  *
  */
-public class DirectoryListModel extends AbstractListModel {
+public class DirListModel extends AbstractListModel {
 
     protected File directory;
     protected List<File> files;
     protected int rowCount;
-    protected Object dirIcon;
-    protected Object fileIcon;
-    
-	public DirectoryListModel(File dir){
+
+	public DirListModel(File dir){
 		super();
         setDirectory(dir);
-        dirIcon = UIManager.get("DirectoryPane.directoryIcon");
-        fileIcon = UIManager.get("DirectoryPane.fileIcon");
 	}
 	
     /**

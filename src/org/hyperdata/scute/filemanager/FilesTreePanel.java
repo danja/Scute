@@ -29,8 +29,8 @@ public class FilesTreePanel extends JPanel {
      *
      * @param startPath the start path
      */
-    public FilesTreePanel( String startPath ) {
-        this( new FilesTreeModel( startPath ) );
+    public FilesTreePanel(String startPath) {
+        this( new FilesTreeModel(startPath) );
     }
 
     /**
@@ -38,8 +38,8 @@ public class FilesTreePanel extends JPanel {
      *
      * @param model the model
      */
-    public FilesTreePanel( FilesTreeModel model ) {
-        tree = new JTree( model ) {       
+    public FilesTreePanel(FilesTreeModel model) {
+        tree = new JTree(model) {       
             @Override
 			public String convertValueToText(Object value, boolean selected,
                                              boolean expanded, boolean leaf, int row,
@@ -49,12 +49,12 @@ public class FilesTreePanel extends JPanel {
         };
 
         //tree.setLargeModel( true );        
-        tree.setRootVisible( false );
-        tree.setShowsRootHandles( true );
+        tree.setRootVisible(false);
+        tree.setShowsRootHandles(true);
       //  tree.putClientProperty( "JTree.lineStyle", "Angled" );
 
-        setLayout( new BorderLayout() );
-        add( tree, BorderLayout.CENTER );
+        setLayout(new BorderLayout());
+        add(tree, BorderLayout.CENTER);
     }
 
     /**

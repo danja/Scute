@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -26,7 +27,7 @@ import javax.swing.tree.TreePath;
  */
 public class FilesTreeModel extends DefaultTreeModel {
 
-	private String root;
+	private String rootString;
 
 	/**
 	 * Instantiates a new file system model.
@@ -36,7 +37,8 @@ public class FilesTreeModel extends DefaultTreeModel {
 	 */
 	public FilesTreeModel(String startPath) {
 		super(null);
-		root = startPath;
+		// setRoot(new File(startPath)); // new DefaultMutableTreeNode(
+		rootString = startPath;
 	}
 
 	/*
@@ -46,7 +48,7 @@ public class FilesTreeModel extends DefaultTreeModel {
 	 */
 	@Override
 	public Object getRoot() {
-		return new File(root);
+		return new File(rootString);
 	}
 
 	/*
@@ -68,9 +70,9 @@ public class FilesTreeModel extends DefaultTreeModel {
 	 */
 	@Override
 	public int getChildCount(Object parent) {
-		File fileSysEntity = (File) parent;
-		if (fileSysEntity.isDirectory()) {
-			String[] children = fileSysEntity.list();
+		File fileItem = (File) parent;
+		if (fileItem.isDirectory()) {
+			String[] children = fileItem.list();
 			return children.length;
 		} else {
 			return 0;
@@ -111,12 +113,12 @@ public class FilesTreeModel extends DefaultTreeModel {
 	@Override
 	public int getIndexOfChild(Object parent, Object child) {
 		File directory = (File) parent;
-		File fileSysEntity = (File) child;
+		File fileItem = (File) child;
 		String[] children = FileComparator.getSortedChildrenNames(directory);
 		int result = -1;
 
 		for (int i = 0; i < children.length; ++i) {
-			if (fileSysEntity.getName().equals(children[i])) {
+			if (fileItem.getName().equals(children[i])) {
 				result = i;
 				break;
 			}
@@ -133,5 +135,14 @@ public class FilesTreeModel extends DefaultTreeModel {
 	 */
 	@Override
 	public void valueForPathChanged(TreePath path, Object newValue) {
+	}
+
+	/**
+	 * @param file
+	 */
+	public void addToPath(File file) {
+		//TreePath path = new TreePath(getPathToRoot(file));
+		//valueForPathChanged(path, file);
+		
 	}
 }
