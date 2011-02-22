@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql;
+package org.hyperdata.scute.sparql.actions;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;

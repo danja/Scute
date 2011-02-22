@@ -16,11 +16,16 @@ public class SparqlResultsPanel extends JPanel {
 
 	public SparqlResultsPanel(){
 		super(new BorderLayout());
-		JTabbedPane tabs = new JTabbedPane(JTabbedPane.BOTTOM);
+		
 		TextResultsView textView = new TextResultsView ();
 		TableResultsView tableView = new TableResultsView();
+		HTTPView httpView = new HTTPView();
+		
+		JTabbedPane tabs = new JTabbedPane(JTabbedPane.BOTTOM);
 		tabs.addTab("Text", textView);
 		tabs.addTab("Table", tableView);
+		tabs.addTab("HTTP", httpView);
+		
 		add(tabs, BorderLayout.CENTER);
 	}
 }

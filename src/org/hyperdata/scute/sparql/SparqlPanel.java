@@ -30,6 +30,7 @@ public class SparqlPanel extends JXTitledPanel {
 		SparqlResultsPanel resultPanel = new SparqlResultsPanel();
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sourcePanel, resultPanel);
+		splitPane.setContinuousLayout(true);
 		add(splitPane, BorderLayout.CENTER); 
 	}
 	/**

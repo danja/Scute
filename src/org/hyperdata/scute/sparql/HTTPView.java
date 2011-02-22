@@ -3,10 +3,12 @@
  */
 package org.hyperdata.scute.sparql;
 
+import javax.swing.JEditorPane;
+
 /**
  * @author danny
  *
  */
-public class WorkingModelEndpointAction extends EndpointAction {
+public class HTTPView extends JEditorPane {
 
 }

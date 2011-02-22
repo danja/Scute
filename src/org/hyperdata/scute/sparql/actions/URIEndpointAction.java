@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql;
+package org.hyperdata.scute.sparql.actions;
+
+import org.hyperdata.scute.sparql.Endpoint;
 
 /**
  * @author danny

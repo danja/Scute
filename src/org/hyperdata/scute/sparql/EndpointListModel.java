@@ -12,6 +12,8 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataListener;
 
+import org.hyperdata.scute.sparql.actions.WorkingModelEndpointAction;
+
 /**
  * @author danny
  *
@@ -21,8 +23,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 	private List<Endpoint> targets = new ArrayList<Endpoint>();
 	
 	public EndpointListModel(){
-makeSamples();
-		
+makeSamples();	
 	}
 	
 	public Object getElementAt(int i){
@@ -35,4 +36,13 @@ makeSamples();
 		Endpoint dbPediaEndpoint = new Endpoint("dbPedia", "http://dbpedia.org/sparql");
 		targets.add(dbPediaEndpoint);
 	}
+
+	/* (non-Javadoc)
+	 * @see javax.swing.ListModel#getSize()
+	 */
+	@Override
+	public int getSize() {
+		return targets.size();
+	}
+
 }

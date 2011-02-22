@@ -5,6 +5,8 @@ package org.hyperdata.scute.sparql;
 
 import javax.swing.Action;
 
+import org.hyperdata.scute.sparql.actions.URIEndpointAction;
+
 
 
 /**
