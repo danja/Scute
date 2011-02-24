@@ -3,21 +3,16 @@
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix vis:     <http://ideagraph.org/xmlns/idea/graphic#> .
 @prefix x:       <http://purl.org/stuff/> .
 
 <http://purl.org/stuff/scute/application>
       <http://purl.org/stuff/scute/defaultFileFormat>
               "Turtle" ;
       <http://purl.org/stuff/scute/modelSaveDelay>
-              "2000" ;
-      <http://purl.org/stuff/scute/modelSavePeriod>
-              "6000" ;
+              "20000" ;
       <http://purl.org/stuff/scute/selectedView>
-              "Files" ;
+              "Turtle" ;
       <http://purl.org/stuff/scute/sync>
-              "true" ;
+              "false" ;
       <http://purl.org/stuff/scute/textSaveDelay>
-              "4000" ;
-      <http://purl.org/stuff/scute/textSavePeriod>
-              "6000" .
+              "4000" .
