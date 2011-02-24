@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.Document;
@@ -230,6 +231,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		
 		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
 		cardPanel.add("Files", fileExplorerPanel);
+		
+		LogPane log = LogPane.getLogPane();
+		JScrollPane logScroll = new JScrollPane(log);
+		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
+		LogPane.println("Ok.");
+		TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
+		logScroll.setBorder(logBorder);
+		cardPanel.add("Log", logScroll);
 		
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);

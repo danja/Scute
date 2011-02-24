@@ -81,6 +81,7 @@ public class TaskPanel extends JXTitledPanel {
 		taskPaneContainer.add(taskPane);
 
 		taskPane.add(new ChangeEditorPanelAction(this, "System", "Settings"));
+		taskPane.add(new ChangeEditorPanelAction(this, "Log", "System Log"));
 	}
 
 
