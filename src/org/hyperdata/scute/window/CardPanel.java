@@ -25,7 +25,11 @@ public class CardPanel extends JPanel {
 		super();
 		layout = new CardLayout();
 		setLayout(layout);
-
+	}
+	
+	public void setViewName(String view){
+		this.view = view;
+		fireStateChanged(); // is enough to update?
 	}
 	
 	 public void addChangeListener(ChangeListener listener) {

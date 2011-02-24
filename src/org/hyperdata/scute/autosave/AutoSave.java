@@ -22,7 +22,7 @@ import javax.swing.event.ChangeEvent;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
-import org.hyperdata.scute.source.TextContainer;
+import org.hyperdata.scute.source.TextContainerEditorPane;
 import org.hyperdata.scute.window.CardPanel;
 
 /**
@@ -37,20 +37,34 @@ import org.hyperdata.scute.window.CardPanel;
  * 
  */
 public class AutoSave extends UserActivityAdapter { // 
-
-	/** The text timer. */
-	private final Timer textTimer = new Timer();
 	
 	/** The text saver. */
 	private TextSaver textSaver;
 	
 	/** The model timer. */
-	private final Timer modelTimer = new Timer();
+	private final Timer timer = new Timer();
 
 	private ModelSaver modelSaver;
+
+	private ModelContainer workingModelContainer;
+
+	private TextContainerEditorPane currentTextContainer;
 	
-	/** The model saver. */
-	// private ModelSaver modelSaver;
+
+	/**
+	 * Inits the model saver.
+	 * 
+	 * @param container
+	 *            the container
+	 */
+	public void setWorkingModelContainer(ModelContainer container) {
+		workingModelContainer = container;
+		// reschedule();
+	}
+	
+	public void setCurrentTextContainer(TextContainerEditorPane container) {
+		currentTextContainer = container;
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.main.UserActivityListener#activityOccurred(java.util.EventObject)
@@ -60,11 +74,44 @@ public class AutoSave extends UserActivityAdapter { //
 		reschedule();
 	}
 	
+	/*
+	 java.awt.event.FocusListener
+	 */
+		/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
+	 */
+	@Override
+	public void focusGained(FocusEvent event) {
+		
+		textSaver.save(); // save the old one
+	reschedule(); // start over
+		}
+	
 	/**
 	 * Effectively resets clock.
 	 */
 	public void reschedule(){
 		System.out.println("RESCHEDULE!!!");
+		
+		if(modelSaver != null){
+		modelSaver.cancel();
+		}
+		if(textSaver != null){
+		textSaver.cancel();
+		}
+		timer.purge(); // clean queue
+		
+		modelSaver = new ModelSaver(workingModelContainer);
+		timer.schedule(modelSaver, Config.self.getModelSaveDelay());
+//		modelTimer.scheduleAtFixedRate(modelSaver, Config.self
+//		.getModelSaveDelay(), Config.self.getModelSavePeriod());
+		// textTimer.cancel
+		textSaver = new TextSaver(currentTextContainer);
+		
+//		textTimer
+//		.scheduleAtFixedRate(textSaver, Config.self.getTextSaveDelay(),
+//				Config.self.getTextSavePeriod());
+		timer.schedule(textSaver, Config.self.getTextSaveDelay());
 	}
 
 
@@ -84,9 +131,11 @@ public class AutoSave extends UserActivityAdapter { //
 	 * @param rdfEditor
 	 *            the rdf editor
 	 */
-	public void restorePreviousState(Scute rdfEditor) {
-		System.out.println("Config.self.getSelectedTab()) ="
+	public void restorePreviousState(Scute scute) {
+		System.out.println("Config.self.getSelectedView() ="
 				+ Config.self.getSelectedView());
+		
+		scute.setSelectedView(Config.self.getSelectedView());
 //		rdfEditor.setSelectedTab(Config.self.getSelectedTab());
 //		rdfEditor.setSourceText(getSavedText());
 		
@@ -128,33 +177,6 @@ public class AutoSave extends UserActivityAdapter { //
 		}
 		Config.self.setSync(true);
 		Config.self.saveNow();
-	}
-
-	/**
-	 * Inits the model saver.
-	 * 
-	 * @param container
-	 *            the container
-	 */
-	public void initModelSaver(ModelContainer container) {
-		modelSaver = new ModelSaver(container);
-		modelTimer.scheduleAtFixedRate(modelSaver, Config.self
-				.getModelSaveDelay(), Config.self.getModelSavePeriod());
-	}
-
-/*
- java.awt.event.FocusListener
- */
-	/* (non-Javadoc)
- * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
- */
-@Override
-public void focusGained(FocusEvent event) {
-		TextContainer container = (TextContainer) event.getSource();
-		textSaver = new TextSaver(container);
-		textTimer
-				.scheduleAtFixedRate(textSaver, Config.self.getTextSaveDelay(),
-						Config.self.getTextSavePeriod());
 	}
 
 	/* (non-Javadoc)

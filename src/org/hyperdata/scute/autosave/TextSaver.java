@@ -17,7 +17,7 @@ import java.io.OutputStream;
 import java.util.TimerTask;
 
 import org.hyperdata.scute.main.Config;
-import org.hyperdata.scute.source.TextContainer;
+import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
  * The Class TextSaver.
@@ -25,8 +25,8 @@ import org.hyperdata.scute.source.TextContainer;
 public class TextSaver extends TimerTask {
 
 	/** The container. */
-	private final TextContainer container;
-	private String filename;
+	private final TextContainerEditorPane container;
+//	private String filename;
 
 	/**
 	 * Instantiates a new text saver.
@@ -34,13 +34,13 @@ public class TextSaver extends TimerTask {
 	 * @param container
 	 *            the container
 	 */
-	public TextSaver(TextContainer container) {
+	public TextSaver(TextContainerEditorPane container) {
 		this.container = container;
 	}
 	
-	public void setFilename(String filename){ // Config.TEXT_FILENAME
-		this.filename = filename;
-	}
+//	public void setFilename(String filename){ // Config.TEXT_FILENAME
+//		this.filename = filename;
+//	}
 
 	/* (non-Javadoc)
 	 * @see java.util.TimerTask#run()
@@ -54,19 +54,6 @@ public class TextSaver extends TimerTask {
 	 * Save.
 	 */
 	public void save() {
-		File file = new File(filename);
-
-		byte[] bytes = (Config.self
-				.getIdentifyingComment(container.getSyntax()) + container
-				.getText()).getBytes();
-		try {
-			OutputStream fos = new FileOutputStream(file);
-			fos.write(bytes);
-			fos.close();
-			System.out.println("saving : " + container.getSyntax());
-		} catch (IOException e) {
-			// TODO popup warning
-			e.printStackTrace();
-		}
+		container.save();
 	}
 }

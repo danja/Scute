@@ -26,6 +26,7 @@ public class ModelSaver extends TimerTask {
 	@Override
 	public void run() {
 		doSave();
+		cancel(); // kill itself
 	}
 	/**
 	 * 

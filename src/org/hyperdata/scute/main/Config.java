@@ -39,9 +39,14 @@ public class Config extends ModelContainer {
 	/** The Constant TEXT_FILENAME. */
 	public static final String TEXT_FILENAME = "data/temp.txt";
 
+	public static final String SPARQL_FILENAME = "data/sparql-temp.txt";
+	
 	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
 
+	public static final String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/working";
+	
 	public static final String VERSION_STRING = "Version 0.5 Beta";
+
 	
 	/** The base uri. */
 	public static String baseUri = "http://purl.org/stuff/scute/";
@@ -74,6 +79,7 @@ public class Config extends ModelContainer {
 	private Config() {
 		setModel(model);
 		setModelFilename(CONFIG_FILENAME);
+		setModelURI(CONFIG_MODEL_URI);
 	}
 
 	// only for bootstrapping, sets & saves default values
@@ -95,11 +101,11 @@ public class Config extends ModelContainer {
 	public void setDefaults() {
 		setValue("defaultFileFormat", "Turtle");
 		setValue("modelSaveDelay", "20000");
-		setValue("modelSavePeriod", "60000");
+		// setValue("modelSavePeriod", "60000");
 		setValue("textSaveDelay", "4000");
-		setValue("textSavePeriod", "6000");
+		// setValue("textSavePeriod", "6000");
 		setValue("sync", "true");
-		setValue("selectedTab", "0");
+		setValue("selectedView", "Turtle");
 	}
 
 	/**

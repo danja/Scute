@@ -168,8 +168,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		setModelURI(Config.WORKING_MODEL_URI);
 
 		AutoSave autoSave = new AutoSave();
-		autoSave.initModelSaver(this);
-		autoSave.initModelSaver(Config.self);
+		autoSave.setWorkingModelContainer(this);
+		autoSave.setWorkingModelContainer(Config.self);
 
 		Models.workingModel = Models.sampleModel;
 		
@@ -191,6 +191,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 		Document turtleDocument = turtlePanel.getDocument();
+		
+		autoSave.setCurrentTextContainer(turtlePanel);
 		
 //		tabs.addChangeListener(turtlePanel);
 //		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
@@ -617,5 +619,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	@Override
 	public Frame getFrame() {
 		return frame;
+	}
+
+	/**
+	 * @param selectedView
+	 */
+	public void setSelectedView(String selectedView) {
+		cardPanel.setViewName(selectedView);
 	}
 }

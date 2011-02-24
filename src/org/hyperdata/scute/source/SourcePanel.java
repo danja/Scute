@@ -30,7 +30,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 /**
  * The Class SourcePanel.
  */
-public class SourcePanel extends JEditorPane implements TextContainer,
+public class SourcePanel extends TextContainerEditorPane implements
 		ChangeListener {
 
 	/**
@@ -168,7 +168,7 @@ public class SourcePanel extends JEditorPane implements TextContainer,
 	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
 	 */
 	@Override
-	public String getTextFilename() {
+	public String getFilename() {
 		return Config.TEXT_FILENAME;
 	}
 }

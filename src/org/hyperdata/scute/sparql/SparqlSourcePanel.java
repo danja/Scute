@@ -7,13 +7,14 @@ import javax.swing.JEditorPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.hyperdata.scute.source.TextContainer;
+import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
  * @author danny
  *
  */
-public class SparqlSourcePanel extends JEditorPane implements TextContainer,
+public class SparqlSourcePanel extends TextContainerEditorPane implements 
 ChangeListener {
 
 	/* (non-Javadoc)
@@ -38,9 +39,8 @@ ChangeListener {
 	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
 	 */
 	@Override
-	public String getTextFilename() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getFilename() {
+		return Config.SPARQL_FILENAME;
 	}
 
 }
