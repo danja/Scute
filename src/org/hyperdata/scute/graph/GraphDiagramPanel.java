@@ -45,7 +45,7 @@ public class GraphDiagramPanel extends JPanel {
 	 */
 	public GraphDiagramPanel(Model model) {
 		super();
-		setSize(800, 800);
+	//	setSize(800, 800);
 
 		// get your data in!
 		graphSet = new GraphSet();

@@ -68,7 +68,8 @@ public class GraphPanel extends JPanel {
 	 *            the listener
 	 */
 	public void addUserActivityListener(UserActivityListener listener) {
-		// TODO to implement when GraphPanel supports editing
+		// TODO to implement when GraphPanel supports editing - make it an interface!?
+	
 	}
 
 	/**

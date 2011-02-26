@@ -11,12 +11,14 @@
 package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -38,7 +40,7 @@ import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.source.HighlighterEditorKit;
-import org.hyperdata.scute.source.SourcePanel;
+import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.sparql.SparqlPanel;
 import org.hyperdata.scute.swing.FileChooserWrapper;
 import org.hyperdata.scute.swing.FileUI;
@@ -56,6 +58,7 @@ import org.hyperdata.scute.syspane.SystemPanel;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.triples.TriplesPanel;
 import org.hyperdata.scute.validate.TurtleValidateAction;
 import org.hyperdata.scute.window.CardPanel;
 import org.hyperdata.scute.window.TaskPanel;
@@ -66,9 +69,6 @@ import org.hyperdata.scute.window.TaskPanel;
 public class Scute extends ModelContainer implements TreeSelectionListener,
 		GeneralApplication, ToolsInterface {
 
-	/** The Constant FRAME_SIZE. */
-	public static final Dimension FRAME_SIZE = new Dimension(800, 800);
-
 	/** The Constant READ_ONLY_COLOR. */
 	public static final Color READ_ONLY_COLOR = (Color) UIManager.getDefaults()
 			.get("Button.background");
@@ -77,11 +77,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	public static final Color READ_WRITE_COLOR = (Color) UIManager
 			.getDefaults().get("TextField.background");
 
-	/** The Constant SOURCE_PANEL_SIZE. */
-	public static final Dimension SOURCE_PANEL_SIZE = new Dimension(600, 300);
-
-	/** The Constant TREE_PANEL_SIZE. */
-	public static final Dimension TREE_PANEL_SIZE = new Dimension(600, 300);
+	private static final int FRAME_INSET = 75;
 
 	/**
 	 * The main method.
@@ -90,16 +86,11 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		// WindowKit.setPlastic3DLookAndFeel();
-		// WindowKit.setNativeLookAndFeel();
 		new Scute();
 	}
 
-	/** The file chooser. */
-	private final JFileChooser fileChooser;
-
 	/** The frame. */
-	private final JFrame frame;
+	private JFrame frame;
 
 	/** The node panel. */
 	private NodePanel nodePanel;
@@ -114,16 +105,16 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private final JPanel panel;
 
 	/** The rdfxml panel. */
-	private final SourcePanel rdfxmlPanel;
+	private RdfSourcePanel rdfxmlPanel;
 
 	/** The turtle panel. */
-	private final SourcePanel turtlePanel;
+	private RdfSourcePanel turtlePanel;
 
 	/** The tabs. */
 // 	private final JTabbedPane tabs;
 
 	/** The tree panel. */
-	private final RdfTreePanel treePanel;
+	private RdfTreePanel treePanel;
 
 	/** The graph panel. */
 	private GraphPanel graphPanel = null;
@@ -134,7 +125,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private OpenDialog openDialog;
 
-	private final CardPanel cardPanel;
+	private CardPanel cardPanel;
 
 	private FileExplorerPanel fileExplorerPanel;
 
@@ -144,6 +135,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	public static ScuteHelp scuteHelp;
 
+	private AutoSave autoSave;
+
+	private TriplesPanel triplesPanel;
+	
+	private FileUI fileUI;
+	private HelpUI helpUI;
+	
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -151,12 +149,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		// FIXME restorePreviousState BROKEN - fix!
 		// TODO restorePreviousState BROKEN - fix!
-		
-		// setSystemLookFeel();
+
 
 		// for bootstrapping/debugging
 		// Config.self.setDefaults();
 		// Config.self.saveNow();
+	
 
 		if (Config.self.getSync()) { // previous run was shut down correctly
 			System.out.println("CLEAN");
@@ -167,7 +165,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		setModelFilename(Config.WORKING_MODEL_FILENAME);
 		setModelURI(Config.WORKING_MODEL_URI);
 
-		AutoSave autoSave = new AutoSave();
+		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
 		autoSave.setWorkingModelContainer(Config.self);
 
@@ -177,53 +175,134 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		
 
 		panel = new JPanel(new BorderLayout());
-		panel.setPreferredSize(FRAME_SIZE);
-		
-		// tabs = new JTabbedPane(SwingConstants.BOTTOM);
 
+makeCardPanels();
+
+		final JPanel controlPanel = new JPanel(); // contains JToolBars
+		panel.add(controlPanel, BorderLayout.NORTH);
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+		
+		fileUI = new FileUI(this);
+		
+		controlPanel.add(fileUI.getToolBar());
+
+		 helpUI = new HelpUI(this);
+
+		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
+		statusPanel.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
+		panel.add(statusPanel, BorderLayout.SOUTH);
+
+		// FIXME basic Save and Load
+
+		// Set up autosave
+		// FIXME merge with AutoSave stuff above
+		StatusAction autosaveAction = new AutoSaveAction();
+		StatusButton autosaveButton = new StatusButton(autosaveAction,
+				"Unsaved", "Saving...", "Saved");
+		statusPanel.add(autosaveButton);
+
+		// Set up validators
+		Document turtleDocument = turtlePanel.getDocument();
+		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
+		StatusPane validatorPane = new StatusPane(turtleAction);
+
+		// Set up validator button
+		StatusButton validatorButton = new StatusButton(turtleAction,
+				"Invalid syntax", "Checking syntax...", "Valid syntax");
+
+		statusPanel.add(validatorButton);
+		statusPanel.add(validatorPane);
+		
+		TaskPanel taskPanel = new TaskPanel(cardPanel);
+		panel.add(taskPanel, BorderLayout.WEST);
+		
+		/*
+		 * FIXME validator, autosave must interrupt/be halted immediately on any
+		 * actions only one can run at any given time make singleton?
+		 */
+
+
+		createFrame();
+		
+		// fileChooser = new JFileChooser("./data"); is used???
+		
+		if (Config.self.getSync() == false) { // previous run wasn't shut down
+			// correctly
+			System.out.println("RESTORE");
+			autoSave.restorePreviousState(this);
+			
+			cardPanel.addChangeListener(autoSave);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void createFrame() {
+		frame = new JFrame("Scute");
+		
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width  - 2*FRAME_INSET, screenSize.height - 2*FRAME_INSET);
+        
+		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
+		frame.addWindowListener(autoSave);
+		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		final JMenuBar menuBar = new JMenuBar();
+		menuBar.add(fileUI.getFileMenu());
+		menuBar.add(helpUI.getHelpMenu());
+
+		frame.setJMenuBar(menuBar);
+		frame.setContentPane(panel);
+	//	frame.pack();
+
+		frame.setVisible(true);
+	}
+
+	/**
+	 * 
+	 */
+	private void makeCardPanels() {
 		cardPanel = new CardPanel();
 
-		// panel.add(tabs, BorderLayout.CENTER);
 		panel.add(cardPanel, BorderLayout.CENTER);
 		
-		turtlePanel = new SourcePanel("Turtle");
+		turtlePanel = new RdfSourcePanel("Turtle");
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
-		Document turtleDocument = turtlePanel.getDocument();
 		
 		autoSave.setCurrentTextContainer(turtlePanel);
-		
-//		tabs.addChangeListener(turtlePanel);
-//		tabs.addTab("Turtle", new JScrollPane(turtlePanel));
 		
 		cardPanel.addChangeListener(turtlePanel);
 		cardPanel.add("Turtle", new JScrollPane(turtlePanel));
 
-		rdfxmlPanel = new SourcePanel("RDF/XML");
+		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
 		Document rdfxmlDocument = turtlePanel.getDocument();
-//		tabs.addChangeListener(rdfxmlPanel);
-//		tabs.addTab("RDF/XML", new JScrollPane(rdfxmlPanel));
 		
 		cardPanel.addChangeListener(rdfxmlPanel);
 		cardPanel.add("RDF/XML", new JScrollPane(rdfxmlPanel));
 
 		treePanel = new RdfTreePanel(Models.workingModel);
 		treePanel.addUserActivityListener(autoSave);
-//		tabs.addTab("Tree", treePanel); // treePanel has scroll?
 
 		// need change listener???
 		cardPanel.add("Tree", treePanel);
 		
 		graphPanel = new GraphPanel(Models.workingModel);
 		graphPanel.addUserActivityListener(autoSave);
-//		tabs.addTab("Graph", graphPanel);
-
 		// need change listener???
 		cardPanel.add("Graph", graphPanel);
+		
+		triplesPanel = new TriplesPanel(Models.workingModel);
+		// triplesPanel.addUserActivityListener(autoSave);
+		// TODO create UserActivityListener interface
+		// need change listener???
+		// TODO ADD SELECTION LISTENER - make shared listener?
+		cardPanel.add("Triples", triplesPanel);
 		
 		sparqlPanel = new SparqlPanel();
 		cardPanel.add("SPARQL", sparqlPanel);
@@ -244,110 +323,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
-//		tabs.addTab("System", new JScrollPane(systemPanel));
 
 		cardPanel.add("System", new JScrollPane(systemPanel));
-		// tabs.setSelectedIndex(0);
-
-		final JPanel controlPanel = new JPanel(); // contains JToolBars
-		panel.add(controlPanel, BorderLayout.NORTH);
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-
-		final FileUI fileUI = new FileUI(this);
-		controlPanel.add(fileUI.getToolBar());
-
-		final HelpUI helpUI = new HelpUI(this);
-
-		// controlPanel.add(fileUI.getToolBar());
-
-		// final SourceToolUI sourceUI = new SourceToolUI(this);
-		// JToolBar sourceToolbar = sourceUI.getToolBar();
-		// controlPanel.add(sourceToolbar); // TODO tidy up toolbars
-
-		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
-		statusPanel.setBorder(BorderFactory
-				.createEtchedBorder(EtchedBorder.LOWERED));
-		panel.add(statusPanel, BorderLayout.SOUTH);
-
-		// FIXME basic Save and Load
-
-		// Set up autosave
-		// FIXME merge with AutoSave stuff above
-		StatusAction autosaveAction = new AutoSaveAction();
-		StatusButton autosaveButton = new StatusButton(autosaveAction,
-				"Unsaved", "Saving...", "Saved");
-		statusPanel.add(autosaveButton);
-
-		// Set up validators
-		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
-		StatusPane validatorPane = new StatusPane(turtleAction);
-
-		// Set up validator button
-		StatusButton validatorButton = new StatusButton(turtleAction,
-				"Invalid syntax", "Checking syntax...", "Valid syntax");
-
-		statusPanel.add(validatorButton);
-		statusPanel.add(validatorPane);
-		
-		TaskPanel taskPanel = new TaskPanel(cardPanel);
-		panel.add(taskPanel, BorderLayout.WEST);
-		
-		/*
-		 * FIXME validator, autosave must interrupt/be halted immediately on any
-		 * actions only one can run at any given time make singleton?
-		 */
-
-		frame = new JFrame("Scute");
-		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
-		frame.addWindowListener(autoSave);
-		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		final JMenuBar menuBar = new JMenuBar();
-		menuBar.add(fileUI.getFileMenu());
-		menuBar.add(helpUI.getHelpMenu());
-		// menuBar.add(sourceUI.getSourceMenu());
-
-		frame.setJMenuBar(menuBar);
-		frame.setContentPane(panel);
-		frame.pack();
-
-		frame.setVisible(true);
-		fileChooser = new JFileChooser("./data");
-		if (Config.self.getSync() == false) { // previous run wasn't shut down
-			// correctly
-			System.out.println("RESTORE");
-			autoSave.restorePreviousState(this);
-			
-			cardPanel.addChangeListener(autoSave);
-		//	tabs.addChangeListener(autoSave); // so previous tab can be
-			// restored, has to be here to
-			// miss initializing change to
-			// tab 0
-		}
 	}
-
-	/**
-	 * Sets the selected tab.
-	 * 
-	 * @param index
-	 *            the new selected tab
-	 */
-//	public void setSelectedTab(int index) {
-//		System.out.println("setting tab = " + index);
-//		tabs.setSelectedIndex(index);
-//	}
-
-	/**
-	 * Gets the selected tab.
-	 * 
-	 * @return the selected tab
-	 */
-//	public int getSelectedTab() {
-//		return tabs.getSelectedIndex();
-//	}
-
-//	public String getSelectedTabTitle() {
-//		return tabs.getTitleAt(getSelectedTab());
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -552,57 +530,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		}
 	}
 
-	/**
-	 * Gets the current source panel.
-	 * 
-	 * TODO check this is in use
-	 * 
-	 * @return the current source panel
-	 * @throws Exception
-	 *             the exception
-	 */
-//	public SourcePanel getCurrentSourcePanel() throws Exception {
-//	
-//		JScrollPane scroll = (JScrollPane) tabs.getSelectedComponent();
-//		// System.out.println("component = "+scroll);
-//		Object panel = scroll.getViewport().getView();
-//		if (panel instanceof SourcePanel)
-//			return (SourcePanel) panel;
-//		else
-//			throw new Exception("not a text panel");
-//	}
 
-	/**
-	 * Sets the source text.
-	 * 
-	 * @param savedText
-	 *            the new source text
-	 */
-//	public void setSourceText(String savedText) {
-//		try {
-//			getCurrentSourcePanel().setText(savedText);
-//		} catch (Exception e) {
-//			// ignore
-//		}
-//	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#checkText()
-	 */
-//	@Override
-//	public void checkText() {
-//		try {
-//			String text = getCurrentSourcePanel().getText();
-//			String syntax = getCurrentSourcePanel().getSyntax();
-//			RdfUtils.stringToModel(text, Config.baseUri, syntax);
-//		} catch (Exception e) {
-//			System.out.println("INVALID");
-//		}
-//		System.out.println("VALID");
-//	}
-
+	// is needed?
 	public static void setSystemLookFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

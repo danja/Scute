@@ -3,20 +3,25 @@
  */
 package org.hyperdata.scute.sparql;
 
-import javax.swing.JEditorPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.source.HighlighterEditorKit;
 import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
  * @author danny
  *
  */
-public class SparqlSourcePanel extends TextContainerEditorPane implements 
-ChangeListener {
+public class SparqlSourcePanel extends TextContainerEditorPane {
 
+	public SparqlSourcePanel(){
+		super();
+		// addUserActivityListener(autoSave);
+		setEditorKit(new HighlighterEditorKit("SPARQL"));
+		String text = "SELECT ?s ?p ?o WHERE {\n   ?s ?p ?o \n}";
+		setText(text);
+	}
 	/* (non-Javadoc)
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
@@ -31,8 +36,7 @@ ChangeListener {
 	 */
 	@Override
 	public String getSyntax() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SPARQL";
 	}
 
 	/* (non-Javadoc)

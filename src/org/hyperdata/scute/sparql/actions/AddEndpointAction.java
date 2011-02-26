@@ -15,6 +15,13 @@ import javax.swing.Action;
  */
 public class AddEndpointAction extends AbstractAction {
 
+	/**
+	 * @param string
+	 */
+	public AddEndpointAction(String string) {
+		super(string);
+	}
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */

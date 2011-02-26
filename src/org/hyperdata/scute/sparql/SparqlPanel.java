@@ -14,6 +14,8 @@ import org.jdesktop.swingx.JXTitledPanel;
 
 /**
  * @author danny
+ * 
+ * TODO make SPARQL SELECT/CONSTRUCT/DESCRIBE?/ASK? template from current working model
  *
  */
 public class SparqlPanel extends JXTitledPanel {
@@ -21,7 +23,7 @@ public class SparqlPanel extends JXTitledPanel {
 	public SparqlPanel(){
 		super();
 		super.setLayout(new BorderLayout());
-		super.setTitle("Results");
+		super.setTitle("Query"); //??/ where is this
 		
 		SparqlToolbar toolbar = new SparqlToolbar();
 		add(toolbar, BorderLayout.NORTH);

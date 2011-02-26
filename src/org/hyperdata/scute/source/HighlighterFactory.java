@@ -15,6 +15,8 @@ import javax.swing.text.LabelView;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
+import org.hyperdata.scute.sparql.SparqlView;
+
 /**
  * A factory for creating Highlighter objects.
  */
@@ -35,6 +37,8 @@ class HighlighterFactory implements ViewFactory {
 				return new TurtleView(elem);
 			if (syntax.equals("XML"))
 				return new XmlView(elem);
+			if (syntax.equals("SPARQL"))
+				return new SparqlView(elem);
 		}
 
 		// default to text display

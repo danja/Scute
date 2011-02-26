@@ -30,8 +30,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 /**
  * The Class SourcePanel.
  */
-public class SourcePanel extends TextContainerEditorPane implements
-		ChangeListener {
+public class RdfSourcePanel extends TextContainerEditorPane {
 
 	/**
 	 * Adds the user activity listener.
@@ -64,7 +63,7 @@ public class SourcePanel extends TextContainerEditorPane implements
 	 * @param syntax
 	 *            the syntax
 	 */
-	public SourcePanel(String syntax) {
+	public RdfSourcePanel(String syntax) {
 		super();
 		this.syntax = syntax;
 	}

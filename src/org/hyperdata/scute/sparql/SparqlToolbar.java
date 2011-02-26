@@ -23,13 +23,13 @@ public class SparqlToolbar extends JPanel {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-		JButton run = new JButton("Run Query");
-		run.setAction(new RunQueryAction());
+		JButton run = new JButton();
+		run.setAction(new RunQueryAction("Run Query"));
 		add(run);
 		add(Box.createHorizontalStrut(10));
 		
-		JButton stop = new JButton("Stop");
-		stop.setAction(new StopQueryAction());
+		JButton stop = new JButton();
+		stop.setAction(new StopQueryAction("Stop"));
 		add(stop);
 		
 		add(Box.createHorizontalStrut(10));
@@ -48,8 +48,8 @@ public class SparqlToolbar extends JPanel {
 		add(uriField);
 		
 		add(Box.createHorizontalStrut(10));
-		JButton add = new JButton("Add");
-		add.setAction(new AddEndpointAction());
+		JButton add = new JButton();
+		add.setAction(new AddEndpointAction("Add"));
 		add(add);
 	}
 }

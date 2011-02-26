@@ -13,6 +13,8 @@ package org.hyperdata.scute.triples;
 
 import javax.swing.JPanel;
 
+import com.hp.hpl.jena.rdf.model.Model;
+
 /**
  * The Class TriplesPanel.
  *
@@ -23,6 +25,13 @@ import javax.swing.JPanel;
  * FIXME implement
  */
 public class TriplesPanel extends JPanel {
+
+	/**
+	 * @param workingModel
+	 */
+	public TriplesPanel(Model workingModel) {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 

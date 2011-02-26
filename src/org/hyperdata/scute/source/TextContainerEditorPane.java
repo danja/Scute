@@ -9,15 +9,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.swing.JEditorPane;
+import javax.swing.event.ChangeListener;
 
 import org.hyperdata.scute.main.Config;
 
 /**
- * The Interface TextContainer.
+ * A JEditorPane with a few additions for managing the text contentS
  * 
  * @author danny
  */
-public abstract class TextContainerEditorPane extends JEditorPane implements TextContainer{
+public abstract class TextContainerEditorPane extends JEditorPane implements TextContainer, 
+ChangeListener {
 
 	/**
 	 * 

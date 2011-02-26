@@ -15,6 +15,13 @@ import javax.swing.Action;
  */
 public class RunQueryAction extends AbstractAction {
 
+	/**
+	 * @param string
+	 */
+	public RunQueryAction(String string) {
+		super(string);
+	}
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */

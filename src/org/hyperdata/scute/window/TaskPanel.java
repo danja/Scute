@@ -45,6 +45,7 @@ public class TaskPanel extends JXTitledPanel {
 
 		taskPane.add(new ChangeEditorPanelAction(this, "Turtle", "Turtle View"));
 		taskPane.add(new ChangeEditorPanelAction(this, "RDF/XML", "RDF/XML View"));
+		taskPane.add(new ChangeEditorPanelAction(this, "Triples", "Triples View"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Tree", "Tree View"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Graph", "Graph View"));
 	}

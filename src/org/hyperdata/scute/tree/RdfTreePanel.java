@@ -199,11 +199,11 @@ public class RdfTreePanel extends JPanel implements TreeSelectionListener {
 	/* (non-Javadoc)
 	 * @see java.awt.Component#setSize(java.awt.Dimension)
 	 */
-	@Override
-	public void setSize(Dimension size) {
-		setPreferredSize(size);
-		tree.setSize(size);
-	}
+//	@Override
+//	public void setSize(Dimension size) {
+//		setPreferredSize(size);
+//		tree.setSize(size);
+//	}
 
 	/**
 	 * Sets the clicked path.

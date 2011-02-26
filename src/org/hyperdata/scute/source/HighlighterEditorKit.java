@@ -41,9 +41,9 @@ public class HighlighterEditorKit extends StyledEditorKit {
 	 */
 	@Override
 	public MutableAttributeSet getInputAttributes() {
-		final MutableAttributeSet mAttrs = super.getInputAttributes();
+		final MutableAttributeSet attrs = super.getInputAttributes();
 		// mAttrs.removeAttribute(SyntaxHighlighterRunner.LINE_BREAK_ATTRIBUTE_NAME);
-		return mAttrs;
+		return attrs;
 	}
 
 	/* (non-Javadoc)
