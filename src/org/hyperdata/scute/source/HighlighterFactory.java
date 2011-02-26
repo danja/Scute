@@ -35,8 +35,10 @@ class HighlighterFactory implements ViewFactory {
 		if (kind != null) {
 			if (syntax.equals("Turtle"))
 				return new TurtleView(elem);
+			
 			if (syntax.equals("XML"))
 				return new XmlView(elem);
+			
 			if (syntax.equals("SPARQL"))
 				return new SparqlView(elem);
 		}
@@ -53,5 +55,6 @@ class HighlighterFactory implements ViewFactory {
 	 */
 	public void setSyntax(String syntax) {
 		this.syntax = syntax;
+		// System.out.println("syntax="+syntax);
 	}
 }

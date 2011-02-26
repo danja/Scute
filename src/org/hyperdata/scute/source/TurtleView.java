@@ -33,41 +33,37 @@ import javax.swing.text.Utilities;
  */
 public class TurtleView extends PlainView {
 
-	/** The BNOD e_ pattern. */
-	private static String BNODE_PATTERN = "(_:\\w+)";
-	
-	/** The K w_ bas e_ pattern. */
-	private static String KW_BASE_PATTERN = "(@base)";
-	
-	/** The K w_ prefi x_ pattern. */
-	private static String KW_PREFIX_PATTERN = "(@prefix)";
-	
-	/** The LITERA l_ pattern. */
-	private static String LITERAL_PATTERN = "(\"\")";
-	
-	/** The NOD e_ pattern. */
-	private static String NODE_PATTERN = "(:\\w+)";
-	
-	/** The pattern colors. */
 	private static HashMap<Pattern, Color> patternColors;
 	
-	/** The SEPERATOR s_ pattern. */
-	private static String SEPERATORS_PATTERN = "(\\[|\\])";
+	public static String BNODE_PATTERN = "(_:\\w+)";
+	
+	public static String KW_BASE_PATTERN = "(@base)";
+	
+	public static String KW_PREFIX_PATTERN = "(@prefix)";
+	
+	public static String LITERAL_PATTERN = "(\".+\")";
+	
+	public static String LONG_LITERAL_PATTERN = "(\"\"\".+\"\"\")";
+	
+	public static String NODE_PATTERN = "(\\w*:\\w+)";
+	
+	public static String SQUARE_BRACKETS_PATTERN = "(\\[|\\])";
 	
 	/** The UR i_ pattern. */
-	private static String URI_PATTERN = "(<http://.*>)";
+	public static String URI_PATTERN = "(<http://.+>)";
 
 	static {
-		// NOTE: the order is important!
 		patternColors = new LinkedHashMap<Pattern, Color>();
+		
+		// order is important!
 		patternColors.put(Pattern.compile(URI_PATTERN), Color.RED);
 		patternColors.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
 		patternColors.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
 		patternColors.put(Pattern.compile(NODE_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(SEPERATORS_PATTERN), Color.BLUE);
+		patternColors.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
 
-		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN), Color.YELLOW);
-		patternColors.put(Pattern.compile(KW_BASE_PATTERN), Color.GREEN);
+		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
+		patternColors.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
 	}
 
 	/**

@@ -21,6 +21,19 @@ import org.hyperdata.scute.main.Config;
 public abstract class TextContainerEditorPane extends JEditorPane implements TextContainer, 
 ChangeListener {
 
+	private String syntax;
+	
+	/**
+	 * @param syntax
+	 */
+	public TextContainerEditorPane(String syntax) {
+		this.syntax = syntax;
+	}
+	
+	public String getSyntax() {
+		return syntax;
+	}
+
 	/**
 	 * 
 	 */

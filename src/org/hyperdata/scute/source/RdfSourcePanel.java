@@ -54,9 +54,6 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	/** The scroll. */
 	protected JScrollPane scroll;
 
-	/** The syntax. */
-	private String syntax;
-
 	/**
 	 * Instantiates a new source panel.
 	 * 
@@ -64,8 +61,8 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	 *            the syntax
 	 */
 	public RdfSourcePanel(String syntax) {
-		super();
-		this.syntax = syntax;
+		super(syntax);
+		// this.syntax = syntax;
 	}
 
 	/**
@@ -77,15 +74,6 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 		return refreshButton;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
-	 */
-	@Override
-	public String getSyntax() {
-		return syntax;
-	}
 
 	/**
 	 * Load model.
@@ -127,15 +115,6 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 		}
 	}
 
-	/**
-	 * Sets the syntax.
-	 * 
-	 * @param s
-	 *            the new syntax
-	 */
-	public void setSyntax(String s) {
-		syntax = s;
-	}
 
 	// called when tabs clicked
 	/*
