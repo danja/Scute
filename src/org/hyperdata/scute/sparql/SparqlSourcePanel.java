@@ -15,12 +15,9 @@ import org.hyperdata.scute.source.TextContainerEditorPane;
  */
 public class SparqlSourcePanel extends TextContainerEditorPane {
 
-	public SparqlSourcePanel(){
-		super();
+	public SparqlSourcePanel(String string){
+		super(string);
 		// addUserActivityListener(autoSave);
-		setEditorKit(new HighlighterEditorKit("SPARQL"));
-		String text = "SELECT ?s ?p ?o WHERE {\n   ?s ?p ?o \n}";
-		setText(text);
 	}
 	/* (non-Javadoc)
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)

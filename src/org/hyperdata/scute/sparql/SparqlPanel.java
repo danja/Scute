@@ -12,6 +12,8 @@ import javax.swing.WindowConstants;
 
 import org.jdesktop.swingx.JXTitledPanel;
 
+import org.hyperdata.scute.source.HighlighterEditorKit;
+
 /**
  * @author danny
  * 
@@ -23,12 +25,17 @@ public class SparqlPanel extends JXTitledPanel {
 	public SparqlPanel(){
 		super();
 		super.setLayout(new BorderLayout());
-		super.setTitle("Query"); //??/ where is this
+		super.setTitle("SPARQL"); //??/ where is this
 		
 		SparqlToolbar toolbar = new SparqlToolbar();
 		add(toolbar, BorderLayout.NORTH);
 		
-		SparqlSourcePanel sourcePanel = new SparqlSourcePanel();
+		SparqlSourcePanel sourcePanel = new SparqlSourcePanel("SPARQL");
+		sourcePanel.setEditorKit(new HighlighterEditorKit("SPARQL"));
+		
+		String text = "SELECT ?s ?p ?o WHERE {\n   ?s ?p ?o \n}";
+		sourcePanel.setText(text);
+		
 		SparqlResultsPanel resultPanel = new SparqlResultsPanel();
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sourcePanel, resultPanel);

@@ -111,7 +111,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private RdfSourcePanel turtlePanel;
 
 	/** The tabs. */
-// 	private final JTabbedPane tabs;
+	// private final JTabbedPane tabs;
 
 	/** The tree panel. */
 	private RdfTreePanel treePanel;
@@ -138,10 +138,10 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private AutoSave autoSave;
 
 	private TriplesPanel triplesPanel;
-	
+
 	private FileUI fileUI;
 	private HelpUI helpUI;
-	
+
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -150,11 +150,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		// FIXME restorePreviousState BROKEN - fix!
 		// TODO restorePreviousState BROKEN - fix!
 
-
 		// for bootstrapping/debugging
 		// Config.self.setDefaults();
 		// Config.self.saveNow();
-	
 
 		if (Config.self.getSync()) { // previous run was shut down correctly
 			System.out.println("CLEAN");
@@ -170,23 +168,22 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		autoSave.setWorkingModelContainer(Config.self);
 
 		Models.workingModel = Models.sampleModel;
-		
+
 		scuteHelp = new ScuteHelp();
-		
 
 		panel = new JPanel(new BorderLayout());
 
-makeCardPanels();
+		makeCardPanels();
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
 		panel.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-		
+
 		fileUI = new FileUI(this);
-		
+
 		controlPanel.add(fileUI.getToolBar());
 
-		 helpUI = new HelpUI(this);
+		helpUI = new HelpUI(this);
 
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
@@ -213,25 +210,24 @@ makeCardPanels();
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
-		
+
 		TaskPanel taskPanel = new TaskPanel(cardPanel);
 		panel.add(taskPanel, BorderLayout.WEST);
-		
+
 		/*
 		 * FIXME validator, autosave must interrupt/be halted immediately on any
 		 * actions only one can run at any given time make singleton?
 		 */
 
-
 		createFrame();
-		
+
 		// fileChooser = new JFileChooser("./data"); is used???
-		
+
 		if (Config.self.getSync() == false) { // previous run wasn't shut down
 			// correctly
 			System.out.println("RESTORE");
 			autoSave.restorePreviousState(this);
-			
+
 			cardPanel.addChangeListener(autoSave);
 		}
 	}
@@ -241,10 +237,11 @@ makeCardPanels();
 	 */
 	private void createFrame() {
 		frame = new JFrame("Scute");
-		
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width  - 2*FRAME_INSET, screenSize.height - 2*FRAME_INSET);
-        
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width - 2
+				* FRAME_INSET, screenSize.height - 2 * FRAME_INSET);
+
 		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
 		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -254,7 +251,7 @@ makeCardPanels();
 
 		frame.setJMenuBar(menuBar);
 		frame.setContentPane(panel);
-	//	frame.pack();
+		// frame.pack();
 
 		frame.setVisible(true);
 	}
@@ -266,14 +263,14 @@ makeCardPanels();
 		cardPanel = new CardPanel();
 
 		panel.add(cardPanel, BorderLayout.CENTER);
-		
+
 		turtlePanel = new RdfSourcePanel("Turtle");
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
-		
+
 		autoSave.setCurrentTextContainer(turtlePanel);
-		
+
 		cardPanel.addChangeListener(turtlePanel);
 		cardPanel.add("Turtle", new JScrollPane(turtlePanel));
 
@@ -282,7 +279,7 @@ makeCardPanels();
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
 		Document rdfxmlDocument = turtlePanel.getDocument();
-		
+
 		cardPanel.addChangeListener(rdfxmlPanel);
 		cardPanel.add("RDF/XML", new JScrollPane(rdfxmlPanel));
 
@@ -291,28 +288,29 @@ makeCardPanels();
 
 		// need change listener???
 		cardPanel.add("Tree", treePanel);
-		
+
 		graphPanel = new GraphPanel(Models.workingModel);
 		graphPanel.addUserActivityListener(autoSave);
 		// need change listener???
 		cardPanel.add("Graph", graphPanel);
-		
+
 		triplesPanel = new TriplesPanel(Models.workingModel);
 		// triplesPanel.addUserActivityListener(autoSave);
 		// TODO create UserActivityListener interface
 		// need change listener???
 		// TODO ADD SELECTION LISTENER - make shared listener?
 		cardPanel.add("Triples", triplesPanel);
-		
+
 		sparqlPanel = new SparqlPanel();
+
 		cardPanel.add("SPARQL", sparqlPanel);
-		
+
 		graphManagerPanel = new GraphManagerPanel();
 		cardPanel.add("Graphs", graphManagerPanel);
-		
+
 		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
 		cardPanel.add("Files", fileExplorerPanel);
-		
+
 		LogPane log = LogPane.getLogPane();
 		JScrollPane logScroll = new JScrollPane(log);
 		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -320,7 +318,7 @@ makeCardPanels();
 		TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
 		logScroll.setBorder(logBorder);
 		cardPanel.add("Log", logScroll);
-		
+
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
 
@@ -428,7 +426,6 @@ makeCardPanels();
 			loadNamedModel();
 		}
 
-	
 		logPrintln("Loaded");
 		System.out.println("Loaded");
 
@@ -529,7 +526,6 @@ makeCardPanels();
 			treePanel.setCursor(normalTreeCursor);
 		}
 	}
-
 
 	// is needed?
 	public static void setSystemLookFeel() {
