@@ -16,28 +16,32 @@ import org.hyperdata.scute.sparql.actions.WorkingModelEndpointAction;
 
 /**
  * @author danny
- *
+ * 
  */
 public class EndpointListModel extends DefaultComboBoxModel {
 
 	private List<Endpoint> targets = new ArrayList<Endpoint>();
-	
-	public EndpointListModel(){
-makeSamples();	
+
+	public EndpointListModel() {
+		makeSamples();
 	}
-	
-	public Object getElementAt(int i){
+
+	public Object getElementAt(int i) {
 		return targets.get(i);
 	}
-	
-	private void makeSamples(){
-		Endpoint workingModelEndpoint = new Endpoint("Working Model", new WorkingModelEndpointAction());
+
+	private void makeSamples() {
+		Endpoint workingModelEndpoint = new Endpoint("Working Model",
+				new WorkingModelEndpointAction());
 		targets.add(workingModelEndpoint);
-		Endpoint dbPediaEndpoint = new Endpoint("dbPedia", "http://dbpedia.org/sparql");
+		Endpoint dbPediaEndpoint = new Endpoint("dbPedia",
+				"http://dbpedia.org/sparql");
 		targets.add(dbPediaEndpoint);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.ListModel#getSize()
 	 */
 	@Override

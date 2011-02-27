@@ -15,10 +15,15 @@ public class CardPanel extends JPanel {
 	private CardLayout layout;
 	private EventListenerList listenerList = new EventListenerList();
 	private ChangeEvent changeEvent = null;
-	private String view = "Turtle";
+	private String previousView = "Turtle";	
+	private String currentView = "Turtle";
 	
-	public String getViewName() {
-		return this.view;
+	public String getCurrentViewName() {
+		return currentView;
+	}
+	
+	public String getPreviousViewName() {
+		return previousView;
 	}
 	
 	public CardPanel(){
@@ -28,7 +33,8 @@ public class CardPanel extends JPanel {
 	}
 	
 	public void setViewName(String view){
-		this.view = view;
+		previousView = currentView;
+		currentView = view;
 		fireStateChanged(); // is enough to update?
 	}
 	
@@ -67,7 +73,7 @@ public class CardPanel extends JPanel {
 	 * @param actionEvent
 	 */
 	public void fireChange(ActionEvent actionEvent) {
-		this.view = actionEvent.getActionCommand();
+		this.currentView = actionEvent.getActionCommand();
 		fireStateChanged();
 	}
 

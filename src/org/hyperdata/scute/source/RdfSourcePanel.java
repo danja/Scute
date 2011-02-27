@@ -11,6 +11,7 @@
 package org.hyperdata.scute.source;
 
 import java.awt.Component;
+import java.awt.event.FocusEvent;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -62,7 +63,6 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	 */
 	public RdfSourcePanel(String syntax) {
 		super(syntax);
-		// this.syntax = syntax;
 	}
 
 	/**
@@ -126,16 +126,13 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// final Component c = ((JTabbedPane) e.getSource())
-		// .getSelectedComponent();
-		// if (this == c) {
-		// System.out.println("TAB changed");
-		// System.out.println("current window = " + getSyntax());
-		// }
-		String view = ((CardPanel) e.getSource()).getViewName();
-
+		
+		// String currentView = getSyntax();
+		String view = ((CardPanel) e.getSource()).getCurrentViewName();
+		
+		System.out.println("RdfSoucePanel view = "+view);
+// save();
 		if (this.getSyntax().equals(view)) {
-			// System.out.println("refreshing " + c);
 			loadModel(model);
 		}
 	}
@@ -149,4 +146,6 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	public String getFilename() {
 		return Config.TEXT_FILENAME;
 	}
+
+
 }

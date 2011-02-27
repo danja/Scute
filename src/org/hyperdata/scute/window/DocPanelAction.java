@@ -26,7 +26,7 @@ final class DocPanelAction extends
 	}
 
 	public void actionPerformed(ActionEvent actionEvent) {
-    	System.out.println("AACCTTIIOONN = "+actionEvent);
+    	System.out.println("DocPanelAction AACCTTIIOONN = "+actionEvent);
     	Scute.scuteHelp.show();
     	// CardLayout cLay = cardPanel.getLayout();
     	// cLay.show(cardPanel,"panel1Identifier");

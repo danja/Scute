@@ -9,7 +9,6 @@ import org.jdesktop.swingx.action.AbstractActionExt;
 
 final class ChangeEditorPanelAction extends
 		AbstractActionExt {
-//	private String label;
 
 	/**
 	 * 
@@ -24,11 +23,11 @@ final class ChangeEditorPanelAction extends
 	}
 
 	public void actionPerformed(ActionEvent actionEvent) {
-    	System.out.println("AACCTTIIOONN = "+actionEvent);
+    	System.out.println("ChangeEditorPanelAction AACCTTIIOONN = "+actionEvent);
     	// CardLayout cLay = cardPanel.getLayout();
     	// cLay.show(cardPanel,"panel1Identifier");
-    	
+    	System.out.println("SOURCE="+actionEvent.getSource());
     	taskPanel.cardPanel.fireChange(actionEvent);
-    	taskPanel.layout.show(this.taskPanel.cardPanel, actionEvent.getActionCommand());
+    	taskPanel.layout.show(taskPanel.cardPanel, actionEvent.getActionCommand());
     }
 }

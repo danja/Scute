@@ -3,6 +3,7 @@
  */
 package org.hyperdata.scute.source;
 
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import org.hyperdata.scute.main.Config;
  * 
  * @author danny
  */
-public interface TextContainer {
+public interface TextContainer extends FocusListener {
 
 	/**
 	 * Gets the syntax.

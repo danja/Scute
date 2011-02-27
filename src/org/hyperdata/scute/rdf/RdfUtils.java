@@ -59,6 +59,7 @@ public class RdfUtils {
 	 */
 	public static void save(Model model, String filename) throws IOException {
 		setCommonPrefixes(model);
+		System.out.println("FILENAME="+filename);
 		OutputStream os = new FileOutputStream(filename);
 		model.write(os, Config.self.getDefaultFileFormat());
 		os.close();

@@ -173,7 +173,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		panel = new JPanel(new BorderLayout());
 
-		makeCardPanels();
+		makeCardPanel();
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
 		panel.add(controlPanel, BorderLayout.NORTH);
@@ -259,30 +259,85 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	/**
 	 * 
 	 */
-	private void makeCardPanels() {
+	private void makeCardPanel() {
 		cardPanel = new CardPanel();
-
 		panel.add(cardPanel, BorderLayout.CENTER);
 
-		turtlePanel = new RdfSourcePanel("Turtle");
-		turtlePanel.addUserActivityListener(autoSave);
-		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
-		turtlePanel.loadModel(Models.workingModel);
+		makeTurtlePanel();
+		makeRdfXmlPanel();
+		makeTreePanel();
+		makeTriplesPanel();
+		makeSparqlPanel();
+		makeGraphManagerPanel();
+		makeFileExplorerPanel();
+		makeLogPanel();
+		makeSystemPanel();
+	}
 
-		autoSave.setCurrentTextContainer(turtlePanel);
+	/**
+	 * 
+	 */
+	private void makeSystemPanel() {
+		systemPanel = new SystemPanel();
+		// systemPanel.addUserActivityListener(autoSave);
 
-		cardPanel.addChangeListener(turtlePanel);
-		cardPanel.add("Turtle", new JScrollPane(turtlePanel));
+		cardPanel.add("System", new JScrollPane(systemPanel));
+	}
 
-		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
-		rdfxmlPanel.addUserActivityListener(autoSave);
-		rdfxmlPanel.loadModel(Models.workingModel);
-		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
-		Document rdfxmlDocument = turtlePanel.getDocument();
+	/**
+	 * 
+	 */
+	private void makeLogPanel() {
+		LogPane log = LogPane.getLogPane();
+		JScrollPane logScroll = new JScrollPane(log);
+		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
+		LogPane.println("Ok.");
+		TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
+		logScroll.setBorder(logBorder);
+		cardPanel.add("Log", logScroll);
+	}
 
-		cardPanel.addChangeListener(rdfxmlPanel);
-		cardPanel.add("RDF/XML", new JScrollPane(rdfxmlPanel));
+	/**
+	 * 
+	 */
+	private void makeFileExplorerPanel() {
+		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
+		cardPanel.add("Files", fileExplorerPanel);
+	}
 
+	/**
+	 * 
+	 */
+	private void makeGraphManagerPanel() {
+		graphManagerPanel = new GraphManagerPanel();
+		cardPanel.add("Graphs", graphManagerPanel);
+	}
+
+	/**
+	 * 
+	 */
+	private void makeSparqlPanel() {
+		sparqlPanel = new SparqlPanel();
+
+		cardPanel.add("SPARQL", sparqlPanel);
+	}
+
+	/**
+	 * 
+	 */
+	private void makeTriplesPanel() {
+		triplesPanel = new TriplesPanel(Models.workingModel);
+		// triplesPanel.addUserActivityListener(autoSave);
+		// TODO create UserActivityListener interface
+		// need change listener???
+		// TODO ADD SELECTION LISTENER - make shared listener?
+		cardPanel.add("Triples", triplesPanel);
+	}
+
+	/**
+	 * 
+	 */
+	private void makeTreePanel() {
 		treePanel = new RdfTreePanel(Models.workingModel);
 		treePanel.addUserActivityListener(autoSave);
 
@@ -293,36 +348,40 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		graphPanel.addUserActivityListener(autoSave);
 		// need change listener???
 		cardPanel.add("Graph", graphPanel);
+	}
 
-		triplesPanel = new TriplesPanel(Models.workingModel);
-		// triplesPanel.addUserActivityListener(autoSave);
-		// TODO create UserActivityListener interface
-		// need change listener???
-		// TODO ADD SELECTION LISTENER - make shared listener?
-		cardPanel.add("Triples", triplesPanel);
+	/**
+	 * 
+	 */
+	private void makeRdfXmlPanel() {
+		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
+		rdfxmlPanel.addUserActivityListener(autoSave);
+		rdfxmlPanel.loadModel(Models.workingModel);
+		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
+		Document rdfxmlDocument = turtlePanel.getDocument();
 
-		sparqlPanel = new SparqlPanel();
+		cardPanel.addChangeListener(rdfxmlPanel);
+		JPanel rdfxmlCard = new JPanel(new BorderLayout());
+		rdfxmlCard.add(new JScrollPane(rdfxmlPanel), BorderLayout.CENTER);
+		cardPanel.add("RDF/XML", rdfxmlCard);
+	}
 
-		cardPanel.add("SPARQL", sparqlPanel);
+	/**
+	 * 
+	 */
+	private void makeTurtlePanel() {
+		turtlePanel = new RdfSourcePanel("Turtle");
+		turtlePanel.addUserActivityListener(autoSave);
+		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
+		turtlePanel.loadModel(Models.workingModel);
 
-		graphManagerPanel = new GraphManagerPanel();
-		cardPanel.add("Graphs", graphManagerPanel);
+		autoSave.setCurrentTextContainer(turtlePanel);
 
-		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
-		cardPanel.add("Files", fileExplorerPanel);
+		cardPanel.addChangeListener(turtlePanel);
 
-		LogPane log = LogPane.getLogPane();
-		JScrollPane logScroll = new JScrollPane(log);
-		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
-		LogPane.println("Ok.");
-		TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
-		logScroll.setBorder(logBorder);
-		cardPanel.add("Log", logScroll);
-
-		systemPanel = new SystemPanel();
-		// systemPanel.addUserActivityListener(autoSave);
-
-		cardPanel.add("System", new JScrollPane(systemPanel));
+		JPanel turtleCard = new JPanel(new BorderLayout());
+		turtleCard.add(new JScrollPane(turtlePanel), BorderLayout.CENTER);
+		cardPanel.add("Turtle", turtleCard);
 	}
 
 	/*

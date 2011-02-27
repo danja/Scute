@@ -3,6 +3,7 @@
  */
 package org.hyperdata.scute.source;
 
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +29,7 @@ ChangeListener {
 	 */
 	public TextContainerEditorPane(String syntax) {
 		this.syntax = syntax;
+		addFocusListener(this);
 	}
 	
 	public String getSyntax() {
@@ -46,11 +48,30 @@ ChangeListener {
 			OutputStream fos = new FileOutputStream(file);
 			fos.write(bytes);
 			fos.close();
-			System.out.println("saving : " + getSyntax());
+			System.out.println("saving TEXT : " + getSyntax()+ " filename = "+getFilename());
 		} catch (IOException e) {
 			// TODO popup warning
 			e.printStackTrace();
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
+	 */
+	@Override
+	public void focusGained(FocusEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
+	 */
+	@Override
+	public void focusLost(FocusEvent arg0) {
+		System.out.println("focusLost so SAVE");
+		save();
+		
+	}
+	
 }

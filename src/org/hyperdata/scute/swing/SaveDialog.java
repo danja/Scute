@@ -66,7 +66,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		JButton uriButton = new JButton("Select Graph");
 		Dimension buttonDimension = uriButton.getPreferredSize();
 		fileButton.setPreferredSize(buttonDimension);
-		final JFileChooser fc = new JFileChooser();
+		final JFileChooser fc = new JFileChooser("data");
 
 		filenamePanel.add(fileCheckBox);
 		filenamePanel.add(filenameTextField);
@@ -103,10 +103,13 @@ public class SaveDialog extends JDialog implements ActionListener,
 		// Make this dialog display it.
 		setContentPane(optionPane);
 
+		
 		// Handle window closing correctly.
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
+				String filename = filenameTextField.getText();
+				System.out.println("FFF="+filename);
 				/*
 				 * Instead of directly closing the window, we're going to change
 				 * the JOptionPane's value property.
@@ -179,19 +182,19 @@ public class SaveDialog extends JDialog implements ActionListener,
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
 			if (okButtonLabel.equals(value)) {
-				filenameText = uriTextField.getText();
+				filenameText = filenameTextField.getText();
 				// check text
 				if (true) {
 					clearAndHide();
 				} else {
 					// text was invalid
-					uriTextField.selectAll();
+					filenameTextField.selectAll();
 					JOptionPane.showMessageDialog(SaveDialog.this, filenameText
-							+ "isn't a suitable URI.", "Try again...",
+							+ "isn't a suitable filename.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 
 					filenameText = null;
-					uriTextField.requestFocusInWindow();
+					filenameTextField.requestFocusInWindow();
 				}
 			} else { // user closed dialog or clicked cancel
 				filenameText = null;

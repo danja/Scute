@@ -197,7 +197,7 @@ public class AutoSave extends UserActivityAdapter { //
 	public void stateChanged(ChangeEvent event) { // from tabs
 //		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
 //		Config.self.setSelectedTab(tabIndex);
-		String command = ((CardPanel) event.getSource()).getViewName();
+		String command = ((CardPanel) event.getSource()).getCurrentViewName();
 		Config.self.setSelectedView(command);
 	}
 
