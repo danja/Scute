@@ -32,5 +32,11 @@
 	<classpathentry kind="lib" path="lib/Filters.jar"/>
 	<classpathentry kind="lib" path="lib/swingx/swingx-beaninfo-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/swingx/swingx-core-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/http/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/http/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpclient-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpclient-cache-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpcore-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/http/httpmime-4.1.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

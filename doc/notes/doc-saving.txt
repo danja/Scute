@@ -1,0 +1,13 @@
+changing editor panes
+
+IF the syntax is valid, save it as a model
+
+IF NOT save it as text
+
+OPEN A FRESH TAB
+
+This source is currently invalid, so it will be transferred to a temporary tab. 
+
+Options: Make Primary | Discard
+
+

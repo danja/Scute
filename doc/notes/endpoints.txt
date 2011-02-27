@@ -1,0 +1,30 @@
+dbpedia
+"dbPedia", "http://dbpedia.org/sparql"
+
+open library
+http://api.talis.com/stores/openlibrary/services/sparql
+
+musicbrainz
+http://dbtune.org/musicbrainz/sparql
+
+naptan
+http://gov.tso.co.uk/transport/sparql
+
+BBC wildlife
+http://api.talis.com/stores/bbc-wildlife/services/sparql
+
+BBC programmes
+http://dbtune.org/bbc/programmes/sparql/
+
+CIA world factbook
+http://www4.wiwiss.fu-berlin.de/factbook/
+
+wordnet
+http://wordnet.rkbexplorer.com/sparql/
+
+local authority spending data
+http://services.data.gov.uk/statistics/sparql
+
+ordnance survey
+http://api.talis.com/stores/ordnance-survey/services/sparql
+

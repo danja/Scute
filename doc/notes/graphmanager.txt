@@ -1,0 +1,12 @@
+load <localfilename> -> <localgraphname>
+save <localgraphname> -> <localfilename> 
+
+GET <remoteURI> -> <localgraphname>
+
+Publish (tabs?):
+HTTP POST/PUT
+SPARQL Update (Fuseki)
+Talis Endpoint
+
+backup to store (Fuseki)
+backup to File(s)
