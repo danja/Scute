@@ -8,14 +8,13 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.source;
+package org.hyperdata.scute.syntax;
 
 import javax.swing.text.Element;
 import javax.swing.text.LabelView;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
-import org.hyperdata.scute.sparql.SparqlView;
 
 /**
  * A factory for creating Highlighter objects.

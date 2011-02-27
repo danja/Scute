@@ -1,19 +1,14 @@
 /*
- * Copyright 2006-2008 Kees de Kooter
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Scute
+ * 
+ * Homepage: http://hyperdata.org/scute
+ * 
+ * License : http://www.apache.org/licenses/LICENSE-2.0
+ * See also license.txt or http://hyperdata.org/wiki/Scute:License
+ * 
+ * Danny Ayers 2011
  */
-package org.hyperdata.scute.source;
+package org.hyperdata.scute.syntax;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,65 +29,50 @@ import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
 
 /**
- * Thanks: http://groups.google.com/group/de.comp.lang.java/msg/2bbeb016abad270
- * 
- * IMPORTANT NOTE: regex should contain 1 group.
- * 
- * Using PlainView here because we don't want line wrapping to occur.
- * 
- * @author kees
- * @date 13-jan-2006
- * 
+ * The Class TurtleView.
  */
-public class XmlView extends PlainView {
+public class TurtleView extends PlainView {
 
-	/** The GENERI c_ xm l_ name. */
-	private static String GENERIC_XML_NAME = "[A-Za-z\\-_]+(:[A-Za-z\\-_]+)?";
-
-	/** The pattern colors. */
 	private static HashMap<Pattern, Color> patternColors;
-
-	/** The TA g_ attribut e_ pattern. */
-	private static String TAG_ATTRIBUTE_PATTERN = "(" + GENERIC_XML_NAME
-			+ ")\\w*\\=";
 	
-	/** The TA g_ attribut e_ value. */
-	private static String TAG_ATTRIBUTE_VALUE = "\\w*\\=\\w*(\"[^\"]*\")";
+	public static String BNODE_PATTERN = "(_:\\w+)";
 	
-	/** The TA g_ cdata. */
-	private static String TAG_CDATA = "(<\\!\\[CDATA\\[.*\\]\\]>)";
+	public static String KW_BASE_PATTERN = "(@base)";
 	
-	/** The TA g_ comment. */
-	private static String TAG_COMMENT = "(<\\!--[\\w ]*-->)";
+	public static String KW_PREFIX_PATTERN = "(@prefix)";
 	
-	/** The TA g_ en d_ pattern. */
-	private static String TAG_END_PATTERN = "(/>)";
+	public static String LITERAL_PATTERN = "(\".+\")";
 	
-	/** The TA g_ pattern. */
-	private static String TAG_PATTERN = "(</?" + GENERIC_XML_NAME + ")\\s?>?";
+	public static String LONG_LITERAL_PATTERN = "(\"\"\".+\"\"\")";
+	
+	public static String NODE_PATTERN = "(\\w*:\\w+)";
+	
+	public static String SQUARE_BRACKETS_PATTERN = "(\\[|\\])";
+	
+	/** The UR i_ pattern. */
+	public static String URI_PATTERN = "(<http://.+>)";
 
 	static {
-		// NOTE: the order is important!
 		patternColors = new LinkedHashMap<Pattern, Color>();
-		patternColors
-				.put(Pattern.compile(TAG_PATTERN), new Color(63, 127, 127));
-		patternColors.put(Pattern.compile(TAG_CDATA), Color.GRAY);
-		patternColors.put(Pattern.compile(TAG_ATTRIBUTE_PATTERN), new Color(
-				127, 0, 127));
-		patternColors.put(Pattern.compile(TAG_END_PATTERN), new Color(63, 127,
-				127));
-		patternColors.put(Pattern.compile(TAG_ATTRIBUTE_VALUE), new Color(42,
-				0, 255));
-		patternColors.put(Pattern.compile(TAG_COMMENT), Color.BLUE);
+		
+		// order is important!
+		patternColors.put(Pattern.compile(URI_PATTERN), Color.RED);
+		patternColors.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
+		patternColors.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
+		patternColors.put(Pattern.compile(NODE_PATTERN), Color.RED);
+		patternColors.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
+
+		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
+		patternColors.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
 	}
 
 	/**
-	 * Instantiates a new xml view.
+	 * Instantiates a new turtle view.
 	 * 
 	 * @param element
 	 *            the element
 	 */
-	public XmlView(Element element) {
+	public TurtleView(Element element) {
 
 		super(element);
 

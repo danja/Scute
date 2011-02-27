@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.source;
+package org.hyperdata.scute.syntax;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,42 +28,46 @@ import javax.swing.text.PlainView;
 import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
 
+
 /**
  * The Class TurtleView.
  */
-public class TurtleView extends PlainView {
+public class SparqlView extends PlainView {
 
+	
+	// private static String KW_BASE_PATTERN = "(@base)";
+	
+	private static String KW_PREFIX_PATTERN = "(PREFIX)";
+
+	private static String KW_SELECT_PATTERN = "(SELECT)";
+	private static String KW_WHERE_PATTERN = "(WHERE)";
+	private static String KW_LIMIT_PATTERN = "(LIMIT)";
+	
+	private static String VARIABLE_PATTERN = "(\\?\\w++)"; 
+	
 	private static HashMap<Pattern, Color> patternColors;
-	
-	public static String BNODE_PATTERN = "(_:\\w+)";
-	
-	public static String KW_BASE_PATTERN = "(@base)";
-	
-	public static String KW_PREFIX_PATTERN = "(@prefix)";
-	
-	public static String LITERAL_PATTERN = "(\".+\")";
-	
-	public static String LONG_LITERAL_PATTERN = "(\"\"\".+\"\"\")";
-	
-	public static String NODE_PATTERN = "(\\w*:\\w+)";
-	
-	public static String SQUARE_BRACKETS_PATTERN = "(\\[|\\])";
-	
-	/** The UR i_ pattern. */
-	public static String URI_PATTERN = "(<http://.+>)";
+
 
 	static {
 		patternColors = new LinkedHashMap<Pattern, Color>();
 		
 		// order is important!
-		patternColors.put(Pattern.compile(URI_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
-		patternColors.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
-		patternColors.put(Pattern.compile(NODE_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
-
-		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
-		patternColors.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
+		
+		// SPARQL extra
+		patternColors.put(Pattern.compile(KW_WHERE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
+		patternColors.put(Pattern.compile(KW_SELECT_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
+		patternColors.put(Pattern.compile(KW_LIMIT_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
+		
+		// SPARQL extra
+		patternColors.put(Pattern.compile(VARIABLE_PATTERN), Color.BLUE);
+		
+		
+		patternColors.put(Pattern.compile(TurtleView.URI_PATTERN), Color.RED);
+		patternColors.put(Pattern.compile(TurtleView.LITERAL_PATTERN), Color.GRAY);
+		patternColors.put(Pattern.compile(TurtleView.BNODE_PATTERN), Color.CYAN);
+		patternColors.put(Pattern.compile(TurtleView.NODE_PATTERN), Color.RED);
+		patternColors.put(Pattern.compile(TurtleView.SQUARE_BRACKETS_PATTERN), Color.BLUE);
+		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN), Color.YELLOW);
 	}
 
 	/**
@@ -72,7 +76,7 @@ public class TurtleView extends PlainView {
 	 * @param element
 	 *            the element
 	 */
-	public TurtleView(Element element) {
+	public SparqlView(Element element) {
 
 		super(element);
 

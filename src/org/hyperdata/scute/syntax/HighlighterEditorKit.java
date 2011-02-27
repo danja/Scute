@@ -8,11 +8,12 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.source;
+package org.hyperdata.scute.syntax;
 
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.ViewFactory;
+
 
 /**
  * The Class HighlighterEditorKit.

@@ -10,6 +10,7 @@ import org.hyperdata.scute.autosave.ModelSaver;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.RdfUtils;
 
+import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -34,10 +35,10 @@ public class Config extends ModelContainer {
 	public static final String CONFIG_URI = "http://purl.org/stuff/scute/application/config";
 	
 	/** The Constant WORKING_MODEL_FILENAME. */
-	public static final String WORKING_MODEL_FILENAME = "data/default.ttl";
+	public static final String WORKING_MODEL_FILENAME = "data/working.ttl";
 	
 	/** The Constant TEXT_FILENAME. */
-	public static final String TEXT_FILENAME = "data/temp.txt";
+ 	public static final String TEXT_FILENAME = "data/temp.txt";
 
 	public static final String SPARQL_FILENAME = "data/sparql-temp.txt";
 	
@@ -46,6 +47,9 @@ public class Config extends ModelContainer {
 	public static final String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/working";
 	
 	public static final String VERSION_STRING = "Version 0.5 Beta";
+	
+	public static final Syntax SPARQL_SYNTAX = Syntax.syntaxSPARQL_11;
+	//quite a few alternatives there
 
 	
 	/** The base uri. */

@@ -51,6 +51,7 @@ package org.hyperdata.scute;
 * TODO Screenshots
 * TODO Documentation for all the above 
 * TODO Wiki docs
+* TODO extract Card interface as start for plugins
 * 
 * TODO support forum?
 * 
