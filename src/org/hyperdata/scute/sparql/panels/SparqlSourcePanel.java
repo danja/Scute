@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql;
+package org.hyperdata.scute.sparql.panels;
 
 import javax.swing.event.ChangeEvent;
 
 import org.hyperdata.scute.main.Config;
-import org.hyperdata.scute.source.HighlighterEditorKit;
 import org.hyperdata.scute.source.TextContainerEditorPane;
+import org.hyperdata.scute.syntax.HighlighterEditorKit;
 
 /**
  * @author danny

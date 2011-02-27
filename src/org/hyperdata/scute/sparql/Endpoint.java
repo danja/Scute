@@ -16,6 +16,12 @@ public final class Endpoint {
 	private String label = null;
 	private String uri = null;
 	private Action action = null;
+	private boolean local;
+	
+	
+	public boolean isLocal() {
+		return this.local;
+	}
 
 	/**
 	 * Standard remote URI endpoint these all have the same type of Action
@@ -29,11 +35,12 @@ public final class Endpoint {
 	public Endpoint(String label, String uri) {
 		this.label = label;
 		this.uri = uri;
+		local = false;
 		this.action = new URIEndpointAction(this);
 	}
 
 	/**
-	 * Special-case endpoints, e.g. referring to a local model
+	 * Special-case endpoints, i.e. referring to a local model
 	 * 
 	 * @param label
 	 *            display label
@@ -43,6 +50,7 @@ public final class Endpoint {
 	public Endpoint(String label, Action action) {
 		this.label = label;
 		this.action = action;
+		local = true;
 	}
 
 	public String getLabel() {
