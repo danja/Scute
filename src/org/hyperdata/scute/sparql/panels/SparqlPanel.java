@@ -6,14 +6,10 @@ package org.hyperdata.scute.sparql.panels;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
-import com.hp.hpl.jena.query.Dataset;
-
-import org.jdesktop.swingx.JXTitledPanel;
-
+import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.syntax.HighlighterEditorKit;
@@ -24,16 +20,14 @@ import org.hyperdata.scute.syntax.HighlighterEditorKit;
  * TODO make SPARQL SELECT/CONSTRUCT/DESCRIBE?/ASK? template from current working model
  *
  */
-public class SparqlPanel extends JXTitledPanel  { // implements SparqlContainer
+public class SparqlPanel extends Card  { // implements SparqlContainer
 
 	private SparqlSourcePanel sourcePanel;
 	private SparqlResultsPanel resultsPanel;
 	private SparqlContainer sparqlContainer = new SparqlContainerImpl();
 	
 	public SparqlPanel(){
-		super();
-		super.setLayout(new BorderLayout());
-		super.setTitle("SPARQL"); //??/ where is this
+		super(new BorderLayout());
 		
 		sourcePanel = new SparqlSourcePanel("SPARQL");
 		sourcePanel.setEditorKit(new HighlighterEditorKit("SPARQL"));

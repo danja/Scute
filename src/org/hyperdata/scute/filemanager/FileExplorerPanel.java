@@ -11,7 +11,6 @@
 package org.hyperdata.scute.filemanager;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 
@@ -21,17 +20,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
+import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.filemanager.actions.SendToSparqlAction;
 
 /**
  * The Class FileExplorer.
  */
-public class FileExplorerPanel extends JPanel implements FileReference {
+public class FileExplorerPanel extends Card implements FileReference {
 
+	@Override
 	public File getCurrentFile() {
 		return this.currentFile;
 	}
 
+	@Override
 	public void setCurrentFile(File currentFile) {
 		this.currentFile = currentFile;
 	}

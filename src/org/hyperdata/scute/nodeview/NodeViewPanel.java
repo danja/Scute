@@ -11,6 +11,8 @@
 
 package org.hyperdata.scute.nodeview;
 
+import javax.swing.JPanel;
+
 /**
  * Container panel for tabs which display views associated with a single node.
  *
@@ -18,6 +20,6 @@ package org.hyperdata.scute.nodeview;
  * 
  * FIXME implement
  */
-public class NodeViewPanel {
+public class NodeViewPanel extends JPanel {
 
 }

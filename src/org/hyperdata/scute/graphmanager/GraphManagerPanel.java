@@ -2,7 +2,7 @@
 package org.hyperdata.scute.graphmanager;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import org.hyperdata.scute.cards.Card;
 
 /**
  * @author danny
@@ -17,7 +17,7 @@ updates to the dataset are possible while an iterator is being used.
 http://openjena.org/wiki/TDB/JavaAPI
 
  */
-public class GraphManagerPanel extends JPanel {
+public class GraphManagerPanel extends Card {
 
 	
 	public GraphManagerPanel(){

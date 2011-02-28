@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.window;
+package org.hyperdata.scute.cards;
 
 import java.awt.event.ActionEvent;
 
@@ -25,6 +25,7 @@ final class DocPanelAction extends
 		this.taskPanel = taskPanel;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
     	System.out.println("DocPanelAction AACCTTIIOONN = "+actionEvent);
     	Scute.scuteHelp.show();

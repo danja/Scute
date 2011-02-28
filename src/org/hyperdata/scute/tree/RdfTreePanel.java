@@ -12,11 +12,8 @@ package org.hyperdata.scute.tree;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
-import java.awt.Dimension;
-
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
@@ -30,6 +27,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.hp.hpl.jena.rdf.model.Model;
 
 import org.hyperdata.scute.autosave.UserActivityListener;
+import org.hyperdata.scute.cards.Card;
 
 /**
  * The Class RdfTreePanel.
@@ -40,7 +38,7 @@ import org.hyperdata.scute.autosave.UserActivityListener;
  * 
  *         D.Ayers 2002
  */
-public class RdfTreePanel extends JPanel implements TreeSelectionListener {
+public class RdfTreePanel extends Card implements TreeSelectionListener {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4397360330476275899L;

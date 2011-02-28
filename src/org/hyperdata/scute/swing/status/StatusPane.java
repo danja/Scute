@@ -5,7 +5,6 @@ package org.hyperdata.scute.swing.status;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 
 /**

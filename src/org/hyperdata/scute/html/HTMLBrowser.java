@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -52,7 +51,8 @@ public class HTMLBrowser extends JFrame {
   }
 
   private class DropTargetHandler implements DropTargetListener {
-    public void drop(DropTargetDropEvent event) {
+    @Override
+	public void drop(DropTargetDropEvent event) {
       Transferable transferable = event.getTransferable();
       if (transferable.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
         event.acceptDrop(DnDConstants.ACTION_COPY);
@@ -78,7 +78,8 @@ public class HTMLBrowser extends JFrame {
       }
     }
 
-    public void dragEnter(DropTargetDragEvent event) {
+    @Override
+	public void dragEnter(DropTargetDragEvent event) {
       if (event.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
         event.acceptDrag(DnDConstants.ACTION_COPY);
       else {
@@ -86,13 +87,16 @@ public class HTMLBrowser extends JFrame {
       }
     }
 
-    public void dragExit(DropTargetEvent event) {
+    @Override
+	public void dragExit(DropTargetEvent event) {
     }
 
-    public void dragOver(DropTargetDragEvent event) {
+    @Override
+	public void dragOver(DropTargetDragEvent event) {
     }
 
-    public void dropActionChanged(DropTargetDragEvent event) {
+    @Override
+	public void dropActionChanged(DropTargetDragEvent event) {
     }
 
   }
@@ -167,7 +171,8 @@ class WebToolBar extends JToolBar implements HyperlinkListener {
     webBrowserPane.addHyperlinkListener(this);
     urlTextField = new JTextField(25);
     urlTextField.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent event) {
+      @Override
+	public void actionPerformed(ActionEvent event) {
         try {
           URL url = new URL(urlTextField.getText());
           webBrowserPane.goToURL(url);
@@ -180,7 +185,8 @@ class WebToolBar extends JToolBar implements HyperlinkListener {
 
     backButton.addActionListener(new ActionListener() {
 
-      public void actionPerformed(ActionEvent event) {
+      @Override
+	public void actionPerformed(ActionEvent event) {
         URL url = webBrowserPane.back();
         urlTextField.setText(url.toString());
       }
@@ -189,7 +195,8 @@ class WebToolBar extends JToolBar implements HyperlinkListener {
 
     forwardButton.addActionListener(new ActionListener() {
 
-      public void actionPerformed(ActionEvent event) {
+      @Override
+	public void actionPerformed(ActionEvent event) {
         URL url = webBrowserPane.forward();
         urlTextField.setText(url.toString());
       }
@@ -200,7 +207,8 @@ class WebToolBar extends JToolBar implements HyperlinkListener {
 
   }
 
-  public void hyperlinkUpdate(HyperlinkEvent event) {
+  @Override
+public void hyperlinkUpdate(HyperlinkEvent event) {
     if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
       URL url = event.getURL();
       webBrowserPane.goToURL(url);

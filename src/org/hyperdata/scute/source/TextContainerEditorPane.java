@@ -32,6 +32,7 @@ ChangeListener {
 		addFocusListener(this);
 	}
 	
+	@Override
 	public String getSyntax() {
 		return syntax;
 	}
@@ -39,6 +40,7 @@ ChangeListener {
 	/**
 	 * 
 	 */
+	@Override
 	public void save(){
 		File file = new File(getFilename());
 

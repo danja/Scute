@@ -10,7 +10,6 @@
  */
 package org.hyperdata.scute.swing;
 
-import java.awt.Component;
 import java.awt.Frame;
 
 /**

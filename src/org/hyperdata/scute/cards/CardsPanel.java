@@ -1,5 +1,5 @@
 
-package org.hyperdata.scute.window;
+package org.hyperdata.scute.cards;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
 
-public class CardPanel extends JPanel {
+public class CardsPanel extends JPanel {
 
 	private CardLayout layout;
 	private EventListenerList listenerList = new EventListenerList();
@@ -26,11 +26,22 @@ public class CardPanel extends JPanel {
 		return previousView;
 	}
 	
-	public CardPanel(){
+	public CardsPanel(){
 		super();
 		layout = new CardLayout();
 		setLayout(layout);
 	}
+	
+	public void add(Card card, String name){
+		super.add(card, name);
+	}
+	
+//	public JPanel getComponent(String name){
+//		Component[] components = getComponents();
+//		for(int i=0;i<components.length;i++){
+//			
+//		}
+//	}
 	
 	public void setViewName(String view){
 		previousView = currentView;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.window;
+package org.hyperdata.scute.cards;
 
 import java.awt.CardLayout;
 
@@ -16,10 +16,10 @@ import org.hyperdata.resources.scute.ScuteIcons;
 public class TaskPanel extends JXTitledPanel {
 
 	private JXTaskPaneContainer taskPaneContainer;
-	CardPanel cardPanel;
+	CardsPanel cardPanel;
 	CardLayout layout;
 
-	public TaskPanel(CardPanel cardPanel) {
+	public TaskPanel(CardsPanel cardPanel) {
 		super("Activities");
 		this.cardPanel = cardPanel;
 		this.layout = (CardLayout) cardPanel.getLayout();

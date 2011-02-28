@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.window;
+package org.hyperdata.scute.cards;
 
 import java.awt.event.ActionEvent;
 
@@ -22,6 +22,7 @@ final class ChangeEditorPanelAction extends
 		this.taskPanel = taskPanel;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
     	System.out.println("ChangeEditorPanelAction AACCTTIIOONN = "+actionEvent);
     	// CardLayout cLay = cardPanel.getLayout();

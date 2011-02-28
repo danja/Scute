@@ -15,9 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import org.hyperdata.scute.filemanager.FileExplorerPanel;
 import org.hyperdata.scute.filemanager.FileReference;
-import org.hyperdata.scute.tree.RdfTreePanel;
 
 /**
  * The Class CopyAction.

@@ -9,16 +9,14 @@
  * Danny Ayers 2011
  */
 
-package org.hyperdata.scute.syspane;
+package org.hyperdata.scute.systempanels;
 
-import java.awt.Container;
 import java.awt.GridLayout;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 
 // import com.jgoodies.looks.plastic.theme.DesertBluer; ??
 

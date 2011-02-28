@@ -4,14 +4,8 @@
 package org.hyperdata.scute.sparql;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.event.ListDataListener;
-
 import org.hyperdata.scute.sparql.actions.WorkingModelEndpointAction;
 
 /**
@@ -26,6 +20,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 		makeSamples();
 	}
 
+	@Override
 	public Object getElementAt(int i) {
 		return targets.get(i);
 	}

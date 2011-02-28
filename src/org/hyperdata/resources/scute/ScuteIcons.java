@@ -10,7 +10,6 @@
  */
 package org.hyperdata.resources.scute;
 
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**

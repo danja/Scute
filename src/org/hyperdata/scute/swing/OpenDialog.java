@@ -4,8 +4,6 @@
 package org.hyperdata.scute.swing;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-
 import java.beans.*; //property change stuff
 import java.io.File;
 import java.awt.*;
@@ -106,6 +104,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 		// Handle window closing correctly.
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent we) {
 				/*
 				 * Instead of directly closing the window, we're going to change
@@ -117,6 +116,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 
 		// Ensure the text field always gets the first focus.
 		addComponentListener(new ComponentAdapter() {
+			@Override
 			public void componentShown(ComponentEvent ce) {
 				filenameTextField.requestFocusInWindow();
 			}
@@ -146,6 +146,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 	}
 
 	/** This method handles events for the text field. */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		optionPane.setValue(okButtonLabel); // needed?
 		filenameText = filenameTextField.getText();
@@ -158,6 +159,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 	 * @param e
 	 *            the e
 	 */
+	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 		String prop = e.getPropertyName();
 

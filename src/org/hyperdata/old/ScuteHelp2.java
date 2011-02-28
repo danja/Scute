@@ -45,7 +45,7 @@ public class ScuteHelp2 {
       // Add the created helpViewer to it.
       frame.getContentPane().add(helpViewer);
       // Set a default close operation.
-      frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       // Make the frame visible.
       frame.setVisible(true);
    }

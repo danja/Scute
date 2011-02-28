@@ -3,26 +3,15 @@
  */
 package org.hyperdata.scute.filemanager;
 
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.plaf.metal.MetalIconFactory;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import javax.swing.UIManager;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import org.hyperdata.resources.scute.ScuteIcons;
 
 /**
  * @author danny

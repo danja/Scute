@@ -7,7 +7,6 @@ import javax.swing.event.ChangeEvent;
 
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.source.TextContainerEditorPane;
-import org.hyperdata.scute.syntax.HighlighterEditorKit;
 
 /**
  * @author danny

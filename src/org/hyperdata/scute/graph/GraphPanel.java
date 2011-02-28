@@ -14,10 +14,10 @@ import java.awt.BorderLayout;
 
 import javax.swing.Action;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.hyperdata.scute.autosave.UserActivityListener;
+import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.graph.actions.ToggleAction;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -29,7 +29,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * 
  * @author danny
  */
-public class GraphPanel extends JPanel {
+public class GraphPanel extends Card {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2907914679596311549L;

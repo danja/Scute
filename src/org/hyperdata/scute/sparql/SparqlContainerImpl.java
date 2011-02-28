@@ -98,7 +98,8 @@ public class SparqlContainerImpl implements SparqlContainer {
 	         listenerList.remove(SparqlListener.class, sparqlListener);
 	     }
 
-	 public void fireSparqlEvent() {
+	 @Override
+	public void fireSparqlEvent() {
 	     // Guaranteed to return a non-null array
 	     Object[] listeners = listenerList.getListenerList();
 	     // Process the listeners last to first, notifying

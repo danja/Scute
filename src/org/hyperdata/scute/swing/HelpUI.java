@@ -3,19 +3,14 @@
  */
 package org.hyperdata.scute.swing;
 
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-
-import org.hyperdata.resources.general.GeneralIcons;
 import org.hyperdata.scute.main.Config;
 
 /**

@@ -77,6 +77,7 @@ public final class Endpoint {
 		this.action = action;
 	}
 
+	@Override
 	public String toString() {
 		return this.label;
 	}

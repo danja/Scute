@@ -11,9 +11,9 @@
 
 package org.hyperdata.scute.triples;
 
-import javax.swing.JPanel;
-
 import com.hp.hpl.jena.rdf.model.Model;
+
+import org.hyperdata.scute.cards.Card;
 
 /**
  * The Class TriplesPanel.
@@ -24,7 +24,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * 
  * FIXME implement
  */
-public class TriplesPanel extends JPanel {
+public class TriplesPanel extends Card {
 
 	/**
 	 * @param workingModel

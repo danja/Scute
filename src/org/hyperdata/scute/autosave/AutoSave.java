@@ -17,13 +17,13 @@ import java.io.FileInputStream;
 import java.util.EventObject;
 import java.util.Timer;
 
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
+
+import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainerEditorPane;
-import org.hyperdata.scute.window.CardPanel;
 
 /**
  * see http://esw.w3.org/IntegrityIsJobOne
@@ -197,7 +197,8 @@ public class AutoSave extends UserActivityAdapter { //
 	public void stateChanged(ChangeEvent event) { // from tabs
 //		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
 //		Config.self.setSelectedTab(tabIndex);
-		String command = ((CardPanel) event.getSource()).getCurrentViewName();
+		String command = ((CardsPanel) event.getSource()).getCurrentViewName();
+		
 		Config.self.setSelectedView(command);
 	}
 

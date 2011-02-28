@@ -10,20 +10,13 @@
  */
 package org.hyperdata.scute.source;
 
-import java.awt.Component;
-import java.awt.event.FocusEvent;
-
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.hyperdata.scute.autosave.UserActivityListener;
+import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
-import org.hyperdata.scute.window.CardPanel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -128,7 +121,7 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	public void stateChanged(ChangeEvent e) {
 		
 		// String currentView = getSyntax();
-		String view = ((CardPanel) e.getSource()).getCurrentViewName();
+		String view = ((CardsPanel) e.getSource()).getCurrentViewName();
 		
 		System.out.println("RdfSoucePanel view = "+view);
 // save();

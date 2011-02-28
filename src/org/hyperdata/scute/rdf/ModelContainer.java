@@ -17,7 +17,7 @@ import java.io.InputStream;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import org.hyperdata.scute.syspane.LogPane;
+import org.hyperdata.scute.systempanels.LogPane;
 
 /**
  * ModelContainer - wrapper for models

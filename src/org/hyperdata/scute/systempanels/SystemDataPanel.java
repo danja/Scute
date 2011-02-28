@@ -1,11 +1,10 @@
 /**
  * 
  */
-package org.hyperdata.scute.syspane;
+package org.hyperdata.scute.systempanels;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 /**
  * The Class SystemData.

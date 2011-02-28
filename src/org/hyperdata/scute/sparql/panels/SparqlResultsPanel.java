@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
@@ -33,7 +34,7 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		tableView = new TableResultsPanel();
 		httpView = new HTTPPanel();
 		
-		JTabbedPane tabs = new JTabbedPane(JTabbedPane.BOTTOM);
+		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		tabs.addTab("Text", textView);
 		tabs.addTab("Table", tableView);
 		tabs.addTab("HTTP", httpView);

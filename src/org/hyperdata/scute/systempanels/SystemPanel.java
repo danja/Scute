@@ -1,21 +1,18 @@
 
-package org.hyperdata.scute.syspane;
-
-import java.awt.CardLayout;
-import java.awt.GridLayout;
+package org.hyperdata.scute.systempanels;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+
+import org.hyperdata.scute.cards.Card;
 
 /**
  * @author danny
  * 
  * TODO Backup - to remote store, to file
  */
-public class SystemPanel extends JPanel {
+public class SystemPanel extends Card {
 
 	public SystemPanel() {
 		super();
