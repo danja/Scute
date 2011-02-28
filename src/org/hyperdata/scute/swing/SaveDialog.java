@@ -4,6 +4,9 @@
 package org.hyperdata.scute.swing;
 
 import javax.swing.*;
+
+import org.hyperdata.scute.main.Config;
+
 import java.beans.*; //property change stuff
 import java.io.File;
 import java.awt.*;
@@ -36,8 +39,8 @@ public class SaveDialog extends JDialog implements ActionListener,
 		// saveDialog.setSize(400,200);
 		fileDialog.pack();
 		fileDialog.setVisible(true);
-		System.out.println("Filename = "+fileDialog.getFilename());
-		System.out.println("URI = "+fileDialog.getURI());
+//		System.out.println("Filename = "+fileDialog.getFilename());
+//		System.out.println("URI = "+fileDialog.getURI());
 	}
 
 
@@ -64,7 +67,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		JButton uriButton = new JButton("Select Graph");
 		Dimension buttonDimension = uriButton.getPreferredSize();
 		fileButton.setPreferredSize(buttonDimension);
-		final JFileChooser fc = new JFileChooser("data");
+		final JFileChooser fc = new JFileChooser(Config.DATA_DIR);
 
 		filenamePanel.add(fileCheckBox);
 		filenamePanel.add(filenameTextField);

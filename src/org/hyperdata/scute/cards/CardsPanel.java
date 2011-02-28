@@ -3,34 +3,45 @@ package org.hyperdata.scute.cards;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+
+import org.hyperdata.scute.systempanels.SystemPanel;
 
 public class CardsPanel extends JPanel {
 
 	private CardLayout layout;
 	private EventListenerList listenerList = new EventListenerList();
 	private ChangeEvent changeEvent = null;
-	private String previousView = "Turtle";
-	private String currentView = "Turtle";
+	private String previousCardName = "Turtle";
+	private String currentCardName = "Turtle";
 
 	private Map<String, Card> cards = new HashMap<String, Card>();
-
+	
 	public void add(Card card, String name) {
 		super.add(card, name);
+		// System.out.println("Adding CARD = "+name);
+		cards.put(name, card);
+	}
+	
+	public void addScroll(Card card, String name) {
+		super.add(new JScrollPane(card), name);
+		// System.out.println("Adding CARD = "+name);
 		cards.put(name, card);
 	}
 
-	public String getCurrentViewName() {
-		return currentView;
+	public String getCurrentCardName() {
+		return currentCardName;
 	}
 
-	public String getPreviousViewName() {
-		return previousView;
+	public String getPreviousCardName() {
+		return previousCardName;
 	}
 
 	public CardsPanel() {
@@ -38,14 +49,29 @@ public class CardsPanel extends JPanel {
 		layout = new CardLayout();
 		setLayout(layout);
 	}
+	
+	// for debugging
+	public void listCards(){
+		Iterator<String> iterator = cards.keySet().iterator();
+		System.out.println("---- CARDS ----");
+		while(iterator.hasNext()){
+			String key = iterator.next();
+			System.out.println(key+" = "+cards.get(key));
+		}
+		System.out.println("---------------");
+	}
 
 	public Card getCard(String name) {
 		return cards.get(name);
 	}
+	
+	public Card getCurrentCard(){
+		return getCard(currentCardName);
+	}
 
-	public void setViewName(String view) {
-		previousView = currentView;
-		currentView = view;
+	public void setCardName(String cardName) {
+		previousCardName = currentCardName;
+		this.currentCardName = cardName;
 		fireStateChanged(); // is enough to update?
 	}
 
@@ -81,8 +107,7 @@ public class CardsPanel extends JPanel {
 	 * @param actionEvent
 	 */
 	public void fireChange(ActionEvent actionEvent) {
-		this.currentView = actionEvent.getActionCommand();
+		this.currentCardName = actionEvent.getActionCommand();
 		fireStateChanged();
 	}
-
 }

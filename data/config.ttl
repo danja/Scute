@@ -13,6 +13,6 @@
       <http://purl.org/stuff/scute/selectedView>
               "Turtle" ;
       <http://purl.org/stuff/scute/sync>
-              "false" ;
+              "true" ;
       <http://purl.org/stuff/scute/textSaveDelay>
               "4000" .

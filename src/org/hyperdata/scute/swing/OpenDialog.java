@@ -4,6 +4,9 @@
 package org.hyperdata.scute.swing;
 
 import javax.swing.*;
+
+import org.hyperdata.scute.main.Config;
+
 import java.beans.*; //property change stuff
 import java.io.File;
 import java.awt.*;
@@ -18,8 +21,8 @@ import java.awt.event.*;
  */
 public class OpenDialog extends JDialog implements ActionListener,
 		PropertyChangeListener {
-	private String filenameText = null;
-	private String uriText = null;
+	private String filename = null;
+	private String uri = null;
 	private JTextField uriTextField;
 	private JTextField filenameTextField;
 
@@ -36,8 +39,8 @@ public class OpenDialog extends JDialog implements ActionListener,
 		// OpenDialog.setSize(400,200);
 		fileDialog.pack();
 		fileDialog.setVisible(true);
-		System.out.println("Filename = "+fileDialog.getFilename());
-		System.out.println("URI = "+fileDialog.getURI());
+//		System.out.println("Filename = "+fileDialog.getFilename());
+//		System.out.println("URI = "+fileDialog.getURI());
 	}
 
 
@@ -64,7 +67,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 		JButton uriButton = new JButton("Select Graph");
 		Dimension buttonDimension = uriButton.getPreferredSize();
 		fileButton.setPreferredSize(buttonDimension);
-		final JFileChooser fc = new JFileChooser();
+		final JFileChooser fc = new JFileChooser(Config.DATA_DIR);
 
 		filenamePanel.add(fileCheckBox);
 		filenamePanel.add(filenameTextField);
@@ -149,8 +152,8 @@ public class OpenDialog extends JDialog implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		optionPane.setValue(okButtonLabel); // needed?
-		filenameText = filenameTextField.getText();
-		uriText = filenameTextField.getText();
+		// filenameText = filenameTextField.getText();
+		// uriText = filenameTextField.getText();
 	}
 
 	/**
@@ -180,25 +183,29 @@ public class OpenDialog extends JDialog implements ActionListener,
 			// property change event will be fired.
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
+			
 			if (okButtonLabel.equals(value)) {
-				filenameText = uriTextField.getText();
+				uri = uriTextField.getText();
+				filename = filenameTextField.getText();
 				// check text
 				if (true) {
+					
 					clearAndHide();
 				} else {
 					// text was invalid
 					uriTextField.selectAll();
-					JOptionPane.showMessageDialog(OpenDialog.this, filenameText
+					JOptionPane.showMessageDialog(OpenDialog.this, uri
 							+ "isn't a suitable URI.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 
-					filenameText = null;
+				//	filenameText = null;
 					uriTextField.requestFocusInWindow();
 				}
 			} else { // user closed dialog or clicked cancel
-				filenameText = null;
+				// filenameText = null;
 				clearAndHide();
 			}
+			
 		}
 	}
 
@@ -210,10 +217,10 @@ public class OpenDialog extends JDialog implements ActionListener,
 	}
 
 	public String getFilename() {
-		return filenameText;
+		return filename;
 	}
 	
 	public String getURI() {
-		return uriText;
+		return uri;
 	}
 }

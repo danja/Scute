@@ -28,6 +28,7 @@ import javax.swing.text.Document;
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
 import org.hyperdata.scute.autosave.AutoSaveAction;
+import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.cards.TaskPanel;
 import org.hyperdata.scute.filemanager.FileExplorerPanel;
@@ -36,6 +37,7 @@ import org.hyperdata.scute.graphmanager.GraphManagerPanel;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.source.RdfSourcePanel;
+import org.hyperdata.scute.source.TextContainer;
 import org.hyperdata.scute.sparql.panels.SparqlPanel;
 import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
@@ -117,7 +119,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private OpenDialog openDialog;
 
-	private CardsPanel cardPanel;
+	private CardsPanel cardsPanel;
 
 	private FileExplorerPanel fileExplorerPanel;
 
@@ -155,21 +157,19 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		setModelFilename(Config.WORKING_MODEL_FILENAME);
 		setModelURI(Config.WORKING_MODEL_URI);
 
-
-
 		Models.workingModel = Models.sampleModel;
 
 		scuteHelp = new ScuteHelp();
 
 		panel = new JPanel(new BorderLayout());
 
-		makeCardPanel();
-		
+		makeCardsPanel();
+
 		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
 		autoSave.setWorkingModelContainer(Config.self);
 		autoSave.setCurrentTextContainer(turtlePanel);
-		cardPanel.addChangeListener(autoSave);
+		cardsPanel.addChangeListener(autoSave);
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
 		panel.add(controlPanel, BorderLayout.NORTH);
@@ -181,15 +181,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		helpUI = new HelpUI(this);
 
-
-
 		// FIXME basic Save and Load
 
 		// Set up autosave
 		// FIXME merge with AutoSave stuff above
 
-
-		TaskPanel taskPanel = new TaskPanel(cardPanel);
+		TaskPanel taskPanel = new TaskPanel(cardsPanel);
 		panel.add(taskPanel, BorderLayout.WEST);
 
 		/*
@@ -206,7 +203,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 			System.out.println("RESTORE");
 			autoSave.restorePreviousState(this);
 
-			cardPanel.addChangeListener(autoSave);
+			cardsPanel.addChangeListener(autoSave);
 		}
 	}
 
@@ -237,13 +234,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	/**
 	 * 
 	 */
-	private void makeCardPanel() {
-		cardPanel = new CardsPanel();
-		panel.add(cardPanel, BorderLayout.CENTER);
+	private void makeCardsPanel() {
+		cardsPanel = new CardsPanel();
+		panel.add(cardsPanel, BorderLayout.CENTER);
 
 		makeTurtlePanel();
 		makeRdfXmlPanel();
 		makeTreePanel();
+		makeGraphPanel();
 		makeTriplesPanel();
 		makeSparqlPanel();
 		makeGraphManagerPanel();
@@ -259,7 +257,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		systemPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
 
-		cardPanel.add(new JScrollPane(systemPanel), "System");
+		cardsPanel.addScroll(systemPanel, "System");
 	}
 
 	/**
@@ -267,12 +265,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeLogPanel() {
 		LogPane log = LogPane.getLogPane();
-		JScrollPane logScroll = new JScrollPane(log);
-		logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
+		// JScrollPane logScroll = new JScrollPane(log);
+		// logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
 		LogPane.println("Ok.");
-		TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
-		logScroll.setBorder(logBorder);
-		cardPanel.add(logScroll, "Log");
+		// TitledBorder logBorder = BorderFactory.createTitledBorder("Log");
+		// logScroll.setBorder(logBorder);
+		// cardsPanel.add(logScroll, "Log");
+		Card logCard = new Card();
+		logCard.add(log);
+		cardsPanel.addScroll(logCard, "Log");
 	}
 
 	/**
@@ -280,7 +281,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeFileExplorerPanel() {
 		fileExplorerPanel = new FileExplorerPanel(Config.DATA_DIR);
-		cardPanel.add("Files", fileExplorerPanel);
+		cardsPanel.add(fileExplorerPanel, "Files");
 	}
 
 	/**
@@ -288,7 +289,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeGraphManagerPanel() {
 		graphManagerPanel = new GraphManagerPanel();
-		cardPanel.add(graphManagerPanel, "Graphs");
+		cardsPanel.add(graphManagerPanel, "Graphs");
 	}
 
 	/**
@@ -297,7 +298,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private void makeSparqlPanel() {
 		sparqlPanel = new SparqlPanel();
 
-		cardPanel.add(sparqlPanel, "SPARQL");
+		cardsPanel.add(sparqlPanel, "SPARQL");
 	}
 
 	/**
@@ -309,7 +310,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		// TODO create UserActivityListener interface
 		// need change listener???
 		// TODO ADD SELECTION LISTENER - make shared listener?
-		cardPanel.add(triplesPanel, "Triples");
+		cardsPanel.add(triplesPanel, "Triples");
 	}
 
 	/**
@@ -320,14 +321,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		treePanel.addUserActivityListener(autoSave);
 
 		// need change listener???
-		cardPanel.add(treePanel, "Tree");
+		cardsPanel.add(treePanel, "Tree");
 	}
-	
-	private void makeGraphPanel(){
+
+	private void makeGraphPanel() {
 		graphPanel = new GraphPanel(Models.workingModel);
 		graphPanel.addUserActivityListener(autoSave);
 		// need change listener???
-		cardPanel.add(graphPanel, "Graph");
+		cardsPanel.add(graphPanel, "Graph");
 	}
 
 	/**
@@ -335,6 +336,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeRdfXmlPanel() {
 		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
+		rdfxmlPanel.setFilename(Config.RDFXML_TEMP);
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
@@ -342,13 +344,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
-		
+
 		// set up autosave button
 		StatusAction autosaveAction = new AutoSaveAction();
 		StatusButton autosaveButton = new StatusButton(autosaveAction,
 				"Unsaved", "Saving...", "Saved");
 		statusPanel.add(autosaveButton);
-		
+
 		// Set up validators
 		Document rdfxmlDocument = rdfxmlPanel.getDocument();
 		StatusAction rdfxmlAction = new TurtleValidateAction(rdfxmlDocument);
@@ -360,36 +362,39 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
-		
-		cardPanel.addChangeListener(rdfxmlPanel);
-		JPanel rdfxmlCard = new JPanel(new BorderLayout());
+
+		cardsPanel.addChangeListener(rdfxmlPanel);
+
+		Card rdfxmlCard = new Card(new BorderLayout());
+		rdfxmlCard.setTextContainer(rdfxmlPanel);
 		rdfxmlCard.add(new JScrollPane(rdfxmlPanel), BorderLayout.CENTER);
 		rdfxmlCard.add(statusPanel, BorderLayout.SOUTH);
-		
-		cardPanel.add(rdfxmlCard, "RDF/XML");
+
+		cardsPanel.add(rdfxmlCard, "RDF/XML");
 	}
 
 	/**
 	 * 
 	 */
-	private void makeTurtlePanel() {	
+	private void makeTurtlePanel() {
 		turtlePanel = new RdfSourcePanel("Turtle");
+		turtlePanel.setFilename(Config.TURTLE_TEMP);
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 
-		cardPanel.addChangeListener(turtlePanel);
-		
+		cardsPanel.addChangeListener(turtlePanel);
+
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
-		
+
 		// set up autosave button
 		StatusAction autosaveAction = new AutoSaveAction();
 		StatusButton autosaveButton = new StatusButton(autosaveAction,
 				"Unsaved", "Saving...", "Saved");
 		statusPanel.add(autosaveButton);
-		
+
 		// Set up validators
 		Document turtleDocument = turtlePanel.getDocument();
 		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
@@ -402,11 +407,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
 
-		JPanel turtleCard = new JPanel(new BorderLayout());
+		Card turtleCard = new Card(new BorderLayout());
+		turtleCard.setTextContainer(turtlePanel);
 		turtleCard.add(new JScrollPane(turtlePanel), BorderLayout.CENTER);
 		turtleCard.add(statusPanel, BorderLayout.SOUTH);
-		
-		cardPanel.add(turtleCard, "Turtle");
+
+		cardsPanel.add(turtleCard, "Turtle");
 	}
 
 	/*
@@ -491,7 +497,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 			if (openDialog == null) {
 				openDialog = new OpenDialog(frame);
 			}
-			// saveDialog.setSize(400,200);
 			openDialog.pack();
 			openDialog.setVisible(true);
 		} catch (final Exception exception) {
@@ -499,27 +504,42 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 			return;
 		}
 		String filename = openDialog.getFilename();
+
 		if (filename != null) {
-			setModelFilename(filename);
 
-			loadModelFromFile();
-		}
-		String uri = saveDialog.getURI();
-		if (uri != null) {
-			setModelURI(uri);
-			loadNamedModel();
+			if (filename.endsWith(".rdf") || filename.endsWith(".xml")) {
+				// probably RDF/XML
+				setSelectedCard("RDF/XML");
+			} else {
+				setSelectedCard("Turtle");
+			}
+			cardsPanel.listCards();
+			TextContainer textContainer = cardsPanel.getCurrentCard()
+					.getTextContainer();
+			// will either be RDF/XML or Turtle
+			textContainer.setFilename(filename);
+			textContainer.load();
+			// setModelFilename(filename);
+			// loadModelFromFile();
+			logPrintln("Loaded file " + filename);
+		} else {
+			String uri = openDialog.getURI();
+			if (uri != null) {
+				setModelURI(uri);
+				loadNamedModel();
+				logPrintln("Loaded model from " + uri);
+			}
 		}
 
-		logPrintln("Loaded");
 		System.out.println("Loaded");
 
-		turtlePanel.loadModel(Models.workingModel);
-		rdfxmlPanel.loadModel(Models.workingModel);
-
-		treePanel.loadModel(Models.workingModel);
-		treePanel.init();
-
-		graphPanel.loadModel(Models.workingModel);
+		// turtlePanel.loadModel(Models.workingModel);
+		// rdfxmlPanel.loadModel(Models.workingModel);
+		//
+		// treePanel.loadModel(Models.workingModel);
+		// treePanel.init();
+		//
+		// graphPanel.loadModel(Models.workingModel);
 	}
 
 	/*
@@ -633,7 +653,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	/**
 	 * @param selectedView
 	 */
-	public void setSelectedView(String selectedView) {
-		cardPanel.setViewName(selectedView);
+	public void setSelectedCard(String selectedView) {
+		cardsPanel.setCardName(selectedView);
 	}
 }

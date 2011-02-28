@@ -38,7 +38,7 @@ public class Config extends ModelContainer {
 	public static final String WORKING_MODEL_FILENAME = "data/working.ttl";
 	
 	/** The Constant TEXT_FILENAME. */
- 	public static final String TEXT_FILENAME = "data/temp.txt";
+ //	public static final String TEXT_FILENAME = "data/temp.txt";
 
 	public static final String SPARQL_FILENAME = "data/sparql-temp.txt";
 	
@@ -50,6 +50,8 @@ public class Config extends ModelContainer {
 	
 	public static final Syntax SPARQL_SYNTAX = Syntax.syntaxSPARQL_11;
 	//quite a few alternatives there
+	public static final String RDFXML_TEMP = "data/temp.rdf";
+	public static final String TURTLE_TEMP = "data/temp.ttl";
 
 	
 	/** The base uri. */

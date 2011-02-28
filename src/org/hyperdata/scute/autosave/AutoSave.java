@@ -140,7 +140,7 @@ public class AutoSave extends UserActivityAdapter { //
 		System.out.println("Config.self.getSelectedView() ="
 				+ Config.self.getSelectedView());
 
-		scute.setSelectedView(Config.self.getSelectedView());
+		scute.setSelectedCard(Config.self.getSelectedView());
 		// rdfEditor.setSelectedTab(Config.self.getSelectedTab());
 		// rdfEditor.setSourceText(getSavedText());
 
@@ -151,22 +151,22 @@ public class AutoSave extends UserActivityAdapter { //
 	 * 
 	 * @return the saved text
 	 */
-	private String getSavedText() {
-		StringBuffer buffer = new StringBuffer("");
-		int ch;
-		try {
-			FileInputStream fis = new FileInputStream(Config.TEXT_FILENAME);
-			while ((ch = fis.read()) != -1) {
-				buffer.append((char) ch);
-			}
-			fis.close();
-		} catch (Exception e) {
-			// error popup
-			e.printStackTrace();
-			return "";
-		}
-		return buffer.toString();
-	}
+//	private String getSavedText() {
+//		StringBuffer buffer = new StringBuffer("");
+//		int ch;
+//		try {
+//			FileInputStream fis = new FileInputStream(Config.TEXT_FILENAME);
+//			while ((ch = fis.read()) != -1) {
+//				buffer.append((char) ch);
+//			}
+//			fis.close();
+//		} catch (Exception e) {
+//			// error popup
+//			e.printStackTrace();
+//			return "";
+//		}
+//		return buffer.toString();
+//	}
 
 	/**
 	 * Finish up.
@@ -207,7 +207,7 @@ public class AutoSave extends UserActivityAdapter { //
 	public void stateChanged(ChangeEvent event) {
 
 		CardsPanel cardsPanel = (CardsPanel) event.getSource();
-		String current = cardsPanel.getCurrentViewName();
+		String current = cardsPanel.getCurrentCardName();
 		Config.self.setSelectedView(current);
 		Card currentCard = cardsPanel.getCard(current);
 		if (currentCard instanceof TextContainer) {

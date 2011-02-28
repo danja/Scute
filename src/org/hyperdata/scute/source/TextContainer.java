@@ -32,8 +32,12 @@ public interface TextContainer extends FocusListener {
 	 */
 	public String getFilename();
 
+	public void setFilename(String filename);
+	
 	/**
 	 * 
 	 */
 	public void save();
+	
+	public void load();
 }

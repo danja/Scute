@@ -4,10 +4,7 @@
 package org.hyperdata.scute.source;
 
 import java.awt.event.FocusEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 import javax.swing.JEditorPane;
 import javax.swing.event.ChangeListener;
@@ -23,6 +20,7 @@ public abstract class TextContainerEditorPane extends JEditorPane implements Tex
 ChangeListener {
 
 	private String syntax;
+	private String filename;
 	
 	/**
 	 * @param syntax
@@ -35,6 +33,55 @@ ChangeListener {
 	@Override
 	public String getSyntax() {
 		return syntax;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
+	 */
+	@Override
+	public String getFilename() {
+		return filename;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.source.TextContainer#setFilename(java.lang.String)
+	 */
+	@Override
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.source.TextContainer#load()
+	 */
+	@Override
+	public void load() {
+		InputStream in = null;
+		File file = new File(getFilename());
+		System.out.println("FILENAME="+getFilename());
+		// StringBuffer text = new StringBuffer();
+		String text ="";
+		Writer writer = new StringWriter();
+		try {
+		    in = new FileInputStream(file);
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+	//	    String line = null;
+		    
+//		    while ((line = reader.readLine()) != null) {
+//		        text.append(line);
+//		    }
+		   int i;
+		    while((i = reader.read()) != -1){
+		    	writer.write(i);
+		    }
+		    in.close();
+		    text = writer.toString();
+		} catch (IOException exception) {
+		    exception.printStackTrace();
+		} 
+		setText(text.toString());
 	}
 
 	/**

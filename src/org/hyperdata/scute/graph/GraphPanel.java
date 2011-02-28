@@ -47,7 +47,7 @@ public class GraphPanel extends Card {
 	 *            the model
 	 */
 	public GraphPanel(Model model) {
-		super();
+		super(new BorderLayout());
 		loadModel(model);
 		toolBar = new JToolBar("Graph Tools");
 		addControls();

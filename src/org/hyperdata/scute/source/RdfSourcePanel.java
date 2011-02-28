@@ -10,6 +10,13 @@
  */
 package org.hyperdata.scute.source;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
@@ -81,14 +88,13 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 		setText(text);
 		setCaretPosition(0); // scroll to top
 		repaint();
-
 	}
 
 	/**
 	 * Refresh from text.
 	 */
-	public void refreshFromText() {
-		refreshFromString(getText());
+	public void refreshModelFromText() {
+		refreshModelFromString(getText());
 	}
 
 	/**
@@ -97,7 +103,7 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	 * @param string
 	 *            the string
 	 */
-	public void refreshFromString(String string) {
+	public void refreshModelFromString(String string) {
 		final Model modelCopy = model; // er - that'll be a pointer?
 		try {
 			model = RdfUtils.stringToModel(string, Config.baseUri, getSyntax());
@@ -121,7 +127,7 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 	public void stateChanged(ChangeEvent e) {
 		
 		// String currentView = getSyntax();
-		String view = ((CardsPanel) e.getSource()).getCurrentViewName();
+		String view = ((CardsPanel) e.getSource()).getCurrentCardName();
 		
 		System.out.println("RdfSoucePanel view = "+view);
 // save();
@@ -129,16 +135,4 @@ public class RdfSourcePanel extends TextContainerEditorPane {
 			loadModel(model);
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
-	 */
-	@Override
-	public String getFilename() {
-		return Config.TEXT_FILENAME;
-	}
-
-
 }
