@@ -7,6 +7,8 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
+import org.hyperdata.scute.source.TextContainerEditorPane;
+
 
 /**
  * @author danny

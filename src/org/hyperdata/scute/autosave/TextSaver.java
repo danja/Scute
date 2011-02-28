@@ -12,6 +12,7 @@ package org.hyperdata.scute.autosave;
 
 import java.util.TimerTask;
 
+import org.hyperdata.scute.source.TextContainer;
 import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
@@ -20,7 +21,7 @@ import org.hyperdata.scute.source.TextContainerEditorPane;
 public class TextSaver extends TimerTask {
 
 	/** The container. */
-	private final TextContainerEditorPane container;
+	private final TextContainer container;
 //	private String filename;
 
 	/**
@@ -29,7 +30,7 @@ public class TextSaver extends TimerTask {
 	 * @param container
 	 *            the container
 	 */
-	public TextSaver(TextContainerEditorPane container) {
+	public TextSaver(TextContainer container) {
 		this.container = container;
 	}
 	

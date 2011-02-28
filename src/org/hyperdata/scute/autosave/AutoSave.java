@@ -19,28 +19,30 @@ import java.util.Timer;
 
 import javax.swing.event.ChangeEvent;
 
+import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainerEditorPane;
+import org.hyperdata.scute.source.TextContainer;
 
 /**
  * see http://esw.w3.org/IntegrityIsJobOne
  * 
- * Currently just saves stuff afresh every 6 seconds 
- * TODO could do with being intelligent about when things have changed
+ * Currently just saves stuff afresh every 6 seconds TODO could do with being
+ * intelligent about when things have changed
  * 
  * TODO rationalize listeners
  * 
  * @author danny
  * 
  */
-public class AutoSave extends UserActivityAdapter { // 
-	
+public class AutoSave extends UserActivityAdapter { //
+
 	/** The text saver. */
 	private TextSaver textSaver;
-	
+
 	/** The model timer. */
 	private final Timer timer = new Timer();
 
@@ -48,8 +50,7 @@ public class AutoSave extends UserActivityAdapter { //
 
 	private ModelContainer workingModelContainer;
 
-	private TextContainerEditorPane currentTextContainer;
-	
+	private TextContainer currentTextContainer;
 
 	/**
 	 * Inits the model saver.
@@ -61,62 +62,66 @@ public class AutoSave extends UserActivityAdapter { //
 		workingModelContainer = container;
 		// reschedule();
 	}
-	
-	public void setCurrentTextContainer(TextContainerEditorPane container) {
+
+	public void setCurrentTextContainer(TextContainer container) {
 		currentTextContainer = container;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.hyperdata.scute.main.UserActivityListener#activityOccurred(java.util.EventObject)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.hyperdata.scute.main.UserActivityListener#activityOccurred(java.util
+	 * .EventObject)
 	 */
 	@Override
 	public void activityOccurred(EventObject object) {
 		reschedule();
 	}
-	
+
 	/*
-	 java.awt.event.FocusListener
+	 * java.awt.event.FocusListener
 	 */
-		/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
 	 */
 	@Override
 	public void focusGained(FocusEvent event) {
-		
+
 		textSaver.save(); // save the old one
-	reschedule(); // start over
-		}
-	
+		reschedule(); // start over
+	}
+
 	/**
 	 * Effectively resets clock.
 	 */
-	public void reschedule(){
+	public void reschedule() {
 		System.out.println("RESCHEDULE!!!");
-		
-		if(modelSaver != null){
-		modelSaver.cancel();
+
+		if (modelSaver != null) {
+			modelSaver.cancel();
 		}
-		if(textSaver != null){
-		textSaver.cancel();
+		if (textSaver != null) {
+			textSaver.cancel();
 		}
 		timer.purge(); // clean queue
-		
+
 		modelSaver = new ModelSaver(workingModelContainer);
 		timer.schedule(modelSaver, Config.self.getModelSaveDelay());
-//		modelTimer.scheduleAtFixedRate(modelSaver, Config.self
-//		.getModelSaveDelay(), Config.self.getModelSavePeriod());
-		// textTimer.cancel
-		textSaver = new TextSaver(currentTextContainer);
-		
-//		textTimer
-//		.scheduleAtFixedRate(textSaver, Config.self.getTextSaveDelay(),
-//				Config.self.getTextSavePeriod());
-		timer.schedule(textSaver, Config.self.getTextSaveDelay());
+
+		if (currentTextContainer != null) {
+			textSaver = new TextSaver(currentTextContainer);
+			timer.schedule(textSaver, Config.self.getTextSaveDelay());
+		}
 	}
 
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
 	 */
 	@Override
 	public void windowClosing(WindowEvent we) {
@@ -134,11 +139,11 @@ public class AutoSave extends UserActivityAdapter { //
 	public void restorePreviousState(Scute scute) {
 		System.out.println("Config.self.getSelectedView() ="
 				+ Config.self.getSelectedView());
-		
+
 		scute.setSelectedView(Config.self.getSelectedView());
-//		rdfEditor.setSelectedTab(Config.self.getSelectedTab());
-//		rdfEditor.setSourceText(getSavedText());
-		
+		// rdfEditor.setSelectedTab(Config.self.getSelectedTab());
+		// rdfEditor.setSourceText(getSavedText());
+
 	}
 
 	/**
@@ -179,27 +184,37 @@ public class AutoSave extends UserActivityAdapter { //
 		Config.self.saveNow();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
 	 */
 	@Override
 	public void focusLost(FocusEvent arg0) {
 
 	}
-	
 
-	/*  javax.swing.event.ChangeListener */
+	/* javax.swing.event.ChangeListener */
 
-	/* (non-Javadoc)
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent
+	 * )
 	 */
 	@Override
-	public void stateChanged(ChangeEvent event) { // from tabs
-//		int tabIndex = ((JTabbedPane) event.getSource()).getSelectedIndex();
-//		Config.self.setSelectedTab(tabIndex);
-		String command = ((CardsPanel) event.getSource()).getCurrentViewName();
-		
-		Config.self.setSelectedView(command);
+	public void stateChanged(ChangeEvent event) {
+
+		CardsPanel cardsPanel = (CardsPanel) event.getSource();
+		String current = cardsPanel.getCurrentViewName();
+		Config.self.setSelectedView(current);
+		Card currentCard = cardsPanel.getCard(current);
+		if (currentCard instanceof TextContainer) {
+			setCurrentTextContainer((TextContainer) currentCard);
+		} else {
+			setCurrentTextContainer(null);
+		}
 	}
 
 }
