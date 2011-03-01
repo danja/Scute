@@ -3,7 +3,8 @@
  */
 package org.hyperdata.scute.sparql.actions;
 
-import org.hyperdata.scute.sparql.Endpoint;
+import org.hyperdata.scute.sparql.endpoints.Endpoint;
+import org.hyperdata.scute.sparql.endpoints.EndpointAction;
 
 /**
  * @author danny

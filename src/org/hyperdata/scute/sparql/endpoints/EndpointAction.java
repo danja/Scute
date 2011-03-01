@@ -1,30 +1,23 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql.actions;
+package org.hyperdata.scute.sparql.endpoints;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 
 /**
  * @author danny
  *
  */
-public class AddEndpointAction extends AbstractAction {
-
-	/**
-	 * @param string
-	 */
-	public AddEndpointAction(String string) {
-		super(string);
-	}
+public class EndpointAction extends AbstractAction {
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		JOptionPane.showMessageDialog(null, "Eggs are not supposed to be green.");
 	}
 }

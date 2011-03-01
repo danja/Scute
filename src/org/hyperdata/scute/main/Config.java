@@ -52,6 +52,7 @@ public class Config extends ModelContainer {
 	//quite a few alternatives there
 	public static final String RDFXML_TEMP = "data/temp.rdf";
 	public static final String TURTLE_TEMP = "data/temp.ttl";
+	public static final String ENDPOINTS_MODEL = "data/endpoints.ttl";
 
 	
 	/** The base uri. */

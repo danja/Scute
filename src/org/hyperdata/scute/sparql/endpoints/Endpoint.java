@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql;
+package org.hyperdata.scute.sparql.endpoints;
 
 import javax.swing.Action;
 

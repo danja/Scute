@@ -38,7 +38,7 @@ import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.source.TextContainer;
-import org.hyperdata.scute.sparql.panels.SparqlPanel;
+import org.hyperdata.scute.sparql.panels.SparqlCard;
 import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
 import org.hyperdata.scute.swing.HelpUI;
@@ -120,7 +120,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private FileExplorerPanel fileExplorerPanel;
 
-	private SparqlPanel sparqlPanel;
+	private SparqlCard sparqlPanel;
 
 	private GraphManagerPanel graphManagerPanel;
 
@@ -310,7 +310,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * 
 	 */
 	private void makeSparqlPanel() {
-		sparqlPanel = new SparqlPanel();
+		sparqlPanel = new SparqlCard(frame);
 		sparqlPanel.setTextCard(true);
 		cardsPanel.add(sparqlPanel, "SPARQL");
 	}

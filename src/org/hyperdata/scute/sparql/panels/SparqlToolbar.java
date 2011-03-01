@@ -3,17 +3,19 @@
  */
 package org.hyperdata.scute.sparql.panels;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.hyperdata.scute.sparql.Endpoint;
-import org.hyperdata.scute.sparql.EndpointListModel;
 import org.hyperdata.scute.sparql.SparqlContainer;
-import org.hyperdata.scute.sparql.actions.AddEndpointAction;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
 import org.hyperdata.scute.sparql.actions.StopQueryAction;
+import org.hyperdata.scute.sparql.endpoints.EditEndpointsAction;
+import org.hyperdata.scute.sparql.endpoints.Endpoint;
+import org.hyperdata.scute.sparql.endpoints.EndpointListModel;
+import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
 
 /**
  * @author danny
@@ -25,17 +27,22 @@ public class SparqlToolbar extends JPanel implements ActionListener {
 	private JTextField uriField;
 	private SparqlContainer queryContainer;
 	private SparqlSourcePanel sourcePanel;
+	private Frame frame;
 
-	public SparqlToolbar(SparqlContainer queryContainer, SparqlSourcePanel sourcePanel) {
+	public SparqlToolbar(SparqlContainer queryContainer,
+			SparqlSourcePanel sourcePanel, Frame frame) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
+		this.frame = frame;
 		
 		this.queryContainer = queryContainer;
-this.sourcePanel = sourcePanel;
+		this.sourcePanel = sourcePanel;
 		JButton run = new JButton();
-		
+
 		// using sourcepanel here a bit messy, but will do for now
-		run.setAction(new RunQueryAction("Run Query", queryContainer, sourcePanel));
+		run.setAction(new RunQueryAction("Run Query", queryContainer,
+				sourcePanel));
 		add(run);
 		add(Box.createHorizontalStrut(10));
 
@@ -49,8 +56,8 @@ this.sourcePanel = sourcePanel;
 
 		add(new JLabel("Endpoint:"));
 		add(Box.createHorizontalStrut(10));
-
-		comboBox = new JComboBox(new EndpointListModel());
+		EndpointListModel endpointListModel = new EndpointListModel();
+		comboBox = new JComboBox(endpointListModel);
 		comboBox.setSelectedIndex(0);
 		comboBox.addActionListener(this);
 		add(comboBox);
@@ -60,9 +67,13 @@ this.sourcePanel = sourcePanel;
 		add(uriField);
 
 		add(Box.createHorizontalStrut(10));
-		JButton add = new JButton();
-		add.setAction(new AddEndpointAction("Add"));
-		add(add);
+
+		JButton edit = new JButton();
+		System.out.println("hereA"+endpointListModel);
+		EndpointTableModel endpointTableModel = new EndpointTableModel(endpointListModel);
+		System.out.println("hereB");
+		edit.setAction(new EditEndpointsAction("Edit", endpointTableModel, frame));
+		add(edit);
 	}
 
 	/*
@@ -81,7 +92,7 @@ this.sourcePanel = sourcePanel;
 		} else {
 			uriField.setText("---");
 		}
-		System.out.println("ENDPOINT ST="+endpoint);
+		System.out.println("ENDPOINT ST=" + endpoint);
 		queryContainer.setEndpoint(endpoint);
 	}
 }

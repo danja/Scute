@@ -11,7 +11,7 @@
       <http://purl.org/stuff/scute/modelSaveDelay>
               "20000" ;
       <http://purl.org/stuff/scute/selectedView>
-              "Turtle" ;
+              "SPARQL" ;
       <http://purl.org/stuff/scute/sync>
               "true" ;
       <http://purl.org/stuff/scute/textSaveDelay>

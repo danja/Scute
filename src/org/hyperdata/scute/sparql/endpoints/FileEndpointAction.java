@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql.actions;
+package org.hyperdata.scute.sparql.endpoints;
 
 import java.awt.event.ActionEvent;
 

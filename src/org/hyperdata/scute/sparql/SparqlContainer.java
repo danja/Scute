@@ -2,6 +2,8 @@ package org.hyperdata.scute.sparql;
 
 import com.hp.hpl.jena.query.Dataset;
 
+import org.hyperdata.scute.sparql.endpoints.Endpoint;
+
 
 public interface SparqlContainer {
 	

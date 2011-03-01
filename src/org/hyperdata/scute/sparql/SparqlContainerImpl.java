@@ -7,6 +7,8 @@ import javax.swing.event.EventListenerList;
 
 import com.hp.hpl.jena.query.Dataset;
 
+import org.hyperdata.scute.sparql.endpoints.Endpoint;
+
 /**
  * @author danny
  *
