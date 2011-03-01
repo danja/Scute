@@ -6,6 +6,7 @@ package org.hyperdata.scute.sparql.panels;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -35,9 +36,9 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		httpView = new HTTPPanel();
 		
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		tabs.addTab("Text", textView);
-		tabs.addTab("Table", tableView);
-		tabs.addTab("HTTP", httpView);
+		tabs.addTab("Text", new JScrollPane(textView));
+		tabs.addTab("Table", new JScrollPane(tableView));
+		tabs.addTab("HTTP", new JScrollPane(httpView));
 		
 		add(tabs, BorderLayout.CENTER);
 	}

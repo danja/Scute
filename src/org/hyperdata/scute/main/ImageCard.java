@@ -14,7 +14,7 @@ import org.hyperdata.scute.cards.Card;
  * @author danny
  *
  */
-public class ImagePanel extends Card {
+public class ImageCard extends Card {
 
     private BufferedImage image = ScuteIcons.bigImage;
 

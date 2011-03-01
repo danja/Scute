@@ -140,6 +140,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	public Scute() {
 
+		frame = new JFrame("Scute");
+		
 		// FIXME restorePreviousState BROKEN - fix!
 		// TODO restorePreviousState BROKEN - fix!
 
@@ -197,7 +199,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		 * actions only one can run at any given time make singleton?
 		 */
 
-		createFrame();
+		setupFrame();
 		
 		
 
@@ -215,8 +217,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	/**
 	 * 
 	 */
-	private void createFrame() {
-		frame = new JFrame("Scute");
+	private void setupFrame() {
+		
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width - 2
@@ -260,7 +262,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * 
 	 */
 	private void makeImagePanel() {
-		Card imagePanel = new ImagePanel();
+		Card imagePanel = new ImageCard();
 		cardsPanel.add(imagePanel, "Image");
 	}
 

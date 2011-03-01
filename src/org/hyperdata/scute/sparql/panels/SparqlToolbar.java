@@ -69,9 +69,7 @@ public class SparqlToolbar extends JPanel implements ActionListener {
 		add(Box.createHorizontalStrut(10));
 
 		JButton edit = new JButton();
-		System.out.println("hereA"+endpointListModel);
 		EndpointTableModel endpointTableModel = new EndpointTableModel(endpointListModel);
-		System.out.println("hereB");
 		edit.setAction(new EditEndpointsAction("Edit", endpointTableModel, frame));
 		add(edit);
 	}
@@ -92,7 +90,7 @@ public class SparqlToolbar extends JPanel implements ActionListener {
 		} else {
 			uriField.setText("---");
 		}
-		System.out.println("ENDPOINT ST=" + endpoint);
+		// System.out.println("ENDPOINT ST=" + endpoint);
 		queryContainer.setEndpoint(endpoint);
 	}
 }

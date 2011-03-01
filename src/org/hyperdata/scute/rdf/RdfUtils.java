@@ -651,6 +651,7 @@ public class RdfUtils {
 		model.setNsPrefix("tdb", "http://jena.hpl.hp.com/2008/tdb#");
 		model.setNsPrefix("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
 		model.setNsPrefix("x", "http://purl.org/stuff/");
+		model.setNsPrefix("void", "http://rdfs.org/ns/void#");
 	}
 
 	// yuck

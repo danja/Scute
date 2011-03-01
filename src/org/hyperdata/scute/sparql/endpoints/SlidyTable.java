@@ -32,7 +32,7 @@ public class SlidyTable extends JTable {
              c.setBackground(getSelectionBackground());
          }else{
              c.setForeground(getForeground());
-             c.setBackground((row%2==0) ? evenColor : getBackground());
+             c.setBackground((row % 2 == 0) ? evenColor : getBackground());
          }
          return c;
      }
