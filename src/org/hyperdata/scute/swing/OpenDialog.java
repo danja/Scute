@@ -177,12 +177,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 				return;
 			}
 
-			// Reset the JOptionPane's value.
-			// If you don't do this, then if the user
-			// presses the same button next time, no
-			// property change event will be fired.
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
-
 			
 			if (okButtonLabel.equals(value)) {
 				uri = uriTextField.getText();

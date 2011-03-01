@@ -21,8 +21,8 @@ import java.awt.event.*;
  */
 public class SaveDialog extends JDialog implements ActionListener,
 		PropertyChangeListener {
-	private String filenameText = null;
-	private String uriText = null;
+	private String filename = null;
+	private String uri = null;
 	private JTextField uriTextField;
 	private JTextField filenameTextField;
 
@@ -155,8 +155,8 @@ public class SaveDialog extends JDialog implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		optionPane.setValue(okButtonLabel); // needed?
-		filenameText = filenameTextField.getText();
-		uriText = filenameTextField.getText();
+		filename = filenameTextField.getText();
+		uri = filenameTextField.getText();
 	}
 
 	/**
@@ -180,29 +180,26 @@ public class SaveDialog extends JDialog implements ActionListener,
 				return;
 			}
 
-			// Reset the JOptionPane's value.
-			// If you don't do this, then if the user
-			// presses the same button next time, no
-			// property change event will be fired.
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
 			if (okButtonLabel.equals(value)) {
-				filenameText = filenameTextField.getText();
-				// check text
+				filename = filenameTextField.getText();
+				uri = uriTextField.getText();
+				
 				if (true) {
 					clearAndHide();
 				} else {
 					// text was invalid
 					filenameTextField.selectAll();
-					JOptionPane.showMessageDialog(SaveDialog.this, filenameText
+					JOptionPane.showMessageDialog(SaveDialog.this, filename
 							+ "isn't a suitable filename.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 
-					filenameText = null;
+					filename = null;
 					filenameTextField.requestFocusInWindow();
 				}
 			} else { // user closed dialog or clicked cancel
-				filenameText = null;
+				filename = null;
 				clearAndHide();
 			}
 		}
@@ -216,10 +213,10 @@ public class SaveDialog extends JDialog implements ActionListener,
 	}
 
 	public String getFilename() {
-		return filenameText;
+		return filename;
 	}
 	
 	public String getURI() {
-		return uriText;
+		return uri;
 	}
 }

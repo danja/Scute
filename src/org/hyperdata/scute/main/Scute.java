@@ -42,6 +42,7 @@ import org.hyperdata.scute.sparql.panels.SparqlPanel;
 import org.hyperdata.scute.swing.FileUI;
 import org.hyperdata.scute.swing.GeneralApplication;
 import org.hyperdata.scute.swing.HelpUI;
+import org.hyperdata.scute.swing.IO;
 import org.hyperdata.scute.swing.OpenDialog;
 import org.hyperdata.scute.swing.SaveDialog;
 import org.hyperdata.scute.swing.ToolsInterface;
@@ -61,7 +62,7 @@ import org.hyperdata.scute.validate.TurtleValidateAction;
  * The Class Scute.
  */
 public class Scute extends ModelContainer implements TreeSelectionListener,
-		GeneralApplication, ToolsInterface {
+		GeneralApplication {
 
 	/** The Constant READ_ONLY_COLOR. */
 	public static final Color READ_ONLY_COLOR = (Color) UIManager.getDefaults()
@@ -115,10 +116,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private SystemPanel systemPanel;
 
-	private SaveDialog saveDialog = null;
-
-	private OpenDialog openDialog;
-
 	private CardsPanel cardsPanel;
 
 	private FileExplorerPanel fileExplorerPanel;
@@ -135,6 +132,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private FileUI fileUI;
 	private HelpUI helpUI;
+
+	private IO io;
 
 	/**
 	 * Instantiates a new scute.
@@ -164,6 +163,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		panel = new JPanel(new BorderLayout());
 
 		makeCardsPanel();
+		
+
 
 		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
@@ -175,11 +176,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		panel.add(controlPanel, BorderLayout.NORTH);
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
-		fileUI = new FileUI(this);
+		io = new IO(this, cardsPanel);
+		
+		fileUI = new FileUI(io);
 
 		controlPanel.add(fileUI.getToolBar());
 
-		helpUI = new HelpUI(this);
+		helpUI = new HelpUI(io);
 
 		// FIXME basic Save and Load
 
@@ -195,6 +198,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		 */
 
 		createFrame();
+		
+		
 
 		// fileChooser = new JFileChooser("./data"); is used???
 
@@ -238,6 +243,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		cardsPanel = new CardsPanel();
 		panel.add(cardsPanel, BorderLayout.CENTER);
 
+		makeImagePanel();
 		makeTurtlePanel();
 		makeRdfXmlPanel();
 		makeTreePanel();
@@ -248,6 +254,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		makeFileExplorerPanel();
 		makeLogPanel();
 		makeSystemPanel();
+	}
+
+	/**
+	 * 
+	 */
+	private void makeImagePanel() {
+		Card imagePanel = new ImagePanel();
+		cardsPanel.add(imagePanel, "Image");
 	}
 
 	/**
@@ -415,35 +429,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		cardsPanel.add(turtleCard, "Turtle");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#cloneFile()
-	 */
-	@Override
-	public void cloneFile() {
-		throw new RuntimeException("not yet implemented");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#closeFile()
-	 */
-	@Override
-	public void closeFile() {
-		throw new RuntimeException("not yet implemented");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#exit()
-	 */
-	@Override
-	public void exit() { // is needed?
-		// frame.dispose();
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -468,129 +453,10 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		LogPane.println(string);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#newFile()
-	 */
-	@Override
-	public void newModel() {
 
-	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#openFile()
-	 */
-	@Override
-	public void open() {
-		if (getModelURI() == null && getModelFilename() == null) { // never been
-																	// saved
-			JOptionPane.showMessageDialog(frame,
-					"Please save current Working Graph");
-			saveAs();
-		} else {
-			save();
-		}
-		try {
-			if (openDialog == null) {
-				openDialog = new OpenDialog(frame);
-			}
-			openDialog.pack();
-			openDialog.setVisible(true);
-		} catch (final Exception exception) {
-			System.out.println("Open aborted");
-			return;
-		}
-		String filename = openDialog.getFilename();
+	
 
-		if (filename != null) {
-
-			if (filename.endsWith(".rdf") || filename.endsWith(".xml")) {
-				// probably RDF/XML
-				setSelectedCard("RDF/XML");
-			} else {
-				setSelectedCard("Turtle");
-			}
-			cardsPanel.listCards();
-			TextContainer textContainer = cardsPanel.getCurrentCard()
-					.getTextContainer();
-			// will either be RDF/XML or Turtle
-			textContainer.setFilename(filename);
-			textContainer.load();
-			// setModelFilename(filename);
-			// loadModelFromFile();
-			logPrintln("Loaded file " + filename);
-		} else {
-			String uri = openDialog.getURI();
-			if (uri != null) {
-				setModelURI(uri);
-				loadNamedModel();
-				logPrintln("Loaded model from " + uri);
-			}
-		}
-
-		System.out.println("Loaded");
-
-		// turtlePanel.loadModel(Models.workingModel);
-		// rdfxmlPanel.loadModel(Models.workingModel);
-		//
-		// treePanel.loadModel(Models.workingModel);
-		// treePanel.init();
-		//
-		// graphPanel.loadModel(Models.workingModel);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#saveAsFile()
-	 */
-	@Override
-	public void saveAs() {
-
-		try {
-			if (saveDialog == null) {
-				saveDialog = new SaveDialog(frame);
-			}
-			// saveDialog.setSize(400,200);
-			saveDialog.pack();
-			saveDialog.setVisible(true);
-		} catch (final Exception exception) {
-			System.out.println("Export aborted");
-			return;
-		}
-		String filename = saveDialog.getFilename();
-		if (filename != null) {
-			setModelFilename(filename);
-			saveModelToFile();
-		}
-		String uri = saveDialog.getURI();
-		if (uri != null) {
-			setModelURI(uri);
-			storeNamedModel();
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#save()
-	 */
-	@Override
-	public void save() {
-		if (getModelURI() == null && getModelFilename() == null) {
-			saveAs();
-			return;
-		}
-		if (getModelURI() != null) {
-			storeNamedModel();
-		}
-		if (getModelFilename() != null) {
-			saveModelToFile();
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -640,15 +506,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hyperdata.scute.swing.ToolsInterface#getFrame()
-	 */
-	@Override
-	public Frame getFrame() {
-		return frame;
-	}
 
 	/**
 	 * @param selectedView
