@@ -311,7 +311,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeSparqlPanel() {
 		sparqlPanel = new SparqlPanel();
-
+		sparqlPanel.setTextCard(true);
 		cardsPanel.add(sparqlPanel, "SPARQL");
 	}
 
@@ -380,6 +380,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		cardsPanel.addChangeListener(rdfxmlPanel);
 
 		Card rdfxmlCard = new Card(new BorderLayout());
+		rdfxmlCard.setTextCard(true);
 		rdfxmlCard.setTextContainer(rdfxmlPanel);
 		rdfxmlCard.add(new JScrollPane(rdfxmlPanel), BorderLayout.CENTER);
 		rdfxmlCard.add(statusPanel, BorderLayout.SOUTH);
@@ -392,6 +393,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeTurtlePanel() {
 		turtlePanel = new RdfSourcePanel("Turtle");
+		
 		turtlePanel.setFilename(Config.TURTLE_TEMP);
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
@@ -422,6 +424,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		statusPanel.add(validatorPane);
 
 		Card turtleCard = new Card(new BorderLayout());
+		turtleCard.setTextCard(true);
 		turtleCard.setTextContainer(turtlePanel);
 		turtleCard.add(new JScrollPane(turtlePanel), BorderLayout.CENTER);
 		turtleCard.add(statusPanel, BorderLayout.SOUTH);

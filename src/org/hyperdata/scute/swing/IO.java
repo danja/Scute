@@ -137,11 +137,22 @@ public class IO implements ToolsInterface {
 			saveAs();
 			return;
 		}
+
 		if (modelContainer.getModelURI() != null) {
 			modelContainer.storeNamedModel();
 		}
 		if (modelContainer.getModelFilename() != null) {
 			modelContainer.saveModelToFile();
+		}
+
+		Card card = cardsPanel.getCurrentCard();
+		if (card.isTextCard()) {
+			if (card.getTextContainer().getFilename() != null) {
+				card.getTextContainer().save();
+			} else {
+				saveAs();
+				return;
+			}
 		}
 	}
 

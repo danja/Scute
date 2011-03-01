@@ -21,6 +21,7 @@ public class Card extends JPanel {
 
 	// this is a bit yucky, will do for now
 	private TextContainer textContainer = null;
+	private boolean textCard = false;
 
 	// JPanel's constructors
 	public Card(){
@@ -39,6 +40,10 @@ public class Card extends JPanel {
 		super(layout, isDoubleBuffered);
 	}
 
+	public void setTextCard(boolean textCard) {
+		this.textCard = textCard;
+	}
+	
 	/**
 	 * this should maybe be in an interface
 	 * @return
@@ -52,6 +57,13 @@ public class Card extends JPanel {
 	 */
 	public void setTextContainer(TextContainer textContainer) {
 		this.textContainer = textContainer;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isTextCard() {
+		return textCard;
 	}
 	
 }
