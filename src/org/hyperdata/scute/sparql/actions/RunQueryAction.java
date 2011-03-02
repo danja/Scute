@@ -5,8 +5,6 @@ package org.hyperdata.scute.sparql.actions;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryException;

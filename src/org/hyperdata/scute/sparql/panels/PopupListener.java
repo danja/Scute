@@ -21,6 +21,7 @@ public class PopupListener extends MouseAdapter {
 		this.popup = popup;
 	}
 
+	@Override
 	public void mousePressed(MouseEvent event) {
 		if ((event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) { // right
 																							// mouse

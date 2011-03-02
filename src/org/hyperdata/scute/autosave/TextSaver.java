@@ -13,7 +13,6 @@ package org.hyperdata.scute.autosave;
 import java.util.TimerTask;
 
 import org.hyperdata.scute.source.TextContainer;
-import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
  * The Class TextSaver.

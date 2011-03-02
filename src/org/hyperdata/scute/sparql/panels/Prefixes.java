@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.event.ListDataListener;
-
 import org.hyperdata.scute.rdf.RdfUtils;
 
 /**

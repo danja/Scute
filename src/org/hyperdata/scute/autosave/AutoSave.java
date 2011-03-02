@@ -13,7 +13,6 @@ package org.hyperdata.scute.autosave;
 import java.awt.event.FocusEvent;
 
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
 import java.util.EventObject;
 import java.util.Timer;
 
@@ -24,7 +23,6 @@ import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
-import org.hyperdata.scute.source.TextContainerEditorPane;
 import org.hyperdata.scute.source.TextContainer;
 
 /**

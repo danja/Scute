@@ -3,13 +3,8 @@
  */
 package org.hyperdata.scute.sparql.endpoints;
 
-import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * @author danny
@@ -42,6 +37,7 @@ public class EndpointTableModel extends DefaultTableModel { // implements
 		endpointListModel.saveEndpointsToFile();
 	}
 
+	@Override
 	public String getColumnName(int columnIndex) {
 		switch (columnIndex) {
 		case 0:
@@ -136,11 +132,13 @@ public class EndpointTableModel extends DefaultTableModel { // implements
 		super.addRow(obj);
 	}
 
+	@Override
 	public void removeRow(int row) {
 		endpointListModel.removeElementAt(row);
 		super.removeRow(row);
 	}
 	
+	@Override
 	public void fireTableDataChanged(){
 		super.fireTableDataChanged();
 		endpointListModel.fireContentsChanged();

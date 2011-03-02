@@ -14,7 +14,6 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
-import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;

@@ -3,14 +3,9 @@
  */
 package org.hyperdata.scute.sparql.endpoints;
 
-import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JDialog;
 
 /**
  * @author danny

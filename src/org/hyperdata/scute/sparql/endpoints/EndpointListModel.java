@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.DCTerms;
@@ -52,6 +51,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 		return targets.get(i);
 	}
 
+	@Override
 	public void removeElementAt(int row) {
 		Endpoint endpoint = targets.get(row);
 		// super.removeElementAt(row);

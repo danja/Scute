@@ -3,17 +3,11 @@
  */
 package org.hyperdata.scute.sparql.endpoints;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 
