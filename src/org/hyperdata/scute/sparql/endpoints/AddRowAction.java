@@ -22,7 +22,7 @@ class AddRowAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		System.out.println("CREATE ROW");
+		// System.out.println("CREATE ROW");
 		model.addEndpoint(new Endpoint("New name", ""));
 		(new javax.swing.Timer(EndpointsEditPanel.DELAY, new ActionListener() {
 			int i = table.convertRowIndexToView(model.getRowCount() - 1);

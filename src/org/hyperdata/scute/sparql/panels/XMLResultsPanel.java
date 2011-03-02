@@ -9,8 +9,8 @@ import javax.swing.JEditorPane;
  * @author danny
  * 
  */
-public class TextResultsPanel extends JEditorPane {
-	public TextResultsPanel() {
+public class XMLResultsPanel extends JEditorPane {
+	public XMLResultsPanel() {
 		super();
 	}
 }

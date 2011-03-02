@@ -186,7 +186,6 @@ public class EndpointListModel extends DefaultComboBoxModel {
 		if (editBox == null) {
 			editBox = new JPanel();
 		}
-
 	}
 
 	/**
@@ -194,6 +193,11 @@ public class EndpointListModel extends DefaultComboBoxModel {
 	 */
 	public void addEndpoint(Endpoint endpoint) {
 		targets.add(endpoint);
+		
 		// need to repaint??
+	}
+	
+	public void fireContentsChanged(){
+		super.fireContentsChanged(this, 0, targets.size()-1); // I think that's right :)
 	}
 }

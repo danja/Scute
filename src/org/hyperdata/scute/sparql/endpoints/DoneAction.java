@@ -37,6 +37,7 @@ public class DoneAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		endpointTableModel.saveEndpointsToFile();
+		endpointTableModel.fireTableDataChanged();
 		window.dispose();
 	}
 }

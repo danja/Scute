@@ -21,15 +21,15 @@ import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
  * @author danny
  * 
  */
-public class SparqlToolbar extends JPanel implements ActionListener {
+public class SparqlRunToolbar extends JPanel implements ActionListener {
 
-	private JComboBox comboBox;
+	private JComboBox endpointsBox;
 	private JTextField uriField;
 	private SparqlContainer queryContainer;
 	private SparqlSourcePanel sourcePanel;
 	private Frame frame;
 
-	public SparqlToolbar(SparqlContainer queryContainer,
+	public SparqlRunToolbar(SparqlContainer queryContainer,
 			SparqlSourcePanel sourcePanel, Frame frame) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -57,10 +57,10 @@ public class SparqlToolbar extends JPanel implements ActionListener {
 		add(new JLabel("Endpoint:"));
 		add(Box.createHorizontalStrut(10));
 		EndpointListModel endpointListModel = new EndpointListModel();
-		comboBox = new JComboBox(endpointListModel);
-		comboBox.setSelectedIndex(0);
-		comboBox.addActionListener(this);
-		add(comboBox);
+		endpointsBox = new JComboBox(endpointListModel);
+		endpointsBox.setSelectedIndex(0);
+		endpointsBox.addActionListener(this);
+		add(endpointsBox);
 
 		uriField = new JTextField(20);
 		uriField.setText("----");
@@ -83,7 +83,7 @@ public class SparqlToolbar extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// String selected = (String)comboBox.getSelectedItem();
-		Endpoint endpoint = (Endpoint) comboBox.getSelectedItem();
+		Endpoint endpoint = (Endpoint) endpointsBox.getSelectedItem();
 		String uri = endpoint.getUri();
 		if (uri != null) {
 			uriField.setText(uri);

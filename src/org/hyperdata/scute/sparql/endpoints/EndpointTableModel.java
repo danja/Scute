@@ -140,6 +140,11 @@ public class EndpointTableModel extends DefaultTableModel { // implements
 		endpointListModel.removeElementAt(row);
 		super.removeRow(row);
 	}
+	
+	public void fireTableDataChanged(){
+		super.fireTableDataChanged();
+		endpointListModel.fireContentsChanged();
+	}
 
 	// public void tableChanged(TableModelEvent e) {
 	// int row = e.getFirstRow();

@@ -16,12 +16,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import org.hyperdata.scute.swing.status.StatusTask;
+
 
 /**
  * @author danny
  * 
  */
-public class SparqlHttp implements Runnable {
+public class SparqlHttp extends StatusTask {
 
 	private boolean success = false;
 	private String responseString = null;

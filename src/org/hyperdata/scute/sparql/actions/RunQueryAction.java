@@ -21,16 +21,17 @@ import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlHttp;
 import org.hyperdata.scute.sparql.panels.SparqlSourcePanel;
+import org.hyperdata.scute.swing.status.StatusAction;
 
 /**
  * @author danny
  * 
  */
-public class RunQueryAction extends AbstractAction {
+public class RunQueryAction extends StatusAction {
 
 	private SparqlContainer sparqlContainer;
-	private SparqlHttp http;
-	private Thread httpRunner;
+	// private SparqlHttp http;
+	private SparqlHttp sparqlHttp;
 	private SparqlSourcePanel sourcePanel;
 
 	/**
@@ -42,6 +43,8 @@ public class RunQueryAction extends AbstractAction {
 		super(string);
 		this.sparqlContainer = sparqlContainer;
 		this.sourcePanel = sourcePanel;
+		sparqlHttp = new SparqlHttp();
+		setStatusTask(sparqlHttp); 
 	}
 
 	/*
@@ -57,9 +60,10 @@ public class RunQueryAction extends AbstractAction {
 		System.out.println("puzzle="+sourcePanel.getText());
 		System.out.println("RQA query="+sparqlContainer.getQueryString());
 		if (sparqlContainer.isLocal()) {
+			// TODO IMPLEMENTS!!!
 			SPARQLResult result = runQuery(sparqlContainer.getQueryString());
 		} else {
-			runRemoteQuery();
+			runRemoteQuery(event);
 		}
 
 	}
@@ -67,14 +71,16 @@ public class RunQueryAction extends AbstractAction {
 	/**
 	 * 
 	 */
-	private void runRemoteQuery() {
-		if (http == null) {
-			http = new SparqlHttp();
-		}
+	private void runRemoteQuery(ActionEvent event) {
+
 		System.out.println("ENDPOINT RQA="+sparqlContainer.getEndpoint());
-		http.init(sparqlContainer);
-		httpRunner = new Thread(http);
-		httpRunner.start();
+		if(sparqlContainer.getEndpoint().getUri() == null){ // shouldn't get this far...
+			return;
+		}
+		sparqlHttp.init(sparqlContainer);
+		super.actionPerformed(event);
+		// httpRunner = new Thread(http);
+		// httpRunner.start();
 		// sparqlContainer.setResultsText(resultsString);
 	}
 

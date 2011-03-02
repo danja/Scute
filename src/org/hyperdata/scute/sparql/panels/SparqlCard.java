@@ -4,15 +4,23 @@
 package org.hyperdata.scute.sparql.panels;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
+import javax.swing.border.EtchedBorder;
 
+import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
+import org.hyperdata.scute.sparql.actions.RunQueryAction;
+import org.hyperdata.scute.swing.status.StatusAction;
+import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.syntax.HighlighterEditorKit;
 
 /**
@@ -41,12 +49,25 @@ public class SparqlCard extends Card  { // implements SparqlContainer
 		sparqlContainer.addSparqlListener(resultsPanel);
 		
 		// adding sourcepanel here a bit messy, but will do for now
-		SparqlToolbar toolbar = new SparqlToolbar(sparqlContainer, sourcePanel, frame); 
+		SparqlRunToolbar toolbar = new SparqlRunToolbar(sparqlContainer, sourcePanel, frame); 
 		add(toolbar, BorderLayout.NORTH);
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, sourcePanel, resultsPanel);
 		splitPane.setContinuousLayout(true);
-		add(splitPane, BorderLayout.CENTER); 
+		add(splitPane, BorderLayout.CENTER);
+		splitPane.setDividerLocation(0.5);
+		
+		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
+		statusPanel.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
+
+		// set up autosave button
+		StatusAction runQueryAction = new RunQueryAction(text, sparqlContainer, sourcePanel);
+		StatusButton runQueryButton = new StatusButton(runQueryAction,
+				"Ready", "Running...", "Done");
+		statusPanel.add(runQueryButton);
+		
+		add(statusPanel, BorderLayout.SOUTH);
 	}
 	
 	/**

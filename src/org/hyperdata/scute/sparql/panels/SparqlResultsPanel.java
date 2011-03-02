@@ -17,6 +17,7 @@ import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlEvent;
 import org.hyperdata.scute.sparql.SparqlListener;
+import org.hyperdata.scute.syntax.HighlighterEditorKit;
 
 /**
  * @author danny
@@ -24,27 +25,28 @@ import org.hyperdata.scute.sparql.SparqlListener;
  */
 public class SparqlResultsPanel extends JPanel implements SparqlListener {
 	
-	TextResultsPanel textView;
-	TableResultsPanel tableView;
-	HTTPPanel httpView;
+	XMLResultsPanel xmlPanel;
+	TableResultsPanel tablePanel;
+	HTTPPanel httpPanel;
 
 	public SparqlResultsPanel(){
 		super(new BorderLayout());
 		
-		textView = new TextResultsPanel ();
-		tableView = new TableResultsPanel();
-		httpView = new HTTPPanel();
+		xmlPanel = new XMLResultsPanel ();
+		xmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
+		tablePanel = new TableResultsPanel();
+		httpPanel = new HTTPPanel();
 		
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		tabs.addTab("Text", new JScrollPane(textView));
-		tabs.addTab("Table", new JScrollPane(tableView));
-		tabs.addTab("HTTP", new JScrollPane(httpView));
+		tabs.addTab("Text", new JScrollPane(xmlPanel));
+		tabs.addTab("Table", new JScrollPane(tablePanel));
+		tabs.addTab("HTTP", new JScrollPane(httpPanel));
 		
 		add(tabs, BorderLayout.CENTER);
 	}
 	
 	public void populate(String resultString){
-		textView.setText(resultString);
+		xmlPanel.setText(resultString);
 	}
 	
 	public void populate(SPARQLResult result){
@@ -60,7 +62,7 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 //			    fmt.printAll(System.out) ;
 			resultString = ResultSetFormatter.asText(result.getResultSet());
 		}
-		textView.setText(resultString);
+		xmlPanel.setText(resultString);
 	}
 
 	/* (non-Javadoc)
