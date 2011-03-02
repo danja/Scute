@@ -17,7 +17,14 @@ public class StatusAction extends AbstractAction implements
 
 	private StatusEvent status = new StatusEvent(StatusMonitor.AMBER); // uncertain
 																		// status
-
+	
+	public StatusAction(){
+		super();
+	}
+	
+public StatusAction(String label){
+	super(label);
+}
 	/*
 	 * (non-Javadoc)
 	 * 

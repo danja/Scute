@@ -20,13 +20,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.hyperdata.scute.main.Config;
 
@@ -645,13 +639,32 @@ public class RdfUtils {
 	 *            the new common prefixes
 	 */
 	public static void setCommonPrefixes(Model model) {
-		model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		model.setNsPrefix("dcterms", "http://purl.org/dc/terms/");
-		model.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
-		model.setNsPrefix("tdb", "http://jena.hpl.hp.com/2008/tdb#");
-		model.setNsPrefix("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
-		model.setNsPrefix("x", "http://purl.org/stuff/");
-		model.setNsPrefix("void", "http://rdfs.org/ns/void#");
+		Map<String, String> prefixes = new HashMap<String, String>();
+		prefixes.putAll(getCommonPrefixMap());
+		prefixes.putAll(getNotSoCommonPrefixMap());
+		model.setNsPrefixes(prefixes);
+	}
+
+	public static Map<String, String> getCommonPrefixMap(){
+		Map<String, String> prefixes = new HashMap<String, String>();
+		prefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		prefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+		prefixes.put("owl", "http://www.w3.org/2002/07/owl#");
+		prefixes.put("dcterms", "http://purl.org/dc/terms/");
+		prefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
+		prefixes.put("x", "http://purl.org/stuff/");
+		prefixes.put("void", "http://rdfs.org/ns/void#");
+		// prefixes.put("dbpo", "http://dbpedia.org/ontology/");
+		// prefixes.put("dbpr", "http://dbpedia.org/resource/");
+		// prefixes.put("dbpp", "http://dbpedia.org/property/");
+		return prefixes;
+	}
+	
+	public static Map<String, String> getNotSoCommonPrefixMap(){
+		Map<String, String> prefixes = new HashMap<String, String>();
+		prefixes.put("tdb", "http://jena.hpl.hp.com/2008/tdb#");
+		prefixes.put("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
+		return prefixes;
 	}
 
 	// yuck

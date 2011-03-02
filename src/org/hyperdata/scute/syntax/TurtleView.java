@@ -45,12 +45,15 @@ public class TurtleView extends PlainView {
 	
 	public static String LONG_LITERAL_PATTERN = "(\"\"\".+\"\"\")";
 	
-	public static String NODE_PATTERN = "(\\w*:\\w+)";
+	public static String NODE_PATTERN = "(\\w*:\\w+)"; 
+	
+	// PROBLEM:
+	// http://dbpedia.org/resource/Category:Furniture-making
 	
 	public static String SQUARE_BRACKETS_PATTERN = "(\\[|\\])";
 	
 	/** The UR i_ pattern. */
-	public static String URI_PATTERN = "(<http://.+>)";
+	public static String URI_PATTERN = "(<.+>)";
 
 	static {
 		patternColors = new LinkedHashMap<Pattern, Color>();

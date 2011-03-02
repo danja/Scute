@@ -1,0 +1,877 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en"><head>
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Simple part-whole relations in OWL Ontologies </title>
+  <link rel="stylesheet" type="text/css" href="Simple%20part-whole%20relations%20in%20OWL%20Ontologies_files/W3C-WD.asc">
+</head><body>
+<div class="head">
+<a href="http://www.w3.org/"><img src="Simple%20part-whole%20relations%20in%20OWL%20Ontologies_files/w3c_home.asc" alt="W3C" height="48" width="72"></a>
+<h1>Simple part-whole relations in OWL Ontologies <br>
+</h1>
+<h2>W3C Editor's Draft 11 Aug 2005</h2>
+<dl>
+  <dt>This version:</dt>
+  <dd><a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/simple-part-whole-relations-v1.5.html">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/simple-part-whole-relations-v1.5.html</a></dd>
+  <dt>Latest version:</dt>
+  <dd><a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/</a></dd>
+  <dt>Previous versions:</dt>
+  <dd><a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/simple-part-whole-relations-v1.3.html">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/simple-part-whole-relations-v1.3.html</a></dd>
+  <dt>Editors:</dt>
+  <dd><a href="http://www.cs.man.ac.uk/mig/people/rector/">Alan Rector</a>,
+University of Manchester</dd>
+  <dd><a href="http://www.research.ibm.com/people/w/welty/">Chris Welty</a>,
+IBM Research
+  </dd>
+  <dt>Contributors:</dt>
+  <dd><a href="http://smi-web.stanford.edu/people/noy/">Natasha Noy</a>,
+Stanford University<br>
+  </dd><dd>Evan Wallace, NIST</dd>
+  
+</dl>
+
+<p><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+© 2004 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.lcs.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>,
+<a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>,
+<a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
+use</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-software">software
+licensing</a> rules apply.</p>
+<!-- end copyright -->
+<hr></div>
+<!-- end of head -->
+<h2 class="notoc"><a id="abstract" name="abstract">Abstract</a></h2>
+<p>Representing part-whole relations is a very common issue for those
+developing ontologies for the Semantic Web. OWL does not provide any
+built-in primitives for part-whole relations (as it does for the
+subclass relation), but contains sufficient expressive
+power
+to capture most, but not all, of the common cases. The study of
+part-whole
+relations is an entire field in itself - "mereology" - this note is
+intended
+only to deal with straightforward cases for defining classes involving
+part-whole relations.<br>
+</p>
+<h2 id="Status">Status of this Document</h2>
+<p><em>This section describes the status of this document at the time
+of its
+publication. Other documents may supersede this document. A list of
+current
+W3C publications and the latest revision of this technical report can
+be
+found in the <a href="http://www.w3.org/TR/">W3C technical reports
+index</a>
+at http://www.w3.org/TR/.</em></p>
+<p>This document will be a part of a larger document that will provide
+an
+introduction and overview of all ontology design patterns produced by
+the <a href="http://www.w3.org/2001/sw/BestPractices/">Semantic Web
+Best Practices
+and Deployment Working Group</a>.</p>
+<p>This document is a W3C Working Draft and is expected to change. The
+SWBPD
+WG does not expect this document to become a Recommendation. Rather,
+after
+further development, review and refinement, it will be published and
+maintained as a WG Note.</p>
+<p>As a candidate Public Working Draft, we encourage public
+comments.
+Please send comments to <a href="mailto:public-swbp-wg@w3.org">public-swbp-wg@w3.org</a></p>
+<p>Publication as a draft does not imply endorsement by the W3C
+Membership.
+This document is a draft and may be updated, replaced or made obsolete
+by
+other documents at any time. It is inappropriate to cite this document
+as
+other than work in progress.</p>
+
+<hr>
+<h2>Use cases</h2>
+<p>Parts and wholes are ubiquitous:</p>
+<ol>
+  <li> A parts inventory for the devices made in a factory in which we
+want to be able to find the "explosion" of parts required (i.e. for each
+part we can see the sub-parts). </li>
+  <li>A fault finding system for an device in which we want to
+progressively narrow down the functional region of the fault.</li>
+  <li>An anatomy representation such as the Digital Anatomist
+Foundational Model of Anatomy [<a href="#ref-FMA">FMA</a>]</li>
+  <li>A document retrieval system, in which documents are divided into
+chapters, sections, paragraphs etc. (However, note that parthood, as
+explained in this document, does not take order into account).</li>
+</ol>
+
+<hr>
+<h2>General issues</h2>
+<h3>Basics</h3>
+<p>
+Part-whole relations are one of the basic structuring primitives
+of the universe, and many applications require representation of them -
+catalogues of parts, fault diagnosis, anatomy, geography, etc. In fact, the
+study of
+part-whole relations is a large field in its own right - "mereology"
+and
+"mereotopology" - and has been the topic of many papers, see the <a href="#References">references </a>section for a useful list.</p>
+<p>RDF Schema and OWL do not contain specific primitives for part-whole relations 
+  (as they do for the subclass relation, for example).  OWL, and to a lesser
+  degree RDFS, do support sufficient 
+  machinery to express much of what one may want to represent about part-whole 
+  relations. Where it does not, there are a number of "work-arounds" that suffice 
+  in some situations. This note will provide basic schemas for expressing part-whole 
+  relations in RDF Schema and OWL.</p>
+
+
+<h3>Transitive relations - parts and direct parts. <br>
+</h3>
+An important and common requirement for the basic relation from a part
+to its whole that it is
+transitive, i.e.  if A is part of B, and B is part of C, then A is
+part
+of C.  OWL provides a general construct for declaring properties
+to be
+transitive.  If we define a property, say <span style="font-family: monospace;">partOf</span>, to be
+transitive,
+then any reasoner conformant with OWL will draw the conclusions that
+both A and B are
+parts of C. <br>
+<p>In many applications, what is needed is not a list of all parts but
+rather
+a list of the next level breakdown of parts, the "direct parts" of a
+given
+entity. It is therfore often useful to use the property hierarchy to
+define
+a <a href="http://www.w3.org/TR/rdf-schema/#ch_subpropertyof" title="RDFS subproperty definition">subproperty</a> of <code>hasPart</code> that
+is not
+transitive and
+links each subpart just to the next level. For these examples we shall
+call
+this subproperty <code>hasPart_directly.</code> Note of course that the
+mere idea of a "direct" part is subjective, one may invent intermediate
+direct parts depending on numerous factors, or eliminate them.  For
+example, we may choose not to represent engine as a part of cars, 
+but rather represent all the components of engines as direct car parts.
+Grouping subparts into larger parts may also be subjective, a common
+example is a flywheel in a car, which can be viewed as an engine part
+or a transmission part in an ontology that includes those classes.
+</p>
+<h3><a name="sec-choosing"></a>Choosing whether to use <span style="font-family: monospace;">partOf
+</span>or <span style="font-family: monospace;">hasPart</span> <br>
+</h3>
+OWL supports <a href="http://www.w3.org/TR/owl-ref/#inverseOf-def" title="OWL inverses definition">inverse relations</a>, so we can define an inverse of <code>partOf</code>,
+say <code>hasPart</code>.  For any two
+individuals <code>I1</code> and <code>I2</code>,  if
+<code>"I1 partOf I2"</code> then <code>"I2
+hasPart I1"</code>. However, care must be taken when using inverses
+in
+restrictions on classes. To say that "All As are parts of some B" does
+not
+imply that "All Bs have some As as parts", i.e. the restriction
+<pre>(Class A partial restriction(partOf someValuesFrom(B))</pre>
+does not imply
+<pre>(Class B partial restriction(partOf someValuesFrom(A))
+</pre>
+<p>Therefore, if we want to say both that "all As are parts of some B" and
+"all
+Bs have part some A", we have to assert each statement separately. Such
+pairs
+of statements are sometimes called "reciprocals". </p>
+<p>Unfortunately, all current OWL reasoners scale very badly for large
+part-whole hierarchies connected by <span style="font-style: italic;">both</span> 
+<span style="font-family: monospace;">hasPart</span> and<span style="font-family: monospace;"> partOf</span>.  Therefore,
+if
+reasoners are to be used, it is usually necessary to choose to use
+either <code>partOf</code> or <code>hasPart</code> but not both.
+Often it is preferable to use <span style="font-family: monospace;">
+partOf</span> because the most common queries and class definitions
+are
+for the parts of things, e.g. the class of all parts of a car. <br>
+</p>
+
+<h3>Individuals vs. Classes</h3>
+<p>The examples and patterns in this document take two different approaches to 
+representing part-whole relationships.  The first pattern provides an RDFS and
+OWL schema for representing actual parts - instances of the classes in the
+ontology pattern, that may be useful e.g. in an inventory system in which
+a system has an instance for each part being held. The subsequent patterns deal 
+with part-whole relationships for so-called <i>hypothetical entities</i>.  These
+patterns are not meant to be used with instances, rather they are intended
+to represent the typical components of an aggregate whole in a way that 
+allows a system to reason about what parts a whole may have, and how they 
+are related.</p>
+
+<hr>
+<h2>Representation Pattern 1: Representing part-whole for individuals</h2>
+<p>
+
+  We can define <code>hasPart</code> as a property in RDF Schema or OWL, just as 
+  we might for the <code>owner</code> relation.  If limited to RDFS, there is not
+  much one can say about the property at all, except as noted above to make
+  a sub-property for direct parts:
+</p>
+<ol>
+  <li>Define a property <code>partOf</code>. </li>
+  <li>Define a property <code>partOf_directly</code> as subproperty of <code>partOf</code>.</li>
+  <li>If using RDF Schema: 
+        <ul>
+          <li>While RDFS allows one to define domain and range for properties,
+          it is not recommended to do so in this case.  The partOf relation is sufficiently
+          general that just about anything can have a part or be a part.  
+          </li>
+        </ul>
+  </li>
+  <li>If using OWL:
+        <ul>
+          <li>define the properties <code>partOf</code> and <code>hasPart</code> as inverses 
+          (if desired, see <a href="#sec-choosing">the note above</a>).</li>
+          <li>define allValuesFrom restriction on the property partOf for all 
+            classes of things that are parts to the classes of things they are parts of</li>
+          <li>define allValuesFrom restriction for the inverse property hasPart</li>
+          <li>make <code>partOf</code> or <code>hasPart</code> transitive. </li>
+        </ul>
+  </li>
+  <li>Express the part-whole relations amongst individuals using property values 
+    in RDF.</li>
+</ol>
+
+<h3>Example</h3>
+<p>Consider a (over simplified) description of an individual car (an instance 
+  of the class <code>Car</code>), that has an engine, headlights, and wheels.</p>
+<p>Note the the representation of individuals in this pattern is the same for 
+  RDF Schema and OWL. The definition of the classes and properties is different 
+  for the two languages.    
+  Therefore, we present the two version of the definitions 
+  for classes and properties and then show the definition for individuals.
+  Note that the example in OWL shows full transitivity
+  and inverses, however <a href="#sec-choosing">as noted above</a> one may wish
+  to limit this to one or the other direction.</p>
+<h3>The code for classes and properties in RDF Schema</h3>
+<pre>partOf
+  a rdf:Property .
+
+partOf_directly
+  a rdf:Property ;
+  rdfs:subPropertyOf partOf .
+  
+Car
+  a rdfs:Class .
+
+Engine
+  a rdfs:Class .
+
+Headlight
+  a rdfs:Class .
+
+Wheel
+  a rdfs:Class .
+</pre>
+
+<p>As shown, there is not much one can express in RDFS, and as a result it will not
+be used for the remainder of this note.
+ 
+</p><h3>The code for classes and properties in OWL DL</h3>
+
+<p>To begin with, let's set up a special importable
+ontology for the simple family of part relations discussed here,
+as these will be reused in subsequent examples.
+</p>
+
+<pre>Ontology( &lt;<a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl" title="Click to see complete source in RDF/XML format">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl</a>&gt;
+
+  ObjectProperty(hasPart_directly inverseOf(partOf_directly))
+  ObjectProperty(partOf Transitive inverseOf(hasPart))
+  SubPropertyOf(hasPart_directly hasPart)
+  SubPropertyOf(partOf_directly partOf)
+)
+</pre>
+
+<p>This is about all you can ever say about the part relations in general using OWL,
+but in order to put these to use we can define some classes of things with parts and
+then restrict specific classes to have the appropriate values.  In the below example,
+we import the part ontology above and also give it a namespace nickname (part):
+</p>
+<pre>Namespace(part = &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl#&gt;)
+
+Ontology( &lt;<a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example1.owl" title="Click to see complete source in RDF/XML format">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example1.owl</a>&gt;
+
+ Annotation( owl:imports &lt;<a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl" title="Click to see complete source in RDF/XML format">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl</a>&gt;)
+
+ Class(Car partial 
+  restriction(part:hasPart allValuesFrom(unionOf(Wheel Engine Headlight))))
+ Class(Engine partial)
+ Class(Headlight partial)
+ Class(Wheel partial)
+)
+</pre>
+
+<h3>Individuals</h3>
+<pre>car123
+  a Car ;
+
+engine123
+  a Engine ;
+  part:partOf_directly car123 . 
+
+headlight123a
+  a Headlight ;
+  part:partOf_directly car123 .
+
+  ...</pre>
+<p>
+
+</p><h3>Discussion</h3>
+  
+<p>In this example we have described individual parts of an individual car. Note 
+  that we do not say anything about whether cars in general have engines or wheels,
+  nor how many they might have.
+  If we need to describe composition at the level of a whole class of objects 
+  (e.g., all cars have engines), we need to use the <code>partOf</code> relation 
+  at the class level, as in the following patterns.</p>
+<p>A common modeling pitfall in general when representing parts is to create a class 
+that is the superclass of all the possible classes that can be car parts, and use
+this class instead of the union class in the restriction on hasPart for Cars.  It is
+important to realize that making, e.g. <code>Engine</code> a subclass of e.g. <code>
+CarPart</code> means that <i>all engines are car parts</i> - which is simply not true 
+(engines can be parts of boats, planes, generators, etc.).  
+</p>
+
+<hr>
+
+<h2>Representation Pattern 2: Representing a part-whole hierarchy</h2>
+<ol>
+  <li>Import the partOf relation ontology  defined above.
+  </li><li>Choose whether to use the <code>partOf </code>or <code>hasPart </code>relation 
+    as the basic relation amongst classes. If in doubt, choose <code>partOf</code>.
+    In this example, we use both relations, noting that for large examples one
+    must make a choice.</li>
+  <li>Express the part-whole relations amongst individuals using <code>hasValue()</code> 
+    with <code>partOf_directly</code>.</li>
+  <li>Express the part-whole relations amongst classes using <code>someValuesFrom()</code> 
+    with <code>partOf_directly</code>.</li>
+  <li>If there are any universal (<code>allValuesFrom</code>) constraints, add 
+    those.  In this example, we do not have any.</li>
+</ol>
+<p>There should now be sufficient information to make basic inferences about parts, 
+  e.g. to define a class of all parts of the car, car door, etc.
+  For this example, we are concerned with describing the intuitive composition of
+  cars, i.e. that cars are made of engines, wheels, headlights, etc., rather than
+  prescribing a schema for instances of these classes.
+  </p>
+
+<h3>Examples</h3>
+<p>Consider a (over simplified) description of a car and its decomposition into parts,
+subparts, etc.</p>
+<blockquote>
+  <p><span style="font-style: italic;">Car</span>s have parts  <span style="font-style: italic;">Engine, Headlight, Wheel</span></p>
+  <p><span style="font-style: italic;">Engine</span>s have
+parts  <span style="font-style: italic;">Crankcase, Carburetor<br>
+  </span></p>
+  <p><span style="font-style: italic;">Headlight</span>s have
+parts  <span style="font-style: italic;">headlight bulb,
+reflector</span><br>
+  </p>
+</blockquote>
+<p>The OWL abstract syntax for the above example would then be:</p>
+<pre>Namespace(part	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl#&gt;)
+
+Ontology( &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl</a>&gt;
+
+ Annotation( owl:imports &lt;<a href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl" title="Click to see complete source in RDF/XML format">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl</a>&gt;)
+
+ Class(Car partial)
+ Class(Engine partial 
+  restriction(part:partOf_directly someValuesFrom(Car)))
+ Class(Carburetor partial 
+  restriction(part:partOf_directly someValuesFrom(Engine)))
+ Class(Crankcase partial 
+  restriction(part:partOf_directly someValuesFrom(Engine)))
+ Class(Headlight partial 
+  restriction(part:partOf_directly someValuesFrom(Car)))
+ Class(HeadlightBulb partial 
+  restriction(part:partOf_directly someValuesFrom(Headlight)))
+ Class(Reflector partial 
+  restriction(part:partOf_directly someValuesFrom(Headlight)))
+ Class(Wheel partial 
+  restriction(part:partOf_directly someValuesFrom(Car)))
+)</pre>
+
+<h3>Discussion</h3>
+<p>Several issues arise even from such a simple example.  To begin
+with, the representation using existential restrictions (i.e.
+owl:someValuesFrom)  does not clearly communicate all of the
+semantics we may want for car parts.  For example, a strict
+reading of the definition of the Crankcase class above is that a
+crankcase is part of <span style="font-style: italic;">at least one </span>engine. 
+In point of fact, a crankcase cannot be part of more than one engine. We
+may be tempted to add a cardinality restriction (e.g. maxCardinality 1)
+on partOf to the definition of crankcase, but this would be a mistake;
+since partOf is transitive, a crankcase is also part of the car the
+engine is part of.  Note also that OWL-DL does not allow transitive
+properties to have any cardinality restrictions. In general it is best
+to avoid placing restrictions (including range restrictions) on
+transitive properties at all.</p>
+<p>It would make more sense to add a restriction on the partOf_directly
+property in the definition of these classes, when it is
+appropriate.  A single crankcase cannot be a <span style="font-style: italic;">direct </span>part of more than one
+engine, an engine cannot be a <span style="font-style: italic;">direct </span>part
+of more than one car, etc., so in these cases a maxCardinality
+restriction would make the semantics more clear.  On the other
+hand, there is always a tradeoff when employing a reasoner between how
+precise your semantics are and how much information the reasoner has to
+consider.  In this case, adding a cardinality restriction on all
+the partOf_directly properties would significantly increase the amount
+of information handed to a reasoner.  One must consider precisely
+what the ontology will be used for to determine which is more important
+(enforcing semantic constraints vs. classification). The examples in this note are aimed primarily at
+use-cases in which no instances of the classes are present.<br>
+</p>
+<p>From the top down, we may also be tempted to add a cardinality restriction on
+cars, indicating the number of parts of each type they have.  For example, the 
+typical car has one engine, four wheels, and two headlights.  This is an issue
+known as <i>qualified cardinality restrictions</i> (QCRs), which are the subject of
+another OEP note. [<a href="#ref-qcr">QCR</a>]
+</p>
+<p>When considering restrictions on the partOf_directly property for
+different kinds of parts, the issue of using a universal
+(owl:allValuesFrom) vs. an existential restriction arises. Many
+different kinds of things have engines (boats, planes, etc.), and
+in fact even car engines can exist without being part of a car. 
+This indicates that, ontologically, the existential restriction is
+simply not true.  However, what we are trying to capture here is, as mentioned
+above, not a schema for specifying actual concrete parts, but the
+intuitive composition of cars that corresponds to statements in English
+like, "Cars are made of engines, wheels, headlights, ..."
+
+</p>
+<hr>
+<h2>Representation Pattern 3: Defining classes for Parts</h2>
+<ol>
+  <li>Extend ontology with classes of parts for each level in the part
+hierarchy (e.g. Car Parts, Engine Parts, etc.), in such a way that a
+taxonomy can be derived automatically.</li>
+</ol>
+<h3>Examples</h3>
+<p>Extending the ontology in pattern 2, we can define the classes:<code>
+CarPart
+</code>and <code>CarPart_directly</code>:</p>
+<pre>Namespace(ex2	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl#&gt;)
+Namespace(part	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/part.owl#&gt;)
+
+Ontology( &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl</a>&gt;
+
+ Annotation( owl:imports &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl</a>&gt;)
+
+ Class(CarPart complete 
+  restriction(part:partOf someValuesFrom(ex2:Car)))
+ Class(CarPart_directly complete 
+  restriction(part:partOf_directly someValuesFrom(ex2:Car)))
+)
+</pre>
+<p>A classifier could then infer that <code>CarPart_directly </code>subsumes <code>Engine, Headlight, Wheel</code>
+and that <code>CarPart</code> subsumes <code>CarPart_directly, Crankcase, Carburator, HeadlightBulb, Reflector</code>.</p>
+<p>This simple list may not be what we want, in which case it is
+necessary systematically to define a class for the parts of each part, e.g.</p>
+<pre> Class(EnginePart complete 
+  restriction(part:partOf someValuesFrom(ex2:Engine)))
+ Class(HeadlightPart complete 
+  restriction(part:partOf someValuesFrom(ex2:Headlight)))
+</pre>
+If all are defined in this way we get a hierarchy from the classifier (ignoring <code>CarPart_directly</code>):<br>
+<pre>CarPart
+  Engine
+  EnginePart
+    Crankcase
+    Carburetor
+  Headlight
+  HeadlightPart
+    HeadlightBulb
+    Reflector
+  Wheel
+</pre>
+<h3>Discussion<br>
+</h3>
+<p>These classes exemplify one of the main reasons to choose
+existential restrictions on the direct part properties over universal
+restrictions (as discussed in the previous pattern).  A classifier
+would not be able to infer the hierarchy above using universal
+restrictions on the partOf_direct property in the first pattern, unless
+there were minimum cardinality restrictions on the property as well.<br>
+</p>
+<p>Ontologically, these classes by themselves are reasonable, a "car
+part" is indeed anything that is part of a car, however when combined
+with the existential restrictions on the direct properties, a
+classifier would infer the hierarchy above.  These kinds of
+hierarchies seem harmless at first glance, but in some contexts are
+completely wrong: not all engines are car parts, some are boat engines,
+etc.  On the other hand, an engine for a 1969 Porsche 911E is
+generally considered a "car part" regardless of whether it is in a car
+or not (it may be for sale).  Recall again, however, that the intent
+here is to create an intuitive model of what "whole cars" are made of,
+not a schema for concrete instances of these classes.
+</p>
+<p>This approach adds elegance and simplicity by assuming that an automated 
+reasoner will do the work of building the class taxonomy.  In other words, 
+rather than saying explicitly that Headlight (or any other part) is a
+subclass of CarPart e.g.:
+</p><pre> Class(Headlight partial CarPart
+  restriction(part:partOf someValuesFrom(ex2:Car)))
+</pre>
+we let a reasoner infer it, resulting in the more compact expression in the
+ontology above.  It has been argued that such an approach increases 
+maintainability and modularity [<a href="#ref-r-norm">R-NORM</a>].
+<p></p>
+<hr>
+<h2>Representation Pattern 4: Faults in parts and wholes</h2>
+<ol>
+<li>Extend ontology with classes of faults that account for the part
+hierarchy, e.g. allow a reasoner to conclude that a fault in a part is a
+fault in the whole.<br>
+  </li>
+</ol>
+<h3>Distinguishing parts from kinds</h3>
+Although both part-whole relations and <code>subclassOf</code>
+generate
+hierarchies, it is important not to confuse the part-whole hierarchy
+with the
+<code>subclassOf</code> hierarchy. This is easily done because in
+many
+library and related applications, part-whole and subclass relations are
+deliberately conflated into a single "broader than / narrower than"
+axis. For
+example consider the following:
+<pre>Vehicle
+  Car
+    Engine
+      Crankcase
+        Aluminum Crankcase</pre>
+<p>"Car" is a kind of "Vehicle", but "Engine" is a part of a
+"Car", "Crankcase" is a part of an "Engine", but "Aluminum Crankcase" is a
+kind
+of "Crankcase". Such hierarchies serve well for navigation, however they
+they are conflating the two relations (partOf and subClassOf). 
+Statements about "all vehicles" do not necessarily, or
+even
+probably, hold for "all engines". Such hierarchies do need to be recreated 
+in situations that obey
+the rule "A fault of the part is a kind of fault of the whole".</p>
+<h3>Examples</h3>
+<p> You can call for assistance with a fault in your
+car if
+your crankcase is damaged. The following hierarchy is a correct
+<code>subclassOf</code> or "kind of" hierarchy of a type that we need
+to
+reproduce often in OWL:</p>
+<pre>Fault in Car
+  Fault in Engine
+    Fault in Crankcase
+      Fault in Aluminum Crankcase</pre>
+<p>The easy way to say this is that a
+"fault in a
+car" is really a "fault in a car or any of its parts" [<a href="#ref-sep">SEP</a>]. If we use the
+property <code>hasLocus</code> to locate the fault in a particular
+part of the car, then we can easily define axioms for the classes
+of <code>FaultInCar</code> and <code>FaultInEngine</code>:
+</p><pre>Namespace(ex2	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl#&gt;)
+Namespace(ex3	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl#&gt;)
+
+Ontology( &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example4.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example4.owl</a>&gt;
+
+ Annotation( owl:imports &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl</a>&gt;)
+
+ ObjectProperty(hasLocus)
+
+ Class(AluminumCrankcase partial ex2:Crankcase)
+ Class(Fault partial)
+ Class(FaultInCar complete 
+  intersectionOf(Fault 
+                 restriction(hasLocus someValuesFrom(unionOf(ex2:Car ex3:CarPart)))))
+ Class(FaultInEngine complete 
+  intersectionOf(Fault 
+                 restriction(hasLocus someValuesFrom(unionOf(ex2:Engine ex3:EnginePart)))))
+)
+</pre>
+<p>This may look tedious, but
+can
+actually be achieved quite simply with scripting tools or the ability
+to
+"clone and edit" classes easily.  The point is that an automated reasoner can
+deduce that a fault located in an alumninum crankcase is a fault in the engine and
+in the car.
+</p>
+<h3>Discussion<br>
+</h3>
+<p>In certain domains, most notably medicine, we generally understand
+that while body parts (e.g. a heart) can <span style="font-style: italic;">exist</span> outside of a body, they do
+not normally do so.  Thus it makes sense to say, in general, "A
+fault in the heart is a fault in the body," without having a particular
+heart or body in mind, and it makes sense to reason over classes
+defined that way.  For other domains, most notably manufacturing,
+it is more common for parts to exist outside of some whole, and so it
+may not generally be true that a fault in an engine is a fault in a car
+(if the engine is not in a car), just as it may not be generally true
+that an engine is a car part.  In these cases, the capability to
+reason over classes may not be that useful, and again the existential
+restriction on the direct properties may not make sense.<br>
+</p>
+<hr>
+<h2>Representation Pattern 5: Reflexive parts</h2>
+<ol>
+  <li>Extend ontology with classes that approximate the fact that a
+whole is often considered part of itself (reflexivity).</li>
+</ol>
+<h3>Examples</h3>
+Classically, the part of relation is reflexive, that is it includes the
+thing
+itself, e.g. that a "car is a part of a car".   OWL does not
+have any built-in primitives for reflexivity (as it does for
+transitivity and inverses), but as shown above, we can use a pattern
+in
+defining classes to approximate this by combining the class with the
+class of its parts.  It is sometimes
+convenient to define a "..._Reflexive" class for each item, e.g.:<br>
+<pre> Class(CarPart_reflexive complete unionOf(Car CarPart))</pre>
+<p>When reflexive part classes are defined, it simplifies the
+definition of faults (in fact, this is often used as a logical argument for why the
+partOf relation is reflexive), as we do not need to explicitly put the
+unionOf in the restriction on the <code>hasLocus</code> property, as in 
+example 4.  Extending example 3 again with these simplified definitions just
+for car parts and faults in cars, we have:
+</p><pre>Namespace(ex2	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example2.owl#&gt;)
+Namespace(ex3	= &lt;http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl#&gt;)
+
+Ontology( &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example5.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example5.owl</a>&gt;
+
+ Annotation( owl:imports &lt;<a title="Click to see source in RDF/XML format" href="http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl">http://www.w3.org/2001/sw/BestPractices/OEP/SimplePartWhole/example3.owl</a>&gt;)
+
+ ObjectProperty(hasLocus)
+
+ Class(CarPart_reflexive complete unionOf(ex2:Car ex3:CarPart))
+ Class(Fault partial)
+ Class(FaultInCar complete 
+  intersectionOf(Fault 
+                 restriction(hasLocus someValuesFrom(CarPart_reflexive))))
+)
+</pre>
+<h3>Discussion<br>
+</h3>
+<p>Logically these classes do not give us reflexivity at all, a
+reflexive property is one that holds between an object and itself, not
+between an object and something in the same class (which is, technically,
+what the <code>CarPart_reflexive</code> definition says).  It is not
+possible in OWL to state such a restriction or inference, however, and
+when reasoning only over the classes and properties in an ontology this
+will suffice.<br>
+</p>
+<hr>
+<h2>Considerations</h2>
+<ul>
+  <li>Transitive properties should not be functional or inverse
+functional. It is not illegal, but it makes no sense, since the whole
+point is that transitive properties link chains of entitites
+together.  Hence if there is only one value, there is no point in
+a property being transitive; and if there is a point there will be more
+than one value.  In practice,  almost any
+ontology containing a functional or inverse transitive relation will be
+unsatisfiable.</li>
+  <li>If it is desired to have the part taxonomy resemble a tree,
+  i.e. each element is part of one other element, then it
+   is possible to make the <span style="font-family: monospace;">partOf_directly</span> subproperty
+functional, with a local range restriction
+(owl:allValuesFrom) to the "next larger" class of parts.<br>
+  </li>
+  <li>If a classifier is to be used, then ontologies containing both <span style="font-family: monospace;">partOf</span>
+and <span style="font-family: monospace;">hasPart</span> will
+rarely scale beyond a few tens of classes.  If a
+classifier is not to be used, then this need not be considered. <br>
+  </li>
+</ul>
+<h2><a name="Background">Additional Background</a></h2>
+<h3>Other relations that follow the same pattern as faults</h3>
+<p>A number of other relations follow the same pattern as faults, e.g.
+"Repairs on a part are kinds of repairs on the whole". However,
+not all
+relations follow this pattern, e.g. "Purchase of a part is <em>not</em>
+purchase of the whole" (you can buy the wheels off a car without buying
+the car).</p>
+<h3>Relation to classic Mereology<br>
+</h3>
+<p>The classic study of parts and wholes,  mereology, has three
+axioms:
+the part-of relation is<br>
+</p>
+<ul>
+  <li>Transitive - "parts of parts are parts of the whole" -  If A
+is part of B and B is part of C, then A is part of C<br>
+  </li>
+  <li>Reflexive - "Everything is part of itself" - A is part of A<br>
+  </li>
+  <li>Antisymmetric - "Nothing is a part of its parts" -  if A is
+part
+of B and A != B then B is not part of A. </li>
+</ul>
+OWL does not have built-in primitives for antisymmetric or reflexive
+properties, nor is there any work-around
+for them. In most cases this causes no problems, but it does mean that
+if you
+create a cycle in the part-of hierarchy (usually by accident) it will
+go
+unnoticed by the classifier (although it may cause the classifier to
+run
+forever.)<br>
+<p>Furthermore, in mereology, since everything is a part of itself, we
+have
+to define "proper parts"  as "parts not equal to the whole". 
+Whereas in OWL we have to do the reverse: i.e. define "parts"
+(analogous
+to
+"proper parts") and then define "reflexive parts" in terms of "parts". </p>
+<h3>Relations that are not simple part-whole relations in the sense
+above</h3>
+<p>There are a number of relations easily confused with part-whole
+relations.
+Interested readers should consult <a href="file:///D:/rector/Projects/Best%20Practice/Parts-and-wholes/simple-part-whole-relations-v0-2.html#ref-flavours-of-part-of">[Flavours
+of part of]</a>. However, a brief list
+includes:</p>
+<ul>
+  <li><ins>Containment</ins> - the fact that I am contained in my room
+does not mean that I am part of my room</li>
+  <li><ins>Membership</ins> -as flocks of geese and committees.
+Membership is not transitive. For example, the goose's leg is part of
+the goose but not part of the flock of geese. Slightly more awkwardly,
+even though we often talk of members of a committee being "part of a
+committee", being a member of a
+subcommittee that is part of a committee may, or may not, confer
+membership in the committee as a whole.  Admittedly, whether
+membership is a part-whole relation is subject to debate.<br>
+  </li>
+  <li><ins>Connections and branches</ins> -That the lamp is connected
+to the main electricity system does not make it part of that system.
+Similarly, the tributary is not part of the river, rather a brach of
+the river. If we want to talk about parts, we usually speak of the
+"river system".</li>
+  <li><ins>Constituents</ins> - more controversially, many ontologists
+distiguish between the relation between clay and a statue made of clay
+- the clay "constitutes" or "is a constituent of" the statue, rather
+than being part of the statue in the same sense that the arm or leg is
+part of the statue. At the very least, there are a set of different
+issues involved in this relationship that are beyond the scope of this
+document.</li>
+  <li><ins>subClassOf</ins> - As discussed in Pattern 3,  being a
+part of something is not the same as being a subclass of it.</li>
+</ul>
+<h3>More on <code>partOf</code> and <code>hasPart</code></h3>
+<p>In some contexts it is "more universal" to use <code>partOf,</code>
+in
+others to use <code>hasPart.</code> For example, all cars have
+wheels, but
+not all wheels are parts of cars. On the other hand, all leaves are
+parts of
+plants (at least at some time), but not all plants have leaves. The
+inability
+of existing classifiers to cope with ontologies mixing <code>partOf</code>
+and <code>hasPart</code> is a significant
+limitation. </p>
+
+<h3><a name="Flavours_of_part-whole_relations_"></a>Flavours of
+part-whole relations<br>
+</h3>
+Many authors discuss different subtypes of of the <ins>part_of</ins>
+relation. In most cases these can be represented as subproperties of <code>partOf,</code>
+but the various flavours of part-whole
+relation are
+beyond the scope of this note. See <a href="#ref-flavours-of-part-of">[Flavours
+of part of].</a><br>
+<hr>
+<h2><a id="References" name="References">References</a></h2>
+<dl>
+  <dt><a name="ref-sep" id="ref-sep">[SEP]</a></dt>
+  <dd>Hahn, U., Schulz, S. and Romacker, M.
+Part-whole reasoning: a case study in medical ontology engineering. <i>IEEE Intelligent Systems and their
+Applications</i>, 14 (5). 59-67.</dd>
+
+  <dt><a name="ref-specified-values" id="ref-lists-of-values">[Specified
+Values]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/swbp-specified-values/">Representing
+Specified Values in OWL: "value partitions" and "value sets"</a></cite>,
+Alan Rector, Editor, W3C Working Draft, 3 August 2004,
+http://www.w3.org/TR/swbp-specified-values/ .</dd>
+  <dt><a name="ref-OWL-Overview" id="ref-OWL-Overview">[OWL Overview]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-owl-features-20040210/">OWL Web
+Ontology Language Overview</a></cite>, Deborah L. McGuinness and Frank
+van Harmelen, Editors, W3C Recommendation, 10 February 2004,
+http://www.w3.org/TR/2004/REC-owl-features-20040210/ . <a href="http://www.w3.org/TR/owl-features/">Latest version</a> available
+at http://www.w3.org/TR/owl-features/ .</dd>
+  <dt><a name="ref-owl-guide" id="ref-owl-guide">[OWL Guide]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-owl-guide-20040210/">OWL
+Web Ontology Language Guide</a></cite>, Michael K. Smith, Chris Welty,
+and Deborah L. McGuinness, Editors, W3C Recommendation, 10 February
+2004, http://www.w3.org/TR/2004/REC-owl-guide-20040210/ . <a href="http://www.w3.org/TR/owl-guide/">Latest version</a> available at
+http://www.w3.org/TR/owl-guide/ .</dd>
+  <dt><a name="ref-owl-abstract-syntax" id="ref-owl-abstract-syntax">[OWL
+Semantics and Abstract Syntax]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-owl-semantics-20040210/">OWL Web
+Ontology Language Semantics and Abstract Syntax</a></cite>, Peter F.
+Patel-Schneider, Patrick Hayes, and Ian Horrocks, Editors, W3C
+Recommendation, 10 February 2004,
+http://www.w3.org/TR/2004/REC-owl-semantics-20040210/ . <a href="http://www.w3.org/TR/owl-semantics/">Latest version</a>
+available at http://www.w3.org/TR/owl-semantics/ .</dd>
+  <dt><a id="ref-rdf-primer" name="ref-rdf-primer">[RDF Primer]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-primer-20040210/">RDF
+Primer</a></cite>, Frank Manola and Eric Miller, Editors, W3C
+Recommendation, 10 February 2004,
+http://www.w3.org/TR/2004/REC-rdf-primer-20040210/ . <a href="http://www.w3.org/TR/rdf-primer/">Latest version</a> available
+at http://www.w3.org/TR/rdf-primer/ .</dd>
+  <dt><a id="ref-qcr" name="ref-qcr">[QCR]</a></dt>
+  <dd><cite><a href="">Expressing Qualified Cardinality restrictions in OWL</a></cite>, Guus Schreiber and Alan Rector, Editors. </dd>
+  <dt><a name="ref-RDF-Semantics" id="ref-RDF-Semantics">[RDF Semantics]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-mt-20040210/">RDF
+Semantics</a></cite>, Pat Hayes, Editor, W3C Recommendation, 10
+February 2004, http://www.w3.org/TR/2004/REC-rdf-mt-20040210/ . <a href="http://www.w3.org/TR/rdf-mt/">Latest version</a> available at
+http://www.w3.org/TR/rdf-mt/ .</dd>
+  <dt><a name="ref-rdf-vocabulary" id="ref-rdf-vocabulary">[RDF
+Vocabulary]</a></dt>
+  <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-schema-20040210/">RDF
+Vocabulary Description Language 1.0: RDF Schema</a></cite>, Dan
+Brickley and R. V. Guha, Editors, W3C Recommendation, 10 February 2004,
+http://www.w3.org/TR/2004/REC-rdf-schema-20040210/ . <a href="http://www.w3.org/TR/rdf-schema/">Latest version</a> available
+at http://www.w3.org/TR/rdf-schema/ .<br>
+  </dd>
+  <dt><a name="ref-r-norm" id="ref-r-norm">[R-NORM]</a></dt>
+  <dd><cite>KCAP paper</cite>.
+  Alan Rector.
+  </dd>
+  <dt><a name="ref-FMA" id="ref-FMA">[FMA]</a></dt>
+  <dd><cite><a href="http://sig.biostr.washington.edu/projects/fm/index.html">Foundational 
+  Model of Anatomy</a></cite>.
+  Digital Anatomist Project, Cornelius Rosse, Principal Investigator.<br>
+  </dd>
+<dt><a name="ref-flavours-of-part-of" id="ref-rdf-vocabulary">[Flavours of
+part of] </a>
+</dt><dd>Odell, J.J. Six different kinds of
+composition. <span style="font-style: italic;">Journal of Object
+Oriented Programming</span>, 5 (8). 10-15.<br>
+</dd>
+<dd>Winston, M., Chaffin, R. and Hermann,
+D. A taxonomy of part-whole relations. <i>Cognitive Science</i>, 11. 417-444</dd>
+<dd>
+Artale, A., Franconi, E. and Pazzi, L. Part-whole relations in
+object-centered systems: An overview. <i>Data and Knowledge Engineering</i>,
+20. 347-383<br>
+</dd>
+</dl>
+<hr>
+<h2><a id="Changes" name="Changes">Changes</a></h2>
+<ul>
+  <li>renamed relations in examples (need to update OWL source files)
+using more camelCase.  <br>
+  </li>
+  <li>Cleaned up formatting and made pattern sections structurally
+consistent with each other.</li>
+  <li>cleaned up partonomy, removed cylinder, made accurate wrt cars</li>
+  <li>added a discussion section for each pattern that mentions
+potential problems<br>
+  </li>
+</ul>
+
+</body></html>
