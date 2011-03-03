@@ -8,11 +8,18 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
@@ -26,14 +33,61 @@ public class SparqlSourcePanel extends TextContainerEditorPane implements Action
 
 	private JPopupMenu popup;
 	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixMap();
-
+	private Action zoomInAction;
+	private Action zoomOutAction;
+	
 	public SparqlSourcePanel(String string){
 		super(string);
 		// addUserActivityListener(autoSave);
 		createPopUpMenu();
 		PopupListener popupListener = new PopupListener(popup);
 		addMouseListener(popupListener);
+
+		 createZoomActions();
 	}
+
+	public Action getZoomInAction(){
+		return zoomInAction;
+	}
+	
+	public Action getZoomOutAction(){
+		return zoomOutAction;
+	}
+	
+	private double getZoom(){
+		Object zf = getDocument().getProperty("ZOOM_FACTOR");
+		if(zf == null){
+			return 1.0;
+		}
+		return ((Double)zf).doubleValue();
+	}
+	/**
+	 * 
+	 */
+	private void createZoomActions() {
+		 zoomInAction = new AbstractAction("+"){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					double zoom = getZoom()*1.1;
+					getDocument().putProperty("ZOOM_FACTOR", new Double(zoom));	
+					grabFocus();
+				}
+				 
+			 };
+			 
+			 zoomOutAction = new AbstractAction("-"){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						double zoom = getZoom()/1.1;
+						getDocument().putProperty("ZOOM_FACTOR", new Double(zoom));	
+						grabFocus();
+					} 
+				 };
+	}
+
+
 	/**
 	 * 
 	 */

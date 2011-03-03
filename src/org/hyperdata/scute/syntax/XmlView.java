@@ -44,7 +44,7 @@ import javax.swing.text.Utilities;
  * @date 13-jan-2006
  * 
  */
-public class XmlView extends PlainView {
+public class XmlView extends ScalableView {
 
 	/** The GENERI c_ xm l_ name. */
 	private static String GENERIC_XML_NAME = "[A-Za-z\\-_]+(:[A-Za-z\\-_]+)?";

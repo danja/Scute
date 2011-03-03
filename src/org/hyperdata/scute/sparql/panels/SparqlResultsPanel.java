@@ -17,7 +17,7 @@ import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlEvent;
 import org.hyperdata.scute.sparql.SparqlListener;
-import org.hyperdata.scute.syntax.HighlighterEditorKit;
+import org.hyperdata.scute.syntax.ScuteEditorKit;
 
 /**
  * @author danny
@@ -33,7 +33,7 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		super(new BorderLayout());
 		
 		xmlPanel = new XMLResultsPanel ();
-		xmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
+		xmlPanel.setEditorKit(new ScuteEditorKit("XML"));
 		tablePanel = new TableResultsPanel();
 		httpPanel = new HTTPPanel();
 		

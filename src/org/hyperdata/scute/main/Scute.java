@@ -43,7 +43,7 @@ import org.hyperdata.scute.swing.IO;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.swing.status.StatusPane;
-import org.hyperdata.scute.syntax.HighlighterEditorKit;
+import org.hyperdata.scute.syntax.ScuteEditorKit;
 import org.hyperdata.scute.systempanels.LogPane;
 import org.hyperdata.scute.systempanels.SystemPanel;
 import org.hyperdata.scute.tree.NodePanel;
@@ -349,7 +349,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		rdfxmlPanel.setFilename(Config.RDFXML_TEMP);
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
-		rdfxmlPanel.setEditorKit(new HighlighterEditorKit("XML"));
+		rdfxmlPanel.setEditorKit(new ScuteEditorKit("XML"));
 
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
@@ -392,7 +392,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		
 		turtlePanel.setFilename(Config.TURTLE_TEMP);
 		turtlePanel.addUserActivityListener(autoSave);
-		turtlePanel.setEditorKit(new HighlighterEditorKit("Turtle"));
+		turtlePanel.setEditorKit(new ScuteEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
 
 		cardsPanel.addChangeListener(turtlePanel);

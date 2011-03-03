@@ -22,7 +22,7 @@ public class PopupListener extends MouseAdapter {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent event) {
+	public void mousePressed(MouseEvent event) { // SwingUtilities.isLeftMouseButton(e)
 		if ((event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) { // right
 																							// mouse
 																							// click

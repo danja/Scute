@@ -6,34 +6,68 @@ package org.hyperdata.scute.source;
 import java.awt.event.FocusEvent;
 import java.io.*;
 
-import javax.swing.JEditorPane;
 import javax.swing.event.ChangeListener;
 
 import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.syntax.ScalableEditorPane;
+
 
 /**
  * A JEditorPane with a few additions for managing the text contentS
  * 
  * @author danny
  */
-public abstract class TextContainerEditorPane extends JEditorPane implements TextContainer, 
+public abstract class TextContainerEditorPane extends ScalableEditorPane implements TextContainer, 
 ChangeListener {
 
-	private String syntax;
+	// private String syntax;
 	private String filename;
+	
+//	public void paint(Graphics g){
+//		((Graphics2D)g).scale(2,2);
+//		super.paint(g);
+//	}
 	
 	/**
 	 * @param syntax
 	 */
 	public TextContainerEditorPane(String syntax) {
-		this.syntax = syntax;
+		super.setSyntax(syntax);
+		// this.syntax = syntax;
 		addFocusListener(this);
+		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));
+		
 	}
+	/////////////////////////////////////////////////////////////////////////
 	
-	@Override
-	public String getSyntax() {
-		return syntax;
-	}
+//	private HashMap<Object, Action> actions= new HashMap<Object, Action>();
+//	
+//	public HashMap<Object, Action> createActionTable(ScuteEditorKit editorKit) {
+//		System.out.println("TextContainerEditor.createActionTable");
+//        Action[] actionsArray = editorKit.getActions();
+//        for (int i = 0; i < actionsArray.length; i++) {
+//            Action a = actionsArray[i];
+//            actions.put(a.getValue(Action.NAME), a);
+//            System.out.println(a.getValue(Action.NAME));
+//        }
+//	return actions;
+//    }
+//	
+//	public Action getActionByName(String name) {
+//		System.out.println(actions.get(name));
+//	    return actions.get(name);
+//	}
+
+	//////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	/////////////////////////////////////////////////////////
+
 	
 	/*
 	 * (non-Javadoc)

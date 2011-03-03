@@ -55,15 +55,13 @@ public class RunQueryAction extends StatusAction {
 	public void actionPerformed(ActionEvent event) {
 
 		sparqlContainer.setQueryString(sourcePanel.getText());
-		System.out.println("puzzle="+sourcePanel.getText());
-		System.out.println("RQA query="+sparqlContainer.getQueryString());
+
 		if (sparqlContainer.isLocal()) {
 			// TODO IMPLEMENTS!!!
 			SPARQLResult result = runQuery(sparqlContainer.getQueryString());
 		} else {
 			runRemoteQuery(event);
 		}
-
 	}
 
 	/**

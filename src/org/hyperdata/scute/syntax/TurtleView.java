@@ -31,7 +31,7 @@ import javax.swing.text.Utilities;
 /**
  * The Class TurtleView.
  */
-public class TurtleView extends PlainView {
+public class TurtleView extends ScalableView {
 
 	private static HashMap<Pattern, Color> patternColors;
 	

@@ -12,6 +12,9 @@ package org.hyperdata.scute.syntax;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,55 +23,56 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.PlainDocument;
-import javax.swing.text.PlainView;
-import javax.swing.text.Segment;
-import javax.swing.text.Utilities;
-
+import javax.swing.text.*;
 
 /**
  * The Class TurtleView.
  */
-public class SparqlView extends PlainView {
+public class SparqlView extends ScalableView {
 
-	
 	// private static String KW_BASE_PATTERN = "(@base)";
-	
+
 	private static String KW_PREFIX_PATTERN = "(PREFIX)";
 
 	private static String KW_SELECT_PATTERN = "(SELECT)";
 	private static String KW_WHERE_PATTERN = "(WHERE)";
 	private static String KW_LIMIT_PATTERN = "(LIMIT)";
-	
-	private static String VARIABLE_PATTERN = "(\\?\\w++)"; 
-	
-	private static HashMap<Pattern, Color> patternColors;
 
+	private static String VARIABLE_PATTERN = "(\\?\\w++)";
+
+	private static HashMap<Pattern, Color> patternColors;
 
 	static {
 		patternColors = new LinkedHashMap<Pattern, Color>();
-		
+
 		// order is important!
-		
+
 		// SPARQL extra
-		patternColors.put(Pattern.compile(KW_WHERE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
-		patternColors.put(Pattern.compile(KW_SELECT_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
-		patternColors.put(Pattern.compile(KW_LIMIT_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
-		
+		patternColors.put(
+				Pattern.compile(KW_WHERE_PATTERN, Pattern.CASE_INSENSITIVE),
+				Color.GREEN);
+		patternColors.put(
+				Pattern.compile(KW_SELECT_PATTERN, Pattern.CASE_INSENSITIVE),
+				Color.GREEN);
+		patternColors.put(
+				Pattern.compile(KW_LIMIT_PATTERN, Pattern.CASE_INSENSITIVE),
+				Color.GREEN);
+
 		// SPARQL extra
 		patternColors.put(Pattern.compile(VARIABLE_PATTERN), Color.BLUE);
-		
-		
+
 		patternColors.put(Pattern.compile(TurtleView.URI_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(TurtleView.LITERAL_PATTERN), Color.GRAY);
-		patternColors.put(Pattern.compile(TurtleView.BNODE_PATTERN), Color.CYAN);
+		patternColors.put(Pattern.compile(TurtleView.LITERAL_PATTERN),
+				Color.GRAY);
+		patternColors
+				.put(Pattern.compile(TurtleView.BNODE_PATTERN), Color.CYAN);
 		patternColors.put(Pattern.compile(TurtleView.NODE_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(TurtleView.SQUARE_BRACKETS_PATTERN), Color.BLUE);
+		patternColors.put(Pattern.compile(TurtleView.SQUARE_BRACKETS_PATTERN),
+				Color.BLUE);
 		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN), Color.YELLOW);
 	}
+
+	private boolean scaled = false;
 
 	/**
 	 * Instantiates a new turtle view.
@@ -77,21 +81,25 @@ public class SparqlView extends PlainView {
 	 *            the element
 	 */
 	public SparqlView(Element element) {
-
 		super(element);
-
-		// Set tabsize to 4 (instead of the default 8)
-		getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.swing.text.PlainView#drawUnselectedText(java.awt.Graphics, int, int, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.text.PlainView#drawUnselectedText(java.awt.Graphics,
+	 * int, int, int, int)
 	 */
 	@Override
 	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
 			int p1) throws BadLocationException {
 
+		// float xSpan = getPreferredSpan(View.X_AXIS);
+		// float ySpan = getPreferredSpan(View.Y_AXIS);
+		// setSize(xSpan*2, ySpan*2);
+
 		final Document doc = getDocument();
+
 		final String text = doc.getText(p0, p1 - p0);
 
 		final Segment segment = getLineBuffer();
@@ -141,4 +149,8 @@ public class SparqlView extends PlainView {
 		return x;
 	}
 
+//	public void paint(Graphics g, Shape a) {
+//		((Graphics2D) g).scale(2, 2);
+//		super.paint(g, a);
+//	}
 }
