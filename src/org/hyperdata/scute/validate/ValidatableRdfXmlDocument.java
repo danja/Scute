@@ -21,7 +21,7 @@ import org.hyperdata.scute.swing.status.StatusMonitor;
  * 
  * (the method will usually be called automatically by a org.hyperdata.scute.validate.Validator)
  */
-public class ValidatableRDFXMLDocument implements Validatable {
+public class ValidatableRdfXmlDocument implements Validatable {
 
 	private Document document;
 
@@ -30,7 +30,7 @@ public class ValidatableRDFXMLDocument implements Validatable {
 	 *
 	 * @param document the document
 	 */
-	public ValidatableRDFXMLDocument(Document document){
+	public ValidatableRdfXmlDocument(Document document){
 		this.document = document;
 	}
 	

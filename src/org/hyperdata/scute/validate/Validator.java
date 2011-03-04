@@ -4,6 +4,7 @@
 package org.hyperdata.scute.validate;
 
 import org.hyperdata.scute.swing.status.StatusEvent;
+import org.hyperdata.scute.swing.status.StatusMonitor;
 import org.hyperdata.scute.swing.status.StatusTask;
 
 /**
@@ -30,15 +31,17 @@ public class Validator extends StatusTask {
 	@Override
 	public void run() {
 		// ask the Validatable to validate itself
+		StatusEvent starting = new StatusEvent(StatusMonitor.AMBER);
+		stateChanged(starting);
+		
 		StatusEvent event;
 		try {
 			event = validatable.validate();
 			// broadcast results to listeners
 			stateChanged(event);
 		} catch (Exception exception) {
-			// TODO make error indicator
-			System.out.println("Exception in Validator");
 			exception.printStackTrace();
+			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
 		}
 	}
 }
