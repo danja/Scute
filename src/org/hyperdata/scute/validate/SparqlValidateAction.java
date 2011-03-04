@@ -23,7 +23,7 @@ public class SparqlValidateAction extends StatusAction {
 	 * @param turtleDocument the turtle document
 	 */
 	public SparqlValidateAction(Document sparqlDocument) {
-		Validatable validatableSparql = new ValidatableTurtleDocument(sparqlDocument); 
+		Validatable validatableSparql = new ValidatableSparqlDocument(sparqlDocument); 
 		Validator validator = new Validator(validatableSparql);
 		validator.addStatusListener(this);
 		setStatusTask(validator); 

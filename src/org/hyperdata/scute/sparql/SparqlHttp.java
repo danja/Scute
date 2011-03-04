@@ -16,8 +16,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import org.hyperdata.scute.swing.status.StatusEvent;
+import org.hyperdata.scute.swing.status.StatusMonitor;
 import org.hyperdata.scute.swing.status.StatusTask;
-
 
 /**
  * @author danny
@@ -27,25 +28,24 @@ public class SparqlHttp extends StatusTask {
 
 	private boolean success = false;
 	private String responseString = null;
-	
+
 	private HttpClient httpclient;
 	private HttpGet httpget;
 	private SparqlContainer sparqlContainer;
 
 	public void init(SparqlContainer sparqlContainer) {
-		
+
 		this.sparqlContainer = sparqlContainer;
 		String endpointURI = sparqlContainer.getEndpoint().getUri();
 		String query = sparqlContainer.getQueryString();
-		
-		System.out.println("query="+query);
-		
+
+		System.out.println("query=" + query);
+
 		String uri = "";
-		
+
 		try {
 			// might be better to use HttpClient's formatting?
-			uri = endpointURI + "?query="
-					+ URLEncoder.encode(query, "UTF-8");
+			uri = endpointURI + "?query=" + URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException exception) {
 			// TODO popup exception
 			exception.printStackTrace();
@@ -53,25 +53,25 @@ public class SparqlHttp extends StatusTask {
 		httpclient = new DefaultHttpClient();
 		httpget = new HttpGet(uri);
 	}
-	
-	public String getResponseString(){
-	return responseString ;
+
+	public String getResponseString() {
+		return responseString;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
 	public void run() {
+		stateChanged(new StatusEvent(StatusMonitor.AMBER, "Running..."));
 		success = false;
 		HttpResponse response = null;
 		try {
 			response = httpclient.execute(httpget);
-		} catch (ClientProtocolException exception) {
-			// TODO log error
-			exception.printStackTrace();
-		} catch (IOException exception) {
-			// TODO log error
+		} catch (Exception exception) {
+			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
 			exception.printStackTrace();
 		}
 
@@ -89,6 +89,7 @@ public class SparqlHttp extends StatusTask {
 			exception.printStackTrace();
 		}
 		success = true;
+		stateChanged(new StatusEvent(StatusMonitor.GREEN));
 		sparqlContainer.setResultsText(responseString);
 		sparqlContainer.fireSparqlEvent();
 	}

@@ -6,10 +6,9 @@ package org.hyperdata.scute.swing.status;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
-
 /**
  * The Class StatusAction.
- *
+ * 
  * @author danny
  */
 public class StatusAction extends AbstractAction implements
@@ -17,14 +16,15 @@ public class StatusAction extends AbstractAction implements
 
 	private StatusEvent status = new StatusEvent(StatusMonitor.AMBER); // uncertain
 																		// status
-	
-	public StatusAction(){
+
+	public StatusAction() {
 		super();
 	}
-	
-public StatusAction(String label){
-	super(label);
-}
+
+	public StatusAction(String label) {
+		super(label);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -35,6 +35,8 @@ public StatusAction(String label){
 	public void actionPerformed(ActionEvent e) {
 		runTask();
 	}
+	
+
 
 	/**
 	 * Run task.
@@ -47,8 +49,9 @@ public StatusAction(String label){
 
 	/**
 	 * Sets the status task.
-	 *
-	 * @param task the new status task
+	 * 
+	 * @param task
+	 *            the new status task
 	 */
 	public void setStatusTask(Runnable task) {
 		putValue("StatusTask", task);
@@ -56,7 +59,7 @@ public StatusAction(String label){
 
 	/**
 	 * Gets the status task.
-	 *
+	 * 
 	 * @return the status task
 	 */
 	public StatusTask getStatusTask() {
@@ -81,12 +84,13 @@ public StatusAction(String label){
 
 	/**
 	 * Adds the status change listener.
-	 *
-	 * @param listener the listener
+	 * 
+	 * @param listener
+	 *            the listener
 	 */
-	public void addStatusChangeListener(StatusChangeListener listener) { // pass it on
+	public void addStatusChangeListener(StatusChangeListener listener) { // pass
+																			// it
+																			// on
 		getStatusTask().addStatusListener(listener);
 	}
-
-
 }

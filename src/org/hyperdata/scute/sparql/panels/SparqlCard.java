@@ -22,7 +22,10 @@ import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
+import org.hyperdata.scute.swing.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.*;
+import org.hyperdata.scute.validate.RdfXmlValidateAction;
+import org.hyperdata.scute.validate.SparqlValidateAction;
 
 /**
  * @author danny
@@ -74,13 +77,20 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 
-		// set up autosave button
-		StatusAction runQueryAction = new RunQueryAction(text, sparqlContainer,
-				sourcePanel);
-		StatusButton runQueryButton = new StatusButton(runQueryAction, "Ready",
-				"Running...", "Done");
-		statusPanel.add(runQueryButton);
+		// need to set up autosave button
+		
+		// Set up validator
+		Document sparqlDocument = sourcePanel.getDocument();
+		StatusAction sparqlValidateAction = new SparqlValidateAction(sparqlDocument);
+		StatusInfoPane validatorPane = new StatusInfoPane(sparqlValidateAction);
 
+		// Set up validator button
+		StatusButton validatorButton = new StatusButton(sparqlValidateAction,
+				"Invalid syntax", "Checking syntax...", "Valid syntax");
+
+		statusPanel.add(validatorButton);
+		statusPanel.add(validatorPane);
+		
 		add(statusPanel, BorderLayout.SOUTH);
 	}
 

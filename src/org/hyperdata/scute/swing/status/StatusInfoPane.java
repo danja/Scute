@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
  *
  * @author danny
  */
-public class StatusPane extends JPanel implements StatusChangeListener {
+public class StatusInfoPane extends JPanel implements StatusChangeListener {
 
 	private JTextArea textArea;
 	
@@ -21,7 +21,7 @@ public class StatusPane extends JPanel implements StatusChangeListener {
 	 *
 	 * @param statusAction the status action
 	 */
-	public StatusPane(StatusAction statusAction){
+	public StatusInfoPane(StatusAction statusAction){
 		super();
 		statusAction.addStatusChangeListener(this);
 		textArea = new JTextArea();

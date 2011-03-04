@@ -12,6 +12,7 @@
 package org.hyperdata.scute.swing.status;
 
 import javax.swing.ImageIcon;
+import javax.swing.text.BadLocationException;
 
 
 /**
@@ -33,6 +34,15 @@ public class StatusEvent {
 	 */
 	public StatusEvent(int status) {
 		this.status = status;
+	}
+
+	/**
+	 * @param red
+	 * @param message
+	 */
+	public StatusEvent(int status, String message) {
+		this(status);
+		setDescription(message);
 	}
 
 	/**
@@ -88,5 +98,4 @@ public class StatusEvent {
 	public String getDescription() {
 		return this.description;
 	}
-
 }

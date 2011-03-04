@@ -42,7 +42,7 @@ import org.hyperdata.scute.swing.HelpUI;
 import org.hyperdata.scute.swing.IO;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
-import org.hyperdata.scute.swing.status.StatusPane;
+import org.hyperdata.scute.swing.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
 import org.hyperdata.scute.systempanels.LogPane;
 import org.hyperdata.scute.systempanels.SystemPanel;
@@ -50,6 +50,7 @@ import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
 import org.hyperdata.scute.triples.TriplesPanel;
+import org.hyperdata.scute.validate.RdfXmlValidateAction;
 import org.hyperdata.scute.validate.TurtleValidateAction;
 
 /**
@@ -160,12 +161,11 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		makeCardsPanel();
 		
-
-
 		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
 		autoSave.setWorkingModelContainer(Config.self);
 		autoSave.setCurrentTextContainer(turtlePanel);
+		
 		cardsPanel.addChangeListener(autoSave);
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
@@ -194,10 +194,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		 */
 
 		setupFrame();
-		
-		
-
-		// fileChooser = new JFileChooser("./data"); is used???
 
 		if (Config.self.getSync() == false) { // previous run wasn't shut down
 			// correctly
@@ -308,6 +304,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	private void makeSparqlPanel() {
 		sparqlPanel = new SparqlCard(frame);
 		sparqlPanel.setTextCard(true);
+		
 		cardsPanel.add(sparqlPanel, "SPARQL");
 	}
 
@@ -363,8 +360,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		// Set up validators
 		Document rdfxmlDocument = rdfxmlPanel.getDocument();
-		StatusAction rdfxmlAction = new TurtleValidateAction(rdfxmlDocument);
-		StatusPane validatorPane = new StatusPane(rdfxmlAction);
+		StatusAction rdfxmlAction = new RdfXmlValidateAction(rdfxmlDocument);
+		StatusInfoPane validatorPane = new StatusInfoPane(rdfxmlAction);
 
 		// Set up validator button
 		StatusButton validatorButton = new StatusButton(rdfxmlAction,
@@ -410,7 +407,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		// Set up validators
 		Document turtleDocument = turtlePanel.getDocument();
 		StatusAction turtleAction = new TurtleValidateAction(turtleDocument);
-		StatusPane validatorPane = new StatusPane(turtleAction);
+		StatusInfoPane validatorPane = new StatusInfoPane(turtleAction);
 
 		// Set up validator button
 		StatusButton validatorButton = new StatusButton(turtleAction,

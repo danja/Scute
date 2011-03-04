@@ -1,22 +1,35 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
 @prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix void:    <http://rdfs.org/ns/void#> .
-@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix x:       <http://purl.org/stuff/> .
 
 []    a       void:Dataset ;
-      dcterms:title "Local Authority Spending" ;
-      void:sparqlEndpoint <http://services.data.gov.uk/statistics/sparql> .
+      dcterms:title "BBC Programmes" ;
+      void:sparqlEndpoint <http://dbtune.org/bbc/programmes/sparql/> .
+
+[]    a       void:Dataset ;
+      dcterms:title "CIA World Factbook" ;
+      void:sparqlEndpoint <http://www4.wiwiss.fu-berlin.de/factbook/> .
 
 []    a       void:Dataset ;
       dcterms:title "dbPedia" ;
       void:sparqlEndpoint <http://dbpedia.org/sparql> .
 
 []    a       void:Dataset ;
-      dcterms:title "Open Library" ;
-      void:sparqlEndpoint <http://api.talis.com/stores/openlibrary/services/sparql> .
+      dcterms:title "MusicBrainz" ;
+      void:sparqlEndpoint <http://dbtune.org/musicbrainz/sparql> .
+
+[]    a       void:Dataset ;
+      dcterms:title "WordNet" ;
+      void:sparqlEndpoint <http://wordnet.rkbexplorer.com/sparql/> .
 
 []    a       void:Dataset ;
       dcterms:title "Naptan" ;
@@ -27,20 +40,12 @@
       void:sparqlEndpoint <http://api.talis.com/stores/bbc-wildlife/services/sparql> .
 
 []    a       void:Dataset ;
-      dcterms:title "CIA World Factbook" ;
-      void:sparqlEndpoint <http://www4.wiwiss.fu-berlin.de/factbook/> .
+      dcterms:title "Local Authority Spending" ;
+      void:sparqlEndpoint <http://services.data.gov.uk/statistics/sparql> .
 
 []    a       void:Dataset ;
-      dcterms:title "WordNet" ;
-      void:sparqlEndpoint <http://wordnet.rkbexplorer.com/sparql/> .
-
-[]    a       void:Dataset ;
-      dcterms:title "MusicBrainz" ;
-      void:sparqlEndpoint <http://dbtune.org/musicbrainz/sparql> .
-
-[]    a       void:Dataset ;
-      dcterms:title "BBC Programmes" ;
-      void:sparqlEndpoint <http://dbtune.org/bbc/programmes/sparql/> .
+      dcterms:title "Open Library" ;
+      void:sparqlEndpoint <http://api.talis.com/stores/openlibrary/services/sparql> .
 
 []    a       void:Dataset ;
       dcterms:title "Ordnance Survey" ;

@@ -44,7 +44,7 @@ public class Config extends ModelContainer {
 	
 	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
 
-	public static final String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/working";
+	public static final String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/config";
 	
 	public static final String VERSION_STRING = "Version 0.5 Beta";
 	
@@ -227,9 +227,9 @@ public class Config extends ModelContainer {
 	 * 
 	 * @return the model save period
 	 */
-	public long getModelSavePeriod() {
-		return Long.parseLong(getValue("modelSavePeriod"));
-	}
+//	public long getModelSavePeriod() {
+//		return Long.parseLong(getValue("modelSavePeriod"));
+//	}
 
 	/**
 	 * Gets the text save delay.
@@ -245,9 +245,9 @@ public class Config extends ModelContainer {
 	 * 
 	 * @return the text save period
 	 */
-	public long getTextSavePeriod() {
-		return Long.parseLong(getValue("textSavePeriod"));
-	}
+//	public long getTextSavePeriod() {
+//		return Long.parseLong(getValue("textSavePeriod"));
+//	}
 
 	/**
 	 * Gets the sync.
