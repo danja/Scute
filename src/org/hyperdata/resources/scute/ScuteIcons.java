@@ -27,7 +27,7 @@ public class ScuteIcons {
 	public static final ImageIcon applicationIcon;
 	public static final ImageIcon rdfIcon;	
 	public static final ImageIcon sparqlIcon;
-	public static final ImageIcon playIcon;
+	public static final ImageIcon runIcon;
 	public static final ImageIcon stopIcon;
 	public static final ImageIcon errorIcon;
 	public static BufferedImage bigImage = null;	
@@ -38,9 +38,9 @@ public class ScuteIcons {
 		
 		rdfIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/rdf-logo-16x16.png"));
 		sparqlIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/sparql-16x16.png"));
-		playIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/play-32x32.gif"));	
-		stopIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/stop-32x32.gif"));
-		errorIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/error-32x32.gif"));
+		runIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/run-16x16.gif"));	
+		stopIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/stop-16x16.gif"));
+		errorIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/error-16x16.gif"));
 		
 		try {
 			System.out.println(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile());
