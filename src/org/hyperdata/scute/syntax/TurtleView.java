@@ -31,9 +31,9 @@ import javax.swing.text.Utilities;
 /**
  * The Class TurtleView.
  */
-public class TurtleView extends ScalableView {
+public class TurtleView extends HighlighterView {
 
-	private static HashMap<Pattern, Color> patternColors;
+	private static HashMap<Pattern, Color> patternMap;
 	
 	public static String BNODE_PATTERN = "(_:\\w+)";
 	
@@ -56,17 +56,19 @@ public class TurtleView extends ScalableView {
 	public static String URI_PATTERN = "(<.+>)";
 
 	static {
-		patternColors = new LinkedHashMap<Pattern, Color>();
+		patternMap = new LinkedHashMap<Pattern, Color>();
 		
 		// order is important!
-		patternColors.put(Pattern.compile(URI_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
-		patternColors.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
-		patternColors.put(Pattern.compile(NODE_PATTERN), Color.RED);
-		patternColors.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
+		patternMap.put(Pattern.compile(URI_PATTERN), Color.RED);
+		// PROBLEM:
+		// http://dbpedia.org/resource/Category:Furniture-making
+		patternMap.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
+		patternMap.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
+		patternMap.put(Pattern.compile(NODE_PATTERN), Color.RED);
+		patternMap.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
 
-		patternColors.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
-		patternColors.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
+		patternMap.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
+		patternMap.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
 	}
 
 	/**
@@ -76,68 +78,15 @@ public class TurtleView extends ScalableView {
 	 *            the element
 	 */
 	public TurtleView(Element element) {
-
 		super(element);
-
 		// Set tabsize to 4 (instead of the default 8)
 		getDocument().putProperty(PlainDocument.tabSizeAttribute, 4);
 	}
-
-	/* (non-Javadoc)
-	 * @see javax.swing.text.PlainView#drawUnselectedText(java.awt.Graphics, int, int, int, int)
+	
+	/**
+	 * @return
 	 */
-	@Override
-	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
-			int p1) throws BadLocationException {
-
-		final Document doc = getDocument();
-		final String text = doc.getText(p0, p1 - p0);
-
-		final Segment segment = getLineBuffer();
-
-		final SortedMap<Integer, Integer> startMap = new TreeMap<Integer, Integer>();
-		final SortedMap<Integer, Color> colorMap = new TreeMap<Integer, Color>();
-
-		// Match all regexes on this snippet, store positions
-		for (final Map.Entry<Pattern, Color> entry : patternColors.entrySet()) {
-
-			final Matcher matcher = entry.getKey().matcher(text);
-
-			while (matcher.find()) {
-				startMap.put(matcher.start(1), matcher.end());
-				colorMap.put(matcher.start(1), entry.getValue());
-			}
-		}
-
-		// TODO: check the map for overlapping parts
-
-		int i = 0;
-
-		// Colour the parts
-		for (final Map.Entry<Integer, Integer> entry : startMap.entrySet()) {
-			final int start = entry.getKey();
-			final int end = entry.getValue();
-
-			if (i < start) {
-				graphics.setColor(Color.black);
-				doc.getText(p0 + i, start - i, segment);
-				x = Utilities.drawTabbedText(segment, x, y, graphics, this, i);
-			}
-
-			graphics.setColor(colorMap.get(start));
-			i = end;
-			doc.getText(p0 + start, i - start, segment);
-			x = Utilities.drawTabbedText(segment, x, y, graphics, this, start);
-		}
-
-		// Paint possible remaining text black
-		if (i < text.length()) {
-			graphics.setColor(Color.black);
-			doc.getText(p0 + i, text.length() - i, segment);
-			x = Utilities.drawTabbedText(segment, x, y, graphics, this, i);
-		}
-
-		return x;
+	public HashMap<Pattern, Color> getPatternMap() {
+		return patternMap;
 	}
-
 }
