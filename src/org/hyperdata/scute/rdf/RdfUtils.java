@@ -385,6 +385,7 @@ public class RdfUtils {
 		final InputStream inputStream = new FileInputStream(filename);
 		// model.read(new FileReader(filename), "");
 		model.read(inputStream, "", format);
+		setCommonPrefixes(model);
 		// System.out.println(modelToString(model));
 		return model;
 	}

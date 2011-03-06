@@ -60,7 +60,12 @@ public class RunQueryAction extends StatusAction {
 			// TODO IMPLEMENTS!!!
 			SPARQLResult result = runQuery(sparqlContainer.getQueryString());
 		} else {
+			if(!sparqlHttp.isRunning()){
 			runRemoteQuery(event);
+			}else {
+				stop();
+				
+			}
 		}
 	}
 

@@ -5,6 +5,7 @@ package org.hyperdata.scute.sparql.panels;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -46,7 +47,11 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 	}
 	
 	public void populate(String resultString){
+		try{
 		xmlPanel.setText(resultString);
+		}catch(Error error){
+			// ignore - probably Interrupted attempt to aquire write lock
+		}
 	}
 	
 	public void populate(SPARQLResult result){
@@ -75,5 +80,12 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		// needed for other kinds of results..?
 		populate(sparqlContainer.getResultsText());
 		
+	}
+
+	/**
+	 * @return
+	 */
+	public JEditorPane getXmlPane() {
+		return xmlPanel;
 	}
 }

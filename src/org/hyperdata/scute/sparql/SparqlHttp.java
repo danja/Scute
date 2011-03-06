@@ -26,7 +26,7 @@ import org.hyperdata.scute.swing.status.StatusTask;
  */
 public class SparqlHttp extends StatusTask {
 
-	private boolean success = false;
+	private boolean running = false;
 	private String responseString = null;
 
 	private HttpClient httpclient;
@@ -65,8 +65,9 @@ public class SparqlHttp extends StatusTask {
 	 */
 	@Override
 	public void run() {
+		
 		stateChanged(new StatusEvent(StatusMonitor.AMBER, "Running..."));
-		success = false;
+		running = true;
 		HttpResponse response = null;
 		try {
 			response = httpclient.execute(httpget);
@@ -81,16 +82,17 @@ public class SparqlHttp extends StatusTask {
 		String responseString = "";
 		try {
 			responseString = EntityUtils.toString(entity);
-		} catch (ParseException exception) {
-			// TODO log error
-			exception.printStackTrace();
-		} catch (IOException exception) {
-			// TODO log error
+		} catch (Exception exception) {
+			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
 			exception.printStackTrace();
 		}
-		success = true;
+		running = false;
 		stateChanged(new StatusEvent(StatusMonitor.GREEN));
 		sparqlContainer.setResultsText(responseString);
 		sparqlContainer.fireSparqlEvent();
+	}
+	
+	public boolean isRunning(){
+		return running;
 	}
 }

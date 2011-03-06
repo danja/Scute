@@ -18,6 +18,7 @@ import org.hyperdata.scute.sparql.endpoints.EndpointListModel;
 import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
+import org.hyperdata.scute.swing.status.StatusMonitor;
 
 /**
  * @author danny
@@ -50,9 +51,15 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		
 		StatusAction runQueryAction = new RunQueryAction("Run", queryContainer, sourcePanel);
 		
-		String[] labels = {"Refresh", "Stop", "Run"};
-		String[] descriptions = {"Ready", "Running...", "Done"};
-		StatusButton runQueryButton = new StatusButton(runQueryAction, labels, descriptions);
+		String[] labels = { "Error", "Stop", "Run" };
+		String[] descriptions = { "Error, check log", "Running...", "Run" };
+		ImageIcon[] icons = { ScuteIcons.errorIcon, ScuteIcons.stopIcon,
+				ScuteIcons.runIcon };
+		
+		StatusButton runQueryButton = new StatusButton(runQueryAction, labels, descriptions, icons);
+		runQueryButton.setStatus(StatusMonitor.GREEN);
+		runQueryButton.setHorizontalTextPosition(SwingConstants.LEFT);
+		runQueryButton.setHorizontalAlignment(SwingConstants.RIGHT); // doesn't appear to work!
 		add(runQueryButton);
 		
 		add(Box.createHorizontalStrut(10));

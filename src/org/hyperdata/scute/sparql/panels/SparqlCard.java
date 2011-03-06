@@ -16,7 +16,10 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.*;
 
+import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;
+import org.hyperdata.scute.editortools.EditorToolbar;
+import org.hyperdata.scute.editortools.FindAction;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
@@ -46,11 +49,12 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		super(new BorderLayout());
 
 		sourcePanel = new SparqlSourcePanel("SPARQL");
-		editorKit = new ScuteEditorKit("SPARQL"); /////////////////////////
-// editorKit.setSyntax("SPARQL");
+		editorKit = new ScuteEditorKit("SPARQL"); // ///////////////////////
+		// editorKit.setSyntax("SPARQL");
 		sourcePanel.setEditorKit(editorKit);
 
 		String text = "SELECT ?s ?p ?o WHERE {\n   ?s ?p ?o \n}\nLIMIT 10";
+		// String text = " <http://dbpedia.org/resource/Category:Neptune> .";
 		sourcePanel.setText(text);
 
 		resultsPanel = new SparqlResultsPanel();
@@ -60,17 +64,14 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		SparqlRunToolbar toolbar = new SparqlRunToolbar(sparqlContainer,
 				sourcePanel, frame);
 		add(toolbar, BorderLayout.NORTH);
-		
-		JButton zoomIn = new JButton(sourcePanel.getZoomInAction());
-		toolbar.add(zoomIn);
-		
-		JButton zoomOut = new JButton(sourcePanel.getZoomOutAction());
-		toolbar.add(zoomOut);
-		
+
+		EditorToolbar editorToolbar = new EditorToolbar(frame, resultsPanel.getXmlPane(), sourcePanel);
+		toolbar.add(editorToolbar);
+
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				sourcePanel, resultsPanel);
 		splitPane.setContinuousLayout(true);
-		add(splitPane, BorderLayout.CENTER); 
+		add(splitPane, BorderLayout.CENTER);
 		splitPane.setDividerLocation(0.5);
 
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
@@ -78,19 +79,20 @@ public class SparqlCard extends Card { // implements SparqlContainer
 				.createEtchedBorder(EtchedBorder.LOWERED));
 
 		// need to set up autosave button
-		
+
 		// Set up validator
 		Document sparqlDocument = sourcePanel.getDocument();
-		StatusAction sparqlValidateAction = new SparqlValidateAction(sparqlDocument);
+		StatusAction sparqlValidateAction = new SparqlValidateAction(
+				sparqlDocument);
 		StatusInfoPane validatorPane = new StatusInfoPane(sparqlValidateAction);
 
 		// Set up validator button
-		StatusButton validatorButton = new StatusButton(sparqlValidateAction,
-				"Invalid syntax", "Checking syntax...", "Valid syntax");
+
+		StatusButton validatorButton = new StatusButton(sparqlValidateAction);
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
-		
+
 		add(statusPanel, BorderLayout.SOUTH);
 	}
 

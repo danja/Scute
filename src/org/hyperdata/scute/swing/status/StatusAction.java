@@ -17,6 +17,8 @@ public class StatusAction extends AbstractAction implements
 	private StatusEvent status = new StatusEvent(StatusMonitor.AMBER); // uncertain
 																		// status
 
+	private Thread thread;
+	
 	public StatusAction() {
 		super();
 	}
@@ -42,9 +44,18 @@ public class StatusAction extends AbstractAction implements
 	 * Run task.
 	 */
 	private void runTask() {
-		Runnable task = getStatusTask();
-		Thread t = new Thread(task);
-		t.start();
+		thread = new Thread(getStatusTask());
+		thread.start();
+	}
+	
+	public void stop(){
+		if(thread != null){
+		System.out.println("STOP!");
+		thread.interrupt();
+		thread = null; // drastic, but what else to do?
+		getStatusTask().stateChanged(new StatusEvent(StatusMonitor.GREEN)); // reset
+		}
+		
 	}
 
 	/**

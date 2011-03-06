@@ -27,92 +27,55 @@ import org.hyperdata.scute.source.TextContainerEditorPane;
 
 /**
  * @author danny
- *
+ * 
  */
-public class SparqlSourcePanel extends TextContainerEditorPane implements ActionListener {
+public class SparqlSourcePanel extends TextContainerEditorPane implements
+		ActionListener {
 
 	private JPopupMenu popup;
 	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixMap();
-	private Action zoomInAction;
-	private Action zoomOutAction;
-	
-	public SparqlSourcePanel(String string){
+
+
+	public SparqlSourcePanel(String string) {
 		super(string);
 		// addUserActivityListener(autoSave);
 		createPopUpMenu();
 		PopupListener popupListener = new PopupListener(popup);
 		addMouseListener(popupListener);
-
-		 createZoomActions();
 	}
 
-	public Action getZoomInAction(){
-		return zoomInAction;
-	}
-	
-	public Action getZoomOutAction(){
-		return zoomOutAction;
-	}
-	
-	private double getZoom(){
-		Object zf = getDocument().getProperty("ZOOM_FACTOR");
-		if(zf == null){
-			return 1.0;
-		}
-		return ((Double)zf).doubleValue();
-	}
-	/**
-	 * 
-	 */
-	private void createZoomActions() {
-		 zoomInAction = new AbstractAction("+"){
 
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					double zoom = getZoom()*1.1;
-					getDocument().putProperty("ZOOM_FACTOR", new Double(zoom));	
-					grabFocus();
-				}
-				 
-			 };
-			 
-			 zoomOutAction = new AbstractAction("-"){
 
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						double zoom = getZoom()/1.1;
-						getDocument().putProperty("ZOOM_FACTOR", new Double(zoom));	
-						grabFocus();
-					} 
-				 };
-	}
 
 
 	/**
 	 * 
 	 */
 	private void createPopUpMenu() {
-		 popup = new JPopupMenu();
+		popup = new JPopupMenu();
 
 		Iterator<String> iterator = prefixMap.keySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			String key = iterator.next();
-		JMenuItem menuItem = new JMenuItem(key);
-		menuItem.addActionListener(this);
-		popup.add(menuItem);
+			JMenuItem menuItem = new JMenuItem(key);
+			menuItem.addActionListener(this);
+			popup.add(menuItem);
 		}
 
-		
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		String label = ((JMenuItem)event.getSource()).getText();
-		String insert = "PREFIX "+label+": "+"<"+prefixMap.get(label)+">\n";
-	Document doc = getDocument();	
+		String label = ((JMenuItem) event.getSource()).getText();
+		String insert = "PREFIX " + label + ": " + "<" + prefixMap.get(label)
+				+ ">\n";
+		Document doc = getDocument();
 		try {
 			doc.insertString(0, insert, null);
 		} catch (BadLocationException exception) {
@@ -120,16 +83,23 @@ public class SparqlSourcePanel extends TextContainerEditorPane implements Action
 			exception.printStackTrace();
 		}
 	}
-	/* (non-Javadoc)
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent
+	 * )
 	 */
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.source.TextContainer#getSyntax()
 	 */
 	@Override
@@ -137,13 +107,14 @@ public class SparqlSourcePanel extends TextContainerEditorPane implements Action
 		return "SPARQL";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.hyperdata.scute.source.TextContainer#getTextFilename()
 	 */
 	@Override
 	public String getFilename() {
 		return Config.SPARQL_FILENAME;
 	}
-
 
 }

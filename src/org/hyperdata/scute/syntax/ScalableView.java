@@ -29,7 +29,7 @@ class ScalableView extends WrappedPlainView { // BoxView
     }
 
     public double getZoomFactor() {
-        Double scale = (Double) getDocument().getProperty("ZOOM_FACTOR");
+        Double scale = (Double) getDocument().getProperty("zoom");
         if (scale != null) {
             return scale.doubleValue();
         }

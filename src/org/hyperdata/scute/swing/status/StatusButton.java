@@ -22,7 +22,7 @@ public class StatusButton extends JButton implements StatusChangeListener {
 
 	private String[] description = StatusMonitor.DEFAULT_DESCRIPTION;
 
-	private ImageIcon[] icons;
+	private ImageIcon[] icons = StatusMonitor.ICON;
 
 	private String[] label = {"","",""};
 
@@ -102,8 +102,11 @@ setAction(action);
 	}
 	
 	public StatusButton(Action action, String[] labels, String[] descriptions, ImageIcon[] icons) {
-		this(action, labels,descriptions);
-
+		super();
+		setAction(action);
+		init();
+		this.label = labels;
+		this.description = descriptions;
 		this.icons = icons;
 	}
 
@@ -125,7 +128,7 @@ setAction(action);
 	 * Inits the.
 	 */
 	private void init() {
-		icons = StatusMonitor.ICON;
+		
 		setContentAreaFilled(false);
 		setStatus(StatusMonitor.GREEN);
 		setPressedIcon(IndicatorIcons.blueIcon);

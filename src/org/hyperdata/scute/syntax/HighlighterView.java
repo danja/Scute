@@ -74,8 +74,8 @@ public abstract class HighlighterView extends ScalableView implements PatternMap
 			final Matcher matcher = entry.getKey().matcher(text);
 			Matcherloop:
 			while (matcher.find()) {
-				System.out.println(matcher.start(1) + " -> " +matcher.end());
-				System.out.println(matcher.group());
+//				System.out.println(matcher.start(1) + " -> " +matcher.end());
+//				System.out.println(matcher.group());
 
 				// remove blocks nested inside - redundant?
 				for(int i = matcher.start(1);i<matcher.end();i++){
