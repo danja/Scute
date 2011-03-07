@@ -1,0 +1,24 @@
+null any previous runner on Run
+
+undo - redo
+
+validation!
+
+scratchpad  
+
+ctrl-arrow for skip to next space?
+
+clear results on "Run"
+
+table view
+
+http view
+
+label results with endpoint (too easy to choose the wrong one)
+
+Back button for previous query
+
+query time
+number of results
+
+make URIs dereferenceable
