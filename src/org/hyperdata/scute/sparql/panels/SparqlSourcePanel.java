@@ -29,60 +29,24 @@ import org.hyperdata.scute.source.TextContainerEditorPane;
  * @author danny
  * 
  */
-public class SparqlSourcePanel extends TextContainerEditorPane implements
-		ActionListener {
+public class SparqlSourcePanel extends TextContainerEditorPane {
 
-	private JPopupMenu popup;
+	private JPopupMenu popupMenu;
 	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixMap();
 
 
 	public SparqlSourcePanel(String string) {
 		super(string);
 		// addUserActivityListener(autoSave);
-		createPopUpMenu();
-		PopupListener popupListener = new PopupListener(popup);
+		 popupMenu = new SparqlPopupMenu(this);
+		 
+		PopupListener popupListener = new PopupListener(popupMenu);
 		addMouseListener(popupListener);
 	}
 
 
 
 
-
-	/**
-	 * 
-	 */
-	private void createPopUpMenu() {
-		popup = new JPopupMenu();
-
-		Iterator<String> iterator = prefixMap.keySet().iterator();
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-			JMenuItem menuItem = new JMenuItem(key);
-			menuItem.addActionListener(this);
-			popup.add(menuItem);
-		}
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		String label = ((JMenuItem) event.getSource()).getText();
-		String insert = "PREFIX " + label + ": " + "<" + prefixMap.get(label)
-				+ ">\n";
-		Document doc = getDocument();
-		try {
-			doc.insertString(0, insert, null);
-		} catch (BadLocationException exception) {
-			// TODO error
-			exception.printStackTrace();
-		}
-	}
 
 	/*
 	 * (non-Javadoc)

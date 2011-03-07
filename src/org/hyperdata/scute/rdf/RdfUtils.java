@@ -658,8 +658,10 @@ public class RdfUtils {
 		prefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
 		prefixes.put("x", "http://purl.org/stuff/");
 		prefixes.put("void", "http://rdfs.org/ns/void#");
+		prefixes.put("mo", "http://purl.org/ontology/mo/");
+		prefixes.put("rel", "http://purl.org/vocab/relationship/");
+		prefixes.put("rev", "http://purl.org/stuff/rev#");
 
-		
 		// prefixes.put("dbpo", "http://dbpedia.org/ontology/");
 		// prefixes.put("dbpr", "http://dbpedia.org/resource/");
 		// prefixes.put("dbpp", "http://dbpedia.org/property/");

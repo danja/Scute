@@ -39,7 +39,7 @@ public class SparqlHttp extends StatusTask {
 		String endpointURI = sparqlContainer.getEndpoint().getUri();
 		String query = sparqlContainer.getQueryString();
 
-		System.out.println("query=" + query);
+		// System.out.println("query=" + query);
 
 		String uri = "";
 

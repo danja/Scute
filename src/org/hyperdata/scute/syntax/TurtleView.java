@@ -33,6 +33,7 @@ import javax.swing.text.Utilities;
  */
 public class TurtleView extends HighlighterView {
 
+	public static HashMap<Pattern, Color> commonPatternMap;
 	private static HashMap<Pattern, Color> patternMap;
 	
 	public static String BNODE_PATTERN = "(_:\\w+)";
@@ -47,26 +48,28 @@ public class TurtleView extends HighlighterView {
 	
 	public static String NODE_PATTERN = "(\\w*:\\w+)"; 
 	
-	// PROBLEM:
-	// http://dbpedia.org/resource/Category:Furniture-making
-	
 	public static String SQUARE_BRACKETS_PATTERN = "(\\[|\\])";
+
+	public static String CURLY_BRACKETS_PATTERN = "(\\{|\\})";
 	
 	/** The UR i_ pattern. */
 	public static String URI_PATTERN = "(<.+>)";
 
 	static {
-		patternMap = new LinkedHashMap<Pattern, Color>();
+		commonPatternMap = new LinkedHashMap<Pattern, Color>();
 		
 		// order is important!
-		patternMap.put(Pattern.compile(URI_PATTERN), Color.RED);
-		// PROBLEM:
-		// http://dbpedia.org/resource/Category:Furniture-making
-		patternMap.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
-		patternMap.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
-		patternMap.put(Pattern.compile(NODE_PATTERN), Color.RED);
-		patternMap.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
-
+		commonPatternMap.put(Pattern.compile(URI_PATTERN), Color.BLUE);
+		commonPatternMap.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
+		commonPatternMap.put(Pattern.compile(LONG_LITERAL_PATTERN), Color.GRAY);
+		commonPatternMap.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
+		commonPatternMap.put(Pattern.compile(NODE_PATTERN), Color.BLUE);
+		commonPatternMap.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
+		commonPatternMap.put(Pattern.compile(CURLY_BRACKETS_PATTERN), Color.BLUE);
+		
+		patternMap = new LinkedHashMap<Pattern, Color>();
+		
+		patternMap.putAll(commonPatternMap);
 		patternMap.put(Pattern.compile(KW_PREFIX_PATTERN, Pattern.CASE_INSENSITIVE), Color.YELLOW);
 		patternMap.put(Pattern.compile(KW_BASE_PATTERN, Pattern.CASE_INSENSITIVE), Color.GREEN);
 	}

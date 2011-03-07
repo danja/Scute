@@ -74,7 +74,7 @@ public class RunQueryAction extends StatusAction {
 	 */
 	private void runRemoteQuery(ActionEvent event) {
 
-		System.out.println("ENDPOINT RQA="+sparqlContainer.getEndpoint());
+		// System.out.println("ENDPOINT RQA="+sparqlContainer.getEndpoint());
 		if(sparqlContainer.getEndpoint().getUri() == null){ // shouldn't get this far...
 			return;
 		}

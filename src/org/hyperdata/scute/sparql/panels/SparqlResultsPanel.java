@@ -39,7 +39,7 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		httpPanel = new HTTPPanel();
 		
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		tabs.addTab("Text", new JScrollPane(xmlPanel));
+		tabs.addTab("XML", new JScrollPane(xmlPanel));
 		tabs.addTab("Table", new JScrollPane(tablePanel));
 		tabs.addTab("HTTP", new JScrollPane(httpPanel));
 		
@@ -50,7 +50,8 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		try{
 		xmlPanel.setText(resultString);
 		}catch(Error error){
-			// ignore - probably Interrupted attempt to aquire write lock
+			System.err.println("SparqlResultsPanel: "+error.getMessage());
+			// ignore - probably Interrupted attempt to acquire write lock
 		}
 	}
 	

@@ -36,7 +36,7 @@ public final class Endpoint {
 		this.label = label;
 		this.uri = uri;
 		local = false;
-		this.action = new URIEndpointAction(this);
+	//	this.action = new URIEndpointAction(this);
 	}
 
 	/**

@@ -88,7 +88,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 
 		JButton edit = new JButton();
 		EndpointTableModel endpointTableModel = new EndpointTableModel(endpointListModel);
-		edit.setAction(new EditEndpointsAction("Edit", endpointTableModel, frame));
+		edit.setAction(new EditEndpointsAction("Edit Endpoints", endpointTableModel, frame));
 		add(edit);
 	}
 

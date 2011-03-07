@@ -135,8 +135,8 @@ public class AutoSave extends UserActivityAdapter { //
 	 *            the rdf editor
 	 */
 	public void restorePreviousState(Scute scute) {
-		System.out.println("Config.self.getSelectedView() ="
-				+ Config.self.getSelectedView());
+//		System.out.println("Config.self.getSelectedView() ="
+//				+ Config.self.getSelectedView());
 
 		scute.setSelectedCard(Config.self.getSelectedView());
 		// rdfEditor.setSelectedTab(Config.self.getSelectedTab());

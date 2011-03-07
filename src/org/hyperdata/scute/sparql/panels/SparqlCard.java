@@ -4,6 +4,7 @@
 package org.hyperdata.scute.sparql.panels;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -53,7 +54,9 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		// editorKit.setSyntax("SPARQL");
 		sourcePanel.setEditorKit(editorKit);
 
-		String text = "SELECT ?s ?p ?o WHERE {\n   ?s ?p ?o \n}\nLIMIT 10";
+		sourcePanel.setPreferredSize(new Dimension(300,300));
+		
+		String text = "SELECT DISTINCT * WHERE {\n   ?s ?p ?o \n}\nLIMIT 10";
 		// String text = " <http://dbpedia.org/resource/Category:Neptune> .";
 		sourcePanel.setText(text);
 
@@ -80,6 +83,8 @@ public class SparqlCard extends Card { // implements SparqlContainer
 
 		// need to set up autosave button
 
+		// add time taken status?
+		
 		// Set up validator
 		Document sparqlDocument = sourcePanel.getDocument();
 		StatusAction sparqlValidateAction = new SparqlValidateAction(

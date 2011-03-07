@@ -30,13 +30,8 @@ import javax.swing.text.*;
  */
 public class SparqlView extends HighlighterView {
 
-	// private static String KW_BASE_PATTERN = "(@base)";
-
-	private static String KW_PREFIX_PATTERN = "(PREFIX)";
-
-	private static String KW_SELECT_PATTERN = "(SELECT)";
-	private static String KW_WHERE_PATTERN = "(WHERE)";
-	private static String KW_LIMIT_PATTERN = "(LIMIT)";
+	private static String[] KEYWORD_PATTERNS = {"(PREFIX)", "(SELECT)", "(DISTINCT)", "(WHERE)", "(LIMIT)"
+		, "(FILTER)", "(REGEX)", "(OPTIONAL)", "(UNION)", "(OFFSET)", "(ORDER BY)"};
 
 	private static String VARIABLE_PATTERN = "(\\?\\w++)";
 
@@ -45,31 +40,16 @@ public class SparqlView extends HighlighterView {
 	static {
 		patternMap = new LinkedHashMap<Pattern, Color>();
 
+		patternMap.putAll(TurtleView.commonPatternMap);
+		
+		patternMap.put(Pattern.compile(VARIABLE_PATTERN), Color.RED);
 		// order is important!
 
-		// SPARQL extra
-		patternMap.put(
-				Pattern.compile(KW_WHERE_PATTERN, Pattern.CASE_INSENSITIVE),
-				Color.GREEN);
-		patternMap.put(
-				Pattern.compile(KW_SELECT_PATTERN, Pattern.CASE_INSENSITIVE),
-				Color.GREEN);
-		patternMap.put(
-				Pattern.compile(KW_LIMIT_PATTERN, Pattern.CASE_INSENSITIVE),
-				Color.GREEN);
-
-		// SPARQL extra
-		patternMap.put(Pattern.compile(VARIABLE_PATTERN), Color.BLUE);
-
-		patternMap.put(Pattern.compile(TurtleView.URI_PATTERN), Color.RED);
-		patternMap.put(Pattern.compile(TurtleView.LITERAL_PATTERN),
-				Color.GRAY);
-		patternMap
-				.put(Pattern.compile(TurtleView.BNODE_PATTERN), Color.CYAN);
-		patternMap.put(Pattern.compile(TurtleView.NODE_PATTERN), Color.RED);
-		patternMap.put(Pattern.compile(TurtleView.SQUARE_BRACKETS_PATTERN),
-				Color.BLUE);
-		patternMap.put(Pattern.compile(KW_PREFIX_PATTERN), Color.YELLOW);
+		for(int i =0;i<KEYWORD_PATTERNS.length; i++){
+			patternMap.put(
+					Pattern.compile(KEYWORD_PATTERNS[i], Pattern.CASE_INSENSITIVE),
+					Color.GREEN);
+		}
 	}
 
 	private boolean scaled = false;

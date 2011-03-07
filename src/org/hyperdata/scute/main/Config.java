@@ -130,8 +130,8 @@ public class Config extends ModelContainer {
 		Property property = model.createProperty(baseUri + propName);
 		Literal valueNode = model.getRequiredProperty(scuteResource, property)
 				.getLiteral();
-		System.out.println("getting value " + propName + " = "
-				+ valueNode.getString());
+//		System.out.println("getting value " + propName + " = "
+//				+ valueNode.getString());
 		return valueNode.getString();
 	}
 

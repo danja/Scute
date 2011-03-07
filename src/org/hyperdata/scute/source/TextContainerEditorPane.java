@@ -3,6 +3,7 @@
  */
 package org.hyperdata.scute.source;
 
+import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.io.*;
 
@@ -33,10 +34,9 @@ ChangeListener {
 	 */
 	public TextContainerEditorPane(String syntax) {
 		super.setSyntax(syntax);
-		// this.syntax = syntax;
+		setFont(new Font("monospaced", Font.PLAIN, 12));
 		addFocusListener(this);
 		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));
-		
 	}
 	/////////////////////////////////////////////////////////////////////////
 	
@@ -125,8 +125,8 @@ ChangeListener {
 	public void save(){
 		File file = new File(getFilename());
 
-		byte[] bytes = (Config.self
-				.getIdentifyingComment(getSyntax()) + getText()).getBytes();
+		// Config.self.getIdentifyingComment(getSyntax()) + 
+		byte[] bytes = (getText()).getBytes();
 		try {
 			OutputStream fos = new FileOutputStream(file);
 			fos.write(bytes);
