@@ -45,6 +45,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	private SparqlContainer sparqlContainer = new SparqlContainerImpl();
 	private Frame frame;
 	private ScuteEditorKit editorKit;
+	private SparqlPopupMenu popupMenu;
 
 	public SparqlCard(Frame frame) {
 		super(new BorderLayout());
@@ -54,8 +55,11 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		// editorKit.setSyntax("SPARQL");
 		sourcePanel.setEditorKit(editorKit);
 
-		sourcePanel.setPreferredSize(new Dimension(300,300));
-		
+		sourcePanel.setPreferredSize(new Dimension(300, 300));
+		popupMenu = new SparqlPopupMenu(sourcePanel);
+		PopupListener popupListener = new PopupListener(popupMenu);
+		sourcePanel.addMouseListener(popupListener);
+
 		String text = "SELECT DISTINCT * WHERE {\n   ?s ?p ?o \n}\nLIMIT 10";
 		// String text = " <http://dbpedia.org/resource/Category:Neptune> .";
 		sourcePanel.setText(text);
@@ -68,7 +72,8 @@ public class SparqlCard extends Card { // implements SparqlContainer
 				sourcePanel, frame);
 		add(toolbar, BorderLayout.NORTH);
 
-		EditorToolbar editorToolbar = new EditorToolbar(frame, resultsPanel.getXmlPane(), sourcePanel);
+		EditorToolbar editorToolbar = new EditorToolbar(frame,
+				resultsPanel.getXmlPane(), sourcePanel);
 		toolbar.add(editorToolbar);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -84,7 +89,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		// need to set up autosave button
 
 		// add time taken status?
-		
+
 		// Set up validator
 		Document sparqlDocument = sourcePanel.getDocument();
 		StatusAction sparqlValidateAction = new SparqlValidateAction(

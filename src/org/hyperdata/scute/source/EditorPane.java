@@ -8,8 +8,12 @@ import java.awt.event.FocusEvent;
 import java.io.*;
 
 import javax.swing.event.ChangeListener;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
 
-import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.editortools.undo.RedoAction;
+import org.hyperdata.scute.editortools.undo.UndoAction;
+import org.hyperdata.scute.editortools.undo.UndoHandler;
 import org.hyperdata.scute.syntax.ScalableEditorPane;
 
 
@@ -18,11 +22,21 @@ import org.hyperdata.scute.syntax.ScalableEditorPane;
  * 
  * @author danny
  */
-public abstract class TextContainerEditorPane extends ScalableEditorPane implements TextContainer, 
+public abstract class EditorPane extends ScalableEditorPane implements TextContainer, 
 ChangeListener {
 
-	// private String syntax;
 	private String filename;
+	
+	/**
+	 * Listener for the edits on the current document.
+	 */
+	private UndoableEditListener undoHandler = new UndoHandler(this);
+
+	/** UndoManager that we add edits to. */
+	private UndoManager undoManager = new UndoManager();
+	
+	private UndoAction undoAction = new UndoAction(this);
+	private RedoAction redoAction = new RedoAction(this);
 	
 //	public void paint(Graphics g){
 //		((Graphics2D)g).scale(2,2);
@@ -32,11 +46,20 @@ ChangeListener {
 	/**
 	 * @param syntax
 	 */
-	public TextContainerEditorPane(String syntax) {
+	public EditorPane(String syntax) {
 		super.setSyntax(syntax);
 		setFont(new Font("monospaced", Font.PLAIN, 12));
 		addFocusListener(this);
 		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));
+	}
+	
+	/**
+	 * Resets the undo manager.
+	 */
+	public void resetUndoManager() { 
+		getUndoManager().discardAllEdits();
+		getUndoAction().update();
+		getRedoAction().update();
 	}
 	/////////////////////////////////////////////////////////////////////////
 	
@@ -155,6 +178,48 @@ ChangeListener {
 		System.out.println("focusLost so SAVE");
 		save();
 		
+	}
+
+	/**
+	 * @param undoAction the undoAction to set
+	 */
+	public void setUndoAction(UndoAction undoAction) {
+		this.undoAction = undoAction;
+	}
+
+	/**
+	 * @return the undoAction
+	 */
+	public UndoAction getUndoAction() {
+		return undoAction;
+	}
+
+	/**
+	 * @param redoAction the redoAction to set
+	 */
+	public void setRedoAction(RedoAction redoAction) {
+		this.redoAction = redoAction;
+	}
+
+	/**
+	 * @return the redoAction
+	 */
+	public RedoAction getRedoAction() {
+		return redoAction;
+	}
+
+	/**
+	 * @param undoManager the undoManager to set
+	 */
+	public void setUndoManager(UndoManager undoManager) {
+		this.undoManager = undoManager;
+	}
+
+	/**
+	 * @return the undoManager
+	 */
+	public UndoManager getUndoManager() {
+		return undoManager;
 	}
 	
 }

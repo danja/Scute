@@ -23,13 +23,13 @@ import javax.swing.text.StyledDocument;
 
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
-import org.hyperdata.scute.source.TextContainerEditorPane;
+import org.hyperdata.scute.source.EditorPane;
 
 /**
  * @author danny
  * 
  */
-public class SparqlSourcePanel extends TextContainerEditorPane {
+public class SparqlSourcePanel extends EditorPane {
 
 	private JPopupMenu popupMenu;
 	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixMap();
@@ -38,10 +38,7 @@ public class SparqlSourcePanel extends TextContainerEditorPane {
 	public SparqlSourcePanel(String string) {
 		super(string);
 		// addUserActivityListener(autoSave);
-		 popupMenu = new SparqlPopupMenu(this);
-		 
-		PopupListener popupListener = new PopupListener(popupMenu);
-		addMouseListener(popupListener);
+
 	}
 
 

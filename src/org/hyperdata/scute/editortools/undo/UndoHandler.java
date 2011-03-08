@@ -5,15 +5,9 @@ import javax.swing.event.UndoableEditListener;
 
 import org.hyperdata.scute.source.EditorPane;
 
-/**
- * 
- */
 
 public class UndoHandler implements UndoableEditListener {
 
-	/**
-	 * 
-	 */
 	private EditorPane editorPane;
 
 	/**
@@ -28,8 +22,9 @@ public class UndoHandler implements UndoableEditListener {
 	 * <code>undo</code>, an instance of UndoManager.
 	 */
 	public void undoableEditHappened(UndoableEditEvent e) {
-		this.editorPane.undoManager.addEdit(e.getEdit());
-		this.editorPane.undoAction.update();
-		this.editorPane.redoAction.update();
+		System.out.println("undoableEditHappened");
+		this.editorPane.getUndoManager().addEdit(e.getEdit());
+		this.editorPane.getUndoAction().update();
+		this.editorPane.getRedoAction().update();
 	}
 }

@@ -24,7 +24,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 /**
  * The Class SourcePanel.
  */
-public class RdfSourcePanel extends TextContainerEditorPane {
+public class RdfSourcePanel extends EditorPane {
 
 	/**
 	 * Adds the user activity listener.

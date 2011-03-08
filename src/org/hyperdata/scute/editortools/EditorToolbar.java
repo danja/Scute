@@ -9,6 +9,12 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
+
+import org.hyperdata.scute.editortools.undo.ActionChangedListener;
+import org.hyperdata.scute.editortools.undo.UndoHandler;
+import org.hyperdata.scute.source.EditorPane;
 
 /**
  * @author danny
@@ -16,16 +22,34 @@ import javax.swing.JPanel;
  */
 public class EditorToolbar extends JPanel {
 
-//	private JEditorPane findPane;
-//	private JEditorPane zoomPane;
+	/**
+	 * Listener for the edits on the current document.
+	 */
+	public UndoableEditListener undoHandler;
 
-	public EditorToolbar(Frame frame, JEditorPane findPane, JEditorPane zoomPane) {
+	/** UndoManager that we add edits to. */
+	public UndoManager undoManager = new UndoManager();
+
+	public EditorToolbar(Frame frame, JEditorPane findPane, EditorPane zoomPane) {
+
+		undoHandler = new UndoHandler(zoomPane);
+		zoomPane.getDocument().addUndoableEditListener(undoHandler);
+
+		Action undoAction = zoomPane.getUndoAction();
+		JButton undoButton = new JButton(undoAction);
+		undoAction.addPropertyChangeListener(new ActionChangedListener(undoButton));
+		add(undoButton);
+
+		Action redoAction = zoomPane.getRedoAction();
+	
+		JButton redoButton = new JButton(redoAction);
+		redoAction.addPropertyChangeListener(new ActionChangedListener(redoButton));
+		add(redoButton);
 
 		Action findAction = new FindAction(frame, findPane);
 		JButton findButton = new JButton(findAction);
 		add(findButton);
 
-		// move to scute.editortools
 		ZoomAction zoomInAction = new ZoomAction(zoomPane, "+", 1.1);
 		JButton zoomIn = new JButton(zoomInAction);
 		add(zoomIn);
@@ -34,5 +58,4 @@ public class EditorToolbar extends JPanel {
 		JButton zoomOut = new JButton(zoomOutAction);
 		add(zoomOut);
 	}
-
 }

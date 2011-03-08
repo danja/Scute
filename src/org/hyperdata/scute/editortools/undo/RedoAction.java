@@ -13,9 +13,7 @@ import org.hyperdata.scute.source.EditorPane;
  */
 
 public class RedoAction extends AbstractAction {
-	/**
-	 * 
-	 */
+
 	private EditorPane editorPane;
 
 	public RedoAction(EditorPane editorPane) {
@@ -26,19 +24,19 @@ public class RedoAction extends AbstractAction {
 
 	public void actionPerformed(ActionEvent e) {
 		try {
-			this.editorPane.undoManager.redo();
+			this.editorPane.getUndoManager().redo();
 		} catch (CannotRedoException ex) {
 			System.out.println("Unable to redo: " + ex);
 			ex.printStackTrace();
 		}
 		update();
-		this.editorPane.undoAction.update();
+		this.editorPane.getUndoAction().update();
 	}
 
 	public void update() {
-		if (this.editorPane.undoManager.canRedo()) {
+		if (this.editorPane.getUndoManager().canRedo()) {
 			setEnabled(true);
-			putValue(Action.NAME, this.editorPane.undoManager.getRedoPresentationName());
+			putValue(Action.NAME, this.editorPane.getUndoManager().getRedoPresentationName());
 		} else {
 			setEnabled(false);
 			putValue(Action.NAME, "Redo");
