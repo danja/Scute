@@ -1,7 +1,7 @@
 // originally derived from
 // http://java.sun.com/applets/jdk/1.4/demo/applets/GraphLayout/Graph.java
 
-package org.hyperdata.scute.main;
+package org.hyperdata.scute.demos;
 
 import java.awt.BorderLayout;
 import java.io.FileInputStream;

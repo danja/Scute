@@ -3,6 +3,7 @@
  */
 package org.hyperdata.scute.source;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.io.*;
@@ -39,18 +40,15 @@ ChangeListener {
 	private UndoAction undoAction = new UndoAction(this);
 	private RedoAction redoAction = new RedoAction(this);
 	
-//	public void paint(Graphics g){
-//		((Graphics2D)g).scale(2,2);
-//		super.paint(g);
-//	}
-	
 	/**
 	 * @param syntax
 	 */
 	public EditorPane(String syntax) {
 		super.setSyntax(syntax);
 		setFont(new Font("monospaced", Font.PLAIN, 12));
+		setPreferredSize(new Dimension(800,600));
 		addFocusListener(this);
+		setDragEnabled(true);
 		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));
 	}
 	
@@ -82,15 +80,6 @@ ChangeListener {
 //	    return actions.get(name);
 //	}
 
-	//////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	/////////////////////////////////////////////////////////
 
 	
 	/*
@@ -156,9 +145,9 @@ ChangeListener {
 			fos.write(bytes);
 			fos.close();
 			// System.out.println("saving TEXT : " + getSyntax()+ " filename = "+getFilename());
-		} catch (IOException e) {
+		} catch (IOException exception) {
 			// TODO popup warning
-			e.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

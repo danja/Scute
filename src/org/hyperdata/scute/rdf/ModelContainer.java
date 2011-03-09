@@ -33,9 +33,9 @@ public class ModelContainer implements Runnable {
 			// System.out.println("saving Model to file " + getModelURI());
 			RdfUtils.save(getModel(), getModelFilename());
 			setSaved(true);
-		} catch (IOException e) {
+		} catch (IOException exception) {
 			// TODO popup for file error
-			e.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

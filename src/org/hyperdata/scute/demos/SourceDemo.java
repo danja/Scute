@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.main;
+package org.hyperdata.scute.demos;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -21,11 +21,11 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import org.hyperdata.scute.system.Log;
 
 /**
- * The Class TriplesDemo.
+ * The Class SourceDemo.
  * 
  * FIXME finish
  */
-public class TriplesDemo {
+public class SourceDemo {
 
 	/**
 	 * The main method.

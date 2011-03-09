@@ -68,9 +68,9 @@ public class RdfUtils {
 	// model.write(fos, lang, base);
 	// fos.close();
 	// } catch (FileNotFoundException e) {
-	// e.printStackTrace();
+	// Log.exception(exception);;
 	// } catch (IOException e) {
-	// e.printStackTrace();
+	// Log.exception(exception);;
 	// }
 	// }
 
@@ -102,8 +102,8 @@ public class RdfUtils {
 		System.out.println(string);
 		try {
 			date = isoDate.parse(string);
-		} catch (final ParseException e) {
-			e.printStackTrace();
+		} catch (final ParseException exception) {
+			Log.exception(exception);
 		}
 		return date;
 	}
@@ -948,8 +948,8 @@ public class RdfUtils {
 
 		try {
 			model = stringToModel(string, base, null);
-		} catch (final Exception e) {
-			e.printStackTrace();
+		} catch (final Exception exception) {
+			Log.exception(exception);
 		}
 
 		return model;

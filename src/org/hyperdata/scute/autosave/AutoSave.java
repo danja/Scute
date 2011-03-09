@@ -160,7 +160,7 @@ public class AutoSave extends UserActivityAdapter { //
 //			fis.close();
 //		} catch (Exception e) {
 //			// error popup
-//			e.printStackTrace();
+//			Log.exception(exception);;
 //			return "";
 //		}
 //		return buffer.toString();

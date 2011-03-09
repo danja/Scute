@@ -9,6 +9,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.*;
+
+import org.hyperdata.scute.system.Log;
 public class ScuteHelp2 {
 	
    public static void main(String args[]) {
@@ -34,8 +36,8 @@ public class ScuteHelp2 {
          helpViewer = new JHelp(new HelpSet(cl, url));
          // Set the initial entry point in the table of contents.
          helpViewer.setCurrentID("Overview");
-	   } catch (Exception e) {
-	      e.printStackTrace();
+	   } catch (Exception exception) {
+	      Log.exception(exception);
      	}
 
       // Create a new frame.

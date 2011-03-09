@@ -79,9 +79,9 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 			delete();
 			try {
 				RdfUtils.save(model, modelFilename);
-			} catch (IOException e) {
+			} catch (IOException exception) {
 				// TODO error popup
-				e.printStackTrace();
+				Log.exception(exception);
 			}
 		}
 	}

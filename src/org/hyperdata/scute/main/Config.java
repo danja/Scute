@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.hyperdata.scute.autosave.ModelSaver;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -187,10 +188,10 @@ public class Config extends ModelContainer {
 	public void load() {
 		try {
 			RdfUtils.load(model, CONFIG_FILENAME, CONFIG_FORMAT);
-		} catch (IOException e) {
+		} catch (IOException exception) {
 			// do error popup
 			System.out.println("WOOF");
-			e.printStackTrace();
+			Log.exception(exception);
 			System.exit(1);
 		}
 	}

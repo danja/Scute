@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.main;
+package org.hyperdata.scute.demos;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

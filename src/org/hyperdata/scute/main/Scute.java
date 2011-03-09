@@ -131,6 +131,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private IO io;
 
+	private ScratchPad scratchPad;
+
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -161,6 +163,18 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		panel = new JPanel(new BorderLayout());
 
 		makeCardsPanel();
+		// panel.add(cardsPanel, BorderLayout.CENTER);
+		
+		scratchPad = new ScratchPad("Text");
+		JScrollPane scrollPane = new JScrollPane(scratchPad, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, cardsPanel, scrollPane);
+		splitPane.setResizeWeight(1);
+		// splitPane.setContinuousLayout(true);
+		splitPane.setDividerLocation(.9);
+		
+		// 
+		panel.add(splitPane, BorderLayout.CENTER);
+
 		
 		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
@@ -234,8 +248,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 */
 	private void makeCardsPanel() {
 		cardsPanel = new CardsPanel();
-		panel.add(cardsPanel, BorderLayout.CENTER);
-
 		makeImagePanel();
 		makeTurtlePanel();
 		makeRdfXmlPanel();
@@ -449,11 +461,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	public void logPrintln(String string) {
 		LogPane.println(string);
 	}
-
-
-
-	
-
 
 	/*
 	 * (non-Javadoc)
