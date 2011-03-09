@@ -24,10 +24,10 @@ final class ChangeEditorPanelAction extends
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-    	System.out.println("ChangeEditorPanelAction AACCTTIIOONN = "+actionEvent);
+    	// System.out.println("ChangeEditorPanelAction AACCTTIIOONN = "+actionEvent);
     	// CardLayout cLay = cardPanel.getLayout();
     	// cLay.show(cardPanel,"panel1Identifier");
-    	System.out.println("SOURCE="+actionEvent.getSource());
+    	// System.out.println("SOURCE="+actionEvent.getSource());
     	taskPanel.cardPanel.fireChange(actionEvent);
     	taskPanel.layout.show(taskPanel.cardPanel, actionEvent.getActionCommand());
     }

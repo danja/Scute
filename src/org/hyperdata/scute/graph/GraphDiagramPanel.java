@@ -88,7 +88,7 @@ public class GraphDiagramPanel extends JPanel {
 		super.paintComponent(g);
 		Image image = graphLayout.getImage();
 		g.drawImage(image, 0, 0, null);
-		System.out.println("paint image");
+		// System.out.println("paint image");
 
 	}
 

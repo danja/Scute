@@ -18,6 +18,7 @@ public class ScratchPad extends EditorPane {
 	 */
 	public ScratchPad(String syntax) {
 		super(syntax);
+		setFilename(Config.SCRATCH_FILENAME);
 	}
 
 	/* (non-Javadoc) 
