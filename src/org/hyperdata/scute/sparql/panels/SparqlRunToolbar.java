@@ -39,19 +39,11 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-
-
 		this.frame = frame;
-		
 		this.queryContainer = queryContainer;
 		this.sourcePanel = sourcePanel;
-//		JButton run = new JButton();
-//
+
 //		// using sourcepanel here a bit messy, but will do for now
-//		run.setAction(new RunQueryAction("Run Query", queryContainer,
-//				sourcePanel));
-		
-		// ImageIcon[] icons = {ScuteIcons.playIcon,ScuteIcons.stopIcon, ScuteIcons.errorIcon};
 		
 		StatusAction runQueryAction = new RunQueryAction("Run", queryContainer, sourcePanel);
 		
@@ -64,13 +56,10 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		runQueryButton.setStatus(StatusMonitor.GREEN);
 		runQueryButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		runQueryButton.setHorizontalAlignment(SwingConstants.RIGHT); // doesn't appear to work!
+		runQueryButton.setToolTipText("Run query");
 		add(runQueryButton);
 		
 		add(Box.createHorizontalStrut(10));
-
-//		JButton stop = new JButton();
-//		stop.setAction(new StopQueryAction("Stop"));
-//		add(stop);
 
 		add(Box.createHorizontalStrut(10));
 		add(new JSeparator(SwingConstants.VERTICAL));
@@ -82,10 +71,12 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		endpointsBox = new JComboBox(endpointListModel);
 		endpointsBox.setSelectedIndex(0);
 		endpointsBox.addActionListener(this);
+		endpointsBox.setToolTipText("Choose endpoint");
 		add(endpointsBox);
 
 		uriField = new JTextField(20);
 		uriField.setText("----");
+		uriField.setToolTipText("Endpoint URI");
 		add(uriField);
 
 		add(Box.createHorizontalStrut(10));
@@ -93,6 +84,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		JButton edit = new JButton();
 		EndpointTableModel endpointTableModel = new EndpointTableModel(endpointListModel);
 		edit.setAction(new EditEndpointsAction("Edit Endpoints", endpointTableModel, frame));
+		edit.setToolTipText("Add to/remove from  list");
 		add(edit);
 	}
 

@@ -1,3 +1,6 @@
+HIDE toolbars if not needed (a la gnome bars?)
+
+
 null any previous runner on Run
 
 errors - do a POST to hyperdata.org, get that to POST to github, see:

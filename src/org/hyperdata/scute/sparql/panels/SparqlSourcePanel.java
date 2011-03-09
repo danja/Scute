@@ -41,10 +41,6 @@ public class SparqlSourcePanel extends EditorPane {
 
 	}
 
-
-
-
-
 	/*
 	 * (non-Javadoc)
 	 * 

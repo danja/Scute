@@ -67,18 +67,26 @@ public class GeneralIcons {
 	
 	/** The Constant saveIcon. */
 	public static final ImageIcon saveIcon;
+	
+	public static final ImageIcon zoomInIcon;
+	public static final ImageIcon zoomOutIcon;
+	public static final ImageIcon undoIcon;
+	public static final ImageIcon redoIcon;
+	public static final ImageIcon findIcon;
 
 	static {
 		final ClassLoader loader = GeneralIcons.class.getClassLoader();
-
-		/*
-		 * System.out.println("loader = " + loader); System.out.println(
-		 * "loader.getResource(org/hyperdata/resources/general/New16.gif) = " +
-		 * loader.getResource( "org/hyperdata/resources/general/New16.gif"));
-		 * System.out.println( "loader.getResource(GeneralIcons.class) = " +
-		 * loader.getResource(
-		 * "org/hyperdata/resources/general/GeneralIcons.class"));
-		 */
+		zoomInIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/general/ZoomIn16.gif"));
+		zoomOutIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/general/ZoomOut16.gif"));
+		undoIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/general/Undo16.gif"));
+		redoIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/general/Redo16.gif"));
+		findIcon = new ImageIcon(loader
+				.getResource("org/hyperdata/resources/general/Find16.gif"));
+		
 		newIcon = new ImageIcon(loader
 				.getResource("org/hyperdata/resources/general/New16.gif"));
 		openIcon = new ImageIcon(loader
