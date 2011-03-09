@@ -17,6 +17,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 /**
  * @author danny
@@ -77,7 +78,7 @@ public class SparqlPopupMenu extends JPopupMenu implements ActionListener {
 			doc.insertString(0, insert, null);
 		} catch (BadLocationException exception) {
 			// TODO error
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 }

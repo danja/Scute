@@ -85,6 +85,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
+		
 
 		// need to set up autosave button
 

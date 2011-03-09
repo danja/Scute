@@ -18,7 +18,7 @@ public class StatusAction extends AbstractAction implements
 																		// status
 
 	private Thread thread;
-	
+
 	public StatusAction() {
 		super();
 	}
@@ -37,25 +37,24 @@ public class StatusAction extends AbstractAction implements
 	public void actionPerformed(ActionEvent e) {
 		runTask();
 	}
-	
-
 
 	/**
 	 * Run task.
 	 */
 	private void runTask() {
+		System.out.println("runTask");
 		thread = new Thread(getStatusTask());
 		thread.start();
 	}
-	
-	public void stop(){
-		if(thread != null){
-		System.out.println("STOP!");
-		thread.interrupt();
-		thread = null; // drastic, but what else to do?
-		getStatusTask().stateChanged(new StatusEvent(StatusMonitor.GREEN)); // reset
+
+	public void stop() {
+		if (thread != null) {
+			System.out.println("STOP!");
+			thread.interrupt();
+			thread = null; // drastic, but what else to do?
+			getStatusTask().stateChanged(new StatusEvent(StatusMonitor.GREEN)); // reset
 		}
-		
+
 	}
 
 	/**
@@ -75,7 +74,9 @@ public class StatusAction extends AbstractAction implements
 	 */
 	public StatusTask getStatusTask() {
 		Object object = getValue("StatusTask");
+		System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+object);
 		if (object != null) {
+			System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+((StatusTask) object).getClass());
 			return (StatusTask) object;
 		}
 		return null;

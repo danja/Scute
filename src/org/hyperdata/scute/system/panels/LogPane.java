@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.systempanels;
+package org.hyperdata.scute.system.panels;
 
 import javax.swing.JEditorPane;
 

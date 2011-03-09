@@ -20,6 +20,7 @@ import com.hp.hpl.jena.vocabulary.RDF;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
 import org.hyperdata.scute.sparql.actions.WorkingModelEndpointAction;
+import org.hyperdata.scute.system.Log;
 import org.hyperdata.vocabs.VOID;
 
 /**
@@ -82,7 +83,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 					continue;
 				}
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 			String title = null;
 			try {
@@ -92,7 +93,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 					model.removeAll(dataset, null, null);
 				}
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 		}
 	}
@@ -125,7 +126,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 			model = RdfUtils.load(Config.ENDPOINTS_MODEL, "N3");
 		} catch (IOException exception) {
 			// TODO error
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 		ResIterator datasets = model.listSubjectsWithProperty(RDF.type,
@@ -137,14 +138,14 @@ public class EndpointListModel extends DefaultComboBoxModel {
 				endpointURI = dataset.getProperty(VOID.sparqlEndpoint)
 						.getObject().asResource().getURI();
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 			String title = null;
 			try {
 				title = dataset.getProperty(DCTerms.title).getObject()
 						.asLiteral().toString();
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 			Endpoint endpoint = new Endpoint(title, endpointURI);
 			targets.add(endpoint);
@@ -178,7 +179,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 			RdfUtils.save(model, Config.ENDPOINTS_MODEL);
 		} catch (IOException exception) {
 			// TODO error
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

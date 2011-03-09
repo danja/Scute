@@ -11,6 +11,7 @@ import javax.swing.text.Document;
 import com.hp.hpl.jena.rdf.arp.ARP;
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
+import org.hyperdata.scute.system.Log;
 
 /**
  * The Class ValidatableRDFXMLDocument.
@@ -44,7 +45,7 @@ public class ValidatableRdfXmlDocument implements Validatable {
 				statusEvent = parseString(document.getText(0, document.getLength()));
 			} catch (BadLocationException exception) {
 				// TODO Ado something useful with this exception
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 		return statusEvent;
 	}

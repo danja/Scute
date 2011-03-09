@@ -1,3 +1,5 @@
+# Indexes HTML files for JavaHelp
+#
 # should really make location an option in Autohelp
 
 cd ../doc

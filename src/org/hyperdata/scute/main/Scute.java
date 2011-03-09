@@ -44,8 +44,9 @@ import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.swing.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
-import org.hyperdata.scute.systempanels.LogPane;
-import org.hyperdata.scute.systempanels.SystemPanel;
+import org.hyperdata.scute.system.Log;
+import org.hyperdata.scute.system.panels.LogPane;
+import org.hyperdata.scute.system.panels.SystemPanel;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
@@ -498,7 +499,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

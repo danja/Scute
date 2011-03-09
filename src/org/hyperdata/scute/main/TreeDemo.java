@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 
+import org.hyperdata.scute.system.Log;
 import org.hyperdata.scute.tree.RdfNodeMap;
 import org.hyperdata.scute.tree.RdfTreeCellRenderer;
 import org.hyperdata.scute.tree.RdfTreeModel;
@@ -47,7 +48,7 @@ public class TreeDemo {
 			model.read(new FileInputStream(filename), "", "N3");
 			stream.close();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		final RdfNodeMap nodeMap = new RdfNodeMap(model);
 		final RootNode root = new RootNode(nodeMap);

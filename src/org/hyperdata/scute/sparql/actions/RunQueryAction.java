@@ -20,6 +20,7 @@ import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlHttp;
 import org.hyperdata.scute.sparql.panels.SparqlSourcePanel;
 import org.hyperdata.scute.swing.status.StatusAction;
+import org.hyperdata.scute.system.Log;
 
 /**
  * @author danny
@@ -92,7 +93,7 @@ public class RunQueryAction extends StatusAction {
 					Config.SPARQL_SYNTAX);
 		} catch (QueryException exception) {
 			// TODO popup error
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		SPARQLResult result = null;
 		Dataset dataset = sparqlContainer.getDataset();

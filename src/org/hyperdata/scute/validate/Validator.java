@@ -6,6 +6,7 @@ package org.hyperdata.scute.validate;
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
 import org.hyperdata.scute.swing.status.StatusTask;
+import org.hyperdata.scute.system.Log;
 
 /**
  * The Class Validator.
@@ -40,7 +41,7 @@ public class Validator extends StatusTask {
 			// broadcast results to listeners
 			stateChanged(event);
 		} catch (Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
 		}
 	}

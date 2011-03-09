@@ -25,6 +25,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+import org.hyperdata.scute.system.Log;
+
 /**
  * The Class RdfNodeMap.
  */
@@ -147,7 +149,7 @@ public class RdfNodeMap {
 				// }
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -402,7 +404,7 @@ public class RdfNodeMap {
 				}
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -467,7 +469,7 @@ public class RdfNodeMap {
 			node.getModel().remove(parentStatement);
 
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 		/*

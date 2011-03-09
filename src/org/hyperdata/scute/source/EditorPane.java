@@ -15,6 +15,7 @@ import org.hyperdata.scute.editortools.undo.RedoAction;
 import org.hyperdata.scute.editortools.undo.UndoAction;
 import org.hyperdata.scute.editortools.undo.UndoHandler;
 import org.hyperdata.scute.syntax.ScalableEditorPane;
+import org.hyperdata.scute.system.Log;
 
 
 /**
@@ -136,7 +137,7 @@ ChangeListener {
 		    in.close();
 		    text = writer.toString();
 		} catch (IOException exception) {
-		    exception.printStackTrace();
+		    Log.exception(exception);
 		} 
 		setText(text.toString());
 	}
@@ -154,7 +155,7 @@ ChangeListener {
 			OutputStream fos = new FileOutputStream(file);
 			fos.write(bytes);
 			fos.close();
-			System.out.println("saving TEXT : " + getSyntax()+ " filename = "+getFilename());
+			// System.out.println("saving TEXT : " + getSyntax()+ " filename = "+getFilename());
 		} catch (IOException e) {
 			// TODO popup warning
 			e.printStackTrace();
@@ -175,7 +176,7 @@ ChangeListener {
 	 */
 	@Override
 	public void focusLost(FocusEvent arg0) {
-		System.out.println("focusLost so SAVE");
+		// System.out.println("focusLost so SAVE");
 		save();
 		
 	}

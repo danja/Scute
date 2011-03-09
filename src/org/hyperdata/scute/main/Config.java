@@ -144,7 +144,7 @@ public class Config extends ModelContainer {
 	 *            the value
 	 */
 	public void setValue(String propName, String value) {
-		System.out.println("setting value " + propName + " = " + value);
+	//	System.out.println("setting value " + propName + " = " + value);
 		Property property = model.createProperty(baseUri + propName);
 		Literal valueNode = model.createLiteral(value);
 		scuteResource.removeAll(property);
@@ -177,7 +177,7 @@ public class Config extends ModelContainer {
 	 * Save now.
 	 */
 	public void saveNow() {
-		System.out.println("saving config");
+	//	System.out.println("saving config");
 		(new ModelSaver(this)).doSave();
 	}
 

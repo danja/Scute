@@ -28,7 +28,9 @@ final class DocPanelAction extends
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
     	System.out.println("DocPanelAction AACCTTIIOONN = "+actionEvent);
-    	Scute.scuteHelp.show();
+    	System.out.println("getActionCommand()= "+actionEvent.getActionCommand());
+    	System.out.println("getActionCommand()= "+actionEvent.paramString());
+    	Scute.scuteHelp.showTopic(actionEvent.getActionCommand());
     	// CardLayout cLay = cardPanel.getLayout();
     	// cLay.show(cardPanel,"panel1Identifier");
     	

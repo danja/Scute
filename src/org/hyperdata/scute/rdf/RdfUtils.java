@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -53,7 +54,7 @@ public class RdfUtils {
 	 */
 	public static void save(Model model, String filename) throws IOException {
 		setCommonPrefixes(model);
-		System.out.println("FILENAME="+filename);
+		// System.out.println("FILENAME="+filename);
 		OutputStream os = new FileOutputStream(filename);
 		model.write(os, Config.self.getDefaultFileFormat());
 		os.close();
@@ -128,7 +129,7 @@ public class RdfUtils {
 		 * StmtIterator iterator = resource.listProperties(property); Statement
 		 * statement = (Statement) iterator.next(); return
 		 * statement.getObject(); // changed for Jena 2 } } catch (Exception
-		 * exception) { exception.printStackTrace(); }
+		 * exception) { Log.exception(exception); }
 		 */
 		final Statement statement = resource.getProperty(property);
 		if (statement == null)
@@ -160,7 +161,7 @@ public class RdfUtils {
 		 * //parent = statement.getSubject(); if
 		 * (!(RDF.type).equals(statement.getPredicate())) { return
 		 * statement.getSubject(); } } } } catch (Exception exception) {
-		 * exception.printStackTrace(); } return null;
+		 * Log.exception(exception); } return null;
 		 */
 		if (rdfNode instanceof Property)
 			return getParentResource(model, (Property) rdfNode);
@@ -195,7 +196,7 @@ public class RdfUtils {
 		 * statement.getSubject();
 		 * if(!(RDF.type).equals(statement.getPredicate())) { return
 		 * statement.getPredicate(); } } } } catch(Exception exception) {
-		 * exception.printStackTrace(); }
+		 * Log.exception(exception); }
 		 * 
 		 * return null;
 		 */
@@ -225,7 +226,7 @@ public class RdfUtils {
 					return statement.getSubject();
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 		return null;
@@ -257,7 +258,7 @@ public class RdfUtils {
 				}
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		return null;
 	}
@@ -270,7 +271,7 @@ public class RdfUtils {
 	 * while (iterator.hasNext()) { iterator.next(); iterator.remove(); }
 	 * 
 	 * resource.addProperty(property, object); } catch (Exception exception) {
-	 * exception.printStackTrace(); } }
+	 * Log.exception(exception); } }
 	 */
 	/**
 	 * Gets the property.
@@ -341,7 +342,7 @@ public class RdfUtils {
 					return statement;
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		return null;
 	}
@@ -450,7 +451,7 @@ public class RdfUtils {
 	 * "http://ideagraph.org/xmlns/idea/filesystem#"); // the encoding was
 	 * screwing up, so declaration removed rdfWriter.setProperty(
 	 * "showXmlDeclaration", Boolean.FALSE); } catch (Exception exception) {
-	 * exception.printStackTrace(); }
+	 * Log.exception(exception); }
 	 * 
 	 * return rdfWriter; }
 	 */
@@ -474,7 +475,7 @@ public class RdfUtils {
 			stringOut.flush();
 			stringOut.close();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		return stringOut.toString();
 	}
@@ -529,7 +530,7 @@ public class RdfUtils {
 			model.remove(statement);
 			model.add(newStatement);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -572,7 +573,7 @@ public class RdfUtils {
 			}
 
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		return model;
 	}
@@ -595,7 +596,7 @@ public class RdfUtils {
 			model.remove(statement);
 			model.add(newStatement);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 	}
@@ -629,7 +630,7 @@ public class RdfUtils {
 				resource.addProperty(RDF.type, newType);
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -696,7 +697,7 @@ public class RdfUtils {
 			resource.removeAll(property);
 			resource.addProperty(property, (String) value);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -723,7 +724,7 @@ public class RdfUtils {
 
 			resource.addProperty(property, object);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -763,7 +764,7 @@ public class RdfUtils {
 				}
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -788,7 +789,7 @@ public class RdfUtils {
 			final StmtIterator iterator = resource.listProperties();
 			show(iterator);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 
@@ -821,7 +822,7 @@ public class RdfUtils {
 				buffer.append("\n" + iterator.next().toString());
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		buffer.append("\n--^--");
 		System.out.println(buffer);
@@ -904,7 +905,7 @@ public class RdfUtils {
 			stringOut.flush();
 			stringOut.close();
 		} catch (final Exception exception) {
-			// exception.printStackTrace();
+			// Log.exception(exception);
 			// System.exit(1);
 			throw new RuntimeException(exception);
 		}

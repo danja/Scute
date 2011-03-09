@@ -7,8 +7,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.hyperdata.scute.system.Log;
+
 import oracle.help.Help;
-import oracle.help.library.helpset.*;
+import oracle.help.library.Book;
+import oracle.help.library.helpset.HelpSet;
+import oracle.help.library.helpset.HelpSetParseException;
 
 /**
  * @author danny
@@ -25,6 +29,7 @@ javax.help.search.SearchEngine.class
  */
 public class ScuteHelp  {
 
+	private HelpSet helpSet = null; // is a book
 	/**
 	 * @param args
 	 */
@@ -44,16 +49,19 @@ public class ScuteHelp  {
 		} catch (MalformedURLException exception1) {
 			exception1.printStackTrace();
 		}
-		HelpSet helpSet = null;
 		try {
 			helpSet = new HelpSet(url);
 		} catch (HelpSetParseException exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		help.addBook(helpSet);
 	}
 	
 	public void show(){
 		 help.showNavigatorWindow();
+	}
+	
+	public void showTopic(String topicID){
+		help.showTopic(helpSet, topicID);
 	}
 }

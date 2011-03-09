@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
 import org.hyperdata.scute.swing.status.StatusTask;
+import org.hyperdata.scute.system.Log;
 
 /**
  * @author danny
@@ -48,7 +49,7 @@ public class SparqlHttp extends StatusTask {
 			uri = endpointURI + "?query=" + URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException exception) {
 			// TODO popup exception
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		httpclient = new DefaultHttpClient();
 		httpget = new HttpGet(uri);
@@ -73,7 +74,7 @@ public class SparqlHttp extends StatusTask {
 			response = httpclient.execute(httpget);
 		} catch (Exception exception) {
 			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 		HttpEntity entity = response.getEntity();
@@ -84,7 +85,7 @@ public class SparqlHttp extends StatusTask {
 			responseString = EntityUtils.toString(entity);
 		} catch (Exception exception) {
 			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		running = false;
 		stateChanged(new StatusEvent(StatusMonitor.GREEN));

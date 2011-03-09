@@ -17,7 +17,8 @@ import java.io.InputStream;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import org.hyperdata.scute.systempanels.LogPane;
+import org.hyperdata.scute.system.Log;
+import org.hyperdata.scute.system.panels.LogPane;
 
 /**
  * ModelContainer - wrapper for models
@@ -29,7 +30,7 @@ public class ModelContainer implements Runnable {
 	 */
 	public void saveModelToFile() {
 		try {
-			System.out.println("saving Model to file " + getModelURI());
+			// System.out.println("saving Model to file " + getModelURI());
 			RdfUtils.save(getModel(), getModelFilename());
 			setSaved(true);
 		} catch (IOException e) {
@@ -131,7 +132,7 @@ public class ModelContainer implements Runnable {
 			stream.close();
 		} catch (final Exception exception) {
 			LogPane.println(exception.getMessage());
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 }

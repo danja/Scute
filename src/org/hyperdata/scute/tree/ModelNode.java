@@ -20,6 +20,7 @@ import javax.swing.tree.TreeNode;
 
 import org.hyperdata.resources.tree.TreeIcons;
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -156,7 +157,7 @@ public class ModelNode extends ResourceNode implements RdfTreeNode {
 					// }
 				}
 			} catch (final Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 		}
 

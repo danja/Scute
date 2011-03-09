@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.systempanels;
+package org.hyperdata.scute.system;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +38,7 @@ public class LFActionListener implements ActionListener {
 					.updateComponentTreeUI(((JComponent) arg0.getSource())
 							.getTopLevelAncestor());
 		} catch (Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 	}

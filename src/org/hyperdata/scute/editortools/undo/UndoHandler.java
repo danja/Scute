@@ -22,7 +22,7 @@ public class UndoHandler implements UndoableEditListener {
 	 * <code>undo</code>, an instance of UndoManager.
 	 */
 	public void undoableEditHappened(UndoableEditEvent e) {
-		System.out.println("undoableEditHappened");
+		// System.out.println("undoableEditHappened");
 		this.editorPane.getUndoManager().addEdit(e.getEdit());
 		this.editorPane.getUndoAction().update();
 		this.editorPane.getRedoAction().update();

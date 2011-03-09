@@ -31,7 +31,7 @@ public class PopupListener extends MouseAdapter  {
 		if ((event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) { // right
 																							// mouse
 																							// click
-			System.out.println("click "+event.getComponent());
+			// System.out.println("click "+event.getComponent());
 			popup.show(event.getComponent(), event.getX(), event.getY());
 		}
 	}

@@ -23,6 +23,7 @@ import javax.swing.tree.TreeNode;
 
 import org.hyperdata.resources.tree.TreeIcons;
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Statement;
@@ -123,7 +124,7 @@ public class StatementNode extends AbstractRdfTreeNode implements RdfTreeNode {
 				 */
 				children.add(getNodeMap().getTreeNode(statement.getObject()));
 			} catch (final Exception exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 			}
 		}
 

@@ -11,7 +11,7 @@ import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;
-import org.hyperdata.scute.systempanels.LogPane;
+import org.hyperdata.scute.system.panels.LogPane;
 
 /**
  * @author danny

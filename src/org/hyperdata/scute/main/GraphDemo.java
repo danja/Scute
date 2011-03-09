@@ -10,6 +10,7 @@ import java.io.InputStream;
 import javax.swing.JFrame;
 
 import org.hyperdata.scute.graph.GraphPanel;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -44,7 +45,7 @@ public class GraphDemo extends JFrame {
 			model.read(new FileInputStream(filename), "", "N3");
 			stream.close();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		GraphDemo demo = new GraphDemo();
 		demo.initialize();

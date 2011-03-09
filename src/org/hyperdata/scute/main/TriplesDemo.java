@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import org.hyperdata.scute.system.Log;
+
 /**
  * The Class TriplesDemo.
  * 
@@ -42,7 +44,7 @@ public class TriplesDemo {
 			model.read(new FileInputStream(filename), "", "N3");
 			stream.close();
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 		// TODO show source window!!

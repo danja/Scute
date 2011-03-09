@@ -3,11 +3,13 @@
  */
 package org.hyperdata.scute.sparql.panels;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.sparql.SparqlContainer;
@@ -36,6 +38,8 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 			SparqlSourcePanel sourcePanel, Frame frame) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
 
 		this.frame = frame;
 		

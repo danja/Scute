@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.tree.TreeNode;
 
 import org.hyperdata.resources.tree.TreeIcons;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -157,7 +158,7 @@ public class LiteralNode extends AbstractRdfTreeNode implements RdfTreeNode {
 		try {
 			literal = getModel().createLiteral(value);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

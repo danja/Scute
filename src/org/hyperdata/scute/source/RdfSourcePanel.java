@@ -17,6 +17,7 @@ import org.hyperdata.scute.autosave.UserActivityListener;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -100,8 +101,8 @@ public class RdfSourcePanel extends EditorPane {
 		final Model modelCopy = model; // er - that'll be a pointer?
 		try {
 			model = RdfUtils.stringToModel(string, Config.baseUri, getSyntax());
-		} catch (final Exception exception) {
-			exception.printStackTrace();
+		} catch (Exception exception) {
+			Log.exception(exception);
 			model = modelCopy;
 			loadModel(model);
 		}
@@ -122,7 +123,7 @@ public class RdfSourcePanel extends EditorPane {
 		// String currentView = getSyntax();
 		String view = ((CardsPanel) e.getSource()).getCurrentCardName();
 		
-		System.out.println("RdfSoucePanel view = "+view);
+	//	System.out.println("RdfSoucePanel view = "+view);
 // save();
 		if (this.getSyntax().equals(view)) {
 			loadModel(model);

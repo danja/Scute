@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -208,7 +209,7 @@ public abstract class AbstractRdfTreeNode implements RdfTreeNode {
 		try {
 			getModel().remove(statement);
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

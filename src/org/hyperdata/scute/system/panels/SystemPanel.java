@@ -1,5 +1,5 @@
 
-package org.hyperdata.scute.systempanels;
+package org.hyperdata.scute.system.panels;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;

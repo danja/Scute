@@ -1,0 +1,36 @@
+/**
+ * 
+ */
+package org.hyperdata.scute.system;
+
+import java.util.logging.Level;
+
+import org.jdesktop.swingx.JXErrorPane;
+import org.jdesktop.swingx.error.ErrorInfo;
+
+import org.hyperdata.scute.system.panels.LogPane;
+
+/**
+ * @author danny
+ * 
+ */
+public class Log {
+
+	// Log.exception(exception);
+	public static void exception(Exception exception) {
+		JXErrorPane errorPane = new JXErrorPane();
+
+		ErrorInfo info = new ErrorInfo("Application Error",
+				"Application Error", null, "category", exception, Level.ALL,
+				null);
+
+		errorPane.setErrorInfo(info);
+		errorPane.setErrorReporter(new Reporter());
+		JXErrorPane.showDialog(null, errorPane);
+
+		LogPane.err(exception.getMessage());
+		LogPane.err("Caused by:" + exception.getCause().getMessage());
+		Log.exception(exception);
+	}
+
+}

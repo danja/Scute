@@ -11,6 +11,7 @@ import javax.swing.text.Document;
 import com.hp.hpl.jena.rdf.arp.ARP;
 import org.hyperdata.scute.swing.status.StatusEvent;
 import org.hyperdata.scute.swing.status.StatusMonitor;
+import org.hyperdata.scute.system.Log;
 
 /**
  * The Class ValidatableRDFXMLDocument.
@@ -43,7 +44,7 @@ public class ValidatableSparqlDocument implements Validatable {
 			try {
 				statusEvent = parseString(document.getText(0, document.getLength()));
 			} catch (BadLocationException exception) {
-				exception.printStackTrace();
+				Log.exception(exception);
 				statusEvent = new StatusEvent(StatusMonitor.RED, exception.getMessage());
 			}
 		return statusEvent;
@@ -61,7 +62,7 @@ public class ValidatableSparqlDocument implements Validatable {
 		Thread.sleep(2000);
 	} catch (InterruptedException exception) {
 		// TODO Auto-generated catch block
-		exception.printStackTrace();
+		Log.exception(exception);
 	}
 	  
 //	           statusEvent.setStatus(StatusMonitor.RED);

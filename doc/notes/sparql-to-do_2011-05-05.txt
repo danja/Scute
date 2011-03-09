@@ -1,6 +1,7 @@
 null any previous runner on Run
 
-undo - redo
+errors - do a POST to hyperdata.org, get that to POST to github, see:
+http://develop.github.com/p/issues.html
 
 drag & drop
 

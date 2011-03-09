@@ -14,6 +14,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.StyledDocument;
 
+import org.hyperdata.scute.system.Log;
+
 
 public class FindDialog extends JDialog {
 
@@ -157,7 +159,7 @@ public class FindDialog extends JDialog {
 
 			return lastMatchPos != -1;
 		} catch (BadLocationException exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		return false;
 	}
@@ -177,7 +179,7 @@ public class FindDialog extends JDialog {
 			editorPane
 					.select(lastMatchPos, lastMatchPos + replacement.length());
 		} catch (BadLocationException exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 	}
 

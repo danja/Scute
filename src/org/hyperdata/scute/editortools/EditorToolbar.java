@@ -4,6 +4,8 @@
 package org.hyperdata.scute.editortools;
 
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -12,9 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
+import org.jdesktop.swingx.JXErrorPane;
+
 import org.hyperdata.scute.editortools.undo.ActionChangedListener;
 import org.hyperdata.scute.editortools.undo.UndoHandler;
 import org.hyperdata.scute.source.EditorPane;
+import org.hyperdata.scute.system.Log;
 
 /**
  * @author danny
@@ -57,5 +62,21 @@ public class EditorToolbar extends JPanel {
 		ZoomAction zoomOutAction = new ZoomAction(zoomPane, "-", 1 / 1.1);
 		JButton zoomOut = new JButton(zoomOutAction);
 		add(zoomOut);
+		
+		JButton exceptionButton = new JButton("X");
+		exceptionButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					throw new ClassNotFoundException("original message");
+				} catch (Exception exception) {
+					
+					Log.exception(exception);
+				}
+				
+			}});
+		
+		add(exceptionButton);
 	}
 }

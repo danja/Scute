@@ -17,6 +17,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import org.hyperdata.scute.system.Log;
+
 
 /**
  * The Class TreeIcons.
@@ -46,7 +48,7 @@ public class ScuteIcons {
 			System.out.println(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile());
 			bigImage = ImageIO.read(new File(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile()));
 		} catch (IOException exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 
 	}

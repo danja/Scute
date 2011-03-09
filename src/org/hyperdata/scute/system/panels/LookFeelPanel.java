@@ -9,7 +9,7 @@
  * Danny Ayers 2011
  */
 
-package org.hyperdata.scute.systempanels;
+package org.hyperdata.scute.system.panels;
 
 import java.awt.GridLayout;
 
@@ -17,6 +17,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
+
+import org.hyperdata.scute.system.LFActionListener;
 
 // import com.jgoodies.looks.plastic.theme.DesertBluer; ??
 

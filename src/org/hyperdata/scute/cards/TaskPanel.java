@@ -48,6 +48,8 @@ public class TaskPanel extends JXTitledPanel {
 		taskPane.add(new ChangeEditorPanelAction(this, "Triples", "Triples View"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Tree", "Tree View"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Graph", "Graph View"));
+		
+		taskPane.add(new DocPanelAction(this, "Editors", "Documentation")); 
 	}
 
 	@SuppressWarnings("deprecation")
@@ -58,6 +60,8 @@ public class TaskPanel extends JXTitledPanel {
 		taskPaneContainer.add(taskPane);
 
 		taskPane.add(new ChangeEditorPanelAction(this, "SPARQL", "SPARQL Editor"));
+		
+		taskPane.add(new DocPanelAction(this, "SPARQL", "Documentation")); // TODO need to pass help context
 	}
 	
 
@@ -67,11 +71,11 @@ public class TaskPanel extends JXTitledPanel {
 		taskPane.setTitle("Manage Data");
 		taskPaneContainer.add(taskPane);
 
-		taskPane.add(new ChangeEditorPanelAction(this, "Files", "File Manager"));
-		
 		taskPane.add(new ChangeEditorPanelAction(this, "Graphs", "Graph Manager"));
 		
-		taskPane.add(new DocPanelAction(this, "Data", "Documentation")); // TODO need to pass help context
+		taskPane.add(new ChangeEditorPanelAction(this, "Files", "File Manager"));
+		
+		taskPane.add(new DocPanelAction(this, "Manage", "Documentation")); // TODO need to pass help context
 	}
 
 
@@ -83,6 +87,8 @@ public class TaskPanel extends JXTitledPanel {
 
 		taskPane.add(new ChangeEditorPanelAction(this, "System", "Settings"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Log", "System Log"));
+		
+		taskPane.add(new DocPanelAction(this, "System", "Documentation")); // TODO need to pass help context
 	}
 
 

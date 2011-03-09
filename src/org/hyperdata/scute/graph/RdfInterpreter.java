@@ -24,6 +24,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 import org.hyperdata.scute.swing.RoundButton;
+import org.hyperdata.scute.system.Log;
 
 /**
  * The Class RdfInterpreter.
@@ -76,7 +77,7 @@ public class RdfInterpreter {
 				addStatement(statement);
 			}
 		} catch (final Exception exception) {
-			exception.printStackTrace();
+			Log.exception(exception);
 		}
 		// requestFocusInWindow(false); // takes the focus off nodes - doesn't
 		// work!
