@@ -23,8 +23,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
-import org.hyperdata.scute.swing.RoundButton;
 import org.hyperdata.scute.system.Log;
+import org.hyperdata.scute.toolbars.RoundButton;
 
 /**
  * The Class RdfInterpreter.

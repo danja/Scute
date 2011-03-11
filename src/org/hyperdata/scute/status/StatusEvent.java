@@ -9,10 +9,11 @@
  * Danny Ayers 2011
  */
 
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
 
 import javax.swing.ImageIcon;
 import javax.swing.text.BadLocationException;
+
 
 
 /**

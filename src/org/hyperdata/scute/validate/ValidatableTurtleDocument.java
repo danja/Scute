@@ -8,8 +8,8 @@ import java.io.StringReader;
 
 import javax.swing.text.Document;
 
-import org.hyperdata.scute.swing.status.StatusEvent;
-import org.hyperdata.scute.swing.status.StatusMonitor;
+import org.hyperdata.scute.status.StatusEvent;
+import org.hyperdata.scute.status.StatusMonitor;
 
 /**
  * The Class ValidatableTurtleDocument.

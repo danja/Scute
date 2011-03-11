@@ -5,8 +5,8 @@ package org.hyperdata.scute.validate;
 
 import javax.swing.text.Document;
 
-import org.hyperdata.scute.swing.status.StatusAction;
-import org.hyperdata.scute.swing.status.StatusEvent;
+import org.hyperdata.scute.status.StatusAction;
+import org.hyperdata.scute.status.StatusEvent;
 
 /**
  * The Class TurtleValidateAction.

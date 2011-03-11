@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.toolbars.file;
 
 import javax.swing.*;
 
@@ -14,12 +14,12 @@ import java.awt.event.*;
 
 /**
  * 
- * SaveDialog and OpenDialog virtually identical, but kept distinct until all requirements determined
+ * OpenDialog and OpenDialog virtually identical, but kept distinct until all requirements determined
  * 
  * @author danny
  * 
  */
-public class SaveDialog extends JDialog implements ActionListener,
+public class OpenDialog extends JDialog implements ActionListener,
 		PropertyChangeListener {
 	private String filename = null;
 	private String uri = null;
@@ -35,8 +35,8 @@ public class SaveDialog extends JDialog implements ActionListener,
 	public static void main(String[] args) {
 
 		JFrame frame = new JFrame();
-		SaveDialog fileDialog = new SaveDialog(frame);
-		// saveDialog.setSize(400,200);
+		OpenDialog fileDialog = new OpenDialog(frame);
+		// OpenDialog.setSize(400,200);
 		fileDialog.pack();
 		fileDialog.setVisible(true);
 //		System.out.println("Filename = "+fileDialog.getFilename());
@@ -46,17 +46,17 @@ public class SaveDialog extends JDialog implements ActionListener,
 
 
 	/** Creates the reusable dialog. */
-	public SaveDialog(final Frame frame) {
+	public OpenDialog(final Frame frame) {
 		super(frame, true);
 		this.frame = frame;
 
-		setTitle("Save");
+		setTitle("Open");
 
 		JPanel filenamePanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		filenameTextField = new JTextField(30);
 
-		JCheckBox fileCheckBox = new JCheckBox(" Save File     "); // alignment
+		JCheckBox fileCheckBox = new JCheckBox(" Open File     "); // alignment
 																	// set with
 																	// spaces -
 																	// hacky!
@@ -76,7 +76,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		JPanel uriPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 
 		uriTextField = new JTextField(30);
-		JCheckBox uriCheckBox = new JCheckBox("Store Graph");
+		JCheckBox uriCheckBox = new JCheckBox("Open Graph");
 		// uriCheckBox.setHorizontalTextPosition(JCheckBox.LEADING);
 		
 		
@@ -104,14 +104,11 @@ public class SaveDialog extends JDialog implements ActionListener,
 		// Make this dialog display it.
 		setContentPane(optionPane);
 
-		
 		// Handle window closing correctly.
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				String filename = filenameTextField.getText();
-				System.out.println("FFF="+filename);
 				/*
 				 * Instead of directly closing the window, we're going to change
 				 * the JOptionPane's value property.
@@ -137,7 +134,7 @@ public class SaveDialog extends JDialog implements ActionListener,
 		fileButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int returnVal = fc.showSaveDialog(frame);
+				int returnVal = fc.showOpenDialog(frame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					filenameTextField.setText(file.getAbsolutePath());
@@ -155,8 +152,8 @@ public class SaveDialog extends JDialog implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		optionPane.setValue(okButtonLabel); // needed?
-		filename = filenameTextField.getText();
-		uri = filenameTextField.getText();
+		// filenameText = filenameTextField.getText();
+		// uriText = filenameTextField.getText();
 	}
 
 	/**
@@ -181,27 +178,29 @@ public class SaveDialog extends JDialog implements ActionListener,
 			}
 
 			optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
-
+			
 			if (okButtonLabel.equals(value)) {
-				filename = filenameTextField.getText();
 				uri = uriTextField.getText();
-				
+				filename = filenameTextField.getText();
+				// check text
 				if (true) {
+					
 					clearAndHide();
 				} else {
 					// text was invalid
-					filenameTextField.selectAll();
-					JOptionPane.showMessageDialog(SaveDialog.this, filename
-							+ "isn't a suitable filename.", "Try again...",
+					uriTextField.selectAll();
+					JOptionPane.showMessageDialog(OpenDialog.this, uri
+							+ "isn't a suitable URI.", "Try again...",
 							JOptionPane.ERROR_MESSAGE, null);
 
-					filename = null;
-					filenameTextField.requestFocusInWindow();
+				//	filenameText = null;
+					uriTextField.requestFocusInWindow();
 				}
 			} else { // user closed dialog or clicked cancel
-				filename = null;
+				// filenameText = null;
 				clearAndHide();
 			}
+			
 		}
 	}
 

@@ -19,7 +19,7 @@ import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlHttp;
 import org.hyperdata.scute.sparql.panels.SparqlSourcePanel;
-import org.hyperdata.scute.swing.status.StatusAction;
+import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.system.Log;
 
 /**

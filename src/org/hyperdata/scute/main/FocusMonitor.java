@@ -8,8 +8,8 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JEditorPane;
 
-import org.hyperdata.scute.editortools.EditorToolbar;
 import org.hyperdata.scute.source.EditorPane;
+import org.hyperdata.scute.toolbars.source.EditorToolbar;
 
 /**
  * @author danny

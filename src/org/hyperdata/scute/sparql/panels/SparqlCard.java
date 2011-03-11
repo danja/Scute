@@ -21,17 +21,17 @@ import javax.swing.text.*;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;
-import org.hyperdata.scute.editortools.EditorToolbar;
-import org.hyperdata.scute.editortools.FindAction;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
 import org.hyperdata.scute.sparql.popup.PopupListener;
 import org.hyperdata.scute.sparql.popup.SparqlPopupMenu;
-import org.hyperdata.scute.swing.status.StatusAction;
-import org.hyperdata.scute.swing.status.StatusButton;
-import org.hyperdata.scute.swing.status.StatusInfoPane;
+import org.hyperdata.scute.status.StatusAction;
+import org.hyperdata.scute.status.StatusButton;
+import org.hyperdata.scute.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.*;
+import org.hyperdata.scute.toolbars.actions.FindAction;
+import org.hyperdata.scute.toolbars.source.EditorToolbar;
 import org.hyperdata.scute.validate.RdfXmlValidateAction;
 import org.hyperdata.scute.validate.SparqlValidateAction;
 

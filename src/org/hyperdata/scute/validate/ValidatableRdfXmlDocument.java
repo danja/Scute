@@ -9,8 +9,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import com.hp.hpl.jena.rdf.arp.ARP;
-import org.hyperdata.scute.swing.status.StatusEvent;
-import org.hyperdata.scute.swing.status.StatusMonitor;
+
+import org.hyperdata.scute.status.StatusEvent;
+import org.hyperdata.scute.status.StatusMonitor;
 import org.hyperdata.scute.system.Log;
 
 /**

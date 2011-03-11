@@ -18,9 +18,9 @@ import org.hyperdata.scute.sparql.endpoints.EditEndpointsAction;
 import org.hyperdata.scute.sparql.endpoints.Endpoint;
 import org.hyperdata.scute.sparql.endpoints.EndpointListModel;
 import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
-import org.hyperdata.scute.swing.status.StatusAction;
-import org.hyperdata.scute.swing.status.StatusButton;
-import org.hyperdata.scute.swing.status.StatusMonitor;
+import org.hyperdata.scute.status.StatusAction;
+import org.hyperdata.scute.status.StatusButton;
+import org.hyperdata.scute.status.StatusMonitor;
 
 /**
  * @author danny

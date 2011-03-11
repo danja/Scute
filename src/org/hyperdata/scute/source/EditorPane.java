@@ -12,12 +12,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
-import org.hyperdata.scute.editortools.EditorToolbar;
-import org.hyperdata.scute.editortools.undo.RedoAction;
-import org.hyperdata.scute.editortools.undo.UndoAction;
-import org.hyperdata.scute.editortools.undo.UndoHandler;
 import org.hyperdata.scute.syntax.ScalableEditorPane;
 import org.hyperdata.scute.system.Log;
+import org.hyperdata.scute.toolbars.source.EditorToolbar;
+import org.hyperdata.scute.toolbars.source.UndoHandler;
+import org.hyperdata.scute.tree.actions.RedoAction;
+import org.hyperdata.scute.tree.actions.UndoAction;
 
 
 /**
@@ -150,8 +150,7 @@ public abstract class EditorPane extends ScalableEditorPane implements TextConta
 			fos.write(bytes);
 			fos.close();
 			// System.out.println("saving TEXT : " + getSyntax()+ " filename = "+getFilename());
-		} catch (IOException exception) {
-			// TODO popup warning
+		} catch (Exception exception) {
 			Log.exception(exception);
 		}
 	}

@@ -3,7 +3,7 @@
  */
 package org.hyperdata.scute.validate;
 
-import org.hyperdata.scute.swing.status.StatusEvent;
+import org.hyperdata.scute.status.StatusEvent;
 
 /**
  * The Interface Validatable.

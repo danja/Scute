@@ -1,10 +1,12 @@
-package org.hyperdata.scute.editortools;
+package org.hyperdata.scute.toolbars.actions;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JEditorPane;
+
+import org.hyperdata.scute.toolbars.source.FindDialog;
 
 
 public class FindAction extends AbstractAction {

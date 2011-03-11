@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+
 
 
 /**

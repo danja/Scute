@@ -1,7 +1,8 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
+
 
 /**
  * The Class StatusTask.

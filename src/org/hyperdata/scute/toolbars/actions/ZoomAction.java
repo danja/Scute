@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.editortools;
+package org.hyperdata.scute.toolbars.actions;
 
 import java.awt.event.ActionEvent;
 

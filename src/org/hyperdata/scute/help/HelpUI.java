@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.help;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.toolbars.file.FilesInterface;
 
 /**
  * @author danny
@@ -19,11 +20,11 @@ import org.hyperdata.scute.main.Config;
  */
 public class HelpUI {
 	
-	private ToolsInterface editor;
+	private FilesInterface editor;
 	private JMenu helpMenu;
 	private Action aboutAction;
 
-	public HelpUI(ToolsInterface editor) {
+	public HelpUI(FilesInterface editor) {
 		this.editor = editor;
 		createActions();
 

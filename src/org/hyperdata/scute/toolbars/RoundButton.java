@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.toolbars;
 
 import java.awt.Color;
 import java.awt.Dimension;

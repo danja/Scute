@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
 
 import java.awt.Graphics;
 import java.awt.event.MouseListener;

@@ -8,14 +8,14 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.toolbars.file;
 
 import java.awt.Frame;
 
 /**
  * The Interface ToolsInterface.
  */
-public interface ToolsInterface {
+public interface FilesInterface {
 
 	/**
 	 * Clone file.

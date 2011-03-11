@@ -1,4 +1,4 @@
-package org.hyperdata.scute.editortools.undo;
+package org.hyperdata.scute.tree.actions;
 
 import java.awt.event.ActionEvent;
 

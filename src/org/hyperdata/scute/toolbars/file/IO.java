@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.toolbars.file;
 
 import java.awt.Frame;
 
@@ -17,7 +17,7 @@ import org.hyperdata.scute.system.panels.LogPane;
  * @author danny
  * 
  */
-public class IO implements ToolsInterface {
+public class IO implements FilesInterface {
 
 	private Frame frame = null;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
 
 import java.util.HashSet;
 import java.util.Iterator;

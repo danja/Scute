@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.toolbars.file;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -35,7 +35,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	private Action closeAction;
 	
 	/** The editor. */
-	private final ToolsInterface editor;
+	private final FilesInterface editor;
 
 	/** The exit action. */
 	private Action exitAction;
@@ -64,7 +64,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	 * @param editor
 	 *            the editor
 	 */
-	public FileUI(ToolsInterface editor) {
+	public FileUI(FilesInterface editor) {
 		this.editor = editor;
 		createActions();
 

@@ -3,9 +3,9 @@
  */
 package org.hyperdata.scute.validate;
 
-import org.hyperdata.scute.swing.status.StatusEvent;
-import org.hyperdata.scute.swing.status.StatusMonitor;
-import org.hyperdata.scute.swing.status.StatusTask;
+import org.hyperdata.scute.status.StatusEvent;
+import org.hyperdata.scute.status.StatusMonitor;
+import org.hyperdata.scute.status.StatusTask;
 import org.hyperdata.scute.system.Log;
 
 /**

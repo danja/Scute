@@ -16,9 +16,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import org.hyperdata.scute.swing.status.StatusEvent;
-import org.hyperdata.scute.swing.status.StatusMonitor;
-import org.hyperdata.scute.swing.status.StatusTask;
+import org.hyperdata.scute.status.StatusEvent;
+import org.hyperdata.scute.status.StatusMonitor;
+import org.hyperdata.scute.status.StatusTask;
 import org.hyperdata.scute.system.Log;
 
 /**

@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.hyperdata.scute.swing.status;
+package org.hyperdata.scute.status;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+
 
 /**
  * The Class StatusAction.

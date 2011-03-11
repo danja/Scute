@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.editortools;
+package org.hyperdata.scute.toolbars.source;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -23,10 +23,10 @@ import javax.swing.undo.UndoManager;
 import org.jdesktop.swingx.JXErrorPane;
 
 import org.hyperdata.resources.general.GeneralIcons;
-import org.hyperdata.scute.editortools.undo.ActionChangedListener;
-import org.hyperdata.scute.editortools.undo.UndoHandler;
 import org.hyperdata.scute.source.EditorPane;
 import org.hyperdata.scute.system.Log;
+import org.hyperdata.scute.toolbars.actions.FindAction;
+import org.hyperdata.scute.toolbars.actions.ZoomAction;
 
 /**
  * @author danny

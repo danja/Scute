@@ -8,7 +8,7 @@
  * 
  * Danny Ayers 2011
  */
-package org.hyperdata.scute.swing;
+package org.hyperdata.scute.main;
 
 /**
  * The Interface GeneralApplication.

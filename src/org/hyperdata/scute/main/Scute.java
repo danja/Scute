@@ -33,25 +33,24 @@ import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.cards.TaskPanel;
-import org.hyperdata.scute.editortools.EditorToolbar;
 import org.hyperdata.scute.filemanager.FileExplorerPanel;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.graphmanager.GraphManagerPanel;
+import org.hyperdata.scute.help.HelpUI;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.sparql.panels.SparqlCard;
-import org.hyperdata.scute.swing.FileUI;
-import org.hyperdata.scute.swing.GeneralApplication;
-import org.hyperdata.scute.swing.HelpUI;
-import org.hyperdata.scute.swing.IO;
-import org.hyperdata.scute.swing.status.StatusAction;
-import org.hyperdata.scute.swing.status.StatusButton;
-import org.hyperdata.scute.swing.status.StatusInfoPane;
+import org.hyperdata.scute.status.StatusAction;
+import org.hyperdata.scute.status.StatusButton;
+import org.hyperdata.scute.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
 import org.hyperdata.scute.system.Log;
 import org.hyperdata.scute.system.panels.LogPane;
 import org.hyperdata.scute.system.panels.SystemPanel;
+import org.hyperdata.scute.toolbars.file.FileUI;
+import org.hyperdata.scute.toolbars.file.IO;
+import org.hyperdata.scute.toolbars.source.EditorToolbar;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreePanel;
@@ -223,7 +222,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		final JPanel controlPanel = new JPanel(); // contains JToolBars
 		panel.add(controlPanel, BorderLayout.NORTH);
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
 		controlPanel.add(fileUI.getToolBar());
 		controlPanel.add(editorToolbar);
 

@@ -3,7 +3,7 @@
  */
 package org.hyperdata.scute.autosave;
 
-import org.hyperdata.scute.swing.status.StatusAction;
+import org.hyperdata.scute.status.StatusAction;
 
 /**
  * The Class AutoSaveAction.
