@@ -65,7 +65,6 @@ public class RunQueryAction extends StatusAction {
 			runRemoteQuery(event);
 			}else {
 				stop();
-				
 			}
 		}
 	}

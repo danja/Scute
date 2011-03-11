@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventObject;
@@ -24,6 +26,8 @@ import org.hyperdata.scute.editortools.FindAction;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
+import org.hyperdata.scute.sparql.popup.PopupListener;
+import org.hyperdata.scute.sparql.popup.SparqlPopupMenu;
 import org.hyperdata.scute.swing.status.StatusAction;
 import org.hyperdata.scute.swing.status.StatusButton;
 import org.hyperdata.scute.swing.status.StatusInfoPane;
@@ -47,13 +51,14 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	private ScuteEditorKit editorKit;
 	private SparqlPopupMenu popupMenu;
 
-	public SparqlCard(Frame frame) {
+	public SparqlCard(Frame frame, FocusListener focusListener) {
 		super(new BorderLayout());
 
 		sourcePanel = new SparqlSourcePanel("SPARQL");
 		editorKit = new ScuteEditorKit("SPARQL"); // ///////////////////////
 		// editorKit.setSyntax("SPARQL");
 		sourcePanel.setEditorKit(editorKit);
+		sourcePanel.addFocusListener(focusListener);
 
 		sourcePanel.setPreferredSize(new Dimension(300, 300));
 		popupMenu = new SparqlPopupMenu(sourcePanel);
@@ -64,17 +69,13 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		// String text = " <http://dbpedia.org/resource/Category:Neptune> .";
 		sourcePanel.setText(text);
 
-		resultsPanel = new SparqlResultsPanel();
+		resultsPanel = new SparqlResultsPanel(focusListener);
 		sparqlContainer.addSparqlListener(resultsPanel);
 
 		// passing sourcepanel here a bit messy, but will do for now
 		SparqlRunToolbar toolbar = new SparqlRunToolbar(sparqlContainer,
 				sourcePanel, frame);
 		add(toolbar, BorderLayout.NORTH);
-
-		EditorToolbar editorToolbar = new EditorToolbar(frame,
-				resultsPanel.getXmlPane(), sourcePanel);
-		toolbar.add(editorToolbar);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				sourcePanel, resultsPanel);
@@ -113,50 +114,11 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	public static void main(String[] args) {
 
 		final JFrame frame = new JFrame();
-		SparqlCard sparqlPanel = new SparqlCard(frame);
+		SparqlCard sparqlPanel = new SparqlCard(frame, null);
 		frame.setSize(800, 600);
 		frame.add(sparqlPanel);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		// frame.pack();
 		frame.setVisible(true);
 	}
-
-	// delegate to SparqlContainer
-
-	// public String getQueryString() {
-	// return sparqlContainer.getQueryString();
-	// }
-	//
-	// public Dataset getDataset() {
-	// return sparqlContainer.getDataset();
-	// }
-	//
-	// public boolean isLocal() {
-	// return sparqlContainer.isLocal();
-	// }
-	//
-	// public Endpoint getEndpoint() {
-	// return sparqlContainer.getEndpoint();
-	// }
-	//
-	// public void setEndpoint(Endpoint endpoint) {
-	// sparqlContainer.setEndpoint(endpoint);
-	// }
-	//
-	// public void setResultsText(String resultsString) {
-	// sparqlContainer.setResultsText(resultsString);
-	// }
-	//
-	//
-	// public String getResultsText() {
-	// return sparqlContainer.getResultsText();
-	// }
-	//
-	// public void addSparqlListener(SparqlListener sparqlListener) {
-	// sparqlContainer.addSparqlListener(sparqlListener);
-	// }
-	//
-	// public void fireSparqlEvent() {
-	// sparqlContainer.fireSparqlEvent();
-	// }
 }

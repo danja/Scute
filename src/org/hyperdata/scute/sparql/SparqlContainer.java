@@ -1,6 +1,8 @@
 package org.hyperdata.scute.sparql;
 
 import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 import org.hyperdata.scute.sparql.endpoints.Endpoint;
 
@@ -35,4 +37,14 @@ public interface SparqlContainer {
 	 * @param text
 	 */
 	public void setQueryString(String text);
+
+	/**
+	 * @return
+	 */
+	public ResultSet getResultSet();
+
+	/**
+	 * @return
+	 */
+	// public SPARQLResult getResults();
 }

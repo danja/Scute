@@ -8,6 +8,7 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
+import org.hyperdata.scute.source.EditorPane;
 import org.hyperdata.scute.source.TextContainer;
 
 
@@ -19,6 +20,7 @@ public class Card extends JPanel {
 
 	// this is a bit yucky, will do for now
 	private TextContainer textContainer = null;
+//	private EditorPane editorPane = null;
 	private boolean textCard = false;
 
 	// JPanel's constructors
@@ -64,4 +66,11 @@ public class Card extends JPanel {
 		return textCard;
 	}
 	
+//	public EditorPane getEditorPane() {
+//		return this.editorPane;
+//	}
+//
+//	public void setEditorPane(EditorPane editorPane) {
+//		this.editorPane = editorPane;
+//	}
 }

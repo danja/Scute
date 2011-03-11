@@ -6,6 +6,9 @@ package org.hyperdata.scute.sparql;
 import javax.swing.event.EventListenerList;
 
 import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFactory;
+import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 import org.hyperdata.scute.sparql.endpoints.Endpoint;
 
@@ -23,6 +26,7 @@ public class SparqlContainerImpl implements SparqlContainer {
 	
 	private  EventListenerList listenerList = new EventListenerList();
 	private  SparqlEvent sparqlEvent = null;
+	private ResultSet resultSet;
 
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.sparql.SparqlContainer#getQueryString()
@@ -78,8 +82,19 @@ public class SparqlContainerImpl implements SparqlContainer {
 	@Override
 	public void setResultsText(String resultsString) {
 		this.resultsString = resultsString;
+		if(isSelect()){
+			resultSet = ResultSetFactory.fromXML(resultsString);
+		}
 	}
 	
+	/**
+	 * @return
+	 */
+	private boolean isSelect() {
+		// TODO check what kind of query it is
+		return true;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.sparql.SparqlContainer#getResultsText()
 	 */
@@ -115,4 +130,12 @@ public class SparqlContainerImpl implements SparqlContainer {
 	         }
 	     }
 	 }
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.sparql.SparqlContainer#getResults()
+	 */
+	@Override
+	public ResultSet getResultSet() {
+		return resultSet;
+	}
 }

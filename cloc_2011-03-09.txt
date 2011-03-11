@@ -1,0 +1,17 @@
+     100 files     200 files     300 files     400 files     500 files     505 text files.
+classified 505 filesDuplicate file check 505 files (464 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                          Unique:      400 files                                               484 unique files.                              
+Counting:  100Counting:  200Counting:  300Counting:  400      61 files ignored.
+
+http://cloc.sourceforge.net v 1.09  T=10.0 s (42.5 files/s, 10093.9 lines/s)
+-------------------------------------------------------------------------------
+Language          files     blank   comment      code    scale   3rd gen. equiv
+-------------------------------------------------------------------------------
+HTML                249      9154      3996     69603 x   1.90 =      132245.70
+Java                160      2642      6494      8236 x   1.36 =       11200.96
+CSS                   4        86        59       297 x   1.00 =         297.00
+XML                   5        59       102       168 x   1.90 =         319.20
+Bourne Shell          6         8         9        24 x   3.81 =          91.44
+Haskell               1         0         0         2 x   2.11 =           4.22
+-------------------------------------------------------------------------------
+SUM:                425     11949     10660     78330 x   1.84 =      144158.52
+-------------------------------------------------------------------------------

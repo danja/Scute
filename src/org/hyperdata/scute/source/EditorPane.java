@@ -12,6 +12,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 
+import org.hyperdata.scute.editortools.EditorToolbar;
 import org.hyperdata.scute.editortools.undo.RedoAction;
 import org.hyperdata.scute.editortools.undo.UndoAction;
 import org.hyperdata.scute.editortools.undo.UndoHandler;
@@ -24,8 +25,7 @@ import org.hyperdata.scute.system.Log;
  * 
  * @author danny
  */
-public abstract class EditorPane extends ScalableEditorPane implements TextContainer, 
-ChangeListener {
+public abstract class EditorPane extends ScalableEditorPane implements TextContainer, ChangeListener {
 
 	private String filename;
 	
@@ -39,18 +39,23 @@ ChangeListener {
 	
 	private UndoAction undoAction = new UndoAction(this);
 	private RedoAction redoAction = new RedoAction(this);
+	private EditorToolbar editorToolbar;
 	
 	/**
 	 * @param syntax
 	 */
 	public EditorPane(String syntax) {
 		super.setSyntax(syntax);
-		setFont(new Font("monospaced", Font.PLAIN, 12));
+		setFont(new Font("Monospaced", Font.PLAIN, 12));
 		setPreferredSize(new Dimension(800,600));
 		addFocusListener(this);
 		setDragEnabled(true);
 		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));
 	}
+	
+//	public void createToolbar(){
+//
+//	}
 	
 	/**
 	 * Resets the undo manager.

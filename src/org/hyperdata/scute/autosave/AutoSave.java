@@ -21,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
+import org.hyperdata.scute.main.ScratchPad;
 import org.hyperdata.scute.main.Scute;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;
@@ -40,6 +41,8 @@ public class AutoSave extends UserActivityAdapter { //
 
 	/** The text saver. */
 	private TextSaver textSaver;
+	private TextSaver scratchTextSaver;
+	private TextContainer scratchTextContainer;
 
 	/** The model timer. */
 	private final Timer timer = new Timer();
@@ -87,7 +90,7 @@ public class AutoSave extends UserActivityAdapter { //
 	 */
 	@Override
 	public void focusGained(FocusEvent event) {
-
+		// scratchTextSaver - maybe..?
 		textSaver.save(); // save the old one
 		reschedule(); // start over
 	}
@@ -104,6 +107,10 @@ public class AutoSave extends UserActivityAdapter { //
 		if (textSaver != null) {
 			textSaver.cancel();
 		}
+		if (scratchTextSaver != null) {
+			scratchTextSaver.cancel();
+		}
+		
 		timer.purge(); // clean queue
 
 		modelSaver = new ModelSaver(workingModelContainer);
@@ -113,6 +120,10 @@ public class AutoSave extends UserActivityAdapter { //
 			textSaver = new TextSaver(currentTextContainer);
 			timer.schedule(textSaver, Config.self.getTextSaveDelay());
 		}
+		
+		scratchTextSaver = new TextSaver(scratchTextContainer);
+		timer.schedule(scratchTextSaver, Config.self.getTextSaveDelay());
+		
 	}
 
 	/*
@@ -178,6 +189,10 @@ public class AutoSave extends UserActivityAdapter { //
 			textSaver.cancel();
 			textSaver.save();
 		}
+		if (scratchTextSaver != null) {
+			scratchTextSaver.cancel();
+			scratchTextSaver.save();
+		}
 		Config.self.setSync(true);
 		Config.self.saveNow();
 	}
@@ -213,6 +228,13 @@ public class AutoSave extends UserActivityAdapter { //
 		} else {
 			setCurrentTextContainer(null);
 		}
+	}
+
+	/**
+	 * @param scratchPad
+	 */
+	public void setScratchTextContainer(TextContainer textContainer) {
+		scratchTextContainer = textContainer;
 	}
 
 }

@@ -11,12 +11,16 @@
 package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
-
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
@@ -29,6 +33,7 @@ import org.hyperdata.scute.autosave.AutoSaveAction;
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.cards.TaskPanel;
+import org.hyperdata.scute.editortools.EditorToolbar;
 import org.hyperdata.scute.filemanager.FileExplorerPanel;
 import org.hyperdata.scute.graph.GraphPanel;
 import org.hyperdata.scute.graphmanager.GraphManagerPanel;
@@ -133,6 +138,10 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 	private ScratchPad scratchPad;
 
+	private EditorToolbar editorToolbar;
+
+	private FocusMonitor focusMonitor;
+
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -162,36 +171,61 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		panel = new JPanel(new BorderLayout());
 
+		focusMonitor = new FocusMonitor();
 		makeCardsPanel();
-		// panel.add(cardsPanel, BorderLayout.CENTER);
+		
+		editorToolbar = new EditorToolbar(frame); 
+		focusMonitor.setEditorToolbar(editorToolbar);
+		
+		cardsPanel.add(editorToolbar, BorderLayout.SOUTH);
 		
 		scratchPad = new ScratchPad("Text");
+		scratchPad.setFilename(Config.SCRATCH_FILENAME);
+		scratchPad.addFocusListener(focusMonitor);
+		scratchPad.load(); // load saved contents
+		
 		JScrollPane scrollPane = new JScrollPane(scratchPad, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, cardsPanel, scrollPane);
-		splitPane.setResizeWeight(1);
-		// splitPane.setContinuousLayout(true);
-		splitPane.setDividerLocation(.9);
+		
+//		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, cardsPanel, scrollPane);
+//		splitPane.setResizeWeight(1);
+//		splitPane.setDividerLocation(.9);
+		
+		List children = 
+		    Arrays.asList(new Leaf("left"),
+		       new Divider(), 
+		       new Leaf("right"));
+		Split modelRoot = new Split();
+		modelRoot.setChildren(children);
+
+		JXMultiSplitPane multiSplitPane = new JXMultiSplitPane();
+		multiSplitPane.getMultiSplitLayout().setModel(modelRoot);
+		multiSplitPane.add(cardsPanel, "left");
+		multiSplitPane.add(scrollPane, "right");
 		
 		// 
-		panel.add(splitPane, BorderLayout.CENTER);
+		panel.add(multiSplitPane, BorderLayout.CENTER);
+	//	panel.add(splitPane, BorderLayout.CENTER);
 
 		
 		autoSave = new AutoSave();
 		autoSave.setWorkingModelContainer(this);
 		autoSave.setWorkingModelContainer(Config.self);
 		autoSave.setCurrentTextContainer(turtlePanel);
+		autoSave.setScratchTextContainer(scratchPad);
 		
 		cardsPanel.addChangeListener(autoSave);
 
-		final JPanel controlPanel = new JPanel(); // contains JToolBars
-		panel.add(controlPanel, BorderLayout.NORTH);
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+
 
 		io = new IO(this, cardsPanel);
 		
 		fileUI = new FileUI(io);
 
+		final JPanel controlPanel = new JPanel(); // contains JToolBars
+		panel.add(controlPanel, BorderLayout.NORTH);
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(fileUI.getToolBar());
+		controlPanel.add(editorToolbar);
 
 		helpUI = new HelpUI(io);
 
@@ -219,12 +253,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		}
 	}
 
+
+
 	/**
 	 * 
 	 */
 	private void setupFrame() {
-		
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width - 2
 				* FRAME_INSET, screenSize.height - 2 * FRAME_INSET);
@@ -315,9 +349,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 	 * 
 	 */
 	private void makeSparqlPanel() {
-		sparqlPanel = new SparqlCard(frame);
+		sparqlPanel = new SparqlCard(frame, focusMonitor);
 		sparqlPanel.setTextCard(true);
-		
 		cardsPanel.add(sparqlPanel, "SPARQL");
 	}
 
@@ -360,6 +393,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		rdfxmlPanel.addUserActivityListener(autoSave);
 		rdfxmlPanel.loadModel(Models.workingModel);
 		rdfxmlPanel.setEditorKit(new ScuteEditorKit("XML"));
+		rdfxmlPanel.addFocusListener(focusMonitor);
 
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
@@ -404,6 +438,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new ScuteEditorKit("Turtle"));
 		turtlePanel.loadModel(Models.workingModel);
+		turtlePanel.addFocusListener(focusMonitor);
 
 		cardsPanel.addChangeListener(turtlePanel);
 
@@ -428,15 +463,22 @@ public class Scute extends ModelContainer implements TreeSelectionListener,
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
-
+		
 		Card turtleCard = new Card(new BorderLayout());
 		turtleCard.setTextCard(true);
 		turtleCard.setTextContainer(turtlePanel);
 		turtleCard.add(new JScrollPane(turtlePanel), BorderLayout.CENTER);
-		turtleCard.add(statusPanel, BorderLayout.SOUTH);
-
+		
+//		EditorToolbar editorToolbar = turtlePanel.getEditorToolbar();
+//		JPanel toolsPanel = new JPanel();
+//		toolsPanel.add(editorToolbar);
+//		toolsPanel.add(statusPanel);
+//		turtleCard.add(toolsPanel, BorderLayout.SOUTH);
+		
 		cardsPanel.add(turtleCard, "Turtle");
 	}
+	
+	
 
 
 	/*
