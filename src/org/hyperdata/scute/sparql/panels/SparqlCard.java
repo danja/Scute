@@ -11,13 +11,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventObject;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.*;
+
+import org.jdesktop.swingx.JXMultiSplitPane;
+import org.jdesktop.swingx.MultiSplitLayout;
+import org.jdesktop.swingx.MultiSplitLayout.Divider;
+import org.jdesktop.swingx.MultiSplitLayout.Leaf;
+import org.jdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;
@@ -60,7 +68,8 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		sourcePanel.setEditorKit(editorKit);
 		sourcePanel.addFocusListener(focusListener);
 
-		sourcePanel.setPreferredSize(new Dimension(300, 300));
+		// sourcePanel.setPreferredSize(new Dimension(300, 300));
+		
 		popupMenu = new SparqlPopupMenu(sourcePanel);
 		PopupListener popupListener = new PopupListener(popupMenu);
 		sourcePanel.addMouseListener(popupListener);
@@ -77,12 +86,39 @@ public class SparqlCard extends Card { // implements SparqlContainer
 				sourcePanel, frame);
 		add(toolbar, BorderLayout.NORTH);
 
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				sourcePanel, resultsPanel);
-		splitPane.setContinuousLayout(true);
-		add(splitPane, BorderLayout.CENTER);
-		splitPane.setDividerLocation(0.5);
+//		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+//				sourcePanel, resultsPanel);
+//		splitPane.setContinuousLayout(true);
+//		add(splitPane, BorderLayout.CENTER);
+//		splitPane.setDividerLocation(0.5);
 
+		// there's an awful lot of this...
+		Leaf leftLeaf = new Leaf("left");
+		// Rectangle leftBounds = new Rectangle(0,0,300,300);
+		// leftLeaf.setBounds(leftBounds);
+		leftLeaf.setWeight(0.5);
+		Leaf rightLeaf = new Leaf("right");
+//		Rectangle rightBounds = new Rectangle(0,0,300,300);
+//		rightLeaf.setBounds(rightBounds);
+		rightLeaf.setWeight(0.5);
+		
+		List children = 
+		    Arrays.asList(leftLeaf,
+		       new Divider(), 
+		       rightLeaf);
+		Split splitModel = new Split();
+		splitModel.setChildren(children);
+		splitModel.setRowLayout(false); // column
+
+		MultiSplitLayout multiSplitLayout = new MultiSplitLayout();
+		multiSplitLayout.setLayoutMode(MultiSplitLayout.NO_MIN_SIZE_LAYOUT);
+		JXMultiSplitPane multiSplitPane = new JXMultiSplitPane(multiSplitLayout);
+		multiSplitPane.getMultiSplitLayout().setModel(splitModel);
+		multiSplitPane.add(sourcePanel, "left");
+		multiSplitPane.add(resultsPanel, "right");
+		add(multiSplitPane, BorderLayout.CENTER);
+		
+		
 		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));

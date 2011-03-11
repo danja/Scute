@@ -35,7 +35,7 @@ public class FocusMonitor implements FocusListener {
 		} else {
 			editorToolbar.setVisible(false);
 		}
-		System.out.println("FOCUS="+event.getSource());
+		// System.out.println("FOCUS="+event.getSource());
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +43,7 @@ public class FocusMonitor implements FocusListener {
 	 */
 	@Override
 	public void focusLost(FocusEvent e) {
-		// ignore
+		editorToolbar.setVisible(false);
 	}
 
 }

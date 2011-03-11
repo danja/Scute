@@ -53,7 +53,7 @@ public class RdfUtils {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public static void save(Model model, String filename) throws IOException {
-		setCommonPrefixes(model);
+		setPrefixes(model);
 		// System.out.println("FILENAME="+filename);
 		OutputStream os = new FileOutputStream(filename);
 		model.write(os, Config.self.getDefaultFileFormat());
@@ -77,6 +77,10 @@ public class RdfUtils {
 	/** The iso date. */
 	public static SimpleDateFormat isoDate = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssz");
+	
+	private static HashMap<String, String> prefixes = null;
+	private static HashMap<String, String> commonPrefixes = null;
+	private static HashMap<String, String> notSoCommonPrefixes = null;
 
 	/*
 	 * ?? Z - 1.4 only??
@@ -386,7 +390,7 @@ public class RdfUtils {
 		final InputStream inputStream = new FileInputStream(filename);
 		// model.read(new FileReader(filename), "");
 		model.read(inputStream, "", format);
-		setCommonPrefixes(model);
+		setPrefixes(model);
 		// System.out.println(modelToString(model));
 		return model;
 	}
@@ -469,7 +473,7 @@ public class RdfUtils {
 			return "Null Model.";
 		final StringWriter stringOut = new StringWriter();
 		try {
-			setCommonPrefixes(model);
+			setPrefixes(model);
 			model.write(stringOut, "RDF/XML-ABBREV", RSS.getURI());
 			// http://base
 			stringOut.flush();
@@ -640,40 +644,53 @@ public class RdfUtils {
 	 * @param model
 	 *            the new common prefixes
 	 */
-	public static void setCommonPrefixes(Model model) {
-		Map<String, String> prefixes = new HashMap<String, String>();
-		prefixes.putAll(getCommonPrefixMap());
-		prefixes.putAll(getNotSoCommonPrefixMap());
-		model.setNsPrefixes(prefixes);
+	public static void setPrefixes(Model model) {
+		model.setNsPrefixes(getAllPrefixes());
+	}
+	
+	public static Map getAllPrefixes(){
+		if(prefixes == null){
+			prefixes = new HashMap<String, String>();
+			prefixes.putAll(getCommonPrefixes());
+			prefixes.putAll(getNotSoCommonPrefixes());
+		}
+		return prefixes;
 	}
 
-	public static Map<String, String> getCommonPrefixMap(){
-		Map<String, String> prefixes = new HashMap<String, String>();
-		prefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		prefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-		prefixes.put("owl", "http://www.w3.org/2002/07/owl#");
-		prefixes.put("xsd","http://www.w3.org/2001/XMLSchema#");
-		prefixes.put("dc", "http://purl.org/dc/elements/1.1/");
-		prefixes.put("dcterms", "http://purl.org/dc/terms/");
-		prefixes.put("skos", "http://www.w3.org/2004/02/skos/core#");
-		prefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
-		prefixes.put("x", "http://purl.org/stuff/");
-		prefixes.put("void", "http://rdfs.org/ns/void#");
-		prefixes.put("mo", "http://purl.org/ontology/mo/");
-		prefixes.put("rel", "http://purl.org/vocab/relationship/");
-		prefixes.put("rev", "http://purl.org/stuff/rev#");
-
+	public static Map<String, String> getCommonPrefixes(){
+		if(commonPrefixes == null){
+commonPrefixes = new HashMap<String, String>();
+		commonPrefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		commonPrefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+		commonPrefixes.put("owl", "http://www.w3.org/2002/07/owl#");
+		commonPrefixes.put("xsd","http://www.w3.org/2001/XMLSchema#");
+		commonPrefixes.put("dc", "http://purl.org/dc/elements/1.1/");
+		commonPrefixes.put("dcterms", "http://purl.org/dc/terms/");
+		commonPrefixes.put("skos", "http://www.w3.org/2004/02/skos/core#");
+		commonPrefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
+		commonPrefixes.put("x", "http://purl.org/stuff/");
+		commonPrefixes.put("void", "http://rdfs.org/ns/void#");
+		commonPrefixes.put("mo", "http://purl.org/ontology/mo/");
+		commonPrefixes.put("rel", "http://purl.org/vocab/relationship/");
+		commonPrefixes.put("rev", "http://purl.org/stuff/rev#");
+		}
 		// prefixes.put("dbpo", "http://dbpedia.org/ontology/");
 		// prefixes.put("dbpr", "http://dbpedia.org/resource/");
 		// prefixes.put("dbpp", "http://dbpedia.org/property/");
-		return prefixes;
+		return commonPrefixes;
 	}
 	
-	public static Map<String, String> getNotSoCommonPrefixMap(){
-		Map<String, String> prefixes = new HashMap<String, String>();
-		prefixes.put("tdb", "http://jena.hpl.hp.com/2008/tdb#");
-		prefixes.put("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
-		return prefixes;
+	public static Map<String, String> getNotSoCommonPrefixes(){
+		if(notSoCommonPrefixes == null){
+		notSoCommonPrefixes = new HashMap<String, String>();
+		notSoCommonPrefixes.put("tdb", "http://jena.hpl.hp.com/2008/tdb#");
+		notSoCommonPrefixes.put("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
+		
+		notSoCommonPrefixes.put("dbpo", "http://dbpedia.org/ontology/");
+		notSoCommonPrefixes.put("dbpr", "http://dbpedia.org/resource/");
+		notSoCommonPrefixes.put("dbpp", "http://dbpedia.org/property/");
+		}
+		return notSoCommonPrefixes;
 	}
 
 	// yuck

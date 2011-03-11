@@ -13,7 +13,8 @@ import javax.swing.table.TableModel;
 
 import com.hp.hpl.jena.query.ResultSet;
 
-import org.hyperdata.scute.triples.BetterJTable;
+import org.jdesktop.swingx.JXTable;
+
 
 
 /**
@@ -22,11 +23,11 @@ import org.hyperdata.scute.triples.BetterJTable;
  */
 public class TableResultsPane extends JPanel {
 
-	private BetterJTable table;
+	private JXTable table;
 	
 	public TableResultsPane(){
 		super(new BorderLayout());
-		table = new BetterJTable();
+		table = new JXTable();
 		table.setDragEnabled(true);
 		add(new JScrollPane(table),BorderLayout.CENTER);
 	}

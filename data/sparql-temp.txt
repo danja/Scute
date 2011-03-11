@@ -1,4 +1,7 @@
-SELECT DISTINCT * WHERE {
-   ?s ?p ?o 
-}
-LIMIT 10zxc
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT DISTINCT * WHERE { 
+
+   <http://dbpedia.org/resource/Neptune> a ?object . 
+    ?object rdfs:label ?label . 
+} 

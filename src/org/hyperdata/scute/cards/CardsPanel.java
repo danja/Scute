@@ -12,6 +12,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import org.jdesktop.swingx.JXTitledPanel;
+
 public class CardsPanel extends JPanel {
 
 	private CardLayout layout;
@@ -21,15 +23,20 @@ public class CardsPanel extends JPanel {
 	private String currentCardName = "Turtle";
 
 	private Map<String, Card> cards = new HashMap<String, Card>();
+
+	public void addPlain(Card card, String name) {
+		super.add(card, name);
+		cards.put(name, card);
+	}
 	
 	public void add(Card card, String name) {
-		super.add(card, name);
-		// System.out.println("Adding CARD = "+name);
+		super.add(new JXTitledPanel(name, card), name);
 		cards.put(name, card);
 	}
 	
 	public void addScroll(Card card, String name) {
-		super.add(new JScrollPane(card), name);
+		super.add(new JXTitledPanel(name, card), name);
+	//	super.add(new JScrollPane(card), name);
 		// System.out.println("Adding CARD = "+name);
 		cards.put(name, card);
 	}
@@ -51,12 +58,12 @@ public class CardsPanel extends JPanel {
 	// for debugging
 	public void listCards(){
 		Iterator<String> iterator = cards.keySet().iterator();
-		System.out.println("---- CARDS ----");
+		// System.out.println("---- CARDS ----");
 		while(iterator.hasNext()){
 			String key = iterator.next();
-			System.out.println(key+" = "+cards.get(key));
+			// System.out.println(key+" = "+cards.get(key));
 		}
-		System.out.println("---------------");
+		// System.out.println("---------------");
 	}
 
 	public Card getCard(String name) {

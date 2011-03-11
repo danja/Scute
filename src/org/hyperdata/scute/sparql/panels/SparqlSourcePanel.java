@@ -32,7 +32,7 @@ import org.hyperdata.scute.source.EditorPane;
 public class SparqlSourcePanel extends EditorPane {
 
 	private JPopupMenu popupMenu;
-	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixMap();
+	private Map<String, String> prefixMap = RdfUtils.getCommonPrefixes();
 
 
 	public SparqlSourcePanel(String string) {

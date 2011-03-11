@@ -11,7 +11,14 @@
 
 package org.hyperdata.scute.triples;
 
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 import com.hp.hpl.jena.rdf.model.Model;
+
+import org.jdesktop.swingx.JXTable;
 
 import org.hyperdata.scute.cards.Card;
 
@@ -24,18 +31,34 @@ import org.hyperdata.scute.cards.Card;
  * 
  * FIXME implement
  */
-public class TriplesPanel extends Card {
+public class TriplesPanel extends Card  {
 
+	JXTable table; //  = new JXTable();
+	private Model model;
+	
 	/**
-	 * @param workingModel
+	 * @param model
 	 */
-	public TriplesPanel(Model workingModel) {
-		// TODO Auto-generated constructor stub
+	public TriplesPanel(Model model) {
+		this.model = model;
+		loadModel();
+		add(new JScrollPane(table));
+		addFilterPane();
 	}
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private void addFilterPane() {
+		JPanel filterPanel = new JPanel();
+		
+	}
 
+	/**
+	 * 
+	 */
+	private void loadModel() {
+		TableModel tableModel = new TripleTableModel(model);
+		table = new JXTable(tableModel);
+	}
 }

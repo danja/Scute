@@ -1,6 +1,8 @@
 HIDE toolbars if not needed (a la gnome bars?)
 
 spellchecker for RDF terms?
+autocompletion (not in-your-face)
+
 http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-ternary.html?page=1
 http://jstomp.sourceforge.net/comboBox/search.html
 

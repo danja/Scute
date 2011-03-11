@@ -173,7 +173,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 			model.add(subject, DCTerms.title, labelLiteral);
 			model.add(subject, VOID.sparqlEndpoint, endpointResource);
 			
-			RdfUtils.setCommonPrefixes(model);
+			RdfUtils.setPrefixes(model);
 		}
 		try {
 			RdfUtils.save(model, Config.ENDPOINTS_MODEL);

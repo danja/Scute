@@ -8,6 +8,7 @@ import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
 
+import org.hyperdata.scute.main.SplitButtons;
 import org.hyperdata.scute.source.EditorPane;
 import org.hyperdata.scute.source.TextContainer;
 
@@ -65,12 +66,5 @@ public class Card extends JPanel {
 	public boolean isTextCard() {
 		return textCard;
 	}
-	
-//	public EditorPane getEditorPane() {
-//		return this.editorPane;
-//	}
-//
-//	public void setEditorPane(EditorPane editorPane) {
-//		this.editorPane = editorPane;
-//	}
+
 }

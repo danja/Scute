@@ -17,7 +17,7 @@ import org.hyperdata.scute.rdf.RdfUtils;
  */
 public class Prefixes extends DefaultComboBoxModel {
 
-	private Map<String, String> map = RdfUtils.getCommonPrefixMap();
+	private Map<String, String> map = RdfUtils.getCommonPrefixes();
 	private  List<String> names = new ArrayList<String>();
 	
 	public Prefixes(){

@@ -25,7 +25,6 @@ import org.hyperdata.scute.sparql.SparqlListener;
 import org.hyperdata.scute.sparql.table.TableResultsPane;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
 import org.hyperdata.scute.system.Log;
-import org.hyperdata.scute.triples.BetterJTable;
 
 /**
  * @author danny
