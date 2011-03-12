@@ -17,6 +17,7 @@ public class SparqlValidateAction extends StatusAction {
 
 	private StatusEvent status;
 
+	private Validator validator;
 	/**
 	 * Instantiates a new turtle validate action.
 	 *
@@ -24,9 +25,13 @@ public class SparqlValidateAction extends StatusAction {
 	 */
 	public SparqlValidateAction(Document sparqlDocument) {
 		Validatable validatableSparql = new ValidatableSparqlDocument(sparqlDocument); 
-		Validator validator = new Validator(validatableSparql);
+		validator = new Validator(validatableSparql);
 		validator.addStatusListener(this);
 		setStatusTask(validator); 
+	}
+	
+	public Validator getValidator(){
+		return validator;
 	}
 
 	/* (non-Javadoc)

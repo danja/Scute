@@ -17,11 +17,12 @@ import org.hyperdata.scute.source.TextContainer;
 /**
  * The Class TextSaver.
  */
-public class TextSaver extends TimerTask {
+public class TextSaver extends TimerTask implements Saveable {
 
 	/** The container. */
 	private final TextContainer container;
-//	private String filename;
+
+	// private String filename;
 
 	/**
 	 * Instantiates a new text saver.
@@ -32,12 +33,14 @@ public class TextSaver extends TimerTask {
 	public TextSaver(TextContainer container) {
 		this.container = container;
 	}
-	
-//	public void setFilename(String filename){ // Config.TEXT_FILENAME
-//		this.filename = filename;
-//	}
 
-	/* (non-Javadoc)
+	// public void setFilename(String filename){ // Config.TEXT_FILENAME
+	// this.filename = filename;
+	// }
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.TimerTask#run()
 	 */
 	@Override
@@ -49,6 +52,8 @@ public class TextSaver extends TimerTask {
 	 * Save.
 	 */
 	public void save() {
-		container.save();
+		 if (container != null) { // hmmph... get rid later - it's getting called before the container's initialised
+			container.save();
+		 }
 	}
 }

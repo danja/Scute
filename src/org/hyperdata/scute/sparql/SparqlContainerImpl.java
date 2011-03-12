@@ -11,6 +11,7 @@ import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 import org.hyperdata.scute.sparql.endpoints.Endpoint;
+import org.hyperdata.scute.system.Log;
 
 /**
  * @author danny
@@ -84,7 +85,12 @@ public class SparqlContainerImpl implements SparqlContainer {
 	public void setResultsText(String resultsString) {
 		this.resultsString = resultsString;
 		if(isSelect()){
+			try{ // spurious
 			resultSet = ResultSetFactory.fromXML(resultsString);
+			}catch(Exception exception){
+				resultsString = null;
+				Log.exception(exception);
+			}
 		}
 	}
 	

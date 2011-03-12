@@ -27,24 +27,9 @@ import org.hyperdata.scute.validate.ErrorParser;
  */
 public class StatusEvent {
 
-	public int getLine() {
-		return this.line;
-	}
-
-	public void setLine(int line) {
-		this.line = line;
-	}
-
-	public int getColumn() {
-		return this.column;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
-	}
-
 	private int status = 0;
 	private String description = "";
+	
 	private int line = -1;
 	private int column = -1;
 	
@@ -135,5 +120,22 @@ public class StatusEvent {
 	 */
 	public String getDescription() {
 		return this.description;
+	}
+	
+
+	public int getLine() {
+		return this.line;
+	}
+
+	public void setLine(int line) {
+		this.line = line;
+	}
+
+	public int getColumn() {
+		return this.column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
 	}
 }

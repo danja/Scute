@@ -9,29 +9,37 @@ import org.hyperdata.scute.rdf.ModelContainer;
 
 /**
  * @author danny
- *
+ * 
  */
-public class ModelSaver extends TimerTask {
+public class ModelSaver extends TimerTask implements Saveable {
 
 	private ModelContainer modelContainer;
+
 	/**
 	 * @param container
 	 */
 	public ModelSaver(ModelContainer modelContainer) {
 		this.modelContainer = modelContainer;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.TimerTask#run()
 	 */
 	@Override
 	public void run() {
-		doSave();
+		save();
 		cancel(); // kill itself
 	}
+
 	/**
 	 * 
 	 */
-	public void doSave() {
-		modelContainer.saveModelToFile();	
+	public void save() {
+		if (modelContainer != null) { // get rid later - it's getting called
+										// before the container's initialised
+			modelContainer.saveModelToFile();
+		}
 	}
 }

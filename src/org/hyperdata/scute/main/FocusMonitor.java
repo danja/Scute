@@ -42,7 +42,11 @@ public class FocusMonitor implements FocusListener {
 	 * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
 	 */
 	@Override
-	public void focusLost(FocusEvent e) {
+	public void focusLost(FocusEvent event) {
+		Object source = event.getSource();
+		if(source instanceof EditorPane){
+			((EditorPane)source).save();
+		}
 		editorToolbar.setVisible(false);
 	}
 

@@ -1,14 +1,27 @@
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT * WHERE { 
+SELECT DISTINCT * WHERE {
+?s rdfs:label "Buxton"@en ;
+ a <http://transport.data.gov.uk/def/naptan/NptgLocality> ;
+skos:prefLabel ?o .
 
-   <http://dbpedia.org/resource/Neptune> a ?object . 
-    ?object rdfs:label ?label . 
-} 
+}
+
+http://transport.data.gov.uk/id/nptg-locality/E0007051
 
 
 
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX naptan: <http://transport.data.gov.uk/def/naptan/>
 
+SELECT DISTINCT * WHERE {
+<http://transport.data.gov.uk/id/nptg-locality/E0007051> ?p ?o .
+?stop a naptan:StopPoint .
+?stop ?p ?o .
+?stop naptan:street ?street .
+FILTER REGEX(?street, "Macc")
 
 
 

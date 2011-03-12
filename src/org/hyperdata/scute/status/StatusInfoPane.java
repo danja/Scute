@@ -35,7 +35,11 @@ public class StatusInfoPane extends JPanel implements StatusChangeListener {
 	 */
 	@Override
 	public void statusChanged(StatusEvent status) {
-		textArea.setText(status.getDescription());
+		String description = status.getDescription();
+		if(description.length() > 30){ // too long
+			description = description.substring(0,30);
+		}
+		textArea.setText(description);
 	}
 
 }

@@ -5,12 +5,14 @@ package org.hyperdata.scute.source;
 
 import java.awt.event.FocusListener;
 
+import org.hyperdata.scute.autosave.Saveable;
+
 /**
  * The Interface TextContainer.
  * 
  * @author danny
  */
-public interface TextContainer extends FocusListener {
+public interface TextContainer extends FocusListener, Saveable {
 
 	/**
 	 * Gets the syntax.
@@ -34,10 +36,6 @@ public interface TextContainer extends FocusListener {
 
 	public void setFilename(String filename);
 	
-	/**
-	 * 
-	 */
-	public void save();
 	
 	public void load();
 }

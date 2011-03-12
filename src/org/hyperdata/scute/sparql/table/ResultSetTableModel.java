@@ -15,6 +15,7 @@ import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 import org.hyperdata.scute.rdf.RdfUtils;
+import org.hyperdata.scute.system.Log;
 
 
 public class ResultSetTableModel extends AbstractTableModel {
@@ -64,7 +65,13 @@ public class ResultSetTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public Object getValueAt(int row, int column) {
-		QuerySolution solution = results.get(row);
+		QuerySolution solution =null;
+		try { // spurious...
+		solution = results.get(row);
+		}catch(Exception exception){
+			Log.exception(exception);
+			return "error!";
+		}
 		RDFNode node = solution.get(getColumnName(column));
 		if(node == null){
 			return "";
@@ -77,7 +84,13 @@ public class ResultSetTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
-		return false;
+		return true; // might want to copy
+	}
+	/**
+	 * 
+	 */
+	public void clear() {
+		results.clear();
 	}
 
 	/* (non-Javadoc)

@@ -20,13 +20,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.PlainDocument;
-import javax.swing.text.PlainView;
-import javax.swing.text.Segment;
-import javax.swing.text.Utilities;
+import javax.swing.text.*;
 
 /**
  * The Class HighlighterView.
@@ -58,7 +52,7 @@ public abstract class HighlighterView extends ScalableView implements PatternMap
 	@Override
 	protected int drawUnselectedText(Graphics graphics, int x, int y, int p0,
 			int p1) throws BadLocationException {
-
+				
 		final Document doc = getDocument();
 		final String text = doc.getText(p0, p1 - p0);
 
@@ -72,7 +66,7 @@ public abstract class HighlighterView extends ScalableView implements PatternMap
 		for (final Map.Entry<Pattern, Color> entry : getPatternMap().entrySet()) {
 			// System.out.println();
 			final Matcher matcher = entry.getKey().matcher(text);
-			Matcherloop:
+			MatcherLoop:
 			while (matcher.find()) {
 //				System.out.println(matcher.start(1) + " -> " +matcher.end());
 //				System.out.println(matcher.group());
@@ -91,7 +85,7 @@ public abstract class HighlighterView extends ScalableView implements PatternMap
 						if(blockMap.get(i) > matcher.end()){
 //							System.out.println("don't include inner "+i+" -> "+matcher.end());
 //							System.out.println("-----------------------");
-							break Matcherloop;
+							break MatcherLoop;
 						}
 					}
 				}
@@ -124,7 +118,6 @@ public abstract class HighlighterView extends ScalableView implements PatternMap
 			doc.getText(p0 + i, text.length() - i, segment);
 			x = Utilities.drawTabbedText(segment, x, y, graphics, this, i);
 		}
-
-		return x;
+		return x; // x is end of block
 	}
 }

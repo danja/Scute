@@ -21,6 +21,8 @@ import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
 import org.hyperdata.scute.status.StatusMonitor;
+import org.hyperdata.scute.validate.SparqlValidateAction;
+import org.hyperdata.scute.validate.Validator;
 
 /**
  * @author danny
@@ -35,7 +37,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 	private Frame frame;
 
 	public SparqlRunToolbar(SparqlContainer queryContainer,
-			SparqlSourcePanel sourcePanel, Frame frame) {
+			SparqlSourcePanel sourcePanel, Validator validator, Frame frame) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -45,7 +47,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 
 //		// using sourcepanel here a bit messy, but will do for now
 		
-		StatusAction runQueryAction = new RunQueryAction("Run", queryContainer, sourcePanel);
+		StatusAction runQueryAction = new RunQueryAction(frame, "Run", queryContainer, sourcePanel, validator);
 		
 		String[] labels = { "Error", "Stop", "Run" };
 		String[] descriptions = { "Error, check log", "Running...", "Run" };

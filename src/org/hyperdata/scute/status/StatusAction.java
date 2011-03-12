@@ -75,9 +75,9 @@ public class StatusAction extends AbstractAction implements
 	 */
 	public StatusTask getStatusTask() {
 		Object object = getValue("StatusTask");
-		System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+object);
+	//	System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+object);
 		if (object != null) {
-			System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+((StatusTask) object).getClass());
+		//	System.out.println("XXXXXXXXXXXXXXX getValue(StatusTask)="+((StatusTask) object).getClass());
 			return (StatusTask) object;
 		}
 		return null;

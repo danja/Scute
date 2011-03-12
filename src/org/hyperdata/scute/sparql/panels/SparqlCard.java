@@ -68,23 +68,16 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		sourcePanel.setEditorKit(editorKit);
 		sourcePanel.addFocusListener(focusListener);
 
-		// sourcePanel.setPreferredSize(new Dimension(300, 300));
-		
 		popupMenu = new SparqlPopupMenu(sourcePanel);
 		PopupListener popupListener = new PopupListener(popupMenu);
 		sourcePanel.addMouseListener(popupListener);
 
-		String text = "SELECT DISTINCT * WHERE {\n   ?s ?p ?o \n}\nLIMIT 10";
-		// String text = " <http://dbpedia.org/resource/Category:Neptune> .";
-		sourcePanel.setText(text);
+		sourcePanel.loadSoon();
 
 		resultsPanel = new SparqlResultsPanel(focusListener);
 		sparqlContainer.addSparqlListener(resultsPanel);
 
-		// passing sourcepanel here a bit messy, but will do for now
-		SparqlRunToolbar toolbar = new SparqlRunToolbar(sparqlContainer,
-				sourcePanel, frame);
-		add(toolbar, BorderLayout.NORTH);
+
 
 //		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 //				sourcePanel, resultsPanel);
@@ -130,12 +123,15 @@ public class SparqlCard extends Card { // implements SparqlContainer
 
 		// Set up validator
 		Document sparqlDocument = sourcePanel.getDocument();
-		StatusAction sparqlValidateAction = new SparqlValidateAction(
-				sparqlDocument);
+		SparqlValidateAction sparqlValidateAction = new SparqlValidateAction(sparqlDocument);
+		
+		// passing sourcepanel here a bit messy, but will do for now
+		SparqlRunToolbar runToolbar = new SparqlRunToolbar(sparqlContainer, sourcePanel, sparqlValidateAction.getValidator(), frame);
+		add(runToolbar, BorderLayout.NORTH);
+		
 		StatusInfoPane validatorPane = new StatusInfoPane(sparqlValidateAction);
 
 		// Set up validator button
-
 		StatusButton validatorButton = new StatusButton(sparqlValidateAction);
 
 		statusPanel.add(validatorButton);

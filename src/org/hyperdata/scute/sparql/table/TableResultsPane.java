@@ -22,11 +22,13 @@ import org.jdesktop.swingx.JXTable;
 public class TableResultsPane extends JPanel {
 
 	private JXTable table;
+	private ResultSetTableModel tableModel; // recreated with every set of interesting results, kept for clearing
 
 	public TableResultsPane() {
 		super(new BorderLayout());
 		table = new JXTable();
 		table.setDragEnabled(true);
+		//table.setEditable(true);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
 
@@ -35,8 +37,16 @@ public class TableResultsPane extends JPanel {
 	}
 
 	public void setResults(ResultSet resultSet) {
-		TableModel tableModel = new ResultSetTableModel(resultSet);
+		tableModel = new ResultSetTableModel(resultSet);
 		table.setModel(tableModel);
-		table.repaint();
+		table.validate(); // is enough?
+	}
+
+	/**
+	 * 
+	 */
+	public void clear() {
+		tableModel.clear();
+		table.validate(); // is enough?
 	}
 }

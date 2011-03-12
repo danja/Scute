@@ -32,41 +32,42 @@ import org.hyperdata.scute.system.Log;
  */
 public class SparqlResultsPanel extends JPanel implements SparqlListener {
 
-	private TextResultsPanel textPanel;
-	private XMLResultsPanel xmlPanel;
-	//private BetterJTable table = new BetterJTable();
+	private TextResultsPanel textPane;
+	private XMLResultsPanel xmlPane;
+	// private BetterJTable table = new BetterJTable();
 	private TableResultsPane tablePane;
-	private HTTPPanel httpPanel;
+	private HTTPPanel httpPane;
 
 	public SparqlResultsPanel(FocusListener focusListener) {
 		super(new BorderLayout());
 
-		textPanel = new TextResultsPanel();
-		textPanel.addFocusListener(focusListener);
-		textPanel.setEditorKit(new ScuteEditorKit("Turtle")); // for CONSTRUCTed results
-		
-		xmlPanel = new XMLResultsPanel();
-		xmlPanel.addFocusListener(focusListener);
-		xmlPanel.setEditorKit(new ScuteEditorKit("XML"));
-		
+		textPane = new TextResultsPanel();
+		textPane.addFocusListener(focusListener);
+		textPane.setEditorKit(new ScuteEditorKit("Turtle")); // for CONSTRUCTed
+																// results
+
+		xmlPane = new XMLResultsPanel();
+		xmlPane.addFocusListener(focusListener);
+		xmlPane.setEditorKit(new ScuteEditorKit("XML"));
+
 		tablePane = new TableResultsPane();
 		tablePane.addFocusListener(focusListener);
-		
-		httpPanel = new HTTPPanel();
-		httpPanel.addFocusListener(focusListener);
+
+		httpPane = new HTTPPanel();
+		httpPane.addFocusListener(focusListener);
 
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		tabs.addTab("Text", new JScrollPane(textPanel));
+		tabs.addTab("Text", new JScrollPane(textPane));
 		tabs.addTab("Table", tablePane); // it has its own scroll
-		tabs.addTab("XML", new JScrollPane(xmlPanel));
-		tabs.addTab("HTTP", new JScrollPane(httpPanel));
+		tabs.addTab("XML", new JScrollPane(xmlPane));
+		tabs.addTab("HTTP", new JScrollPane(httpPane));
 
 		add(tabs, BorderLayout.CENTER);
 	}
 
 	public void populate(String resultString) {
 		try {
-			xmlPanel.setText(resultString);
+			xmlPane.setText(resultString);
 		} catch (Error error) {
 			System.err.println("SparqlResultsPanel: " + error.getMessage());
 			// ignore - probably Interrupted attempt to acquire write lock
@@ -80,8 +81,8 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		ResultSet resultSet = ResultSetFactory.copyResults(results);
 
 		tablePane.setResults(resultSet);
-		textPanel.setText(ResultSetFormatter.asText(resultSet));
-		xmlPanel.setText(ResultSetFormatter.asXMLString(resultSet));
+		textPane.setText(ResultSetFormatter.asText(resultSet));
+		xmlPane.setText(ResultSetFormatter.asXMLString(resultSet));
 	}
 
 	public void populate(SPARQLResult result) {
@@ -89,11 +90,11 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		String resultString = "...";
 		if (result.isBoolean()) {
 			resultString = Boolean.toString(result.getBooleanResult());
-			textPanel.setText(resultString);
+			textPane.setText(resultString);
 		}
 		if (result.isModel()) {
 			resultString = RdfUtils.modelToString(result.getModel());
-			textPanel.setText(resultString); // will do for now
+			textPane.setText(resultString); // will do for now
 		}
 		if (result.isResultSet()) {
 			populate(result.getResultSet());
@@ -111,24 +112,35 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 	public void sparqlEvent(SparqlEvent sparqlEvent) {
 		SparqlContainer sparqlContainer = (SparqlContainer) sparqlEvent
 				.getSource();
-
+		if (sparqlContainer.getResultsText() == null) {
+			clearViews();
+		}
 		populate(sparqlContainer.getResultsText());
 		populate(sparqlContainer.getResultSet());
 		populateHTTPPane(sparqlContainer.getHTTPText());
+	}
 
+	/**
+	 * 
+	 */
+	private void clearViews() {
+		tablePane.clear();
+		httpPane.setText("");
+		xmlPane.setText("");
+		textPane.setText("");
 	}
 
 	/**
 	 * @param httpText
 	 */
 	private void populateHTTPPane(String httpText) {
-		httpPanel.setText(httpText);
+		httpPane.setText(httpText);
 	}
 
 	/**
 	 * @return
 	 */
 	public JEditorPane getXmlPane() {
-		return xmlPanel;
+		return xmlPane;
 	}
 }

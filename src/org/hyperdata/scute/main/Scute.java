@@ -180,8 +180,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		panel = new JPanel(new BorderLayout());
 
 		focusMonitor = new FocusMonitor();
+		
+		autoSave = new AutoSave();
+		
 		makeCardsPanel();
-
+		
+		
 		editorToolbar = new EditorToolbar(frame);
 		focusMonitor.setEditorToolbar(editorToolbar);
 
@@ -193,7 +197,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		scratchPad.setEditorKit(new ScuteEditorKit("SPARQL"));
 		scratchPad.setFilename(Config.SCRATCH_FILENAME);
 		scratchPad.addFocusListener(focusMonitor);
-		scratchPad.load(); // load saved contents
+		scratchPad.loadSoon(); // load saved contents
+		
 		JScrollPane scratchPane = new JScrollPane(scratchPad,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -229,12 +234,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		panel.add(multiSplitPane, BorderLayout.CENTER);
 		// panel.add(splitPane, BorderLayout.CENTER);
 
-		autoSave = new AutoSave();
+		// effectively presets
 		autoSave.setWorkingModelContainer(this);
 		autoSave.setWorkingModelContainer(Config.self);
 		autoSave.setCurrentTextContainer(turtlePanel);
 		autoSave.setScratchTextContainer(scratchPad);
-
+		
 		cardsPanel.addChangeListener(autoSave);
 
 		io = new IO(this, cardsPanel);
@@ -428,6 +433,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 
+		// add to save-on-shutdown list
+		autoSave.addSaveable(rdfxmlPanel);
+		
 		// set up autosave button
 		StatusAction autosaveAction = new AutoSaveAction();
 		StatusButton autosaveButton = new StatusButton(autosaveAction,
@@ -475,6 +483,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		statusPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 
+		// add to save-on-shutdown list
+		autoSave.addSaveable(turtlePanel);
+		
 		// set up autosave button
 		StatusAction autosaveAction = new AutoSaveAction();
 		StatusButton autosaveButton = new StatusButton(autosaveAction,
@@ -492,11 +503,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 		statusPanel.add(validatorButton);
 		statusPanel.add(validatorPane);
-
+		
+		
 		Card turtleCard = new Card(new BorderLayout());
 		turtleCard.setTextCard(true);
 		turtleCard.setTextContainer(turtlePanel);
 		turtleCard.add(new JScrollPane(turtlePanel), BorderLayout.CENTER);
+		turtleCard.add(statusPanel, BorderLayout.SOUTH);
 
 		cardsPanel.add(turtleCard, "Turtle");
 	}

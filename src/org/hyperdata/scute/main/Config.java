@@ -30,17 +30,8 @@ public class Config extends ModelContainer {
 	/** The Constant ASSEMBLER_FILENAME. */
 	public static final String ASSEMBLER_FILENAME = "data/tdb-assembler.ttl";
 	
-	/** The Constant CONFIG_FILENAME. */
-	public static final String CONFIG_FILENAME = "data/config.ttl";
-
 	public static final String CONFIG_URI = "http://purl.org/stuff/scute/application/config";
 	
-	/** The Constant WORKING_MODEL_FILENAME. */
-	public static final String WORKING_MODEL_FILENAME = "data/working.ttl";
-	
-	/** The Constant TEXT_FILENAME. */
- //	public static final String TEXT_FILENAME = "data/temp.txt";
-
 	public static final String SPARQL_FILENAME = "data/sparql-temp.txt";
 	
 	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
@@ -51,11 +42,13 @@ public class Config extends ModelContainer {
 	
 	public static final Syntax SPARQL_SYNTAX = Syntax.syntaxSPARQL_11;
 	//quite a few alternatives there
+	
+	public static final String CONFIG_FILENAME = "data/config.ttl";
+	public static final String WORKING_MODEL_FILENAME = "data/working.ttl";
 	public static final String RDFXML_TEMP = "data/temp.rdf";
 	public static final String TURTLE_TEMP = "data/temp.ttl";
-	public static final String ENDPOINTS_MODEL = "data/endpoints.ttl";
 	public static final String SCRATCH_FILENAME = "data/temp.txt";
-
+	public static final String ENDPOINTS_MODEL = "data/endpoints.ttl";
 	
 	/** The base uri. */
 	public static String baseUri = "http://purl.org/stuff/scute/";
@@ -180,7 +173,7 @@ public class Config extends ModelContainer {
 	 */
 	public void saveNow() {
 	//	System.out.println("saving config");
-		(new ModelSaver(this)).doSave();
+		(new ModelSaver(this)).save();
 	}
 
 	/**

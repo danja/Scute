@@ -14,6 +14,9 @@ import java.awt.event.FocusEvent;
 
 import java.awt.event.WindowEvent;
 import java.util.EventObject;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Timer;
 
 import javax.swing.event.ChangeEvent;
@@ -39,6 +42,7 @@ import org.hyperdata.scute.source.TextContainer;
  */
 public class AutoSave extends UserActivityAdapter { //
 
+	private Set<Saveable> saveables = new HashSet<Saveable>();
 	/** The text saver. */
 	private TextSaver textSaver;
 	private TextSaver scratchTextSaver;
@@ -53,6 +57,16 @@ public class AutoSave extends UserActivityAdapter { //
 
 	private TextContainer currentTextContainer;
 
+	public void addSaveable(Saveable saveable) {
+		saveables.add(saveable);
+	}
+
+	public void setCurrentTextContainer(TextContainer container) {
+		currentTextContainer = container;
+		System.out.println("CONTAINER =" + container);
+		rescheduleTextSaver();
+	}
+
 	/**
 	 * Inits the model saver.
 	 * 
@@ -61,11 +75,15 @@ public class AutoSave extends UserActivityAdapter { //
 	 */
 	public void setWorkingModelContainer(ModelContainer container) {
 		workingModelContainer = container;
-		// reschedule();
+		rescheduleModelSaver();
 	}
 
-	public void setCurrentTextContainer(TextContainer container) {
-		currentTextContainer = container;
+	/**
+	 * @param scratchPad
+	 */
+	public void setScratchTextContainer(TextContainer textContainer) {
+		scratchTextContainer = textContainer;
+		rescheduleScratchSaver();
 	}
 
 	/*
@@ -90,7 +108,6 @@ public class AutoSave extends UserActivityAdapter { //
 	 */
 	@Override
 	public void focusGained(FocusEvent event) {
-		// scratchTextSaver - maybe..?
 		textSaver.save(); // save the old one
 		reschedule(); // start over
 	}
@@ -100,30 +117,34 @@ public class AutoSave extends UserActivityAdapter { //
 	 */
 	public void reschedule() {
 		System.out.println("RESCHEDULE!!!");
+		timer.purge(); // clean queue
+		rescheduleTextSaver();
+		rescheduleModelSaver();
+		rescheduleScratchSaver();
+	}
 
-		if (modelSaver != null) {
-			modelSaver.cancel();
-		}
+	private void rescheduleTextSaver() {
 		if (textSaver != null) {
 			textSaver.cancel();
 		}
+		textSaver = new TextSaver(currentTextContainer);
+		timer.schedule(textSaver, Config.self.getTextSaveDelay());
+	}
+
+	private void rescheduleModelSaver() {
+		if (modelSaver != null) {
+			modelSaver.cancel();
+		}
+		modelSaver = new ModelSaver(workingModelContainer);
+		timer.schedule(modelSaver, Config.self.getModelSaveDelay());
+	}
+
+	private void rescheduleScratchSaver() {
 		if (scratchTextSaver != null) {
 			scratchTextSaver.cancel();
 		}
-		
-		timer.purge(); // clean queue
-
-		modelSaver = new ModelSaver(workingModelContainer);
-		timer.schedule(modelSaver, Config.self.getModelSaveDelay());
-
-		if (currentTextContainer != null) {
-			textSaver = new TextSaver(currentTextContainer);
-			timer.schedule(textSaver, Config.self.getTextSaveDelay());
-		}
-		
 		scratchTextSaver = new TextSaver(scratchTextContainer);
 		timer.schedule(scratchTextSaver, Config.self.getTextSaveDelay());
-		
 	}
 
 	/*
@@ -146,8 +167,8 @@ public class AutoSave extends UserActivityAdapter { //
 	 *            the rdf editor
 	 */
 	public void restorePreviousState(Scute scute) {
-//		System.out.println("Config.self.getSelectedView() ="
-//				+ Config.self.getSelectedView());
+		// System.out.println("Config.self.getSelectedView() ="
+		// + Config.self.getSelectedView());
 
 		scute.setSelectedCard(Config.self.getSelectedView());
 		// rdfEditor.setSelectedTab(Config.self.getSelectedTab());
@@ -160,22 +181,22 @@ public class AutoSave extends UserActivityAdapter { //
 	 * 
 	 * @return the saved text
 	 */
-//	private String getSavedText() {
-//		StringBuffer buffer = new StringBuffer("");
-//		int ch;
-//		try {
-//			FileInputStream fis = new FileInputStream(Config.TEXT_FILENAME);
-//			while ((ch = fis.read()) != -1) {
-//				buffer.append((char) ch);
-//			}
-//			fis.close();
-//		} catch (Exception e) {
-//			// error popup
-//			Log.exception(exception);;
-//			return "";
-//		}
-//		return buffer.toString();
-//	}
+	// private String getSavedText() {
+	// StringBuffer buffer = new StringBuffer("");
+	// int ch;
+	// try {
+	// FileInputStream fis = new FileInputStream(Config.TEXT_FILENAME);
+	// while ((ch = fis.read()) != -1) {
+	// buffer.append((char) ch);
+	// }
+	// fis.close();
+	// } catch (Exception e) {
+	// // error popup
+	// Log.exception(exception);;
+	// return "";
+	// }
+	// return buffer.toString();
+	// }
 
 	/**
 	 * Finish up.
@@ -183,7 +204,7 @@ public class AutoSave extends UserActivityAdapter { //
 	private void finishUp() {
 		if (modelSaver != null) {
 			modelSaver.cancel(); // clean shutdown of timed operations
-			modelSaver.doSave(); // final saving
+			modelSaver.save(); // final saving
 		}
 		if (textSaver != null) {
 			textSaver.cancel();
@@ -193,6 +214,13 @@ public class AutoSave extends UserActivityAdapter { //
 			scratchTextSaver.cancel();
 			scratchTextSaver.save();
 		}
+
+		// this is belts & braces - everything should already have been saved
+		Iterator<Saveable> iterator = saveables.iterator();
+		while (iterator.hasNext()) {
+			iterator.next().save();
+		}
+
 		Config.self.setSync(true);
 		Config.self.saveNow();
 	}
@@ -228,13 +256,6 @@ public class AutoSave extends UserActivityAdapter { //
 		} else {
 			setCurrentTextContainer(null);
 		}
-	}
-
-	/**
-	 * @param scratchPad
-	 */
-	public void setScratchTextContainer(TextContainer textContainer) {
-		scratchTextContainer = textContainer;
 	}
 
 }

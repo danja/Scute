@@ -74,4 +74,5 @@ public class SparqlSourcePanel extends EditorPane {
 		return Config.SPARQL_FILENAME;
 	}
 
+
 }
