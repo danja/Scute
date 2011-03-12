@@ -74,7 +74,7 @@ public class CardsPanel extends JPanel {
 		return getCard(currentCardName);
 	}
 
-	public void setCardName(String cardName) {
+	public void setCurrentCard(String cardName) {
 		previousCardName = currentCardName;
 		this.currentCardName = cardName;
 		fireStateChanged(); // is enough to update?

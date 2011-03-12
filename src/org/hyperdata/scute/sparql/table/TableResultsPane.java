@@ -15,30 +15,28 @@ import com.hp.hpl.jena.query.ResultSet;
 
 import org.jdesktop.swingx.JXTable;
 
-
-
 /**
  * @author danny
- *
+ * 
  */
 public class TableResultsPane extends JPanel {
 
 	private JXTable table;
-	
-	public TableResultsPane(){
+
+	public TableResultsPane() {
 		super(new BorderLayout());
 		table = new JXTable();
 		table.setDragEnabled(true);
-		add(new JScrollPane(table),BorderLayout.CENTER);
+		add(new JScrollPane(table), BorderLayout.CENTER);
 	}
-	
-	public void addFocusListener(FocusListener focusListener){
+
+	public void addFocusListener(FocusListener focusListener) {
 		table.addFocusListener(focusListener);
 	}
-	
-	public void setResults(ResultSet resultSet){
+
+	public void setResults(ResultSet resultSet) {
 		TableModel tableModel = new ResultSetTableModel(resultSet);
 		table.setModel(tableModel);
-table.repaint();
+		table.repaint();
 	}
 }

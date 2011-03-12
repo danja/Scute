@@ -14,6 +14,8 @@ import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
+import org.hyperdata.scute.rdf.RdfUtils;
+
 
 public class ResultSetTableModel extends AbstractTableModel {
 
@@ -67,7 +69,7 @@ public class ResultSetTableModel extends AbstractTableModel {
 		if(node == null){
 			return "";
 		}
-		return node.toString();
+		return RdfUtils.nodeToDisplayString(node);
 	}
 
 	/* (non-Javadoc)

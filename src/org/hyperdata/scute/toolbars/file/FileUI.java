@@ -69,6 +69,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 		createActions();
 
 		toolBar = new JToolBar();
+		toolBar.setFloatable(false);
 		fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 

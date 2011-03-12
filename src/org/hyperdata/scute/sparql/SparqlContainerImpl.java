@@ -27,6 +27,7 @@ public class SparqlContainerImpl implements SparqlContainer {
 	private  EventListenerList listenerList = new EventListenerList();
 	private  SparqlEvent sparqlEvent = null;
 	private ResultSet resultSet;
+	private String httpText;
 
 	/* (non-Javadoc)
 	 * @see org.hyperdata.scute.sparql.SparqlContainer#getQueryString()
@@ -137,5 +138,21 @@ public class SparqlContainerImpl implements SparqlContainer {
 	@Override
 	public ResultSet getResultSet() {
 		return resultSet;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.sparql.SparqlContainer#setHTTPText(java.lang.String)
+	 */
+	@Override
+	public void setHTTPText(String httpText) {
+		this.httpText = httpText;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.sparql.SparqlContainer#getHTTPText()
+	 */
+	@Override
+	public String getHTTPText() {
+		return httpText;
 	}
 }

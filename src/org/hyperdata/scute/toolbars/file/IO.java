@@ -65,9 +65,9 @@ public class IO implements FilesInterface {
 
 			if (filename.endsWith(".rdf") || filename.endsWith(".xml")) {
 				// probably RDF/XML
-				cardsPanel.setCardName("RDF/XML");
+				cardsPanel.setCurrentCard("RDF/XML");
 			} else {
-				cardsPanel.setCardName("Turtle");
+				cardsPanel.setCurrentCard("Turtle");
 			}
 			// cardsPanel.listCards();
 			TextContainer textContainer = cardsPanel.getCurrentCard()

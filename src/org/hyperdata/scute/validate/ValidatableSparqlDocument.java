@@ -3,10 +3,24 @@
  */
 package org.hyperdata.scute.validate;
 
+import java.awt.Color;
 import java.io.StringReader;
+import java.io.IOException ;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
+
+
+import org.openjena.atlas.io.IndentedLineBuffer ;
+import org.openjena.atlas.io.IndentedWriter ;
+
+import com.hp.hpl.jena.query.Query ;
+import com.hp.hpl.jena.query.QueryFactory ;
+import com.hp.hpl.jena.query.Syntax ;
+import com.hp.hpl.jena.sparql.ARQException ;
+import com.hp.hpl.jena.sparql.algebra.Algebra ;
+import com.hp.hpl.jena.sparql.algebra.Op ;
+import com.hp.hpl.jena.sparql.serializer.SerializationContext ;
+
+import javax.swing.text.*;
 
 import com.hp.hpl.jena.rdf.arp.ARP;
 
@@ -26,6 +40,7 @@ import org.hyperdata.scute.system.Log;
 public class ValidatableSparqlDocument implements Validatable {
 
 	private Document document;
+	private String text;
 
 	/**
 	 * Instantiates a new validatable rdfxml document.
@@ -43,11 +58,11 @@ public class ValidatableSparqlDocument implements Validatable {
 	public StatusEvent validate() throws InterruptedException {
 			StatusEvent statusEvent = null;
 			try {
-				statusEvent = parseString(document.getText(0, document.getLength()));
-			} catch (BadLocationException exception) {
-				Log.exception(exception);
-				statusEvent = new StatusEvent(StatusMonitor.RED, exception.getMessage());
+				text = document.getText(0, document.getLength());
+			} catch (BadLocationException exception) { // unlucky!
+				return new StatusEvent(StatusMonitor.RED, exception.getMessage());
 			}
+				statusEvent = parseString(text);
 		return statusEvent;
 	}
 
@@ -57,19 +72,30 @@ public class ValidatableSparqlDocument implements Validatable {
 	 * @param text the text
 	 * @return the status event
 	 */
-	public static StatusEvent parseString(String text){
-		
-	 try {
-		Thread.sleep(2000);
-	} catch (InterruptedException exception) {
-		// TODO Auto-generated catch block
-		Log.exception(exception);
-	}
-	  
-//	           statusEvent.setStatus(StatusMonitor.RED);
-//	           statusEvent.setDescription("eek");
-	           StatusEvent statusEvent = new StatusEvent(StatusMonitor.GREEN, "happy!");
+	public StatusEvent parseString(String queryString){
+        Query query = null ;
+        StatusEvent statusEvent = null;
+        try {
+            query = QueryFactory.create(queryString) ;
+            statusEvent = new StatusEvent(StatusMonitor.GREEN, "");
+        } catch (Exception exception){
+        	String message = exception.getMessage();
+            statusEvent = new StatusEvent(StatusMonitor.RED, exception.getMessage(), true);
+            if(statusEvent.getLine()>-1){
+// highlightError(statusEvent); // doesn't work - because of doc-level styling..?
+            }
+        }   
 	    return statusEvent;
+	}
+
+	/**
+	 * @param statusEvent
+	 */
+	private void highlightError(StatusEvent statusEvent) {
+    	int location = DocUtils.getLocation(text, statusEvent.getLine(), statusEvent.getColumn());
+    	MutableAttributeSet attributes = new SimpleAttributeSet();
+    	StyleConstants.setBackground(attributes, Color.red);
+    	((StyledDocument)document).setParagraphAttributes(location,1,attributes,false);
 	}
 
 }

@@ -3,6 +3,8 @@
  */
 package org.hyperdata.scute.main;
 
+import java.awt.Font;
+
 import javax.swing.event.ChangeEvent;
 
 import org.hyperdata.scute.source.EditorPane;
@@ -19,6 +21,7 @@ public class ScratchPad extends EditorPane {
 	public ScratchPad(String syntax) {
 		super(syntax);
 		setFilename(Config.SCRATCH_FILENAME);
+		setFont(new Font("Monospaced", Font.PLAIN, 10)); // bit smaller
 	}
 
 	/* (non-Javadoc) 

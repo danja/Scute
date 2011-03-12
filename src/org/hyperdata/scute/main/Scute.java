@@ -73,8 +73,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	public static final Color READ_WRITE_COLOR = (Color) UIManager
 			.getDefaults().get("TextField.background");
 
-	private static final int FRAME_INSET = 75;
-
 	/**
 	 * The main method.
 	 * 
@@ -115,13 +113,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/** The graph panel. */
 	private GraphPanel graphPanel = null;
 
-	private SystemPanel systemPanel;
+	private SystemPanel settingsPanel;
 
 	private CardsPanel cardsPanel;
 
 	private FileExplorerPanel fileExplorerPanel;
 
-	private SparqlCard sparqlPanel;
+	private SparqlCard sparqlCard;
 
 	private GraphManagerPanel graphManagerPanel;
 
@@ -150,7 +148,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 	private SplitButtons splitButtons;
 
-	private Card imagePanel;
+	private Card imageCard;
 
 	/**
 	 * Instantiates a new scute.
@@ -224,9 +222,10 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 		splitButtons = new SplitButtons(multiSplitPane, leftLeaf, centerLeaf,
 				rightLeaf);
-		splitButtons.setBigCenter();
-		((ImageCard) imagePanel).addActionListener(splitButtons);
+		splitButtons.setFullMiddle();
+		((ImageCard) imageCard).addActionListener(splitButtons);
 
+		
 		panel.add(multiSplitPane, BorderLayout.CENTER);
 		// panel.add(splitPane, BorderLayout.CENTER);
 
@@ -276,24 +275,18 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		}
 	}
 
-	// public void resetSplits() {
-	// leftLeaf.setWeight(0.2);
-	// centerLeaf.setWeight(0.6);
-	// rightLeaf.setWeight(0.2);
-	// }
-
-	// public void hideTasks(){
-	// leftLeaf.setWeight(0);
-	// }
-	//
-	// public void showTasks(){
-	// leftLeaf.setWeight(0.2);
-	// }
-
+	private static final int FRAME_X_INSET = 75;
+	private static final int FRAME_Y_INSET = 20;
+	private static final int IDEAL_WIDTH = 1200;
+	private static final int IDEAL_HEIGHT = 600;	
+	
 	private void setupFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setBounds(FRAME_INSET, FRAME_INSET, screenSize.width - 2
-				* FRAME_INSET, screenSize.height - 2 * FRAME_INSET);
+		int maxWidth = screenSize.width-2*FRAME_X_INSET;
+		int maxHeight = screenSize.height-2*FRAME_Y_INSET;
+		int width = maxWidth < IDEAL_WIDTH ? maxWidth : IDEAL_WIDTH;
+		int height = maxHeight < IDEAL_HEIGHT ? maxHeight : IDEAL_HEIGHT;
+		frame.setBounds(FRAME_X_INSET, FRAME_Y_INSET, width, height);
 
 		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
 		frame.addWindowListener(autoSave);
@@ -331,18 +324,18 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 * 
 	 */
 	private void makeImagePanel() {
-		imagePanel = new ImageCard();
-		cardsPanel.addPlain(imagePanel, "Image");
+		imageCard = new ImageCard();
+		cardsPanel.addPlain(imageCard, "Image");
 	}
 
 	/**
 	 * 
 	 */
 	private void makeSystemPanel() {
-		systemPanel = new SystemPanel();
+		settingsPanel = new SystemPanel();
 		// systemPanel.addUserActivityListener(autoSave);
 
-		cardsPanel.addScroll(systemPanel, "System");
+		cardsPanel.addScroll(settingsPanel, "Settings");
 	}
 
 	/**
@@ -383,9 +376,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 * 
 	 */
 	private void makeSparqlPanel() {
-		sparqlPanel = new SparqlCard(frame, focusMonitor);
-		sparqlPanel.setTextCard(true);
-		cardsPanel.add(sparqlPanel, "SPARQL");
+		sparqlCard = new SparqlCard(frame, focusMonitor);
+		sparqlCard.setTextCard(true);
+		cardsPanel.add(sparqlCard, "SPARQL");
 	}
 
 	/**
@@ -554,6 +547,6 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 * @param selectedView
 	 */
 	public void setSelectedCard(String selectedView) {
-		cardsPanel.setCardName(selectedView);
+		cardsPanel.setCurrentCard(selectedView);
 	}
 }

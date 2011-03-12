@@ -77,10 +77,11 @@ public class RdfUtils {
 	/** The iso date. */
 	public static SimpleDateFormat isoDate = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssz");
-	
+
 	private static HashMap<String, String> prefixes = null;
 	private static HashMap<String, String> commonPrefixes = null;
 	private static HashMap<String, String> notSoCommonPrefixes = null;
+	private static HashMap<String, String> reversePrefixMap = null;
 
 	/*
 	 * ?? Z - 1.4 only??
@@ -556,7 +557,7 @@ public class RdfUtils {
 			Statement statement;
 			Resource subject;
 			RDFNode object = null;
-			
+
 			// buffer in List to avoid concurrent modification exception
 			final List<Statement> statementList = new ArrayList<Statement>();
 			while (statements.hasNext()) {
@@ -595,8 +596,8 @@ public class RdfUtils {
 		Statement newStatement;
 		try {
 			final Model model = statement.getModel();
-			newStatement = model.createStatement(newSubject, statement
-					.getPredicate(), statement.getObject());
+			newStatement = model.createStatement(newSubject,
+					statement.getPredicate(), statement.getObject());
 			model.remove(statement);
 			model.add(newStatement);
 		} catch (final Exception exception) {
@@ -647,9 +648,9 @@ public class RdfUtils {
 	public static void setPrefixes(Model model) {
 		model.setNsPrefixes(getAllPrefixes());
 	}
-	
-	public static Map getAllPrefixes(){
-		if(prefixes == null){
+
+	public static Map<String, String> getAllPrefixes() {
+		if (prefixes == null) {
 			prefixes = new HashMap<String, String>();
 			prefixes.putAll(getCommonPrefixes());
 			prefixes.putAll(getNotSoCommonPrefixes());
@@ -657,38 +658,42 @@ public class RdfUtils {
 		return prefixes;
 	}
 
-	public static Map<String, String> getCommonPrefixes(){
-		if(commonPrefixes == null){
-commonPrefixes = new HashMap<String, String>();
-		commonPrefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		commonPrefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-		commonPrefixes.put("owl", "http://www.w3.org/2002/07/owl#");
-		commonPrefixes.put("xsd","http://www.w3.org/2001/XMLSchema#");
-		commonPrefixes.put("dc", "http://purl.org/dc/elements/1.1/");
-		commonPrefixes.put("dcterms", "http://purl.org/dc/terms/");
-		commonPrefixes.put("skos", "http://www.w3.org/2004/02/skos/core#");
-		commonPrefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
-		commonPrefixes.put("x", "http://purl.org/stuff/");
-		commonPrefixes.put("void", "http://rdfs.org/ns/void#");
-		commonPrefixes.put("mo", "http://purl.org/ontology/mo/");
-		commonPrefixes.put("rel", "http://purl.org/vocab/relationship/");
-		commonPrefixes.put("rev", "http://purl.org/stuff/rev#");
+	public static Map<String, String> getCommonPrefixes() {
+		if (commonPrefixes == null) {
+			commonPrefixes = new HashMap<String, String>();
+			commonPrefixes.put("rdf",
+					"http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+			commonPrefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+			commonPrefixes.put("owl", "http://www.w3.org/2002/07/owl#");
+			commonPrefixes.put("xsd", "http://www.w3.org/2001/XMLSchema#");
+			commonPrefixes.put("dc", "http://purl.org/dc/elements/1.1/");
+			commonPrefixes.put("dcterms", "http://purl.org/dc/terms/");
+			commonPrefixes.put("skos", "http://www.w3.org/2004/02/skos/core#");
+			commonPrefixes.put("foaf", "http://xmlns.com/foaf/0.1/");
+			commonPrefixes.put("x", "http://purl.org/stuff/");
+			commonPrefixes.put("void", "http://rdfs.org/ns/void#");
+			commonPrefixes.put("mo", "http://purl.org/ontology/mo/");
+			commonPrefixes.put("rel", "http://purl.org/vocab/relationship/");
+			commonPrefixes.put("rev", "http://purl.org/stuff/rev#");
 		}
 		// prefixes.put("dbpo", "http://dbpedia.org/ontology/");
 		// prefixes.put("dbpr", "http://dbpedia.org/resource/");
 		// prefixes.put("dbpp", "http://dbpedia.org/property/");
 		return commonPrefixes;
 	}
-	
-	public static Map<String, String> getNotSoCommonPrefixes(){
-		if(notSoCommonPrefixes == null){
-		notSoCommonPrefixes = new HashMap<String, String>();
-		notSoCommonPrefixes.put("tdb", "http://jena.hpl.hp.com/2008/tdb#");
-		notSoCommonPrefixes.put("ja", "http://jena.hpl.hp.com/2005/11/Assembler#");
-		
-		notSoCommonPrefixes.put("dbpo", "http://dbpedia.org/ontology/");
-		notSoCommonPrefixes.put("dbpr", "http://dbpedia.org/resource/");
-		notSoCommonPrefixes.put("dbpp", "http://dbpedia.org/property/");
+
+	public static Map<String, String> getNotSoCommonPrefixes() {
+		if (notSoCommonPrefixes == null) {
+			notSoCommonPrefixes = new HashMap<String, String>();
+			notSoCommonPrefixes.put("tdb", "http://jena.hpl.hp.com/2008/tdb#");
+			notSoCommonPrefixes.put("ja",
+					"http://jena.hpl.hp.com/2005/11/Assembler#");
+
+			notSoCommonPrefixes.put("dbpo", "http://dbpedia.org/ontology/");
+			notSoCommonPrefixes.put("dbpr", "http://dbpedia.org/resource/");
+			notSoCommonPrefixes.put("dbpp", "http://dbpedia.org/property/");
+			notSoCommonPrefixes.put("yagoc", "http://dbpedia.org/class/yago/");
+			notSoCommonPrefixes.put("yagop", "http://dbpedia.org/property/yago/"); // may or may not exist 
 		}
 		return notSoCommonPrefixes;
 	}
@@ -970,6 +975,58 @@ commonPrefixes = new HashMap<String, String>();
 		}
 
 		return model;
+	}
+
+	public static String nodeToDisplayString(RDFNode node) {
+		if (node.isAnon()) {
+			return node.asResource().getId().getLabelString();
+		}
+		if (node.isURIResource()) {
+			Resource resource = node.asResource();
+			Model model = node.getModel();
+			String prefix = null;
+			if (model != null) { // try the node's model, if it has one
+				prefix = model.getNsURIPrefix(resource.getNameSpace());
+			}
+			if (prefix == null) { // no joy, so try local map
+				prefix = getNsURIPrefix(resource.getNameSpace());
+			}
+			if (prefix == null) { // give up and return URI
+				return resource.getURI();
+			}
+			return prefix + ":" + resource.getLocalName();
+		}
+		if (node.isLiteral()) {
+			Literal literal = node.asLiteral();
+			// TODO datatype??
+			return literal.toString();
+		}
+		return "?error!?";
+	}
+
+	public static Map<String, String> getReversePrefixMap() {
+		if (reversePrefixMap == null) {
+			reversePrefixMap = new HashMap<String, String>();
+			Map<String, String> prefixes = getAllPrefixes();
+			Iterator<String> iterator = prefixes.keySet().iterator();
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				System.out.println("putting "+prefixes.get(key)+" = "+key);
+				reversePrefixMap.put(prefixes.get(key), key);
+			}
+		}
+		return reversePrefixMap;
+	}
+
+	/**
+	 * @param nameSpace
+	 * @return
+	 */
+	public static String getNsURIPrefix(String namespace) {
+		Map<String, String> rPrefixes = getReversePrefixMap();
+		String prefix = rPrefixes.get(namespace);
+		// System.out.println(namespace + "   " + prefix);
+		return getReversePrefixMap().get(namespace);
 	}
 
 }

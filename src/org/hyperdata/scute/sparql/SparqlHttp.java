@@ -28,11 +28,12 @@ import org.hyperdata.scute.system.Log;
 public class SparqlHttp extends StatusTask {
 
 	private boolean running = false;
-	private String responseString = null;
+	private String resultString = null;
 
 	private HttpClient httpclient;
 	private HttpGet httpget;
 	private SparqlContainer sparqlContainer;
+private String httpText = "";
 
 	public void init(SparqlContainer sparqlContainer) {
 
@@ -53,10 +54,13 @@ public class SparqlHttp extends StatusTask {
 		}
 		httpclient = new DefaultHttpClient();
 		httpget = new HttpGet(uri);
+		
+		httpText = "Request:\n\n"+httpget.getRequestLine();
+		sparqlContainer.setHTTPText(httpText);
 	}
 
 	public String getResponseString() {
-		return responseString;
+		return resultString;
 	}
 
 	/*
@@ -78,18 +82,22 @@ public class SparqlHttp extends StatusTask {
 		}
 
 		HttpEntity entity = response.getEntity();
-
+		
+		httpText += "\n\nResponse:\n\n"+response.toString();
+		sparqlContainer.setHTTPText(httpText);
+		
 		// long len = entity.getContentLength();
-		String responseString = "";
+		// String results = "";
+		
 		try {
-			responseString = EntityUtils.toString(entity);
+			resultString = EntityUtils.toString(entity);
 		} catch (Exception exception) {
 			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
 			Log.exception(exception);
 		}
 		running = false;
 		stateChanged(new StatusEvent(StatusMonitor.GREEN));
-		sparqlContainer.setResultsText(responseString);
+		sparqlContainer.setResultsText(resultString);
 		sparqlContainer.fireSparqlEvent();
 	}
 	

@@ -20,15 +20,21 @@ import org.hyperdata.scute.system.Log;
  * 
  */
 public class SplitButtons implements ActionListener {
-
+	
+	private static final double LEFT_DEFAULT_WEIGHT = 0.2;
+	private static final double MIDDLE_DEFAULT_WEIGHT = 0.5;
+	private static final double RIGHT_DEFAULT_WEIGHT = 0.3;
+	
 	private JButton leftButton;
 	private JButton rightButton;
 	private Leaf leftLeaf;
 	private Leaf rightLeaf;
-	private Leaf centerLeaf;
+	private Leaf middleLeaf;
+	
 	private double leftWeight = 0;
-	private double centerWeight = 1;
+	private double middleWeight = 1;
 	private double rightWeight = 0;
+
 	private JXMultiSplitPane multiSplitPane;
 
 	public JButton getLeftButton() {
@@ -51,7 +57,7 @@ public class SplitButtons implements ActionListener {
 
 		this.leftLeaf = leftLeaf;
 		this.rightLeaf = rightLeaf;
-		this.centerLeaf = centerLeaf;
+		this.middleLeaf = centerLeaf;
 
 		leftButton = new JButton(">");
 		leftButton.addActionListener(this);
@@ -87,28 +93,28 @@ public class SplitButtons implements ActionListener {
 	 */
 	private void flipLeft() {
 		System.out.println("flip left");
-		if (leftWeight >= 0.2) {
+		if (leftWeight >= LEFT_DEFAULT_WEIGHT) {
 			leftWeight = 0;
-			centerWeight = 1 - rightWeight;
+			middleWeight = 1 - rightWeight;
 			leftButton.setText(">");
 			setWeights();
 		} else {
-			leftWeight = 0.2;
-			centerWeight = 0.8 - rightWeight;
+			leftWeight = LEFT_DEFAULT_WEIGHT;
+			middleWeight = MIDDLE_DEFAULT_WEIGHT - rightWeight;
 			leftButton.setText("<");
 			setWeights();
 		}
 	}
 
 	private void flipRight() {
-		if (rightWeight >= 0.2) {
+		if (rightWeight >= RIGHT_DEFAULT_WEIGHT) {
 			rightWeight = 0;
-			centerWeight = 1 - leftWeight;
+			middleWeight = 1 - leftWeight;
 			rightButton.setText(">");
 			setWeights();
 		} else {
-			rightWeight = 0.2;
-			centerWeight = 0.8 - leftWeight;
+			rightWeight = RIGHT_DEFAULT_WEIGHT;
+			middleWeight = MIDDLE_DEFAULT_WEIGHT - leftWeight;
 			rightButton.setText("<");
 			setWeights();
 		}
@@ -118,12 +124,11 @@ public class SplitButtons implements ActionListener {
 	 * 
 	 */
 	private void setWeights() {
-
 		leftLeaf.setWeight(leftWeight);
-		centerLeaf.setWeight(centerWeight);
+		middleLeaf.setWeight(middleWeight);
 		rightLeaf.setWeight(rightWeight);
 
-		System.out.println(leftWeight + " " + centerWeight + " " + rightWeight);
+		System.out.println(leftWeight + " " + middleWeight + " " + rightWeight);
 		multiSplitPane.validate();
 		// multiSplitPane.getParent().repaint();
 	}
@@ -131,15 +136,15 @@ public class SplitButtons implements ActionListener {
 	public void setDefaults() {
 		leftButton.setText("<");
 		rightButton.setText(">");
-		leftWeight = 0.2;
-		centerWeight = 0.6;
-		rightWeight = 0.2;
+		leftWeight = LEFT_DEFAULT_WEIGHT;
+		middleWeight = MIDDLE_DEFAULT_WEIGHT;
+		rightWeight = RIGHT_DEFAULT_WEIGHT;
 		setWeights();
 	}
 	
-	public void setBigCenter() {
+	public void setFullMiddle() {
 		leftWeight = 0;
-		centerWeight = 1;
+		middleWeight = 1;
 		rightWeight = 0;
 		setWeights();
 	}

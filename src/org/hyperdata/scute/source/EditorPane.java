@@ -47,7 +47,7 @@ public abstract class EditorPane extends ScalableEditorPane implements TextConta
 	public EditorPane(String syntax) {
 		super.setSyntax(syntax);
 		setFont(new Font("Monospaced", Font.PLAIN, 12));
-		setPreferredSize(new Dimension(800,600));
+		// setPreferredSize(new Dimension(800,600));
 		addFocusListener(this);
 		setDragEnabled(true);
 		getDocument().putProperty("ZOOM_FACTOR", new Double(2.5));

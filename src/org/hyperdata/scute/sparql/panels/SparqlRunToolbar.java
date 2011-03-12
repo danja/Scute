@@ -57,35 +57,31 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		runQueryButton.setHorizontalTextPosition(SwingConstants.LEFT);
 		runQueryButton.setHorizontalAlignment(SwingConstants.RIGHT); // doesn't appear to work!
 		runQueryButton.setToolTipText("Run query");
-		add(runQueryButton);
-		
-		add(Box.createHorizontalStrut(10));
 
-		add(Box.createHorizontalStrut(10));
-		add(new JSeparator(SwingConstants.VERTICAL));
-		add(Box.createHorizontalStrut(20));
-
-		add(new JLabel("Endpoint:"));
-		add(Box.createHorizontalStrut(10));
 		EndpointListModel endpointListModel = new EndpointListModel();
 		endpointsBox = new JComboBox(endpointListModel);
 		endpointsBox.setSelectedIndex(0);
 		endpointsBox.addActionListener(this);
 		endpointsBox.setToolTipText("Choose endpoint");
-		add(endpointsBox);
-
+		
 		uriField = new JTextField(20);
 		uriField.setText("----");
 		uriField.setToolTipText("Endpoint URI");
-		add(uriField);
 
-		add(Box.createHorizontalStrut(10));
-
-		JButton edit = new JButton();
+		JButton editButton = new JButton();
 		EndpointTableModel endpointTableModel = new EndpointTableModel(endpointListModel);
-		edit.setAction(new EditEndpointsAction("Edit Endpoints", endpointTableModel, frame));
-		edit.setToolTipText("Add to/remove from  list");
-		add(edit);
+		editButton.setAction(new EditEndpointsAction("Endpoint:", endpointTableModel, frame));
+		editButton.setToolTipText("Add to/remove from  list");
+		
+		add(runQueryButton);
+		// add(Box.createHorizontalStrut(5));
+		add(new JSeparator(SwingConstants.VERTICAL));
+		add(Box.createHorizontalStrut(5));
+		//	add(new JLabel("Endpoint:"));
+		add(editButton);
+		add(Box.createHorizontalStrut(5));
+		add(endpointsBox);
+		add(uriField);
 	}
 
 	/*

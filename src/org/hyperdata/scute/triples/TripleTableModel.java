@@ -81,33 +81,13 @@ public class TripleTableModel extends AbstractTableModel {
 		Statement statement = statements.get(row);
 		switch (column) {
 		case 0:
-			return toDisplayString(statement.getSubject());
+			return RdfUtils.nodeToDisplayString(statement.getSubject());
 		case 1:
-			return toDisplayString(statement.getPredicate());
+			return RdfUtils.nodeToDisplayString(statement.getPredicate());
 		case 2:
-			return toDisplayString(statement.getObject());
+			return RdfUtils.nodeToDisplayString(statement.getObject());
 		}
 		return null;
-	}
-	
-	private String toDisplayString(RDFNode node){
-		if(node.isAnon()){
-			return node.asResource().getId().getLabelString();
-		}
-		if(node.isURIResource()){
-			Resource resource = node.asResource();
-			String prefix = model.getNsURIPrefix(resource.getNameSpace());
-			if(prefix == null){
-				return resource.getURI();
-			}
-			return prefix+":"+resource.getLocalName();
-		}
-		if(node.isLiteral()){
-			Literal literal = node.asLiteral();
-			// TODO datatype??
-			return literal.toString();
-		}
-		return "?error!?";
 	}
 
 	/*

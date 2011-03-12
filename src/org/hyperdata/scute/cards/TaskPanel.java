@@ -61,7 +61,7 @@ public class TaskPanel extends JXTitledPanel {
 
 		taskPane.add(new ChangeEditorPanelAction(this, "SPARQL", "SPARQL Editor"));
 		
-		taskPane.add(new DocPanelAction(this, "SPARQL", "Documentation")); // TODO need to pass help context
+		taskPane.add(new DocPanelAction(this, "SPARQL", "Documentation")); 
 	}
 	
 
@@ -75,7 +75,7 @@ public class TaskPanel extends JXTitledPanel {
 		
 		taskPane.add(new ChangeEditorPanelAction(this, "Files", "File Manager"));
 		
-		taskPane.add(new DocPanelAction(this, "Manage", "Documentation")); // TODO need to pass help context
+		taskPane.add(new DocPanelAction(this, "Manage", "Documentation"));
 	}
 
 
@@ -85,10 +85,10 @@ public class TaskPanel extends JXTitledPanel {
 		taskPane.setTitle("System Features");
 		taskPaneContainer.add(taskPane);
 
-		taskPane.add(new ChangeEditorPanelAction(this, "System", "Settings"));
+		taskPane.add(new ChangeEditorPanelAction(this, "Settings", "Settings"));
 		taskPane.add(new ChangeEditorPanelAction(this, "Log", "System Log"));
 		
-		taskPane.add(new DocPanelAction(this, "System", "Documentation")); // TODO need to pass help context
+		taskPane.add(new DocPanelAction(this, "System", "Documentation")); 
 	}
 
 

@@ -29,8 +29,11 @@ public class Log {
 		JXErrorPane.showDialog(null, errorPane);
 
 		LogPane.err(exception.getMessage());
-		LogPane.err("Caused by:" + exception.getCause().getMessage());
-		Log.exception(exception);
+		Throwable cause = exception.getCause();
+		if (cause != null) {
+			LogPane.err("Caused by:" + cause.getMessage());
+		}
+		// Log.exception(exception);
 	}
 
 }

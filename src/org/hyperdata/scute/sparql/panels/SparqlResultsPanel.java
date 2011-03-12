@@ -81,7 +81,7 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 
 		tablePane.setResults(resultSet);
 		textPanel.setText(ResultSetFormatter.asText(resultSet));
-		xmlPanel.setText("XXX"+ResultSetFormatter.asXMLString(resultSet));
+		xmlPanel.setText(ResultSetFormatter.asXMLString(resultSet));
 	}
 
 	public void populate(SPARQLResult result) {
@@ -114,7 +114,15 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 
 		populate(sparqlContainer.getResultsText());
 		populate(sparqlContainer.getResultSet());
+		populateHTTPPane(sparqlContainer.getHTTPText());
 
+	}
+
+	/**
+	 * @param httpText
+	 */
+	private void populateHTTPPane(String httpText) {
+		httpPanel.setText(httpText);
 	}
 
 	/**

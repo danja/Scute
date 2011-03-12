@@ -44,6 +44,12 @@ public interface SparqlContainer {
 	public ResultSet getResultSet();
 
 	/**
+	 * @param string
+	 */
+	public void setHTTPText(String string);
+
+	public String getHTTPText();
+	/**
 	 * @return
 	 */
 	// public SPARQLResult getResults();

@@ -5,3 +5,19 @@ SELECT DISTINCT * WHERE {
    <http://dbpedia.org/resource/Neptune> a ?object . 
     ?object rdfs:label ?label . 
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
