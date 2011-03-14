@@ -298,6 +298,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JMenuBar menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
+		menuBar.add(editorToolbar.getMenu());
 		menuBar.add(helpUI.getHelpMenu());
 
 		frame.setJMenuBar(menuBar);

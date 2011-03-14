@@ -98,9 +98,6 @@ public class RunQueryAction extends StatusAction {
 		}
 		sparqlHttp.init(sparqlContainer);
 		super.actionPerformed(event);
-		// httpRunner = new Thread(http);
-		// httpRunner.start();
-		// sparqlContainer.setResultsText(resultsString);
 	}
 
 	public SPARQLResult runQuery(String queryString) {
@@ -109,7 +106,6 @@ public class RunQueryAction extends StatusAction {
 			query = QueryFactory.create(sparqlContainer.getQueryString(),
 					Config.SPARQL_SYNTAX);
 		} catch (QueryException exception) {
-			// TODO popup error
 			Log.exception(exception);
 		}
 		SPARQLResult result = null;
