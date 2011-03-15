@@ -19,7 +19,7 @@ import org.hyperdata.scute.system.Log;
  * @author danny
  * 
  */
-public class SplitButtons implements ActionListener {
+public class SplitScreen implements ActionListener {
 	
 	private static final double LEFT_DEFAULT_WEIGHT = 0.2;
 	private static final double MIDDLE_DEFAULT_WEIGHT = 0.5;
@@ -51,7 +51,7 @@ public class SplitButtons implements ActionListener {
 	 * @param centerLeaf
 	 * @param rightLeaf
 	 */
-	public SplitButtons(JXMultiSplitPane multiSplitPane, Leaf leftLeaf,
+	public SplitScreen(JXMultiSplitPane multiSplitPane, Leaf leftLeaf,
 			Leaf centerLeaf, Leaf rightLeaf) {
 		this.multiSplitPane = multiSplitPane;
 
@@ -82,7 +82,7 @@ public class SplitButtons implements ActionListener {
 		if (source.equals(rightButton)) {
 			flipRight();
 		}
-		System.out.println(source);
+		// System.out.println(source);
 		if (source.getText().equals("")) {
 			setDefaults();
 		}
@@ -92,7 +92,7 @@ public class SplitButtons implements ActionListener {
 	 * 
 	 */
 	private void flipLeft() {
-		System.out.println("flip left");
+		// System.out.println("flip left");
 		if (leftWeight >= LEFT_DEFAULT_WEIGHT) {
 			leftWeight = 0;
 			middleWeight = 1 - rightWeight;
@@ -128,7 +128,7 @@ public class SplitButtons implements ActionListener {
 		middleLeaf.setWeight(middleWeight);
 		rightLeaf.setWeight(rightWeight);
 
-		System.out.println(leftWeight + " " + middleWeight + " " + rightWeight);
+		// System.out.println(leftWeight + " " + middleWeight + " " + rightWeight);
 		multiSplitPane.validate();
 		// multiSplitPane.getParent().repaint();
 	}

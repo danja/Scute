@@ -11,7 +11,7 @@ import org.hyperdata.scute.sparql.actions.URIEndpointAction;
  * @author danny
  * 
  */
-public final class Endpoint {
+public final class Endpoint implements Comparable {
 
 	private String label = null;
 	private String uri = null;
@@ -80,6 +80,14 @@ public final class Endpoint {
 	@Override
 	public String toString() {
 		return this.label;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Object arg) {
+		return getLabel().compareTo(((Endpoint)arg).getLabel());
 	}
 
 }

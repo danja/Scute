@@ -1011,7 +1011,7 @@ public class RdfUtils {
 			Iterator<String> iterator = prefixes.keySet().iterator();
 			while (iterator.hasNext()) {
 				String key = iterator.next();
-				System.out.println("putting "+prefixes.get(key)+" = "+key);
+				// System.out.println("putting "+prefixes.get(key)+" = "+key);
 				reversePrefixMap.put(prefixes.get(key), key);
 			}
 		}
@@ -1029,4 +1029,36 @@ public class RdfUtils {
 		return getReversePrefixMap().get(namespace);
 	}
 
+	/**
+	 * HTMLizes & wraps - bleah, a mess, not currently used
+	 * 
+	 * @param node
+	 * @param i
+	 * @return
+	 */
+	public static String nodeToDisplayHTML(RDFNode node, int wrap) { 
+		String html = "<html>";
+		html += nodeToDisplayString(node, wrap).replace("\n", "<br/>");
+		return html;
+	}
+	
+	// TODO not splitting in words
+	public static String nodeToDisplayString(RDFNode node, int wrap) { 
+		StringBuffer input = new StringBuffer(nodeToDisplayString(node));
+		StringBuffer output = new StringBuffer();
+		char newline = "\n".charAt(0);
+		int c = 0;
+		for(int i=0;i<input.length();i++) {
+			output.append(input.charAt(i));
+			if(input.charAt(i) == newline){
+				c = 0;
+				continue;
+			}
+			if(++c > wrap){
+				output.append("\n");
+				c = 0;
+			}
+		}
+		return output.toString();
+	}
 }

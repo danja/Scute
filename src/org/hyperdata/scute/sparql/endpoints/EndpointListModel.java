@@ -5,6 +5,7 @@ package org.hyperdata.scute.sparql.endpoints;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
@@ -67,7 +68,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 
 		String label = endpoint.getLabel();
 		String uri = endpoint.getUri();
-
+		
 		ResIterator datasets = model.listSubjectsWithProperty(RDF.type,
 				VOID.Dataset);
 		while (datasets.hasNext()) {
@@ -129,6 +130,8 @@ public class EndpointListModel extends DefaultComboBoxModel {
 			Log.exception(exception);
 		}
 
+		List<Endpoint> sortList = new ArrayList<Endpoint>();
+		
 		ResIterator datasets = model.listSubjectsWithProperty(RDF.type,
 				VOID.Dataset);
 		while (datasets.hasNext()) {
@@ -148,8 +151,10 @@ public class EndpointListModel extends DefaultComboBoxModel {
 				Log.exception(exception);
 			}
 			Endpoint endpoint = new Endpoint(title, endpointURI);
-			targets.add(endpoint);
+			sortList.add(endpoint);
 		}
+		Collections.sort(sortList);
+		targets.addAll(sortList);
 	}
 	
 	public void saveEndpointsToFile(){

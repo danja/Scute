@@ -146,7 +146,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 	private Leaf rightLeaf;
 
-	private SplitButtons splitButtons;
+	private SplitScreen splitButtons;
 
 	private Card imageCard;
 
@@ -221,11 +221,11 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		multiSplitLayout.setLayoutMode(MultiSplitLayout.NO_MIN_SIZE_LAYOUT);
 		JXMultiSplitPane multiSplitPane = new JXMultiSplitPane(multiSplitLayout);
 		multiSplitPane.getMultiSplitLayout().setModel(splitModel);
-		multiSplitPane.setDividerSize(2);
+		// multiSplitPane.setDividerSize(2); nah, default 5 is fine
 		multiSplitPane.add(cardsPanel, "center");
 		multiSplitPane.add(new JXTitledPanel("Scratch Pad", scratchPane), "right");
 
-		splitButtons = new SplitButtons(multiSplitPane, leftLeaf, centerLeaf,
+		splitButtons = new SplitScreen(multiSplitPane, leftLeaf, centerLeaf,
 				rightLeaf);
 		splitButtons.setFullMiddle();
 		((ImageCard) imageCard).addActionListener(splitButtons);

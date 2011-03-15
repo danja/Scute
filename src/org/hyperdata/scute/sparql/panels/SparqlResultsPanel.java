@@ -57,9 +57,9 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		httpPane.addFocusListener(focusListener);
 
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
-		tabs.addTab("Text", new JScrollPane(textPane));
 		tabs.addTab("Table", tablePane); // it has its own scroll
 		tabs.addTab("XML", new JScrollPane(xmlPane));
+		tabs.addTab("Text", new JScrollPane(textPane));
 		tabs.addTab("HTTP", new JScrollPane(httpPane));
 
 		add(tabs, BorderLayout.CENTER);

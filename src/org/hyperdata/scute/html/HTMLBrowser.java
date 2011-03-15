@@ -38,7 +38,7 @@ public class HTMLBrowser extends JFrame {
   private WebBrowserPane browserPane = new WebBrowserPane();
 
   public HTMLBrowser() {
-    super("Drag-and-Drop Web Browser");
+    super("SkyTurtle");
 
     toolBar = new WebToolBar(browserPane);
 

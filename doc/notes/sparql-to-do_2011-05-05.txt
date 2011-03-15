@@ -1,3 +1,24 @@
+history
+
+http://tidysaucer.svn.sourceforge.net/svnroot/tidysaucer
+https://PROJECTNAME.svn.sourceforge.net/svnroot/PROJECTNAME
+https://github.com/flyingsaucerproject/flyingsaucer
+
+dropbox release?
+interested in sponsoring?
+
+code prettifier/indenter
+
+...things to make it work as a personal knowledgebase
+
+...gamify
+(need online store for foaf)
+
+SPARQL table - right-click to copy value
+
+automatic POSTing of errors (switch-on-able)
+online store - fuseki set up on odd port, only 
+
 HIDE toolbars if not needed (a la gnome bars?)
 
 spellchecker for RDF terms?
