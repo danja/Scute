@@ -1,3 +1,76 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX po: <http://purl.org/ontology/po/>
+
+SELECT DISTINCT ?o2 WHERE {
+
+?s po:category ?o .
+?s rdfs:label ?label .
+?s a ?o2 .
+
+FILTER REGEX(str(?o), "comedy", "i")
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX po: <http://purl.org/ontology/po/>
+
+SELECT DISTINCT ?label ?s WHERE {
+
+?s po:category ?o .
+?s rdfs:label ?label .
+
+FILTER REGEX(str(?o), "comedy", "i")
+
+}
+
+
+
+SELECT DISTINCT * WHERE {
+
+<http://www.bbc.co.uk/nature/species/Common_Swift#species> ?p ?o
+ 
+}
+
+PREFIX wo: <http://purl.org/ontology/wo/>
+
+SELECT DISTINCT * WHERE {
+
+   ?bird wo:genus ?genus .
+   ?genus wo:class
+          <http://www.bbc.co.uk/nature/class/Bird#class> .
+   ?bird wo:adaptation
+           <http://www.bbc.co.uk/nature/adaptations/High_altitude#adaptations> .
+}
+
+
+PREFIX wo: <http://purl.org/ontology/wo/>
+SELECT DISTINCT * WHERE {
+
+<http://www.bbc.co.uk/nature/species/Common_Swift#species> wo:ecozone ?ecozone .
+?s wo:ecozone ?ecozone .
+    ?s wo:genus [ wo:class <http://www.bbc.co.uk/nature/class/Mammal#class> ] .
+}
+
+
+
+SELECT DISTINCT * WHERE {
+
+?s ?p <http://www.bbc.co.uk/nature/adaptations/High_altitude#adaptations>
+ 
+}
+
+
 PREFIX dcterms: <http://purl.org/dc/terms/>
 SELECT DISTINCT * WHERE {
 

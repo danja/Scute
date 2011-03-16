@@ -21,6 +21,7 @@ import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlHttp;
+import org.hyperdata.scute.sparql.panels.SparqlRunToolbar;
 import org.hyperdata.scute.sparql.panels.SparqlSourcePanel;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusEvent;
@@ -31,15 +32,16 @@ import org.hyperdata.scute.validate.Validator;
 /**
  * @author danny
  * 
+ * TODO refactor!
  */
 public class RunQueryAction extends StatusAction {
 
-	private SparqlContainer sparqlContainer;
-	// private SparqlHttp http;
+//	private SparqlContainer sparqlContainer;
 	private SparqlHttp sparqlHttp;
-	private SparqlSourcePanel sourcePanel;
-	private Validator validator;
-	private Frame frame;
+//	private SparqlSourcePanel sourcePanel;
+//	private Validator validator;
+//	private Frame frame;
+	private SparqlRunToolbar sparqlRunToolbar;
 
 	/**
 	 * @param frame 
@@ -48,13 +50,25 @@ public class RunQueryAction extends StatusAction {
 	 * @param sourcePanel
 	 * @param validator
 	 */
-	public RunQueryAction(Frame frame, String string, SparqlContainer sparqlContainer,
-			SparqlSourcePanel sourcePanel, Validator validator) {
-		super(string);
-		this.frame = frame;
-		this.sparqlContainer = sparqlContainer;
-		this.sourcePanel = sourcePanel;
-		this.validator = validator;
+//	public RunQueryAction(Frame frame, String string, SparqlContainer sparqlContainer,
+//			SparqlSourcePanel sourcePanel, Validator validator) {
+//		super(string);
+//		this.frame = frame;
+//		this.sparqlContainer = sparqlContainer;
+//		this.sourcePanel = sourcePanel;
+//		this.validator = validator;
+//		sparqlHttp = new SparqlHttp();
+//		setStatusTask(sparqlHttp);
+//	}
+	
+
+
+	/**
+	 * @param sparqlRunToolbar
+	 */
+	public RunQueryAction(SparqlRunToolbar sparqlRunToolbar) {
+		super("Run");
+		this.sparqlRunToolbar = sparqlRunToolbar;
 		sparqlHttp = new SparqlHttp();
 		setStatusTask(sparqlHttp);
 	}
@@ -67,16 +81,19 @@ public class RunQueryAction extends StatusAction {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		StatusEvent statusEvent = validator.validate();
+		StatusEvent statusEvent = sparqlRunToolbar.getValidator().validate();
 		if (statusEvent.getStatus() != StatusMonitor.GREEN) {
-			JOptionPane.showMessageDialog(frame, statusEvent.getDescription(), "Syntax Error", JOptionPane.WARNING_MESSAGE);
-			return;
+			JOptionPane.showMessageDialog(sparqlRunToolbar.getFrame(), statusEvent.getDescription(), "Syntax Error", JOptionPane.WARNING_MESSAGE);
+			return; 
 		}
-		sparqlContainer.setQueryString(sourcePanel.getText());
-
-		if (sparqlContainer.isLocal()) {
+		sparqlRunToolbar.initSparqlContainer();
+		// sparqlContainer.setQueryString(sourcePanel.getText());
+		
+	//	sparqlContainer.setEndpoint(sourcePanel.get)
+ 
+		if (sparqlRunToolbar.getSparqlContainer().isLocal()) {
 			// TODO IMPLEMENTS!!!
-			SPARQLResult result = runQuery(sparqlContainer.getQueryString());
+			SPARQLResult result = runQuery(sparqlRunToolbar.getSparqlContainer().getQueryString());
 		} else {
 			if (!sparqlHttp.isRunning()) {
 				runRemoteQuery(event);
@@ -91,25 +108,28 @@ public class RunQueryAction extends StatusAction {
 	 */
 	private void runRemoteQuery(ActionEvent event) {
 
-		System.out.println("ENDPOINT RQA="+sparqlContainer.getEndpoint());
-		if (sparqlContainer.getEndpoint().getUri() == null) { // shouldn't get
+		System.out.println("ENDPOINT RQA="+sparqlRunToolbar.getSparqlContainer().getEndpoint());
+		if (sparqlRunToolbar.getSparqlContainer().getEndpoint().getUri() == null) { // shouldn't get
 																// this far...
 			return;
 		}
-		sparqlHttp.init(sparqlContainer);
+//		if(sparqlHttp == null){
+//			sparqlHttp = new SparqlHttp();
+//		}
+		sparqlHttp.init(sparqlRunToolbar.getSparqlContainer());
 		super.actionPerformed(event);
 	}
 
 	public SPARQLResult runQuery(String queryString) {
 		Query query = null;
 		try {
-			query = QueryFactory.create(sparqlContainer.getQueryString(),
+			query = QueryFactory.create(sparqlRunToolbar.getSparqlContainer().getQueryString(),
 					Config.SPARQL_SYNTAX);
 		} catch (QueryException exception) {
 			Log.exception(exception);
 		}
 		SPARQLResult result = null;
-		Dataset dataset = sparqlContainer.getDataset();
+		Dataset dataset = sparqlRunToolbar.getSparqlContainer().getDataset();
 		QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
 
 		if (query.isSelectType()) {

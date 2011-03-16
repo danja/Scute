@@ -10,6 +10,10 @@
  */
 package org.hyperdata.resources.scute;
 
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +38,21 @@ public class ScuteIcons {
 	public static final ImageIcon errorIcon;
 	public static final ImageIcon bigImageIcon;
 	public static BufferedImage bigImage = null;	
-
+	
+//	public static final Image spin0;
+//	public static final Image spin1;
+//	public static final Image spin2;
+//	public static final Image spin3;
+//	public static final Image spin4;
+//	public static final Image spin5;
+	public static Image[] spin = new Image[6];
+	
+	public static final Image transparent;
+	public static Cursor transparentCursor;
+	
 	static {
 		final ClassLoader loader = ScuteIcons.class.getClassLoader();
+
 		applicationIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/logo.png"));
 		
 		rdfIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/rdf-logo-16x16.png"));
@@ -44,7 +60,20 @@ public class ScuteIcons {
 		runIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/run-16x16.gif"));	
 		stopIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/stop-16x16.gif"));
 		errorIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/error-16x16.gif"));
-		bigImageIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg"));		
+		bigImageIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg"));	
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();  
+
+		spin[0] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin0.gif"));
+		spin[1] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin1.gif"));
+		spin[2] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin2.gif"));
+		spin[3] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin3.gif"));
+		spin[4] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin4.gif"));
+		spin[5] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/spin5.gif"));
+		
+		transparent = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/transparent.gif"));
+		transparentCursor = toolkit.createCustomCursor(transparent, new Point(0,0), "transparent");
+		
 		try {
 		//	System.out.println(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile());
 			bigImage = ImageIO.read(new File(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile()));

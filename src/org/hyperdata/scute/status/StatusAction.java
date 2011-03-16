@@ -43,7 +43,7 @@ public class StatusAction extends AbstractAction implements
 	 * Run task.
 	 */
 	private void runTask() {
-		System.out.println("runTask");
+		System.out.println("runTask "+getStatusTask());
 		thread = new Thread(getStatusTask());
 		thread.start();
 	}
@@ -52,6 +52,7 @@ public class StatusAction extends AbstractAction implements
 		if (thread != null) {
 			System.out.println("STOP!");
 			thread.interrupt();
+	
 			thread = null; // drastic, but what else to do?
 			getStatusTask().stateChanged(new StatusEvent(StatusMonitor.GREEN)); // reset
 		}

@@ -78,10 +78,10 @@ public class RdfUtils {
 	public static SimpleDateFormat isoDate = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssz");
 
-	private static HashMap<String, String> prefixes = null;
-	private static HashMap<String, String> commonPrefixes = null;
-	private static HashMap<String, String> notSoCommonPrefixes = null;
-	private static HashMap<String, String> reversePrefixMap = null;
+	private static Map<String, String> prefixes = null;
+	private static Map<String, String> commonPrefixes = null;
+	private static Map<String, String> notSoCommonPrefixes = null;
+	private static Map<String, String> reversePrefixMap = null;
 
 	/*
 	 * ?? Z - 1.4 only??
@@ -651,7 +651,7 @@ public class RdfUtils {
 
 	public static Map<String, String> getAllPrefixes() {
 		if (prefixes == null) {
-			prefixes = new HashMap<String, String>();
+			prefixes = new TreeMap<String, String>(); // sorted by keys
 			prefixes.putAll(getCommonPrefixes());
 			prefixes.putAll(getNotSoCommonPrefixes());
 		}
@@ -694,6 +694,8 @@ public class RdfUtils {
 			notSoCommonPrefixes.put("dbpp", "http://dbpedia.org/property/");
 			notSoCommonPrefixes.put("yagoc", "http://dbpedia.org/class/yago/");
 			notSoCommonPrefixes.put("yagop", "http://dbpedia.org/property/yago/"); // may or may not exist 
+			notSoCommonPrefixes.put("po", "http://purl.org/ontology/po/"); // BBC Programmes			
+			notSoCommonPrefixes.put("wo", "http://purl.org/ontology/wo/"); // BBC Wildlife
 		}
 		return notSoCommonPrefixes;
 	}
@@ -999,7 +1001,7 @@ public class RdfUtils {
 		if (node.isLiteral()) {
 			Literal literal = node.asLiteral();
 			// TODO datatype??
-			return literal.toString();
+			return literal.getLexicalForm();
 		}
 		return "?error!?";
 	}

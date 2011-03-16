@@ -25,7 +25,7 @@ import org.hyperdata.scute.system.Log;
  */
 public class SparqlPopupMenu extends JPopupMenu implements ActionListener {
 
-	private static Map<String, String> prefixMap = RdfUtils.getCommonPrefixes();
+	private static Map<String, String> prefixMap = RdfUtils.getAllPrefixes();
 	private static Map<String, String> snippetsMap = getSnippetsMap();
 	private JEditorPane editorPane;
 

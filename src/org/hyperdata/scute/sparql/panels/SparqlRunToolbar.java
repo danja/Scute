@@ -4,6 +4,8 @@
 package org.hyperdata.scute.sparql.panels;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,7 @@ import org.hyperdata.scute.validate.Validator;
 /**
  * @author danny
  * 
+ * TODO refactor messy passing of stuff to RunQueryAction
  */
 public class SparqlRunToolbar extends JPanel implements ActionListener {
 
@@ -35,6 +38,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 	private SparqlContainer queryContainer;
 	private SparqlSourcePanel sourcePanel;
 	private Frame frame;
+	private Validator validator;
 
 	public SparqlRunToolbar(SparqlContainer queryContainer,
 			SparqlSourcePanel sourcePanel, Validator validator, Frame frame) {
@@ -42,12 +46,14 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		this.frame = frame;
+		this.validator = validator;
 		this.queryContainer = queryContainer;
 		this.sourcePanel = sourcePanel;
 
-//		// using sourcepanel here a bit messy, but will do for now
+//		//  a bit messy, lots of backrefs, but will do for now
 		
-		StatusAction runQueryAction = new RunQueryAction(frame, "Run", queryContainer, sourcePanel, validator);
+		StatusAction runQueryAction = new RunQueryAction(this);
+		// frame, "Run", queryContainer, sourcePanel, validator
 		
 		String[] labels = { "Error", "Stop", "Run" };
 		String[] descriptions = { "Error, check log", "Running...", "Run" };
@@ -104,5 +110,35 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		}
 		// System.out.println("ENDPOINT ST=" + endpoint);
 		queryContainer.setEndpoint(endpoint);
+	}
+
+	/**
+	 * @return
+	 */
+	public Validator getValidator() {
+		return validator;
+	}
+
+	/**
+	 * @return
+	 */
+	public Frame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * 
+	 */
+	public void initSparqlContainer() {
+		queryContainer.setQueryString(sourcePanel.getText());
+		Endpoint endpoint = (Endpoint) endpointsBox.getSelectedItem();
+		queryContainer.setEndpoint(endpoint);
+	}
+
+	/**
+	 * @return
+	 */
+	public SparqlContainer getSparqlContainer() {
+		return queryContainer;
 	}
 }

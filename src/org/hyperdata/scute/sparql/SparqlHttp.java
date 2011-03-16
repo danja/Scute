@@ -96,6 +96,7 @@ private String httpText = "";
 			Log.exception(exception);
 		}
 		running = false;
+		sparqlContainer.setHTTPText(httpText);
 		stateChanged(new StatusEvent(StatusMonitor.GREEN));
 		sparqlContainer.setResultsText(resultString);
 		sparqlContainer.fireSparqlEvent();
