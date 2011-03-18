@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql.panels;
+package org.hyperdata.scute.sparql.popup;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,35 @@
+fix endpoints!
+
+support for DESCRIBE etc.
+
+write up sequences of activities - for testing (& screenshot)
+
+button hiding & keypress for startup
+
+autosave
+
+prettifiers
+
+sample queries
+sample data
+
+update icons
+
+<F1> help
+
+history?
+
+running meter thing
+-----------------
+for release
+
+build
+hyperdata homepage
+
+blog
+screencast
+
+add to http://www.w3.org/2001/sw/wiki/Tools
+http://www.w3.org/2001/sw/wiki/Category:Editor
+
+http://gov.tso.co.uk/transport/sparql?query=PREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT+DISTINCT+*+WHERE+%7B%0A%3Fs+rdfs%3Alabel+%22Buxton%22%40en+%3B%0A+a+%3Chttp%3A%2F%2Ftransport.data.gov.uk%2Fdef%2Fnaptan%2FNptgLocality%3E+%3B%0Askos%3AprefLabel+%3Fo+.%0A%0A%7D

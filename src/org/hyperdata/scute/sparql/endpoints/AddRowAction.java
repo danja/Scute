@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.JTable;
 
 class AddRowAction extends AbstractAction {
 
 	private EndpointTableModel model;
-	private SlidyTable table;
+	private JTable table;
 
-	public AddRowAction(String label, Icon icon, SlidyTable table, EndpointTableModel model) {
+	public AddRowAction(String label, Icon icon, JTable table, EndpointTableModel model) {
 		super(label, icon);
 		this.model = model;
 		this.table = table;

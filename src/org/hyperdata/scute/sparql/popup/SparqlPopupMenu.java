@@ -45,8 +45,7 @@ public class SparqlPopupMenu extends JPopupMenu implements ActionListener {
 	}
 
 	private void init() {
-		JMenu snippets = new JMenu("Snippets");
-
+		JMenu snippets = new Snippets(this);
 		
 		JMenu prefixes = new JMenu("Prefix");
 
@@ -58,6 +57,7 @@ public class SparqlPopupMenu extends JPopupMenu implements ActionListener {
 			prefixes.add(menuItem);
 		}
 			add(prefixes);
+			add(snippets);
 	}
 	/*
 	 * (non-Javadoc)
@@ -68,7 +68,10 @@ public class SparqlPopupMenu extends JPopupMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JMenuItem source = (JMenuItem) event.getSource();
+		
 		System.out.println("SOURCE "+source);
+		System.out.println("SOURCE PARENT "+source.getParent());
+		
 		String label = source.getText();
 		
 		String insert = "PREFIX " + label + ": " + "<" + prefixMap.get(label)

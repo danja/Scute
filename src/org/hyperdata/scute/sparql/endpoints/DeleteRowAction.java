@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.JTable;
 
 class DeleteRowAction extends AbstractAction {
 	
-	private SlidyTable table;
+	private JTable table;
 	private EndpointTableModel model;
 
-	public DeleteRowAction(String label, Icon icon, SlidyTable table,
+	public DeleteRowAction(String label, Icon icon, JTable table,
 			EndpointTableModel model) {
 		super(label, icon);
 		this.table = table;

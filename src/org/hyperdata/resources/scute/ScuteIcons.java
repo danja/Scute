@@ -46,9 +46,11 @@ public class ScuteIcons {
 //	public static final Image spin4;
 //	public static final Image spin5;
 	public static Image[] spin = new Image[6];
-	
 	public static final Image transparent;
 	public static Cursor transparentCursor;
+	
+	public static Cursor[] spinCube = new Cursor[4];
+	public static Image[] cubes = new Image[4];
 	
 	static {
 		final ClassLoader loader = ScuteIcons.class.getClassLoader();
@@ -73,6 +75,15 @@ public class ScuteIcons {
 		
 		transparent = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/transparent.gif"));
 		transparentCursor = toolkit.createCustomCursor(transparent, new Point(0,0), "transparent");
+		
+		cubes[0] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/cube0.gif"));
+		spinCube[0] = toolkit.createCustomCursor(cubes[0], new Point(0,0), "cubes0");
+		cubes[1] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/cube1.gif"));
+		spinCube[1] = toolkit.createCustomCursor(cubes[1], new Point(0,0), "cubes1");
+		cubes[2] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/cube2.gif"));
+		spinCube[2] = toolkit.createCustomCursor(cubes[2], new Point(0,0), "cubes2");
+		cubes[3] = toolkit.getImage(loader.getResource("org/hyperdata/resources/scute/cube3.gif"));
+		spinCube[3] = toolkit.createCustomCursor(cubes[3], new Point(0,0), "cubes3");
 		
 		try {
 		//	System.out.println(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg").getFile());

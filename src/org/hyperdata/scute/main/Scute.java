@@ -43,6 +43,7 @@ import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.sparql.panels.SparqlCard;
+import org.hyperdata.scute.status.AnimatedCursor;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
 import org.hyperdata.scute.status.StatusInfoPane;

@@ -27,8 +27,17 @@ import org.hyperdata.scute.validate.ErrorParser;
  */
 public class StatusEvent {
 
+	public int getProgress() {
+		return this.progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
 	private int status = 0;
 	private String description = "";
+	private int progress = StatusMonitor.INACTIVE; // normally 0 to 100
 	
 	private int line = -1;
 	private int column = -1;

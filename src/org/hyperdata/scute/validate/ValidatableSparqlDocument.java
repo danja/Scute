@@ -81,6 +81,7 @@ public class ValidatableSparqlDocument implements Validatable {
 		StatusEvent statusEvent = null;
 		try {
 			query = QueryFactory.create(queryString);
+			System.out.println("DESCRIBE="+query.isDescribeType());
 			statusEvent = new StatusEvent(StatusMonitor.GREEN, "");
 		} catch (Exception exception) {
 			String message = exception.getMessage();

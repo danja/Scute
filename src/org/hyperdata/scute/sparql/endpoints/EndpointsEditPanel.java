@@ -17,7 +17,7 @@ import javax.swing.*;
  */
 public class EndpointsEditPanel extends JPanel {
 
-	private SlidyTable table;
+	private JTable table;
 	static final int DELAY = 10;
 	static final int START_HEIGHT = 4;
 	static final int END_HEIGHT = 24;
@@ -30,13 +30,13 @@ public class EndpointsEditPanel extends JPanel {
 		
 		// this.dialog = dialog;
 
-		table = new SlidyTable(endpointTableModel);
+		table = new JTable(endpointTableModel);
 		// table.setFillsViewportHeight(true);
 		table.setAutoCreateRowSorter(true);
-		table.setRowHeight(START_HEIGHT);
-		for (int i = 0; i < endpointTableModel.getRowCount(); i++) {
-			table.setRowHeight(i, END_HEIGHT);
-		}
+	//	table.setRowHeight(START_HEIGHT);
+//		for (int i = 0; i < endpointTableModel.getRowCount(); i++) {
+//			table.setRowHeight(i, END_HEIGHT);
+//		}
 
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setComponentPopupMenu(new TablePopupMenu(table, endpointTableModel));

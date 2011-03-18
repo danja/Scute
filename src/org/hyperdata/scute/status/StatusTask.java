@@ -3,6 +3,8 @@
  */
 package org.hyperdata.scute.status;
 
+import java.util.Set;
+
 
 /**
  * The Class StatusTask.
@@ -11,6 +13,8 @@ package org.hyperdata.scute.status;
  * 
  * just a marker
  */
-public abstract class StatusTask extends StatusMonitor implements Runnable {
+public abstract class StatusTask extends StatusMonitor implements Runnable, Stoppable {
+
+
 
 }

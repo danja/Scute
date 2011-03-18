@@ -1,3 +1,55 @@
+
+
+
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX po: <http://purl.org/ontology/po/> 
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#> 
+PREFIX tl: <http://purl.org/NET/c4dm/timeline.owl#> 
+
+SELECT DISTINCT * WHERE {
+?programme a po:Programme .
+?programme dc:title ?title .
+
+  ?broadcast po:broadcast_of ?programme .
+  ?broadcast event:time ?time .
+  ?time tl:start ?broadcast_start .
+
+FILTER REGEX(?title, "dog", "i")
+}
+ORDER BY ?broadcast_start
+limit 10
+
+
+
+
+
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#> 
+PREFIX tl: <http://purl.org/NET/c4dm/timeline.owl#> 
+PREFIX po: <http://purl.org/ontology/po/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT *
+WHERE
+{ 
+  ?broadcast po:broadcast_of ?programme .
+  ?broadcast event:time ?time .
+  ?time tl:start ?broadcast_start .
+}
+ORDER BY ?broadcast_start
+limit 10
+
+
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX po: <http://purl.org/ontology/po/> 
+
+SELECT DISTINCT * WHERE {
+?s po:category <http://www.bbc.co.uk/programmes/people/VGVmL25hbWUvbmF1Z2h0aWUsIGphbWVzIChtZWRpYSBwZXJzb25hbGl0eSk#person> .
+?s dc:title ?title .
+?s ?p ?o
+FILTER REGEX(?title, "election", "i")
+}
+
+
+
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX po: <http://purl.org/ontology/po/>
 
@@ -15,7 +67,18 @@ FILTER REGEX(str(?o), "comedy", "i")
 
 
 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX po: <http://purl.org/ontology/po/>
 
+SELECT DISTINCT * WHERE {
+
+?s po:category <http://www.bbc.co.uk/programmes/genres/comedy#genre> .
+?s rdfs:label ?label .
+?s a po:Programme .
+
+# FILTER REGEX(str(?o), "comedy", "i")
+# FILTER REGEX(?label, "2008")
+}
 
 
 

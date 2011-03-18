@@ -44,14 +44,6 @@ public class Validator extends StatusTask {
 		return event;
 	}
 
-//	public boolean isValid() {
-//		StatusEvent event = validate();
-//		if(event.getStatus() == StatusMonitor.GREEN){
-//			return true;
-//		}
-//		return false;
-//	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -60,5 +52,13 @@ public class Validator extends StatusTask {
 	@Override
 	public void run() {
 		validate();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.status.Stoppable#stop()
+	 */
+	@Override
+	public void stop() {
+		// ignore - should be short-lived task
 	}
 }

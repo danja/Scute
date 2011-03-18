@@ -6,17 +6,19 @@ package org.hyperdata.scute.status;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.hyperdata.scute.main.Scute;
+
 
 /**
  * The Class StatusAction.
  * 
  * @author danny
  */
-public class StatusAction extends AbstractAction implements
-		StatusChangeListener {
+public class StatusAction extends AbstractAction implements StatusChangeListener {
 
 	private StatusEvent status = new StatusEvent(StatusMonitor.AMBER); // uncertain
 																		// status
+	
 
 	private Thread thread;
 
@@ -43,12 +45,16 @@ public class StatusAction extends AbstractAction implements
 	 * Run task.
 	 */
 	private void runTask() {
+
 		System.out.println("runTask "+getStatusTask());
 		thread = new Thread(getStatusTask());
 		thread.start();
 	}
 
 	public void stop() {
+		System.out.println("in StatusAction stop()1");
+		getStatusTask().stop(); 
+		System.out.println("in StatusAction stop()2");
 		if (thread != null) {
 			System.out.println("STOP!");
 			thread.interrupt();
@@ -65,7 +71,11 @@ public class StatusAction extends AbstractAction implements
 	 * @param task
 	 *            the new status task
 	 */
-	public void setStatusTask(Runnable task) {
+	public void setStatusTask(StatusTask task) {
+		StatusTask currentTask = getStatusTask();
+		if(currentTask != null){
+			task.addStatusChangeListeners(currentTask.getStatusChangeListeners());
+		}
 		putValue("StatusTask", task);
 	}
 

@@ -36,7 +36,9 @@ import org.hyperdata.scute.sparql.popup.PopupListener;
 import org.hyperdata.scute.sparql.popup.SparqlPopupMenu;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
+import org.hyperdata.scute.status.StatusEvent;
 import org.hyperdata.scute.status.StatusInfoPane;
+import org.hyperdata.scute.status.StatusMonitor;
 import org.hyperdata.scute.syntax.*;
 import org.hyperdata.scute.toolbars.actions.FindAction;
 import org.hyperdata.scute.toolbars.source.EditorToolbar;
@@ -77,22 +79,10 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		resultsPanel = new SparqlResultsPanel(focusListener);
 		sparqlContainer.addSparqlListener(resultsPanel);
 
-
-
-//		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-//				sourcePanel, resultsPanel);
-//		splitPane.setContinuousLayout(true);
-//		add(splitPane, BorderLayout.CENTER);
-//		splitPane.setDividerLocation(0.5);
-
 		// there's an awful lot of this...
 		Leaf leftLeaf = new Leaf("left");
-		// Rectangle leftBounds = new Rectangle(0,0,300,300);
-		// leftLeaf.setBounds(leftBounds);
 		leftLeaf.setWeight(0.5);
 		Leaf rightLeaf = new Leaf("right");
-//		Rectangle rightBounds = new Rectangle(0,0,300,300);
-//		rightLeaf.setBounds(rightBounds);
 		rightLeaf.setWeight(0.5);
 		
 		List children = 
@@ -110,12 +100,6 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		multiSplitPane.add(sourcePanel, "left");
 		multiSplitPane.add(resultsPanel, "right");
 		add(multiSplitPane, BorderLayout.CENTER);
-		
-		
-		JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEADING)); // left-aligned
-		statusPanel.setBorder(BorderFactory
-				.createEtchedBorder(EtchedBorder.LOWERED));
-		
 
 		// need to set up autosave button
 
@@ -129,14 +113,8 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		SparqlRunToolbar runToolbar = new SparqlRunToolbar(sparqlContainer, sourcePanel, sparqlValidateAction.getValidator(), frame);
 		add(runToolbar, BorderLayout.NORTH);
 		
-		StatusInfoPane validatorPane = new StatusInfoPane(sparqlValidateAction);
-
-		// Set up validator button
-		StatusButton validatorButton = new StatusButton(sparqlValidateAction);
-
-		statusPanel.add(validatorButton);
-		statusPanel.add(validatorPane);
-
+		SparqlStatusPanel statusPanel = new SparqlStatusPanel(sparqlValidateAction); 
+		runToolbar.addStatusChangeListener(statusPanel);
 		add(statusPanel, BorderLayout.SOUTH);
 	}
 

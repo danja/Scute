@@ -23,5 +23,5 @@ public interface StatusChangeListener {
 		 *
 		 * @param status the status
 		 */
-		public void statusChanged(StatusEvent status);
+		public void statusChanged(StatusEvent statusEvent);
 }

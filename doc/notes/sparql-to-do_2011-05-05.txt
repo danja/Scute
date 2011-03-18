@@ -1,6 +1,6 @@
 history
 
-support for DESCRIBE etc.
+
 
 http://tidysaucer.svn.sourceforge.net/svnroot/tidysaucer
 https://PROJECTNAME.svn.sourceforge.net/svnroot/PROJECTNAME

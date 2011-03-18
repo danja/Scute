@@ -6,6 +6,7 @@ package org.hyperdata.scute.sparql.panels;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ import org.hyperdata.scute.sparql.endpoints.EndpointListModel;
 import org.hyperdata.scute.sparql.endpoints.EndpointTableModel;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
+import org.hyperdata.scute.status.StatusChangeListener;
+import org.hyperdata.scute.status.StatusEvent;
 import org.hyperdata.scute.status.StatusMonitor;
 import org.hyperdata.scute.validate.SparqlValidateAction;
 import org.hyperdata.scute.validate.Validator;
@@ -39,6 +42,8 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 	private SparqlSourcePanel sourcePanel;
 	private Frame frame;
 	private Validator validator;
+	private StatusAction runQueryAction;
+
 
 	public SparqlRunToolbar(SparqlContainer queryContainer,
 			SparqlSourcePanel sourcePanel, Validator validator, Frame frame) {
@@ -52,8 +57,10 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 
 //		//  a bit messy, lots of backrefs, but will do for now
 		
-		StatusAction runQueryAction = new RunQueryAction(this);
+		runQueryAction = new RunQueryAction(this);
 		// frame, "Run", queryContainer, sourcePanel, validator
+		
+		// runQueryAction.addStatusChangeListener(this); **************************************************
 		
 		String[] labels = { "Error", "Stop", "Run" };
 		String[] descriptions = { "Error, check log", "Running...", "Run" };
@@ -81,6 +88,8 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		editButton.setAction(new EditEndpointsAction("Endpoint:", endpointTableModel, frame));
 		editButton.setToolTipText("Add to/remove from  list");
 		
+
+		
 		add(runQueryButton);
 		// add(Box.createHorizontalStrut(5));
 		add(new JSeparator(SwingConstants.VERTICAL));
@@ -90,6 +99,11 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		add(Box.createHorizontalStrut(5));
 		add(endpointsBox);
 		add(uriField);
+	}
+	
+	public void setCursor(Cursor cursor){
+		super.setCursor(cursor);
+		sourcePanel.setCursor(cursor);
 	}
 
 	/*
@@ -141,4 +155,13 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 	public SparqlContainer getSparqlContainer() {
 		return queryContainer;
 	}
+
+	/**
+	 * @param sparqlCard
+	 */
+	public void addStatusChangeListener(StatusChangeListener listener) {
+		runQueryAction.addStatusChangeListener(listener);
+	}
+
+
 }

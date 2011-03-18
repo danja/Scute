@@ -3,10 +3,15 @@
  */
 package org.hyperdata.scute.sparql;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -31,31 +36,27 @@ public class SparqlHttp extends StatusTask {
 	private String resultString = null;
 
 	private HttpClient httpclient;
-	private HttpGet httpget;
+	private HttpGet httpGet;
 	private SparqlContainer sparqlContainer;
-private String httpText = "";
+	private String httpText = "";
 
 	public void init(SparqlContainer sparqlContainer) {
 
 		this.sparqlContainer = sparqlContainer;
 		String endpointURI = sparqlContainer.getEndpoint().getUri();
 		String query = sparqlContainer.getQueryString();
-
-		// System.out.println("query=" + query);
-
 		String uri = "";
 
 		try {
 			// might be better to use HttpClient's formatting?
 			uri = endpointURI + "?query=" + URLEncoder.encode(query, "UTF-8");
 		} catch (UnsupportedEncodingException exception) {
-			// TODO popup exception
 			Log.exception(exception);
 		}
 		httpclient = new DefaultHttpClient();
-		httpget = new HttpGet(uri);
-		
-		httpText = "Request:\n\n"+httpget.getRequestLine();
+		httpGet = new HttpGet(uri);
+
+		httpText = "Request:\n\n" + httpGet.getRequestLine();
 		sparqlContainer.setHTTPText(httpText);
 	}
 
@@ -70,39 +71,127 @@ private String httpText = "";
 	 */
 	@Override
 	public void run() {
-		
-		stateChanged(new StatusEvent(StatusMonitor.AMBER, "Running..."));
 		running = true;
+		StatusEvent event = new StatusEvent(StatusMonitor.AMBER, "Running...");
+		System.out.println("SparqlHttp Running...");
+		event.setProgress(0);
+		stateChanged(event);
+
 		HttpResponse response = null;
 		try {
-			response = httpclient.execute(httpget);
+			response = httpclient.execute(httpGet);
+		} catch (InterruptedIOException iioException){
+			// user interrupted
 		} catch (Exception exception) {
-			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
+			stateChanged(new StatusEvent(StatusMonitor.RED,
+					exception.getMessage()));
 			Log.exception(exception);
 		}
+		if(!running){
+			return;
+		}
+		event = new StatusEvent(StatusMonitor.AMBER, "Running...");
+		event.setProgress(25);
+		stateChanged(event);
 
 		HttpEntity entity = response.getEntity();
-		
-		httpText += "\n\nResponse:\n\n"+response.toString();
+
+		httpText += "\n\nResponse:\n\n" + response.toString();
 		sparqlContainer.setHTTPText(httpText);
-		
-		// long len = entity.getContentLength();
-		// String results = "";
-		
+
+		long length = entity.getContentLength(); // doesn't appear to work - examine later
+		// System.out.println("LENGTH=" + length);
+
 		try {
-			resultString = EntityUtils.toString(entity);
+			resultString = readEntity(entity); // has status monitoring inside
+			// EntityUtils.toString(entity);
 		} catch (Exception exception) {
-			stateChanged(new StatusEvent(StatusMonitor.RED, exception.getMessage()));
+			stateChanged(new StatusEvent(StatusMonitor.RED,
+					exception.getMessage()));
 			Log.exception(exception);
 		}
 		running = false;
 		sparqlContainer.setHTTPText(httpText);
-		stateChanged(new StatusEvent(StatusMonitor.GREEN));
+		event = new StatusEvent(StatusMonitor.GREEN);
+		event.setProgress(100);
+		stateChanged(event);
+		if(resultString.equals("Interrupted")){ // was stopped (better handling via exception...)
+			return;
+		}
 		sparqlContainer.setResultsText(resultString);
 		sparqlContainer.fireSparqlEvent();
 	}
-	
-	public boolean isRunning(){
+
+	/**
+	 * @param entity
+	 * @return
+	 * @throws IOException
+	 */
+	private String readEntity(HttpEntity entity) throws Exception {
+		StringBuffer stringBuffer = new StringBuffer();
+
+		// StatusEvent event = new StatusEvent(StatusMonitor.AMBER,
+		// "Running...");
+		// event.setProgress(0);
+		// stateChanged(event);
+		long counter = 0;
+		if (entity != null) {
+			InputStream instream = entity.getContent();
+			long length = entity.getContentLength();
+			long chunk = length / 10;
+			if (length == -1) {
+				StatusEvent event = new StatusEvent(StatusMonitor.AMBER);
+				event.setProgress(StatusMonitor.INDETERMINATE_PROGRESS);
+				stateChanged(event);
+			}
+			try {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(instream));
+				int c;
+				while (running && (c = reader.read()) != -1) {
+					stringBuffer.append((char) c);
+					counter++;
+					if (length != -1 && counter % chunk == 0) {
+						StatusEvent event = new StatusEvent(StatusMonitor.AMBER);
+						event.setProgress((int) (100 * counter / length));
+						stateChanged(event);
+					}
+				}
+			} catch (Exception exception) {
+				System.out.println("interrupted "+exception);
+				stop();
+				return "Interrupted";
+
+			} finally {
+				// Closing the input stream will trigger connection release
+				instream.close();
+			}
+			// When HttpClient instance is no longer needed,
+			// shut down the connection manager to ensure
+			// immediate deallocation of all system resources
+			httpclient.getConnectionManager().shutdown();
+		}
+		return stringBuffer.toString();
+	}
+
+	public boolean isRunning() {
 		return running;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.hyperdata.scute.status.Stoppable#stop()
+	 */
+	@Override
+	public void stop() {
+		System.out.println("stopping");
+		running = false;
+		httpGet.abort();
+		// httpGet.
+		httpclient.getConnectionManager().shutdown();
+		
+		System.out.println("nulling");
+		httpclient = null;
 	}
 }

@@ -7,14 +7,15 @@ import java.awt.Component;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 
 class TablePopupMenu extends JPopupMenu {
 	
 	private Action deleteAction = null;
-	private SlidyTable table;
+	private JTable table;
 	private EndpointTableModel model;
 
-	public TablePopupMenu(SlidyTable table, EndpointTableModel model) {
+	public TablePopupMenu(JTable table, EndpointTableModel model) {
 		super();
 		this.table = table;
 		this.model = model;

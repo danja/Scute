@@ -29,6 +29,11 @@ public class StatusMonitor {
 			"Good" };
 
 	protected static final ImageIcon[] ICON = new ImageIcon[N_STATES];
+
+	public static final int INDETERMINATE_PROGRESS = -101;
+
+	public static final int INACTIVE = -1;
+	
 	static {
 		ICON[0] = IndicatorIcons.redIcon;
 		ICON[1] = IndicatorIcons.amberIcon;
@@ -37,6 +42,20 @@ public class StatusMonitor {
 	
 	private Set<StatusChangeListener> statusChangeListeners = new HashSet<StatusChangeListener>();
 
+	/**
+	 * @return
+	 */
+	public Set<StatusChangeListener> getStatusChangeListeners() {
+		return statusChangeListeners;
+	}
+	
+	/**
+	 * @param statusChangeListeners
+	 */
+	public void addStatusChangeListeners(Set<StatusChangeListener> statusChangeListeners) {
+		this.statusChangeListeners.addAll(statusChangeListeners);
+	}
+	
 	/**
 	 * Adds the status listener.
 	 *

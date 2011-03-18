@@ -23,12 +23,12 @@ import org.jdesktop.swingx.JXTable;
  */
 public class TableResultsPane extends JPanel {
 
-	private JTable table;
+	private JXTable table;
 	private ResultSetTableModel tableModel; // recreated with every set of interesting results, kept for clearing
 
 	public TableResultsPane() {
 		super(new BorderLayout());
-		table = new JTable();
+		table = new JXTable();
 		table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		table.setDragEnabled(true);
 		
