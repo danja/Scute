@@ -7,6 +7,7 @@
 	<property name="creator.name" value="Danny Ayers" />
 	<property name="dist.name" value="scute" />
 	<property name="install.file" value="Scute.jar" />
+	<property name="package.filename" value="Scute.jar" />
 	<property name="main.class" value="org.hyperdata.scute.main.Scute" />
 
 	<!-- directory paths -->
@@ -28,7 +29,7 @@
 	<property name="dist.dir" value="dist/${dist.name}" />
 
 	<path id="classpath">
-		<fileset dir="${lib.dir}" includes="*.jar" />
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
 	</path>
 
 	<!-- compiler flags -->

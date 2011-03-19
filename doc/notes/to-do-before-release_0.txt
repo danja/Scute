@@ -13,6 +13,8 @@ prettifiers
 sample queries
 sample data
 
+javadoc
+
 update icons
 
 <F1> help

@@ -3,10 +3,15 @@ Ant-Version: Apache Ant 1.7.1
 Created-By: 19.0-b09 (Sun Microsystems Inc.)
 Built-By: Danny Ayers
 Main-Class: org.hyperdata.scute.main.Scute
-Implementation-Version: 0.50-b15
-Class-Path: antlr-2.7.5.jar:arq-2.8.7.jar:arq-extra.jar:commons-loggin
- g-1.1.jar:concurrent.jar:icu4j-3.4.4.jar:iri-0.8.jar:jena-2.6.4.jar:j
- son.jar:junit-4.5.jar:log4j-1.2.14.jar:looks-2.1.4.jar:lucene-core-2.
- 3.1.jar:slf4j-api-1.5.8.jar:slf4j-log4j12-1.5.8.jar:stax-api-1.0.1.ja
- r:tdb-0.8.7.jar:wstx-asl-3.2.9.jar:xercesImpl-2.7.1.jar:xml-apis.jar
+Implementation-Version: 0.50-b18
+Class-Path: Filters.jar:commons-codec-1.4.jar:commons-logging-1.1.1.ja
+ r:httpclient-4.1.jar:httpclient-cache-4.1.jar:httpcore-4.1.jar:httpmi
+ me-4.1.jar:Autohelp.jar:help-indexer.jar:help-share.jar:jewt.jar:jhal
+ l.jar:ohj.jar:oracle_ice.jar:share.jar:antlr-2.7.5.jar:arq-2.8.7.jar:
+ arq-extra.jar:commons-logging-1.1.jar:concurrent.jar:icu4j-3.4.4.jar:
+ iri-0.8.jar:jena-2.6.4.jar:json.jar:junit-4.5.jar:log4j-1.2.14.jar:lo
+ oks-2.1.4.jar:lucene-core-2.3.1.jar:slf4j-api-1.5.8.jar:slf4j-log4j12
+ -1.5.8.jar:stax-api-1.0.1.jar:tdb-0.8.7.jar:wstx-asl-3.2.9.jar:xerces
+ Impl-2.7.1.jar:xml-apis.jar:swingx-beaninfo-1.6.2.jar:swingx-core-1.6
+ .2.jar
 
