@@ -12,7 +12,6 @@ package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
 import org.jdesktop.swingx.*;
-import org.jdesktop.swingx.MultiSplitLayout.Leaf;
 import org.jdesktop.swingx.MultiSplitLayout.*;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -42,6 +41,8 @@ import org.hyperdata.scute.help.HelpUI;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
 import org.hyperdata.scute.source.RdfSourcePanel;
+import org.hyperdata.scute.source.popup.PopupListener;
+import org.hyperdata.scute.source.popup.SourcePopupMenu;
 import org.hyperdata.scute.sparql.panels.SparqlCard;
 import org.hyperdata.scute.status.AnimatedCursor;
 import org.hyperdata.scute.status.StatusAction;
@@ -447,7 +448,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
 		rdfxmlPanel.setFilename(Config.RDFXML_TEMP);
 		rdfxmlPanel.addUserActivityListener(autoSave);
-		rdfxmlPanel.loadModel(Models.workingModel);
+		// rdfxmlPanel.loadModel(Models.workingModel);
+		rdfxmlPanel.load();
 		rdfxmlPanel.setEditorKit(new ScuteEditorKit("XML"));
 		rdfxmlPanel.addFocusListener(focusMonitor);
 
@@ -496,8 +498,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		turtlePanel.setFilename(Config.TURTLE_TEMP);
 		turtlePanel.addUserActivityListener(autoSave);
 		turtlePanel.setEditorKit(new ScuteEditorKit("Turtle"));
-		turtlePanel.loadModel(Models.workingModel);
+		// turtlePanel.loadModel(Models.workingModel);
+		turtlePanel.load();
 		turtlePanel.addFocusListener(focusMonitor);
+		
+		SourcePopupMenu popupMenu = new SourcePopupMenu(turtlePanel);
+		PopupListener popupListener = new PopupListener(popupMenu);
+		turtlePanel.addMouseListener(popupListener);
 
 		cardsPanel.addChangeListener(turtlePanel);
 		// add to save-on-shutdown list

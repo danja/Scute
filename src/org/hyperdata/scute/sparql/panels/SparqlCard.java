@@ -29,11 +29,11 @@ import org.jdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;
+import org.hyperdata.scute.source.popup.PopupListener;
+import org.hyperdata.scute.source.popup.SourcePopupMenu;
 import org.hyperdata.scute.sparql.SparqlContainer;
 import org.hyperdata.scute.sparql.SparqlContainerImpl;
 import org.hyperdata.scute.sparql.actions.RunQueryAction;
-import org.hyperdata.scute.sparql.popup.PopupListener;
-import org.hyperdata.scute.sparql.popup.SparqlPopupMenu;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
 import org.hyperdata.scute.status.StatusEvent;
@@ -59,7 +59,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	private SparqlContainer sparqlContainer = new SparqlContainerImpl();
 	private Frame frame;
 	private ScuteEditorKit editorKit;
-	private SparqlPopupMenu popupMenu;
+	private SourcePopupMenu popupMenu;
 
 	public SparqlCard(Frame frame, FocusListener focusListener) {
 		super(new BorderLayout());
@@ -70,7 +70,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		sourcePanel.setEditorKit(editorKit);
 		sourcePanel.addFocusListener(focusListener);
 
-		popupMenu = new SparqlPopupMenu(sourcePanel);
+		popupMenu = new SourcePopupMenu(sourcePanel);
 		PopupListener popupListener = new PopupListener(popupMenu);
 		sourcePanel.addMouseListener(popupListener);
 

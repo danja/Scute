@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.sparql.popup;
+package org.hyperdata.scute.source.popup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

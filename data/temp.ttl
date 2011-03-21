@@ -1,11 +1,32 @@
-<http://purl.org/stuff/brian>
-      <http://xmlns.com/foaf/0.1/knows>
-              <http://purl.org/stuff/andy> .
+@PREFIX ja:	<http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rev:     <http://purl.org/stuff/rev#> .
+@prefix mo:      <http://purl.org/ontology/mo/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .
+@prefix wo:      <http://purl.org/ontology/wo/> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix yagop:   <http://dbpedia.org/property/yago/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix dbpr:    <http://dbpedia.org/resource/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dbpo:    <http://dbpedia.org/ontology/> .
+@prefix dbpp:    <http://dbpedia.org/property/> .
+@prefix yagoc:   <http://dbpedia.org/class/yago/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rel:     <http://purl.org/vocab/relationship/> .
+@prefix po:      <http://purl.org/ontology/po/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
+@prefix x:       <http://purl.org/stuff/> .
 
-<http://purl.org/stuff/carl>
-      <http://xmlns.com/foaf/0.1/name>
-              "carl" .
+x:brian
+      foaf:knows x:andy .
 
-<http://purl.org/stuff/andy>
-      <http://xmlns.com/foaf/0.1/knows>
-              <http://purl.org/stuff/brian> .
+x:carl
+      foaf:name "carl" .
+
+x:andy
+      foaf:knows x:brian .

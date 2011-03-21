@@ -10,6 +10,8 @@
  */
 package org.hyperdata.scute.source;
 
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
@@ -74,6 +76,7 @@ public class RdfSourcePanel extends EditorPane {
 	 * 
 	 * @param workingModel
 	 *            the working model
+	 *            XXXMODEL
 	 */
 	public void loadModel(Model workingModel) {
 		model = workingModel;
@@ -84,6 +87,14 @@ public class RdfSourcePanel extends EditorPane {
 		repaint();
 	}
 
+	public void saveModel() { // XXXMODEL
+		try {
+			RdfUtils.save(model, Config.WORKING_MODEL_FILENAME);
+		} catch (IOException exception) {
+			Log.exception(exception);
+		}
+	}
+	
 	/**
 	 * Refresh from text.
 	 */
@@ -122,10 +133,11 @@ public class RdfSourcePanel extends EditorPane {
 		
 		// String currentView = getSyntax();
 		String view = ((CardsPanel) e.getSource()).getCurrentCardName();
-		
+		// System.out.println("VIEW="+view);
 	//	System.out.println("RdfSoucePanel view = "+view);
 // save();
 		if (this.getSyntax().equals(view)) {
+			// load();
 			loadModel(model);
 		}
 	}

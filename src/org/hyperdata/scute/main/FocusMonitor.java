@@ -9,6 +9,7 @@ import java.awt.event.FocusListener;
 import javax.swing.JEditorPane;
 
 import org.hyperdata.scute.source.EditorPane;
+import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.toolbars.source.EditorToolbar;
 
 /**
@@ -45,7 +46,17 @@ public class FocusMonitor implements FocusListener {
 	public void focusLost(FocusEvent event) {
 		Object source = event.getSource();
 		if(source instanceof EditorPane){
-			((EditorPane)source).save();
+			EditorPane editorPane = (EditorPane)source;
+			editorPane.save();
+			
+			// editorPane.
+			
+		}
+		// XXXMODEL
+		if(source instanceof RdfSourcePanel){
+			RdfSourcePanel sourcePanel = (RdfSourcePanel)source;
+			sourcePanel.refreshModelFromText();
+			sourcePanel.saveModel();
 		}
 		editorToolbar.setVisible(false);
 	}
