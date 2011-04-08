@@ -1,4 +1,3 @@
-@PREFIX ja:	<http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix dc:      <http://purl.org/dc/elements/1.1/> .
 @prefix rev:     <http://purl.org/stuff/rev#> .
 @prefix mo:      <http://purl.org/ontology/mo/> .
@@ -22,11 +21,3 @@
 @prefix ja:      <http://jena.hpl.hp.com/2005/11/Assembler#> .
 @prefix x:       <http://purl.org/stuff/> .
 
-x:brian
-      foaf:knows x:andy .
-
-x:carl
-      foaf:name "carl" .
-
-x:andy
-      foaf:knows x:brian .

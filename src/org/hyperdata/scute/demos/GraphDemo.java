@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 import javax.swing.JFrame;
 
-import org.hyperdata.scute.graph.GraphPanel;
+import org.hyperdata.scute.graph.GraphCard;
 import org.hyperdata.scute.system.Log;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -24,7 +24,7 @@ public class GraphDemo extends JFrame {
 	private static final long serialVersionUID = 117728935219563549L;
 	
 	/** The panel. */
-	private GraphPanel panel;
+	private GraphCard panel;
 	
 	/** The model. */
 	static Model model;
@@ -61,7 +61,7 @@ public class GraphDemo extends JFrame {
 	public void initialize() {
 		setLayout(new BorderLayout());
 
-		panel = new GraphPanel(model);
+		panel = new GraphCard(model);
 		add("Center", panel);
 		// panel.initialize();
 

@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.tree.RdfTreeCard;
 
 /**
  * The Class CopyAction.
@@ -31,7 +31,7 @@ public class CopyAction extends AbstractAction {
 	 * @param treePanel
 	 *            the tree panel
 	 */
-	public CopyAction(RdfTreePanel treePanel) {
+	public CopyAction(RdfTreeCard treePanel) {
 		super("Copy");
 	}
 

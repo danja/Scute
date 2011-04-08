@@ -28,7 +28,7 @@ public class TreeMouseListener extends MouseAdapter {
 	private JTree tree;
 	
 	/** The tree panel. */
-	private final RdfTreePanel treePanel;
+	private final RdfTreeCard treePanel;
 
 	/**
 	 * Instantiates a new tree mouse listener.
@@ -36,7 +36,7 @@ public class TreeMouseListener extends MouseAdapter {
 	 * @param treePanel
 	 *            the tree panel
 	 */
-	public TreeMouseListener(RdfTreePanel treePanel) {
+	public TreeMouseListener(RdfTreeCard treePanel) {
 		tree = treePanel.getTree();
 		this.treePanel = treePanel;
 

@@ -1,5 +1,7 @@
 fix when endpoint is invalid
 
+scroll on sparql pane
+
 do something when result is 500 page
 
 check XXXMODEL bits - model behaviour???

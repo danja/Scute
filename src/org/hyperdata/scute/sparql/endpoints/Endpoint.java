@@ -87,7 +87,7 @@ public final class Endpoint implements Comparable {
 	 */
 	@Override
 	public int compareTo(Object arg) {
-		return getLabel().compareTo(((Endpoint)arg).getLabel());
+		return getLabel().toLowerCase().compareTo(((Endpoint)arg).getLabel().toLowerCase());
 	}
 
 }

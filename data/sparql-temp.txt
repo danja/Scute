@@ -1,10 +1,12 @@
-PREFIX dbpo:	<http://dbpedia.org/ontology/>
+PREFIX rdfs:		<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX void:		<http://rdfs.org/ns/void#>
+PREFIX wn:	<http://www.w3.org/2006/03/wn/wn20/schema/>
 SELECT DISTINCT * WHERE {
-?s ?p ?o
-}
-PREFIX dbpo: <http://dbpedia.org/ontology/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+?o1 wn:hyponymOf <http://wordnet.rkbexplorer.com/id/synset-Roman_deity-noun-1> .
+?o2 wn:memberMeronymOf <http://wordnet.rkbexplorer.com/id/synset-solar_system-noun-1> .
+?o1 ?p ?o.
+?o2 ?p ?o.
 
-SELECT DISTINCT * WHERE {
-<http://www4.wiwiss.fu-berlin.de/factbook/resource/Libya> ?p ?o 
 }
+
+

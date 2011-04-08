@@ -12,9 +12,9 @@ import org.hyperdata.scute.cards.Card;
  * 
  * TODO Backup - to remote store, to file
  */
-public class SystemPanel extends Card {
+public class SystemCard extends Card {
 
-	public SystemPanel() {
+	public SystemCard() {
 		super();
 		
 		// setLayout(new GridLayout(0,1));

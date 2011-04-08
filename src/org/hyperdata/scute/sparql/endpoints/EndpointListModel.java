@@ -154,7 +154,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 			sortList.add(endpoint);
 		}
 		Collections.sort(sortList);
-		targets.addAll(sortList);
+		targets.addAll(sortList); // just use targets and sort in-place
 	}
 	
 	public void saveEndpointsToFile(){
@@ -199,7 +199,7 @@ public class EndpointListModel extends DefaultComboBoxModel {
 	 */
 	public void addEndpoint(Endpoint endpoint) {
 		targets.add(endpoint);
-		
+		Collections.sort(targets);
 		// need to repaint??
 	}
 	

@@ -38,23 +38,23 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 	private TableResultsPane tablePane;
 	private HTTPPanel httpPane;
 
-	public SparqlResultsPanel(FocusListener focusListener) {
+	public SparqlResultsPanel() {
 		super(new BorderLayout());
 
 		textPane = new TextResultsPanel();
-		textPane.addFocusListener(focusListener);
+
 		textPane.setEditorKit(new ScuteEditorKit("Turtle")); // for CONSTRUCTed
 																// results
 
 		xmlPane = new XMLResultsPanel();
-		xmlPane.addFocusListener(focusListener);
+
 		xmlPane.setEditorKit(new ScuteEditorKit("XML"));
 
 		tablePane = new TableResultsPane();
-		tablePane.addFocusListener(focusListener);
+
 
 		httpPane = new HTTPPanel();
-		httpPane.addFocusListener(focusListener);
+
 
 		JTabbedPane tabs = new JTabbedPane(SwingConstants.BOTTOM);
 		tabs.addTab("Table", tablePane); // it has its own scroll
@@ -63,6 +63,13 @@ public class SparqlResultsPanel extends JPanel implements SparqlListener {
 		tabs.addTab("HTTP", new JScrollPane(httpPane));
 
 		add(tabs, BorderLayout.CENTER);
+	}
+	
+	public void addFocusListener(FocusListener focusListener){
+		textPane.addFocusListener(focusListener);
+		xmlPane.addFocusListener(focusListener);
+		tablePane.addFocusListener(focusListener);
+		httpPane.addFocusListener(focusListener);
 	}
 
 	public void populate(String resultString) {

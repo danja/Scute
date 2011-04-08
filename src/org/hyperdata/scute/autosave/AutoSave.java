@@ -248,7 +248,7 @@ public class AutoSave extends UserActivityAdapter { //
 	public void stateChanged(ChangeEvent event) {
 
 		CardsPanel cardsPanel = (CardsPanel) event.getSource();
-		String current = cardsPanel.getCurrentCardName();
+		String current = cardsPanel.getCurrentCardType();
 		Config.self.setSelectedView(current);
 		Card currentCard = cardsPanel.getCard(current);
 		if (currentCard instanceof TextContainer) {

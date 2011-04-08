@@ -26,7 +26,7 @@ import org.hyperdata.scute.filemanager.actions.SendToSparqlAction;
 /**
  * The Class FileExplorer.
  */
-public class FileExplorerPanel extends Card implements FileReference {
+public class FileExplorerCard extends Card implements FileReference {
 
 	@Override
 	public File getCurrentFile() {
@@ -40,7 +40,7 @@ public class FileExplorerPanel extends Card implements FileReference {
 
 	private File currentFile;
 	
-	public FileExplorerPanel(String startPath) {
+	public FileExplorerCard(String startPath) {
 		super(new BorderLayout());
 		FilesTreeModel treeModel = new FilesTreeModel(startPath);
 		DirListModel directoryModel = new DirListModel((File) treeModel.getRoot());

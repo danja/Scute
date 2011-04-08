@@ -31,7 +31,7 @@ import org.hyperdata.scute.cards.Card;
  * 
  * FIXME implement
  */
-public class TriplesPanel extends Card  {
+public class TriplesCard extends Card  {
 
 	JXTable table; //  = new JXTable();
 	private Model model;
@@ -39,7 +39,7 @@ public class TriplesPanel extends Card  {
 	/**
 	 * @param model
 	 */
-	public TriplesPanel(Model model) {
+	public TriplesCard(Model model) {
 		this.model = model;
 		loadModel();
 		add(new JScrollPane(table));

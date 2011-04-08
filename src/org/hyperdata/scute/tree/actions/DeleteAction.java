@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import org.hyperdata.scute.tree.RdfTreeNode;
-import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.tree.RdfTreeCard;
 
 /**
  * The Class DeleteAction.
@@ -26,7 +26,7 @@ public class DeleteAction extends AbstractAction {
 	private static final long serialVersionUID = -4723921004105606994L;
 	
 	/** The tree panel. */
-	private final RdfTreePanel treePanel;
+	private final RdfTreeCard treePanel;
 
 	/**
 	 * Instantiates a new delete action.
@@ -34,7 +34,7 @@ public class DeleteAction extends AbstractAction {
 	 * @param treePanel
 	 *            the tree panel
 	 */
-	public DeleteAction(RdfTreePanel treePanel) {
+	public DeleteAction(RdfTreeCard treePanel) {
 		super("Delete");
 		this.treePanel = treePanel;
 	}

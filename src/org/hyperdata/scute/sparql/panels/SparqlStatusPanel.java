@@ -61,6 +61,6 @@ public class SparqlStatusPanel extends JPanel implements StatusChangeListener {
 			progressBar.setIndeterminate(false);
 			progressBar.setValue(progress);
 		}
-		System.out.println("PROGRESS="+progress);
+		// System.out.println("PROGRESS="+progress);
 	}
 }

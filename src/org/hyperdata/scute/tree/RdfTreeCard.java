@@ -38,7 +38,7 @@ import org.hyperdata.scute.cards.Card;
  * 
  *         D.Ayers 2002
  */
-public class RdfTreePanel extends Card implements TreeSelectionListener {
+public class RdfTreeCard extends Card implements TreeSelectionListener {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4397360330476275899L;
@@ -68,7 +68,7 @@ public class RdfTreePanel extends Card implements TreeSelectionListener {
 	 * @param model
 	 *            the model
 	 */
-	public RdfTreePanel(Model model) {
+	public RdfTreeCard(Model model) {
 		super(new BorderLayout());
 		// addFocusListener(focusListener);
 		loadModel(model);
@@ -76,15 +76,6 @@ public class RdfTreePanel extends Card implements TreeSelectionListener {
 		init();
 	}
 	
-	/**
-	 * Adds the user activity listener.
-	 *
-	 * @param listener the listener
-	 */
-	public void addUserActivityListener(UserActivityListener listener) {
-		// TODO to implement when RdfTreePanel supports editing
-	}
-
 	/**
 	 * Gets the action.
 	 * 

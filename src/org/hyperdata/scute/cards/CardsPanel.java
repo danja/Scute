@@ -2,6 +2,8 @@ package org.hyperdata.scute.cards;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,39 +16,41 @@ import javax.swing.event.EventListenerList;
 
 import org.jdesktop.swingx.JXTitledPanel;
 
-public class CardsPanel extends JPanel {
+public class CardsPanel extends JPanel implements MouseListener {
 
 	private CardLayout layout;
 	private EventListenerList listenerList = new EventListenerList();
 	private ChangeEvent changeEvent = null;
-	private String previousCardName = "Turtle";
-	private String currentCardName = "Turtle";
+	private String previousCardType = "Turtle";
+	private String currentCardType = "Turtle";
 
 	private Map<String, Card> cards = new HashMap<String, Card>();
 
-	public void addPlain(Card card, String name) {
-		super.add(card, name);
-		cards.put(name, card);
+	public void addPlain(Card card, String type) {
+		super.add(card, type);
+		cards.put(type, card);
 	}
 	
-	public void add(Card card, String name) {
-		super.add(new JXTitledPanel(name, card), name);
-		cards.put(name, card);
+	public void add(Card card, String type) {
+		JXTitledPanel titledPanel = new JXTitledPanel(type, card);
+		titledPanel.addMouseListener(this);
+		super.add(titledPanel, type);
+		cards.put(type, card);
 	}
 	
-	public void addScroll(Card card, String name) {
-		super.add(new JXTitledPanel(name, card), name);
+	public void addScroll(Card card, String type) {
+		super.add(new JXTitledPanel(type, card), type);
 	//	super.add(new JScrollPane(card), name);
 		// System.out.println("Adding CARD = "+name);
-		cards.put(name, card);
+		cards.put(type, card);
 	}
 
-	public String getCurrentCardName() {
-		return currentCardName;
+	public String getCurrentCardType() {
+		return currentCardType;
 	}
 
-	public String getPreviousCardName() {
-		return previousCardName;
+	public String getPreviousCardType() {
+		return previousCardType;
 	}
 
 	public CardsPanel() {
@@ -66,17 +70,17 @@ public class CardsPanel extends JPanel {
 		// System.out.println("---------------");
 	}
 
-	public Card getCard(String name) {
-		return cards.get(name);
+	public Card getCard(String type) {
+		return cards.get(type);
 	}
 	
 	public Card getCurrentCard(){
-		return getCard(currentCardName);
+		return getCard(currentCardType);
 	}
 
-	public void setCurrentCard(String cardName) {
-		previousCardName = currentCardName;
-		this.currentCardName = cardName;
+	public void setCurrentCard(String cardType) {
+		previousCardType = currentCardType;
+		this.currentCardType = cardType;
 		fireStateChanged(); // is enough to update?
 	}
 
@@ -112,7 +116,52 @@ public class CardsPanel extends JPanel {
 	 * @param actionEvent
 	 */
 	public void fireChange(ActionEvent actionEvent) {
-		this.currentCardName = actionEvent.getActionCommand();
+		this.currentCardType = actionEvent.getActionCommand();
 		fireStateChanged();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		System.out.println("CLICK! "+arg0);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

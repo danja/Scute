@@ -923,7 +923,7 @@ public class RdfUtils {
 			// the encoding was screwing up, so declaration removed
 			// rdfWriter.setProperty("showXmlDeclaration", Boolean.FALSE);
 			// rdfWriter.write(model, System.out, RSS.getURI());
-			rdfWriter.write(model, stringOut, RSS.getURI());
+			rdfWriter.write(model, stringOut, RSS.getURI()); // why RSS?
 			// model.write(stringOut, lang, RSS.getURI());
 			// http://base
 			stringOut.flush();
@@ -932,6 +932,7 @@ public class RdfUtils {
 			// Log.exception(exception);
 			// System.exit(1);
 			throw new RuntimeException(exception);
+			// return "";
 		}
 		return stringOut.toString();
 	}

@@ -29,6 +29,7 @@ import org.jdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;
+import org.hyperdata.scute.main.FocusMonitor;
 import org.hyperdata.scute.source.popup.PopupListener;
 import org.hyperdata.scute.source.popup.SourcePopupMenu;
 import org.hyperdata.scute.sparql.SparqlContainer;
@@ -61,14 +62,14 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	private ScuteEditorKit editorKit;
 	private SourcePopupMenu popupMenu;
 
-	public SparqlCard(Frame frame, FocusListener focusListener) {
+	public SparqlCard() {
 		super(new BorderLayout());
 
 		sourcePanel = new SparqlSourcePanel("SPARQL");
 		editorKit = new ScuteEditorKit("SPARQL"); // ///////////////////////
 		// editorKit.setSyntax("SPARQL");
 		sourcePanel.setEditorKit(editorKit);
-		sourcePanel.addFocusListener(focusListener);
+
 
 		popupMenu = new SourcePopupMenu(sourcePanel);
 		PopupListener popupListener = new PopupListener(popupMenu);
@@ -76,11 +77,12 @@ public class SparqlCard extends Card { // implements SparqlContainer
 
 		sourcePanel.loadSoon();
 
-		resultsPanel = new SparqlResultsPanel(focusListener);
+		resultsPanel = new SparqlResultsPanel();
+
 		sparqlContainer.addSparqlListener(resultsPanel);
 
 		// there's an awful lot of this...
-		Leaf leftLeaf = new Leaf("left");
+		Leaf leftLeaf = new Leaf("left"); // actually upper & lower
 		leftLeaf.setWeight(0.5);
 		Leaf rightLeaf = new Leaf("right");
 		rightLeaf.setWeight(0.5);
@@ -97,7 +99,7 @@ public class SparqlCard extends Card { // implements SparqlContainer
 		multiSplitLayout.setLayoutMode(MultiSplitLayout.NO_MIN_SIZE_LAYOUT);
 		JXMultiSplitPane multiSplitPane = new JXMultiSplitPane(multiSplitLayout);
 		multiSplitPane.getMultiSplitLayout().setModel(splitModel);
-		multiSplitPane.add(sourcePanel, "left");
+		multiSplitPane.add(new JScrollPane(sourcePanel), "left");
 		multiSplitPane.add(resultsPanel, "right");
 		add(multiSplitPane, BorderLayout.CENTER);
 
@@ -123,12 +125,29 @@ public class SparqlCard extends Card { // implements SparqlContainer
 	 */
 	public static void main(String[] args) {
 
-		final JFrame frame = new JFrame();
-		SparqlCard sparqlPanel = new SparqlCard(frame, null);
-		frame.setSize(800, 600);
-		frame.add(sparqlPanel);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		// frame.pack();
-		frame.setVisible(true);
+//		final JFrame frame = new JFrame();
+//		SparqlCard sparqlPanel = new SparqlCard(frame, null);
+//		frame.setSize(800, 600);
+//		frame.add(sparqlPanel);
+//		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//		// frame.pack();
+//		frame.setVisible(true);
+	}
+
+	/**
+	 * @param frame2
+	 */
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+		
+	}
+
+	/**
+	 * @param focusMonitor
+	 */
+	public void addFocusMonitor(FocusMonitor focusMonitor) {
+		sourcePanel.addFocusListener(focusMonitor);
+		resultsPanel.addFocusListener(focusMonitor);
+		
 	}
 }

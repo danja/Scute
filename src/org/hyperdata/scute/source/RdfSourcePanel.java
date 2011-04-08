@@ -80,7 +80,8 @@ public class RdfSourcePanel extends EditorPane {
 	 */
 	public void loadModel(Model workingModel) {
 		model = workingModel;
-		// System.out.println("SYNTAX " + getSyntax());
+		System.out.println("SYNTAX " + getSyntax());
+		System.out.println("MODEL " + model);
 		final String text = RdfUtils.modelToString(model, getSyntax());
 		setText(text);
 		setCaretPosition(0); // scroll to top
@@ -132,7 +133,7 @@ public class RdfSourcePanel extends EditorPane {
 	public void stateChanged(ChangeEvent e) {
 		
 		// String currentView = getSyntax();
-		String view = ((CardsPanel) e.getSource()).getCurrentCardName();
+		String view = ((CardsPanel) e.getSource()).getCurrentCardType();
 		// System.out.println("VIEW="+view);
 	//	System.out.println("RdfSoucePanel view = "+view);
 // save();

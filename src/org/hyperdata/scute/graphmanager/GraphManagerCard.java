@@ -17,10 +17,10 @@ updates to the dataset are possible while an iterator is being used.
 http://openjena.org/wiki/TDB/JavaAPI
 
  */
-public class GraphManagerPanel extends Card {
+public class GraphManagerCard extends Card {
 
 	
-	public GraphManagerPanel(){
+	public GraphManagerCard(){
 		add(new JLabel("Graph Manager - TODO"));
 	}
 	/**

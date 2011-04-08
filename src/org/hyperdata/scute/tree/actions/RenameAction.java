@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import org.hyperdata.scute.tree.RdfTreeNode;
-import org.hyperdata.scute.tree.RdfTreePanel;
+import org.hyperdata.scute.tree.RdfTreeCard;
 
 /**
  * The Class RenameAction.
@@ -26,7 +26,7 @@ public class RenameAction extends AbstractAction {
 	private static final long serialVersionUID = 5693309851417366965L;
 	
 	/** The tree panel. */
-	private final RdfTreePanel treePanel;
+	private final RdfTreeCard treePanel;
 
 	/**
 	 * Instantiates a new rename action.
@@ -34,7 +34,7 @@ public class RenameAction extends AbstractAction {
 	 * @param treePanel
 	 *            the tree panel
 	 */
-	public RenameAction(RdfTreePanel treePanel) {
+	public RenameAction(RdfTreeCard treePanel) {
 		super("Rename");
 		this.treePanel = treePanel;
 	}

@@ -1,3 +1,113 @@
+v
+
+?s wn:memberMeronymOf <http://wordnet.rkbexplorer.com/id/synset-solar_system-noun-1>
+
+
+http://wordnet.rkbexplorer.com/id/synset-Roman_deity-noun-1
+
+
+PREFIX rdfs:		<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX void:		<http://rdfs.org/ns/void#>
+PREFIX wn:	<http://www.w3.org/2006/03/wn/wn20/schema/>
+SELECT DISTINCT * WHERE {
+?s rdfs:label "Neptune" .
+?s wn:classifiedByTopic ?o
+}
+
+
+<http://wordnet.rkbexplorer.com/id/synset-odd-toed_ungulate-noun-1> ?p ?o
+
+void:exampleResource
+
+?s a foaf:Person .
+?s a ?thing .
+
+<http://dbpedia.org/resource/Neptune> dbpo:discoverer ?s  . 
+
+
+
+PREFIX  rdfs:           <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dcterms:        <http://purl.org/dc/terms/>
+PREFIX  interval:       <http://reference.data.gov.uk/def/intervals/>
+PREFIX  org:            <http://www.w3.org/ns/org#>
+PREFIX  vcard:          <http://www.w3.org/2006/vcard/ns#>
+PREFIX  payment:        <http://reference.data.gov.uk/def/payment#>
+PREFIX  council:        <http://reference.data.gov.uk/def/council#>
+PREFIX  internal:       <http://www.epimorphics.com/vocabularies/spend/internal#>
+
+SELECT DISTINCT * WHERE
+{
+    ?payment a payment:Payment;
+       payment:date [ rdfs:label ?date ];
+       payment:payer [ rdfs:label ?payer ];
+       payment:payee [ rdfs:label ?supplier ];
+       payment:expenditureLine ?expenditure  .
+
+    ?expenditure
+        payment:netAmount ?amount .
+?payment ?p ?o .
+# ?payment rdfs:label "Business Improvement"@en .
+
+} 
+ORDER BY DESC(?amount)
+LIMIT 10
+
+
+
+
+
+
+
+http://reference.data.gov.uk/def/payment#
+
+http://purl.org/net/provenance/ns#
+
+http://gov.tso.co.uk/coins/sparql
+http://linked4.org/lsd/sparql
+
+PREFIX dc:		<http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT DISTINCT * WHERE {
+
+	dc:publisher ?publisher .
+?s a ?type .
+?s ?p ?publisher .
+FILTER (?type != <http://purl.org/ontology/bibo/Book>)
+}
+
+
+PREFIX dbpo:		<http://dbpedia.org/ontology/>
+PREFIX dbpp:		<http://dbpedia.org/property/>
+
+SELECT DISTINCT * WHERE { 
+
+?country a dbpo:Country ;
+?p ?green .
+FILTER REGEX(?green, "green", "i")
+}
+
+
+
+PREFIX dbpo:		<http://dbpedia.org/ontology/>
+PREFIX dbpp:		<http://dbpedia.org/property/>
+
+SELECT DISTINCT * WHERE { 
+
+<http://dbpedia.org/resource/Libya> ?p ?o .
+?o dbpp:timezone ?tz .
+
+} 
+
+PREFIX dbpp:		<http://dbpedia.org/property/>
+
+SELECT DISTINCT * WHERE { 
+
+   ?s dbpp:pushpinMap "Libya"@en ;
+?p ?o .
+
+} 
 
 # CIA
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

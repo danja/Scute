@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.hyperdata.scute.filemanager.FileExplorerPanel;
+import org.hyperdata.scute.filemanager.FileExplorerCard;
 
 /**
  * @author danny
@@ -27,7 +27,7 @@ public class FileExplorerDemo {
 		});
 
 		frame.getContentPane().add(
-				new FileExplorerPanel(System.getProperty("user.home")));
+				new FileExplorerCard(System.getProperty("user.home")));
 
 		frame.setSize(400, 400);
 		frame.pack();

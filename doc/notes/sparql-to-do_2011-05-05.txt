@@ -1,5 +1,17 @@
+card naming see org.hyperdata.scute.cards.CardNameDialog
+CardsPanel.mouseClicked
+<shortName>
+[filename]
+[URI]
+
 history
 
+this sometimes uses yagoc: somethimes not
+SELECT DISTINCT * WHERE { 
+   ?subject ?property "Neptune" 
+} 
+
+engine of application state: record current application state in an RDF model
 
 
 http://tidysaucer.svn.sourceforge.net/svnroot/tidysaucer
@@ -10,6 +22,8 @@ dropbox release?
 interested in sponsoring?
 
 code prettifier/indenter
+
+have option of disabling query validation
 
 ...things to make it work as a personal knowledgebase
 

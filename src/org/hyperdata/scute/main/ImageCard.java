@@ -26,8 +26,7 @@ public class ImageCard extends Card implements ActionListener, KeyListener {
 	private JButton button;
 	private Scute scute;
 
-	public ImageCard(Scute scute) {
-		this.scute = scute;
+	public ImageCard() {
 		button = new JButton(ScuteIcons.bigImageIcon);
 		button.setText("");
 		button.setBorderPainted(false);
@@ -109,6 +108,13 @@ public class ImageCard extends Card implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 // ignore
+	}
+
+	/**
+	 * @param scute2
+	 */
+	public void setScute(Scute scute) {
+		this.scute = scute;
 	}
 
 }

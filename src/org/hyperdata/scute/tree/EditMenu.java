@@ -31,7 +31,7 @@ public class EditMenu extends JMenu {
 	private Action treeAction;
 	
 	/** The tree panel. */
-	private final RdfTreePanel treePanel;;
+	private final RdfTreeCard treePanel;;
 
 	/**
 	 * Instantiates a new edits the menu.
@@ -39,7 +39,7 @@ public class EditMenu extends JMenu {
 	 * @param treePanel
 	 *            the tree panel
 	 */
-	public EditMenu(RdfTreePanel treePanel) {
+	public EditMenu(RdfTreeCard treePanel) {
 		super("Edit");
 		this.treePanel = treePanel;
 		init();

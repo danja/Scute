@@ -29,7 +29,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * 
  * @author danny
  */
-public class GraphPanel extends Card {
+public class GraphCard extends Card {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2907914679596311549L;
@@ -46,7 +46,7 @@ public class GraphPanel extends Card {
 	 * @param model
 	 *            the model
 	 */
-	public GraphPanel(Model model) {
+	public GraphCard(Model model) {
 		super(new BorderLayout());
 		loadModel(model);
 		toolBar = new JToolBar("Graph Tools");

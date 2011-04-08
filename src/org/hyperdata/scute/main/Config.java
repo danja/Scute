@@ -91,11 +91,11 @@ public class Config extends ModelContainer {
 	 * @param args
 	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		// Config config = new Config();
-		self.setDefaults();
-		self.saveNow();
-	}
+//	public static void main(String[] args) {
+//		// Config config = new Config();
+//		// self.setDefaults();
+//		// self.saveNow();
+//	}
 
 	/**
 	 * Sets the defaults.
