@@ -36,6 +36,7 @@ public class Card extends JPanel {
 	private TextContainer textContainer = null;
 //	private EditorPane editorPane = null;
 	private boolean textCard = false;
+private boolean sharedModelCard = false;
 	
 	// JPanel's constructors
 //	private Card(){
@@ -89,6 +90,14 @@ public class Card extends JPanel {
 		this.textContainer = textContainer;
 	}
 
+	public boolean isSharedModelCard(){
+		return sharedModelCard;
+	}
+	
+	public void setSharedModelCard(boolean modelCard){
+		this.sharedModelCard = modelCard;
+	}
+	
 	/**
 	 * @return
 	 */

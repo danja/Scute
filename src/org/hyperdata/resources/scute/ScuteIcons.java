@@ -36,6 +36,9 @@ public class ScuteIcons {
 	public static final ImageIcon runIcon;
 	public static final ImageIcon stopIcon;
 	public static final ImageIcon errorIcon;
+	public static final ImageIcon previousIcon;
+	public static final ImageIcon nextIcon;	
+	
 	public static final ImageIcon bigImageIcon;
 	public static BufferedImage bigImage = null;	
 	
@@ -62,6 +65,8 @@ public class ScuteIcons {
 		runIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/run-16x16.gif"));	
 		stopIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/stop-16x16.gif"));
 		errorIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/error-16x16.gif"));
+		previousIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/previous-16x16.gif"));
+		nextIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/next-16x16.gif"));
 		bigImageIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg"));	
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();  

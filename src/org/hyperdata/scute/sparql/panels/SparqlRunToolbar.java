@@ -65,7 +65,7 @@ public class SparqlRunToolbar extends JPanel implements ActionListener {
 		String[] labels = { "Error", "Stop", "Run" };
 		String[] descriptions = { "Error, check log", "Running...", "Run" };
 		ImageIcon[] icons = { ScuteIcons.errorIcon, ScuteIcons.stopIcon,
-				ScuteIcons.runIcon };
+				ScuteIcons.sparqlIcon };
 		
 		StatusButton runQueryButton = new StatusButton(runQueryAction, labels, descriptions, icons);
 		runQueryButton.setStatus(StatusMonitor.GREEN);

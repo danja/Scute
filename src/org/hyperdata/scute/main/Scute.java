@@ -111,12 +111,12 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	// private final JTabbedPane tabs;
 
 	/** The tree panel. */
-	private Card treePanel;
+	private Card treeCard;
 
 	/** The graph panel. */
 	private Card graphCard = null;
 
-	private Card settingsPanel;
+	private Card settingsCard;
 
 	private CardsPanel cardsPanel;
 
@@ -124,13 +124,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 	private Card sparqlCard;
 
-	private Card graphManagerPanel;
+	private Card graphManagerCard;
 
 	public static ScuteHelp scuteHelp;
 
 	private AutoSave autoSave;
 
-	private Card triplesPanel;
+	private Card triplesCard;
 
 	private FileUI fileUI;
 	private HelpUI helpUI;
@@ -153,13 +153,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 	private Card imageCard;
 
-	private JPanel controlPanel;
+	private JPanel toolsPanel;
 
 	private JPanel statusBar;
 
 	private JScrollPane scratchPane;
 
 	private JXMultiSplitPane multiSplitPane;
+
+	private JMenuBar menuBar;
 
 	/**
 	 * Instantiates a new scute.
@@ -212,7 +214,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		io = new IO(this, cardsPanel);
 		fileUI = new FileUI(io);
 
-		makeControlPanel();
+		makeToolsPanel();
 		
 		helpUI = new HelpUI(io);
 
@@ -229,7 +231,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		 * actions only one can run at any given time make singleton?
 		 */
 
-		setupFrame();
+		makeFrame();
 		
 		splitScreen.setFullMiddle();
 		showTools(false);
@@ -290,13 +292,13 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeControlPanel() {
-		controlPanel = new JPanel(); // contains JToolBars
-		panel.add(controlPanel, BorderLayout.NORTH);
-		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
+	private void makeToolsPanel() {
+		toolsPanel = new JPanel(); // contains JToolBars
+		panel.add(toolsPanel, BorderLayout.NORTH);
+		toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
 		// controlPanel.add(splitButtons.getLeftButton()); more trouble than it was worth
-		controlPanel.add(fileUI.getToolBar());
-		controlPanel.add(editorToolbar);
+		toolsPanel.add(fileUI.getToolBar());
+		toolsPanel.add(editorToolbar);
 		// controlPanel.add(splitButtons.getRightButton()); more trouble than it was worth
 	}
 
@@ -305,7 +307,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	private static final int IDEAL_WIDTH = 1200;
 	private static final int IDEAL_HEIGHT = 600;	
 	
-	private void setupFrame() {
+	private void makeFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int maxWidth = screenSize.width-2*FRAME_X_INSET;
 		int maxHeight = screenSize.height-2*FRAME_Y_INSET;
@@ -316,11 +318,11 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		frame.setIconImage(ScuteIcons.applicationIcon.getImage());
 		frame.addWindowListener(autoSave);
 		// frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		final JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuBar.add(fileUI.getFileMenu());
 		menuBar.add(editorToolbar.getMenu());
 		menuBar.add(helpUI.getHelpMenu());
-
+menuBar.setVisible(false);
 		frame.setJMenuBar(menuBar);
 		frame.setContentPane(panel);
 		// frame.pack();
@@ -333,17 +335,17 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 */
 	private void makeCardsPanel() {
 		cardsPanel = new CardsPanel();
-		makeImagePanel();
-		makeTurtlePanel();
-		makeRdfXmlPanel();
-		makeTreePanel();
-		makeGraphPanel();
-		makeTriplesPanel();
-		makeSparqlPanel();
-		makeGraphManagerPanel();
+		makeImageCard();
+		makeTurtleCard();
+		makeRdfXmlCard();
+		makeTreeCard();
+		makeGraphCard();
+		makeTriplesCard();
+		makeSparqlCard();
+		makeGraphManagerCard();
 		makeFileExplorerPanel();
-		makeLogPanel();
-		makeSystemPanel();
+		makeLogCard();
+		makeSystemCard();
 		
 		cardsPanel.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.RAISED));
@@ -353,7 +355,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeImagePanel() {
+	private void makeImageCard() {
 		imageCard = CardFactory.createCard(Card.IMAGE);
 			((ImageCard)imageCard).setScute(this); 
 			//new ImageCard(this);
@@ -364,18 +366,18 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeSystemPanel() {
-		settingsPanel = CardFactory.createCard(Card.SETTINGS);
+	private void makeSystemCard() {
+		settingsCard = CardFactory.createCard(Card.SETTINGS);
 			// new SystemCard();
 		// systemPanel.addUserActivityListener(autoSave);
 
-		cardsPanel.addScroll(settingsPanel, "Settings");
+		cardsPanel.addScroll(settingsCard, "Settings");
 	}
 
 	/**
 	 * 
 	 */
-	private void makeLogPanel() {
+	private void makeLogCard() {
 		LogPane log = LogPane.getLogPane();
 		// JScrollPane logScroll = new JScrollPane(log);
 		// logScroll.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -401,17 +403,17 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeGraphManagerPanel() {
-		graphManagerPanel = CardFactory.createCard(Card.GRAPH_MANAGER);
+	private void makeGraphManagerCard() {
+		graphManagerCard = CardFactory.createCard(Card.GRAPH_MANAGER);
 			// new GraphManagerCard();
-		graphManagerPanel.addFocusListener(focusMonitor);
-		cardsPanel.add(graphManagerPanel, "Graphs");
+		graphManagerCard.addFocusListener(focusMonitor);
+		cardsPanel.add(graphManagerCard, "Graphs");
 	}
 
 	/**
 	 * 
 	 */
-	private void makeSparqlPanel() {
+	private void makeSparqlCard() {
 		sparqlCard = CardFactory.createCard(Card.SPARQL);
 			// new SparqlCard(frame, focusMonitor);
 		((SparqlCard)sparqlCard).setFrame(frame);
@@ -424,30 +426,30 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeTriplesPanel() {
-		triplesPanel = CardFactory.createCard(Card.TRIPLES);
+	private void makeTriplesCard() {
+		triplesCard = CardFactory.createCard(Card.TRIPLES);
 			//new TriplesCard(Models.workingModel);
-		triplesPanel.addFocusListener(focusMonitor);
+		triplesCard.addFocusListener(focusMonitor);
 		// triplesPanel.addUserActivityListener(autoSave);
 		// TODO create UserActivityListener interface
 		// need change listener???
 		// TODO ADD SELECTION LISTENER - make shared listener?
-		cardsPanel.add(triplesPanel, "Triples");
+		cardsPanel.add(triplesCard, "Triples");
 	}
 
 	/**
 	 * 
 	 */
-	private void makeTreePanel() {
-		treePanel = CardFactory.createCard(Card.TREE);
+	private void makeTreeCard() {
+		treeCard = CardFactory.createCard(Card.TREE);
 			// new RdfTreeCard(Models.workingModel);
-		treePanel.addUserActivityListener(autoSave);
-		treePanel.addFocusListener(focusMonitor);
+		treeCard.addUserActivityListener(autoSave);
+		treeCard.addFocusListener(focusMonitor);
 		// need change listener???
-		cardsPanel.add(treePanel, "Tree");
+		cardsPanel.add(treeCard, "Tree");
 	}
 
-	private void makeGraphPanel() {
+	private void makeGraphCard() {
 		graphCard = CardFactory.createCard(Card.GRAPH);
 			// new GraphCard(Models.workingModel);
 		graphCard.addUserActivityListener(autoSave);
@@ -459,7 +461,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeRdfXmlPanel() {
+	private void makeRdfXmlCard() {
 		rdfxmlPanel = new RdfSourcePanel("RDF/XML");
 		rdfxmlPanel.setFilename(Config.RDFXML_TEMP);
 		rdfxmlPanel.addUserActivityListener(autoSave);
@@ -507,7 +509,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	/**
 	 * 
 	 */
-	private void makeTurtlePanel() {
+	private void makeTurtleCard() {
 		turtlePanel = new RdfSourcePanel("Turtle");
 
 		turtlePanel.setFilename(Config.TURTLE_TEMP);
@@ -565,7 +567,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 */
 	@Override
 	public void valueChanged(TreeSelectionEvent event) {
-		final Object object = ((RdfTreeCard)treePanel).getTree()
+		final Object object = ((RdfTreeCard)treeCard).getTree()
 				.getLastSelectedPathComponent();
 		System.out.println("value changed");
 		if ((object == null)) {
@@ -578,14 +580,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	public void waitCursor(boolean wait) {
 		if (wait) {
 			normalCursor = frame.getCursor();
-			normalTreeCursor = treePanel.getCursor();
+			normalTreeCursor = treeCard.getCursor();
 			frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-			treePanel.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+			treeCard.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		} else {
 			frame.setCursor(normalCursor);
-			treePanel.setCursor(normalTreeCursor);
+			treeCard.setCursor(normalTreeCursor);
 			frame.setCursor(normalCursor);
-			treePanel.setCursor(normalTreeCursor);
+			treeCard.setCursor(normalTreeCursor);
 		}
 	}
 
@@ -616,7 +618,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 * @param b
 	 */
 	public void showTools(boolean b) {
-		controlPanel.setVisible(b);
+		toolsPanel.setVisible(b);
+		menuBar.setVisible(b);
+		// 
 	}
 
 	/**

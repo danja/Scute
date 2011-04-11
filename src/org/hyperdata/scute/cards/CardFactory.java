@@ -65,7 +65,9 @@ public class CardFactory {
 	 * @return
 	 */
 	private static Card createTriplesCard() {
-		return new TriplesCard(Models.workingModel);
+		Card card = new TriplesCard(Models.workingModel);
+		card.setSharedModelCard(true);
+		return card;
 	}
 
 	/**
@@ -93,15 +95,19 @@ public class CardFactory {
 	/**
 	 * @return
 	 */
-	private static Card createTreeCard() {
-		return new RdfTreeCard(Models.workingModel);
+	private static Card createTreeCard() { // TODO why is workingModel being passed? inconsistent
+		Card card = new RdfTreeCard(Models.workingModel);
+		card.setSharedModelCard(true);
+		return card;
 	}
 
 	/**
 	 * @return
 	 */
-	private static Card createGraphCard() {
-		return new GraphCard(Models.workingModel);
+	private static Card createGraphCard() {// TODO why is workingModel being passed? inconsistent
+		Card card = new GraphCard(Models.workingModel);
+		card.setSharedModelCard(true);
+		return card;
 	}
 
 	/**
@@ -122,13 +128,17 @@ public class CardFactory {
 	 * @return
 	 */
 	private static Card createRDFXMLCard() {
-		return new Card(new BorderLayout());
+		Card card = new Card(new BorderLayout());
+		card.setSharedModelCard(true);
+		return card;
 	}
 
 	/**
 	 * @return
 	 */
 	private static Card createTurtleCard() {
-		return new Card(new BorderLayout());
+		Card card = new Card(new BorderLayout());
+		card.setSharedModelCard(true);
+		return card;
 	}
 }
