@@ -15,7 +15,6 @@ import javax.swing.text.Element;
 import javax.swing.text.StyledDocument;
 
 import org.hyperdata.scute.system.Log;
-import org.hyperdata.scute.toolbars.actions.FindAction;
 
 
 public class FindDialog extends JDialog {

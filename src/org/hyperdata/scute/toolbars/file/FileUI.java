@@ -74,6 +74,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 
 		final JButton newButton = toolBar.add(newAction);
+		newButton.setBorderPainted(false);
 		final JMenuItem newMenuItem = fileMenu.add(newAction);
 		newMenuItem.setMnemonic(KeyEvent.VK_N);
 		newButton.setToolTipText("Create new file");

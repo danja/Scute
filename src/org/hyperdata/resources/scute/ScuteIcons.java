@@ -65,8 +65,8 @@ public class ScuteIcons {
 		runIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/run-16x16.gif"));	
 		stopIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/stop-16x16.gif"));
 		errorIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/error-16x16.gif"));
-		previousIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/previous-16x16.gif"));
-		nextIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/next-16x16.gif"));
+		previousIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/previous-16x16.png"));
+		nextIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/next-16x16.png"));
 		bigImageIcon = new ImageIcon(loader.getResource("org/hyperdata/resources/scute/turtle-zoom.jpg"));	
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();  

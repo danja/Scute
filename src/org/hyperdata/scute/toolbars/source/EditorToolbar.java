@@ -30,8 +30,6 @@ import org.jdesktop.swingx.JXErrorPane;
 import org.hyperdata.resources.general.GeneralIcons;
 import org.hyperdata.scute.source.EditorPane;
 import org.hyperdata.scute.system.Log;
-import org.hyperdata.scute.toolbars.actions.FindAction;
-import org.hyperdata.scute.toolbars.actions.ZoomAction;
 
 /**
  * @author danny

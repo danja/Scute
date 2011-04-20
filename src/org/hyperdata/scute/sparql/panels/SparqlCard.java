@@ -41,8 +41,8 @@ import org.hyperdata.scute.status.StatusEvent;
 import org.hyperdata.scute.status.StatusInfoPane;
 import org.hyperdata.scute.status.StatusMonitor;
 import org.hyperdata.scute.syntax.*;
-import org.hyperdata.scute.toolbars.actions.FindAction;
 import org.hyperdata.scute.toolbars.source.EditorToolbar;
+import org.hyperdata.scute.toolbars.source.FindAction;
 import org.hyperdata.scute.validate.RdfXmlValidateAction;
 import org.hyperdata.scute.validate.SparqlValidateAction;
 

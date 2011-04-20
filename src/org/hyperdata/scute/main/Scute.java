@@ -11,22 +11,32 @@
 package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
-import org.jdesktop.swingx.*;
-import org.jdesktop.swingx.MultiSplitLayout.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.Document;
+
+import org.jdesktop.swingx.JXMultiSplitPane;
+import org.jdesktop.swingx.JXTitledPanel;
+import org.jdesktop.swingx.MultiSplitLayout;
+import org.jdesktop.swingx.MultiSplitLayout.Divider;
+import org.jdesktop.swingx.MultiSplitLayout.Leaf;
+import org.jdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
@@ -35,9 +45,6 @@ import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardFactory;
 import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.cards.TaskPanel;
-import org.hyperdata.scute.filemanager.FileExplorerCard;
-import org.hyperdata.scute.graph.GraphCard;
-import org.hyperdata.scute.graphmanager.GraphManagerCard;
 import org.hyperdata.scute.help.HelpUI;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.rdf.Models;
@@ -45,21 +52,19 @@ import org.hyperdata.scute.source.RdfSourcePanel;
 import org.hyperdata.scute.source.popup.PopupListener;
 import org.hyperdata.scute.source.popup.SourcePopupMenu;
 import org.hyperdata.scute.sparql.panels.SparqlCard;
-import org.hyperdata.scute.status.AnimatedCursor;
 import org.hyperdata.scute.status.StatusAction;
 import org.hyperdata.scute.status.StatusButton;
 import org.hyperdata.scute.status.StatusInfoPane;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
 import org.hyperdata.scute.system.Log;
 import org.hyperdata.scute.system.panels.LogPane;
-import org.hyperdata.scute.system.panels.SystemCard;
 import org.hyperdata.scute.toolbars.file.FileUI;
 import org.hyperdata.scute.toolbars.file.IO;
+import org.hyperdata.scute.toolbars.history.HistoryToolbar;
 import org.hyperdata.scute.toolbars.source.EditorToolbar;
 import org.hyperdata.scute.tree.NodePanel;
-import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.tree.RdfTreeCard;
-import org.hyperdata.scute.triples.TriplesCard;
+import org.hyperdata.scute.tree.RdfTreeNode;
 import org.hyperdata.scute.validate.RdfXmlValidateAction;
 import org.hyperdata.scute.validate.TurtleValidateAction;
 
@@ -163,6 +168,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 	private JMenuBar menuBar;
 
+	private HistoryToolbar historyToolbar;
+
 	/**
 	 * Instantiates a new scute.
 	 */
@@ -213,11 +220,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 
 		io = new IO(this, cardsPanel);
 		fileUI = new FileUI(io);
+		
+		historyToolbar = new HistoryToolbar();
 
 		makeToolsPanel();
 		
 		helpUI = new HelpUI(io);
 
+		
 		// FIXME basic Save and Load
 
 		// Set up autosave
@@ -298,6 +308,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
 		// controlPanel.add(splitButtons.getLeftButton()); more trouble than it was worth
 		toolsPanel.add(fileUI.getToolBar());
+		toolsPanel.add(historyToolbar);
 		toolsPanel.add(editorToolbar);
 		// controlPanel.add(splitButtons.getRightButton()); more trouble than it was worth
 	}
