@@ -25,35 +25,27 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public class Config extends ModelContainer {
 
-	public static final String DATA_DIR = "data/";
-	// set in code
-	/** The Constant ASSEMBLER_FILENAME. */
-	public static final String ASSEMBLER_FILENAME = "data/tdb-assembler.ttl";
+	public static String HELPSET;
+	// filenames all set up on init(DATA_DIR)
+	public static String DATA_DIR = "data/";
+	public static String ASSEMBLER_FILENAME;
+	public static String SPARQL_FILENAME;
+	public static String CONFIG_FILENAME;
+	public static String WORKING_MODEL_FILENAME;
+	public static String RDFXML_TEMP;
+	public static String TURTLE_TEMP;
+	public static String SCRATCH_FILENAME;
+	public static String ENDPOINTS_MODEL;
 	
-	public static final String CONFIG_URI = "http://purl.org/stuff/scute/application/config";
-	
-	public static final String SPARQL_FILENAME = "data/sparql-temp.txt";
-	
-	public static final String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
+	public static String CONFIG_URI = "http://purl.org/stuff/scute/application/config";
+	public static String WORKING_MODEL_URI = "http://purl.org/stuff/scute/application/working";
+	public static String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/config";
+	public static String VERSION_STRING = "Version 0.5 Beta";
+	public static Syntax SPARQL_SYNTAX = Syntax.syntaxSPARQL_11;
 
-	public static final String CONFIG_MODEL_URI = "http://purl.org/stuff/scute/application/config";
-	
-	public static final String VERSION_STRING = "Version 0.5 Beta";
-	
-	public static final Syntax SPARQL_SYNTAX = Syntax.syntaxSPARQL_11;
-	//quite a few alternatives there
-	
-	public static final String CONFIG_FILENAME = "data/config.ttl";
-	public static final String WORKING_MODEL_FILENAME = "data/working.ttl";
-	public static final String RDFXML_TEMP = "data/temp.rdf";
-	public static final String TURTLE_TEMP = "data/temp.ttl";
-	public static final String SCRATCH_FILENAME = "data/temp.txt";
-	public static final String ENDPOINTS_MODEL = "data/endpoints.ttl";
-	
 	/** The base uri. */
 	public static String baseUri = "http://purl.org/stuff/scute/";
 	
-	/** The swib resource. */
 	public static Resource scuteResource;
 	
 	/** The model. */
@@ -73,7 +65,8 @@ public class Config extends ModelContainer {
 	private static String CONFIG_FORMAT = "Turtle";
 	
 	/** The self. */
-	public static Config self = new Config(); // seems a good name for a singleton
+	public static Config self; // seems a good name for a singleton
+	private static String SCUTE_HOME;
 
 	/**
 	 * Instantiates a new config.
@@ -182,9 +175,9 @@ public class Config extends ModelContainer {
 	public void load() {
 		try {
 			RdfUtils.load(model, CONFIG_FILENAME, CONFIG_FORMAT);
+			System.out.println("CONFIG_FILENAME="+CONFIG_FILENAME);
 		} catch (IOException exception) {
 			// do error popup
-			System.out.println("WOOF");
 			Log.exception(exception);
 			System.exit(1);
 		}
@@ -295,5 +288,20 @@ public class Config extends ModelContainer {
 	 */
 	public static String getAboutString() {
 		return "Scute "+VERSION_STRING;
+	}
+
+	public static void init(String string) {
+		SCUTE_HOME = string;
+		DATA_DIR = SCUTE_HOME + "data/";
+		ASSEMBLER_FILENAME = DATA_DIR + "tdb-assembler.ttl";
+		SPARQL_FILENAME = DATA_DIR + "sparql-temp.txt";
+		CONFIG_FILENAME = DATA_DIR + "config.ttl";
+		WORKING_MODEL_FILENAME = DATA_DIR + "working.ttl";
+		RDFXML_TEMP = DATA_DIR + "temp.rdf";
+		TURTLE_TEMP = DATA_DIR + "temp.ttl";
+		SCRATCH_FILENAME = DATA_DIR + "temp.txt";
+		ENDPOINTS_MODEL = DATA_DIR + "endpoints.ttl";
+		HELPSET = SCUTE_HOME + "doc/www/Scute.hs";
+		 self = new Config();
 	}
 }

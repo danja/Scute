@@ -88,6 +88,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
+		String homeDir = "";
+		for (int i = 0; i < args.length; i++){
+			if(args[i].equals("--home")){
+				homeDir = args[i+1];
+				break;
+			}
+		}
+		Config.init(homeDir);
+//		System.out.println("config="+Config.self.CONFIG_FILENAME);
 		new Scute();
 	}
 
@@ -307,9 +316,14 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		panel.add(toolsPanel, BorderLayout.NORTH);
 		toolsPanel.setLayout(new BoxLayout(toolsPanel, BoxLayout.X_AXIS));
 		// controlPanel.add(splitButtons.getLeftButton()); more trouble than it was worth
+	
 		toolsPanel.add(fileUI.getToolBar());
 		toolsPanel.add(historyToolbar);
 		toolsPanel.add(editorToolbar);
+		
+//		System.out.println("fileUI.getToolBar()="+fileUI.getToolBar());
+//		System.out.println("historyToolbar="+historyToolbar);
+//		System.out.println("editorToolbar="+editorToolbar);
 		// controlPanel.add(splitButtons.getRightButton()); more trouble than it was worth
 	}
 
@@ -335,6 +349,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener {
 		menuBar.add(helpUI.getHelpMenu());
 menuBar.setVisible(false);
 		frame.setJMenuBar(menuBar);
+
 		frame.setContentPane(panel);
 		// frame.pack();
 

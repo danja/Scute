@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Ant-Version: Apache Ant 1.7.1
-Created-By: 19.0-b09 (Sun Microsystems Inc.)
+Ant-Version: Apache Ant 1.8.1
+Created-By: 1.6.0_24-b07 (Sun Microsystems Inc.)
 Built-By: Danny Ayers
 Main-Class: org.hyperdata.scute.main.Scute
-Implementation-Version: 0.50-b18
+Implementation-Version: 0.50-b19
 Class-Path: Filters.jar:commons-codec-1.4.jar:commons-logging-1.1.1.ja
  r:httpclient-4.1.jar:httpclient-cache-4.1.jar:httpcore-4.1.jar:httpmi
  me-4.1.jar:Autohelp.jar:help-indexer.jar:help-share.jar:jewt.jar:jhal

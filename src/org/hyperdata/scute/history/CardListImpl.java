@@ -59,5 +59,4 @@ public class CardListImpl implements CardList {
 	public void remove() {
 		cards.remove(index);
 	}
-	
 }

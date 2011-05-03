@@ -67,7 +67,7 @@ public class OpenDialog extends JDialog implements ActionListener,
 		JButton uriButton = new JButton("Select Graph");
 		Dimension buttonDimension = uriButton.getPreferredSize();
 		fileButton.setPreferredSize(buttonDimension);
-		final JFileChooser fc = new JFileChooser(Config.DATA_DIR);
+		final JFileChooser fc = new JFileChooser(Config.self.DATA_DIR);
 
 		filenamePanel.add(fileCheckBox);
 		filenamePanel.add(filenameTextField);

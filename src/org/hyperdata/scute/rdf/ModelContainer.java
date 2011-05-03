@@ -30,7 +30,7 @@ public class ModelContainer implements Runnable {
 	 */
 	public void saveModelToFile() {
 		try {
-			// System.out.println("saving Model to file " + getModelURI());
+		// System.out.println("saving Model to file " + getModelFilename());
 			RdfUtils.save(getModel(), getModelFilename());
 			setSaved(true);
 		} catch (IOException exception) {

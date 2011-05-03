@@ -42,7 +42,7 @@ public class ScuteHelp  {
 	
 	public ScuteHelp(){
 		help = new Help();
-		File file = new File("doc/www/Scute.hs");
+		File file = new File(Config.HELPSET);
 		URL url = null;
 		try {
 			url = file.toURI().toURL();

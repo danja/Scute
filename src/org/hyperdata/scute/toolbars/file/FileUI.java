@@ -19,6 +19,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.hyperdata.resources.general.GeneralIcons;
@@ -56,7 +57,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	private Action saveAsAction;
 	
 	/** The tool bar. */
-	private final JToolBar toolBar;
+	private final JPanel toolBar;
 
 	/**
 	 * Instantiates a new file tool ui.
@@ -68,40 +69,54 @@ public class FileUI implements KeyListener { // implements ActionListener
 		this.editor = editor;
 		createActions();
 
-		toolBar = new JToolBar();
-		toolBar.setFloatable(false);
+		toolBar = new JPanel();
+
 		fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 
-		final JButton newButton = toolBar.add(newAction);
-		newButton.setBorderPainted(false);
+		final JButton newButton = new JButton(newAction);
+		newButton.setHideActionText(true);
+			toolBar.add(newButton);
+		// newButton.setBorderPainted(false);
 		final JMenuItem newMenuItem = fileMenu.add(newAction);
 		newMenuItem.setMnemonic(KeyEvent.VK_N);
 		newButton.setToolTipText("Create new file");
 
-		final JButton openButton = toolBar.add(openAction);
+		final JButton openButton = new JButton(openAction);
+		openButton.setHideActionText(true);
+			toolBar.add(openButton);
 		final JMenuItem openMenuItem = fileMenu.add(openAction);
 		openButton.setToolTipText("Open file");
 		openMenuItem.setMnemonic(KeyEvent.VK_O);
 
-		final JButton saveButton = toolBar.add(saveAction);
+		final JButton saveButton = new JButton(saveAction);
+		saveButton.setHideActionText(true);
+			toolBar.add(saveButton);
 		final JMenuItem saveMenuItem = fileMenu.add(saveAction);
 		saveButton.setToolTipText("Save file");
 		saveMenuItem.setMnemonic(KeyEvent.VK_S);
 
-		final JButton saveAsButton = toolBar.add(saveAsAction);
+		final JButton saveAsButton = new JButton(saveAsAction);
+		saveAsButton.setHideActionText(true);
+		toolBar.add(saveAsButton);
 		fileMenu.add(saveAsAction);
 		saveAsButton.setToolTipText("Save file as...");
 
-		toolBar.add(cloneAction);
+		final JButton cloneButton = new JButton(cloneAction);
+		cloneButton.setHideActionText(true);
+		toolBar.add(cloneButton);
 		fileMenu.add(cloneAction);
-		saveAsButton.setToolTipText("Clone");
+		cloneButton.setToolTipText("Clone");
 
-		toolBar.add(closeAction);
+		final JButton closeButton = new JButton(closeAction);
+		closeButton.setHideActionText(true);
+		toolBar.add(closeButton);
 		fileMenu.add(closeAction);
-		saveAsButton.setToolTipText("Close file");
+		closeButton.setToolTipText("Close file");
 
+		
 		fileMenu.add(exitAction);
+		
 	}
 
 	/**
@@ -248,7 +263,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	 * 
 	 * @return the tool bar
 	 */
-	public JToolBar getToolBar() {
+	public JPanel getToolBar() {
 		return toolBar;
 	}
 
