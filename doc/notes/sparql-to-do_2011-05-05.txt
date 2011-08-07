@@ -1,3 +1,5 @@
+timer to allow client SPARQL timeouts, with counter in status bar
+
 card naming see org.hyperdata.scute.cards.CardNameDialog
 CardsPanel.mouseClicked
 <shortName>
