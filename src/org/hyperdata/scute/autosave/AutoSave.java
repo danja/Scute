@@ -26,6 +26,7 @@ import org.hyperdata.scute.cards.CardsPanel;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.main.ScratchPad;
 import org.hyperdata.scute.main.Scute;
+import org.hyperdata.scute.main.ScuteIF;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;
 
@@ -166,7 +167,7 @@ public class AutoSave extends UserActivityAdapter { //
 	 * @param rdfEditor
 	 *            the rdf editor
 	 */
-	public void restorePreviousState(Scute scute) {
+	public void restorePreviousState(ScuteIF scute) {
 		// System.out.println("Config.self.getSelectedView() ="
 		// + Config.self.getSelectedView());
 
