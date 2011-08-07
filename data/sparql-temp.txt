@@ -1,11 +1,11 @@
 PREFIX rdfs:		<http://www.w3.org/2000/01/rdf-schema#>
-PREFIX wn:	<http://www.w3.org/2006/03/wn/wn20/schema/>
 
-SELECT DISTINCT ?label WHERE {
-?s1 wn:memberMeronymOf <http://wordnet.rkbexplorer.com/id/synset-solar_system-noun-1> .
-?s1 rdfs:label ?label.
-?s2 wn:hyponymOf <http://wordnet.rkbexplorer.com/id/synset-Roman_deity-noun-1> .
-?s2 rdfs:label ?label.
+
+
+SELECT DISTINCT ?s ?p ?o WHERE {
+?s rdfs:label "Anaya" ;
+?p ?o .
+
 }
 
 

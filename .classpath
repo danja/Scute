@@ -37,6 +37,7 @@
 	<classpathentry kind="lib" path="lib/http/httpclient-cache-4.1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpmime-4.1.jar"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
