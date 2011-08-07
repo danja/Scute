@@ -24,7 +24,7 @@ public class ImageCard extends Card implements ActionListener, KeyListener {
 
 	// private BufferedImage image = ScuteIcons.bigImage;
 	private JButton button;
-	private Scute scute;
+	private ScuteIF scute;
 
 	public ImageCard() {
 		button = new JButton(ScuteIcons.bigImageIcon);
@@ -113,7 +113,7 @@ public class ImageCard extends Card implements ActionListener, KeyListener {
 	/**
 	 * @param scute2
 	 */
-	public void setScute(Scute scute) {
+	public void setScute(ScuteIF scute) {
 		this.scute = scute;
 	}
 

@@ -71,7 +71,7 @@ import org.hyperdata.scute.validate.TurtleValidateAction;
 /**
  * The Class Scute.
  */
-public class Scute extends ModelContainer implements TreeSelectionListener, ScuteIF {
+public class ScuteCopy extends ModelContainer implements TreeSelectionListener, ScuteIF {
 
 	/** The Constant READ_ONLY_COLOR. */
 	public static final Color READ_ONLY_COLOR = (Color) UIManager.getDefaults()
@@ -97,7 +97,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		}
 		Config.init(homeDir);
 //		System.out.println("config="+Config.self.CONFIG_FILENAME);
-		new Scute();
+		new ScuteCopy();
 	}
 
 	/** The frame. */
@@ -182,7 +182,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 	/**
 	 * Instantiates a new scute.
 	 */
-	public Scute() {
+	public ScuteCopy() {
 
 		frame = new JFrame("Scute");
 
