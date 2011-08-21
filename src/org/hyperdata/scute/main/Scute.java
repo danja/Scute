@@ -25,6 +25,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.plaf.TabbedPaneUI;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.Document;
 
 import org.hdesktop.swingx.JXMultiSplitPane;
@@ -681,9 +682,15 @@ menuBar.setVisible(false);
 		if(b){
 			cardsPanelTabs.setUI(tabUI);
 		} else {
-		cardsPanelTabs.setUI(new javax.swing.plaf.metal.MetalTabbedPaneUI(){  
-		      protected void paintTabArea(Graphics g,int tabPlacement,int selectedIndex){}  
-		    });  
+			cardsPanelTabs.setUI(new BasicTabbedPaneUI() {  
+	            @Override  
+	            protected int calculateTabAreaHeight(int tabPlacement, int horizRunCount, int maxTabHeight) {  
+	                return 0;
+	            }  
+	        });  
+	//	cardsPanelTabs.setUI(new javax.swing.plaf.metal.MetalTabbedPaneUI(){  
+		//      protected void paintTabArea(Graphics g,int tabPlacement,int selectedIndex){}  
+		  //  });  
 	}
 	}
 }
