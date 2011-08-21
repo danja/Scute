@@ -5,7 +5,7 @@ package org.hyperdata.scute.cards;
 
 import java.awt.event.ActionEvent;
 
-import org.jdesktop.swingx.action.AbstractActionExt;
+import org.hdesktop.swingx.action.AbstractActionExt;
 
 import org.hyperdata.scute.main.Scute;
 

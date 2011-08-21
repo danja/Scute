@@ -15,7 +15,7 @@ import javax.swing.table.TableModel;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-import org.jdesktop.swingx.JXTable;
+import org.hdesktop.swingx.JXTable;
 
 /**
  * @author danny

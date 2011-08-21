@@ -24,4 +24,11 @@ public interface ScuteIF {
 	 * @param b
 	 */
 	public void showStatusBar(boolean b);
+
+	/**
+	 * @param b
+	 */
+	public void showTabs(boolean b);
+
+
 }

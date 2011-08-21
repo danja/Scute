@@ -21,11 +21,11 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.*;
 
-import org.jdesktop.swingx.JXMultiSplitPane;
-import org.jdesktop.swingx.MultiSplitLayout;
-import org.jdesktop.swingx.MultiSplitLayout.Divider;
-import org.jdesktop.swingx.MultiSplitLayout.Leaf;
-import org.jdesktop.swingx.MultiSplitLayout.Split;
+import org.hdesktop.swingx.JXMultiSplitPane;
+import org.hdesktop.swingx.MultiSplitLayout;
+import org.hdesktop.swingx.MultiSplitLayout.Divider;
+import org.hdesktop.swingx.MultiSplitLayout.Leaf;
+import org.hdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.cards.Card;

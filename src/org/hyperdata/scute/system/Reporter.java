@@ -5,8 +5,8 @@ package org.hyperdata.scute.system;
 
 import javax.swing.JOptionPane;
 
-import org.jdesktop.swingx.error.ErrorInfo;
-import org.jdesktop.swingx.error.ErrorReporter;
+import org.hdesktop.swingx.error.ErrorInfo;
+import org.hdesktop.swingx.error.ErrorReporter;
 
 /**
  * @author danny
@@ -15,7 +15,7 @@ import org.jdesktop.swingx.error.ErrorReporter;
 public class Reporter implements ErrorReporter {
 
 	/* (non-Javadoc)
-	 * @see org.jdesktop.swingx.error.ErrorReporter#reportError(org.jdesktop.swingx.error.ErrorInfo)
+	 * @see org.hdesktop.swingx.error.ErrorReporter#reportError(org.hdesktop.swingx.error.ErrorInfo)
 	 */
 	@Override
 	public void reportError(ErrorInfo info) throws NullPointerException {

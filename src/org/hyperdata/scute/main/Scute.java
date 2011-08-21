@@ -15,28 +15,24 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.TabbedPaneUI;
 import javax.swing.text.Document;
 
-import org.jdesktop.swingx.JXMultiSplitPane;
-import org.jdesktop.swingx.JXTitledPanel;
-import org.jdesktop.swingx.MultiSplitLayout;
-import org.jdesktop.swingx.MultiSplitLayout.Divider;
-import org.jdesktop.swingx.MultiSplitLayout.Leaf;
-import org.jdesktop.swingx.MultiSplitLayout.Split;
+import org.hdesktop.swingx.JXMultiSplitPane;
+import org.hdesktop.swingx.JXTitledPanel;
+import org.hdesktop.swingx.MultiSplitLayout;
+import org.hdesktop.swingx.MultiSplitLayout.Divider;
+import org.hdesktop.swingx.MultiSplitLayout.Leaf;
+import org.hdesktop.swingx.MultiSplitLayout.Split;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;
@@ -60,7 +56,7 @@ import org.hyperdata.scute.system.Log;
 import org.hyperdata.scute.system.panels.LogPane;
 import org.hyperdata.scute.toolbars.file.FileUI;
 import org.hyperdata.scute.toolbars.file.IO;
-import org.hyperdata.scute.toolbars.history.HistoryToolbar;
+// import org.hyperdata.scute.toolbars.history.HistoryToolbar;
 import org.hyperdata.scute.toolbars.source.EditorToolbar;
 import org.hyperdata.scute.tree.NodePanel;
 import org.hyperdata.scute.tree.RdfTreeCard;
@@ -133,6 +129,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 	private Card settingsCard;
 
 	private CardsPanel cardsPanel;
+	
+	private JTabbedPane cardsPanelTabs;
 
 	private Card fileExplorerCard;
 
@@ -177,7 +175,9 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 
 	private JMenuBar menuBar;
 
-	private HistoryToolbar historyToolbar;
+	private TabbedPaneUI tabUI;
+
+//	private HistoryToolbar historyToolbar;
 
 	/**
 	 * Instantiates a new scute.
@@ -216,7 +216,18 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		focusMonitor.setEditorToolbar(editorToolbar);
 		
 		makeCardsPanel();
+		
 		makeScratchPad();
+		
+		// TODO SEE TABS org.hyperdata.scute.tabs
+		cardsPanelTabs = new JTabbedPane();
+		
+		cardsPanelTabs.addTab("Tab 1", cardsPanel);
+		cardsPanelTabs.addTab("Tab 2", new JPanel());
+		
+		tabUI = cardsPanelTabs.getUI();
+showTabs(false);
+		
 		makeSplitScreen();
 
 		// effectively presets
@@ -230,7 +241,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		io = new IO(this, cardsPanel);
 		fileUI = new FileUI(io);
 		
-		historyToolbar = new HistoryToolbar();
+//		historyToolbar = new HistoryToolbar();
 
 		makeToolsPanel();
 		
@@ -242,9 +253,15 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		// Set up autosave
 		// FIXME merge with AutoSave stuff above
 
-		TaskPanel taskPanel = new TaskPanel(cardsPanel);
-		multiSplitPane.add(taskPanel, "left");
 
+		
+		// TODO tweak makeCardsPanel to support list of cards panels
+		TaskPanel taskPanel = new TaskPanel(cardsPanel);
+	
+
+	multiSplitPane.add(taskPanel, "left");
+
+		
 		/*
 		 * FIXME validator, autosave must interrupt/be halted immediately on any
 		 * actions only one can run at any given time make singleton?
@@ -283,7 +300,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		multiSplitLayout.setLayoutMode(MultiSplitLayout.NO_MIN_SIZE_LAYOUT);
 		multiSplitPane = new JXMultiSplitPane(multiSplitLayout);
 		multiSplitPane.getMultiSplitLayout().setModel(splitModel);
-		multiSplitPane.add(cardsPanel, "center");
+		multiSplitPane.add(cardsPanelTabs, "center");
 		multiSplitPane.add(new JXTitledPanel("Scratch Pad", scratchPane), "right");
 
 		splitScreen = new SplitScreen(multiSplitPane, leftLeaf, centerLeaf,
@@ -318,7 +335,7 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		// controlPanel.add(splitButtons.getLeftButton()); more trouble than it was worth
 	
 		toolsPanel.add(fileUI.getToolBar());
-		toolsPanel.add(historyToolbar);
+	//	toolsPanel.add(historyToolbar); replaced by tabs
 		toolsPanel.add(editorToolbar);
 		
 //		System.out.println("fileUI.getToolBar()="+fileUI.getToolBar());
@@ -654,5 +671,19 @@ menuBar.setVisible(false);
 	 */
 	public void showStatusBar(boolean b) {
 		statusBar.setVisible(b);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.hyperdata.scute.main.ScuteIF#showTabs(boolean)
+	 */
+	@Override
+	public void showTabs(boolean b) {
+		if(b){
+			cardsPanelTabs.setUI(tabUI);
+		} else {
+		cardsPanelTabs.setUI(new javax.swing.plaf.metal.MetalTabbedPaneUI(){  
+		      protected void paintTabArea(Graphics g,int tabPlacement,int selectedIndex){}  
+		    });  
+	}
 	}
 }

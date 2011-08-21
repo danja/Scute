@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
-import org.jdesktop.swingx.JXTable;
+import org.hdesktop.swingx.JXTable;
 
 import org.hyperdata.scute.cards.Card;
 

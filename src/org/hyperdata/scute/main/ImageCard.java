@@ -78,6 +78,7 @@ public class ImageCard extends Card implements ActionListener, KeyListener {
 		scute.setDefaultSplit();
 		scute.showTools(true);
 		scute.showStatusBar(true);
+		scute.showTabs(true);
 	}
 
 	/*

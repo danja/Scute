@@ -10,8 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import org.jdesktop.swingx.JXMultiSplitPane;
-import org.jdesktop.swingx.MultiSplitLayout.Leaf;
+import org.hdesktop.swingx.JXMultiSplitPane;
+import org.hdesktop.swingx.MultiSplitLayout.Leaf;
 
 import org.hyperdata.scute.system.Log;
 

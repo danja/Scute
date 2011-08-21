@@ -25,7 +25,7 @@ import javax.swing.event.UndoableEditListener;
 import javax.swing.text.Document;
 import javax.swing.undo.UndoManager;
 
-import org.jdesktop.swingx.JXErrorPane;
+import org.hdesktop.swingx.JXErrorPane;
 
 import org.hyperdata.resources.general.GeneralIcons;
 import org.hyperdata.scute.source.EditorPane;

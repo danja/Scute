@@ -14,7 +14,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.jdesktop.swingx.JXTitledPanel;
+import org.hdesktop.swingx.JXPanel;
+import org.hdesktop.swingx.JXTitledPanel;
 
 public class CardsPanel extends JPanel implements MouseListener {
 
@@ -32,9 +33,12 @@ public class CardsPanel extends JPanel implements MouseListener {
 	}
 	
 	public void add(Card card, String type) {
-		JXTitledPanel titledPanel = new JXTitledPanel(type, card);
-		titledPanel.addMouseListener(this);
-		super.add(titledPanel, type);
+//		JXTitledPanel titledPanel = new JXTitledPanel(type, card);	
+//		titledPanel.addMouseListener(this);
+//		super.add(titledPanel, type);
+		card.addMouseListener(this);
+		super.add(card, type);
+		
 		cards.put(type, card);
 	}
 	

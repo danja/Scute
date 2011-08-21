@@ -1,0 +1,4 @@
+The material under org.hdesktop is derived from org.jdesktop, the SwingX libraries. 
+While this material is currently in the same tree as org.hyperdata, that's only for convenience during development.
+For release purpose it will be packaged separately retaining the original LGPL license, whereas org.hyperdata will 
+be under the (more liberal) Apache2 license. 

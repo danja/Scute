@@ -7,7 +7,12 @@ import javax.swing.JPanel;
 import org.hyperdata.resources.general.GeneralIcons;
 import org.hyperdata.resources.scute.ScuteIcons;
 
-
+/**
+ * NOT CURRENTLY USED
+ * 
+ * @author danny
+ *
+ */
 public class HistoryToolbar extends JPanel {
 
 

@@ -5,8 +5,8 @@ package org.hyperdata.scute.system;
 
 import java.util.logging.Level;
 
-import org.jdesktop.swingx.JXErrorPane;
-import org.jdesktop.swingx.error.ErrorInfo;
+import org.hdesktop.swingx.JXErrorPane;
+import org.hdesktop.swingx.error.ErrorInfo;
 
 import org.hyperdata.scute.system.panels.LogPane;
 
