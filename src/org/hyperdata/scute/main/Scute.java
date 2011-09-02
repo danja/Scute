@@ -221,6 +221,8 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 		makeScratchPad();
 		
 		// TODO SEE TABS org.hyperdata.scute.tabs
+		// CardSetView
+		// CardSetModel
 		cardsPanelTabs = new JTabbedPane();
 		
 		cardsPanelTabs.addTab("Tab 1", cardsPanel);
