@@ -1,3 +1,5 @@
+// for node.js
+
 var danja = [{
     "s": { "type": "bnode" , "value": "-2854b689:132299e31df:-7ff3" } ,
    "p": { "type": "uri" , "value": "http://www.w3.org/2000/01/rdf-schema#seeAlso" } ,
