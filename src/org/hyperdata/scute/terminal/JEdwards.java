@@ -32,7 +32,7 @@ public class JEdwards {
 		JXMultiSplitPane msp = initPanes();
 		initTerminals(msp);
 		
-	    JFrame f = new JFrame("A JFrame");
+	    JFrame f = new JFrame("JEdwards");
 	    f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	    f.setSize(500, 500);
 	    f.setLocation(100,100);
@@ -45,10 +45,6 @@ public class JEdwards {
 		Terminal terminal2 = new Terminal();
 		Terminal terminal3 = new Terminal();
 		
-//		terminal1.init();
-//		terminal2.init();
-//		terminal3.init();
-		
 		msp.add(new JButton("topLeft"), "topLeft");
 		msp.add(terminal1.getConsole(), "bottomLeft");
 		msp.add(terminal2.getConsole(), "topRight");
@@ -56,9 +52,9 @@ public class JEdwards {
 		
 
 		
-//		terminal1.start();
-//		terminal2.start();
-//		terminal3.start();
+		terminal1.start();
+		terminal2.start();
+		terminal3.start();
 	}
 	
 	  public static void main(String[] args) {

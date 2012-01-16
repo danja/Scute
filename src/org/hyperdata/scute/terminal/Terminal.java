@@ -4,54 +4,73 @@
 package org.hyperdata.scute.terminal;
 
 import java.awt.Component;
-import java.io.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
-import bsh.util.GUIConsoleInterface;
-
 public class Terminal {
 
+	static String shellDir = "/bin";
+	static String shellCommand = "bash";
+	static String prompt = "> ";
+	static String greeting = "Hello!\n";
+	static String encoding = "UTF-8";
+	
+	private JConsole jConsole = null;
+	private ShellWrapper shelly = null;
+	
+	public Component getConsole() {
+		return jConsole;
+	}
+
+	public Terminal() {
+		jConsole = new JConsole();
+		shelly = new ShellWrapper(jConsole);
+	}
+	
+	public void start(){
+		shelly.start();
+	}
+	
+	public void stop(){
+		shelly.stop();
+	}
+	
 	public static void main(String[] args) {
 
 		JFrame frame = new JFrame("Terminal");
 
-		Terminal terminal = new Terminal();
+		final Terminal terminal = new Terminal();
 		frame.getContentPane().add(terminal.getConsole());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter()
+		{
+		      public void windowClosing(WindowEvent e)
+		      {
+		          terminal.stop();
+		          while(!terminal.isDone()){
+		        	  try {
+						Thread.sleep(10);
+					} catch (InterruptedException exception) {
+						exception.printStackTrace();
+						System.exit(1);
+					}
+		          }
+		          System.exit(0);
+		      }
+		});
+		
 		frame.setSize(600, 400);
 
 		frame.setVisible(true);
-		terminal.init();
 		terminal.start();
 	}
 
 	/**
 	 * @return
 	 */
-	public Component getConsole() {
-		return jConsole;
-	}
-
-	ShellWrapper shelly = null;
-	JConsole jConsole = new JConsole();
-	String prompt = "\n> ";
-
-	public Terminal() {
-	}
-
-	/**
-	 * 
-	 */
-	public void init() {
-		shelly = new ShellWrapper(jConsole);
-	}
-	
-	public void start(){
-		//new Thread(shelly.).start();
-		System.out.println("terminal.start");
-		shelly.start();
+	public boolean isDone() {
+		return shelly.isStopped();
 	}
 }

@@ -6,7 +6,7 @@ package org.hyperdata.scute.terminal;
 import java.awt.Color;
 import java.io.*;
 
-import org.hyperdata.scute.terminal.ShellWrapper.ShellIn;
+import org.hyperdata.scute.terminal.ShellWrapper.ShellInput;
 
 import bsh.ConsoleInterface;
 
@@ -16,85 +16,142 @@ import bsh.ConsoleInterface;
  */
 public class ShellWrapper {
 
-	String shellDir = "/bin";
-	String shellCommand = "bash";
-	String prompt = "> ";
-
+	protected JConsole console = null;
+	
+	private Thread inputThread = null;
+	private Thread outputThread = null;
+	private Thread errorThread = null;
+	
+	private Process shellProcess = null;
+	
 	private BufferedReader shellInputReader = null;
+	private BufferedReader shellErrorReader = null;
 	private PrintWriter shellWriter = null;
-	protected JConsole console;
-	private BufferedReader shellErrorReader;
-	private ShellIn shellIn;
+	
+	private boolean keepAlive = true;
+	private boolean stopped = false;
 
 	public ShellWrapper(JConsole console) {
 		this.console = console;
 		init();
 	}
+	
+	public void start() {
+		keepAlive = true;
+		inputThread.start();
+		outputThread.start();
+		errorThread.start();
+	}
+	
+	public void stop(){
+		keepAlive = false;
+		while(!threadsDone()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException exception) {
+				exception.printStackTrace();
+			}
+		}
+		shellProcess.destroy();
+		stopped = true;
+	}
+	
+	public boolean isStopped(){
+		return stopped;
+	}
 
 	public void init() {
-		ProcessBuilder processBuilder = new ProcessBuilder(shellCommand);
-		processBuilder.directory(new File(shellDir));
-		Process shell = null;
+		ProcessBuilder processBuilder = new ProcessBuilder(Terminal.shellCommand);
+		processBuilder.directory(new File(Terminal.shellDir));
+		
 		try {
-			shell = processBuilder.start();
+			shellProcess = processBuilder.start();
 		} catch (IOException exception1) {
 			exception1.printStackTrace();
 		}
 
-		// BufferedReader shellIn = new BufferedReader(new InputStreamReader(
-		// shell.getInputStream()));
-
 		try {
 			shellInputReader = new BufferedReader(new InputStreamReader(
-					shell.getInputStream(), "UTF-8"));
+					shellProcess.getInputStream(), "UTF-8"));
 		} catch (UnsupportedEncodingException exception) {
 			exception.printStackTrace();
 		}
-
 		try {
 			shellErrorReader = new BufferedReader(new InputStreamReader(
-					shell.getErrorStream(), "UTF-8"));
+					shellProcess.getErrorStream(), Terminal.encoding));
 		} catch (UnsupportedEncodingException exception) {
 			exception.printStackTrace();
 		}
-
 		shellWriter = new PrintWriter(new BufferedWriter(
-				new OutputStreamWriter(shell.getOutputStream())), true);
+				new OutputStreamWriter(shellProcess.getOutputStream())), true);
+		
+		inputThread = new Thread(new ShellInput());
+		outputThread = new Thread(new ShellOutput());
+		errorThread = new Thread(new ShellError());
 	}
 
-	public void start() {
-		System.out.println("shelly.start");
-		shellIn = new ShellIn();
-		new Thread(shellIn).start();
-		new Thread(new ShellToConsole()).start();
-		new Thread(new ShellErr()).start();
-	}
 
-	class ShellIn implements Runnable {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Runnable#run()
-		 */
-		@Override
+
+	class ShellInput implements Runnable {
+
 		public void run() { // pushes input from the console to the shell
-			// System.out.println("starting shellin");
 			Reader input = console.getIn();
 			BufferedReader consoleSource = new BufferedReader(input);
 
 			String line = "";
 
 			try {
-				while ((line = consoleSource.readLine()) != null) {
+				while ((line = consoleSource.readLine()) != null && keepAlive) {
 					shellWriter.write(line + "\n");
 					shellWriter.flush();
 				}
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
+			shellWriter.close();
 		}
 	}
 
+
+
+	class ShellError implements Runnable {
+		
+		public void run() {
+			String errorLine = "";
+			try {
+				while ((errorLine = shellErrorReader.readLine()) != null && keepAlive) {
+					console.print(errorLine + "\n", Color.RED);
+				}
+				shellErrorReader.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
+	}
+
+	class ShellOutput implements Runnable {
+
+		public void run() {
+			
+			String outLine = "";
+
+			console.print(Terminal.greeting, Color.GREEN);
+			console.print(outLine + Terminal.prompt, Color.BLUE);
+			try { // reads from the shell and outputs to console
+				while ((outLine = shellInputReader.readLine()) != null && keepAlive) {
+					if (!outLine.equals("")) {
+						console.print(outLine + "\n", Color.BLUE);
+					}
+					console.print("> ", Color.BLUE);
+				}
+				shellInputReader.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+
+		}
+	}
+	
 	/**
 	 * @return the shellOut
 	 */
@@ -120,55 +177,10 @@ public class ShellWrapper {
 		return console;
 	}
 
-	class ShellErr implements Runnable {
-
-//		private ShellWrapper shelly;
-//
-//		public ShellErr(ShellWrapper shelly) {
-//			this.shelly = shelly;
-//		}
-
-		public void run() {
-			String errorLine = "";
-		//	BufferedReader shellErrorReader = shelly.getShellErrorReader();
-			try {
-				while ((errorLine = shellErrorReader.readLine()) != null) {
-					console.print(errorLine + "\n", Color.RED);
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-		}
+	/**
+	 * @return
+	 */
+	public boolean threadsDone() {
+		return inputThread.isAlive() || outputThread.isAlive() || errorThread.isAlive();
 	}
-
-	class ShellToConsole implements Runnable {
-
-		// private ShellWrapper shelly;
-		//
-		// public ShellToConsole(ShellWrapper shelly){
-		// this.shelly = shelly;
-		// }
-
-		public void run() {
-			// BufferedReader shellInputReader = shelly.getShellInputReader();
-
-			String outLine = "";
-
-			console.print("Hello!\n", Color.GREEN);
-			console.print(outLine + "\n> ", Color.BLUE);
-			try { // reads from the shell and outputs to console
-					// shellWriter.write("echo Hello!\n");
-				while ((outLine = shellInputReader.readLine()) != null) {
-					if (!outLine.equals("")) {
-						console.print(outLine + "\n", Color.BLUE);
-					}
-					console.print("> ", Color.BLUE);
-				}
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-
-		}
-	}
-
 }
