@@ -22,7 +22,7 @@ public class ShellWrapper {
 
 	private BufferedReader shellInputReader = null;
 	private PrintWriter shellWriter = null;
-	private JConsole console;
+	protected JConsole console;
 	private BufferedReader shellErrorReader;
 	private ShellIn shellIn;
 
@@ -62,12 +62,14 @@ public class ShellWrapper {
 				new OutputStreamWriter(shell.getOutputStream())), true);
 	}
 
-public void start(){
-	System.out.println("shelly.start");
-	shellIn = new ShellIn();
-	new Thread(shellIn).start();
-}
-	
+	public void start() {
+		System.out.println("shelly.start");
+		shellIn = new ShellIn();
+		new Thread(shellIn).start();
+		new Thread(new ShellToConsole()).start();
+		new Thread(new ShellErr()).start();
+	}
+
 	class ShellIn implements Runnable {
 		/*
 		 * (non-Javadoc)
@@ -114,59 +116,59 @@ public void start(){
 		return this.shellErrorReader;
 	}
 
-	public JConsole getConsole(){
+	public JConsole getConsole() {
 		return console;
 	}
-}
 
-class ShellErr implements Runnable {
+	class ShellErr implements Runnable {
 
-	private ShellWrapper shelly;
+//		private ShellWrapper shelly;
+//
+//		public ShellErr(ShellWrapper shelly) {
+//			this.shelly = shelly;
+//		}
 
-	public ShellErr(ShellWrapper shelly){
-		this.shelly = shelly;
-	}
-	
-	public void run() {
-		String errorLine = "";
-		BufferedReader shellErrorReader = shelly.getShellErrorReader();
-		try {
-			while ((errorLine = shellErrorReader.readLine()) != null) {
-				shelly.getConsole().print(errorLine + "\n", Color.RED);
-			}
-		} catch (IOException exception) {
-			exception.printStackTrace();
-		}
-	}
-}
-
-class ShellToConsole implements Runnable {
-
-	private ShellWrapper shelly;
-
-	public ShellToConsole(ShellWrapper shelly){
-		this.shelly = shelly;
-	}
-	
-	public void run() {
-		BufferedReader shellInputReader = shelly.getShellInputReader();
-
-		String outLine = "";
-
-		shelly.getConsole().print("Hello!\n", Color.GREEN);
-		shelly.getConsole().print(outLine + "\n> ", Color.BLUE);
-		try { // reads from the shell and outputs to console
-			// shellWriter.write("echo Hello!\n");
-			while ((outLine = shellInputReader.readLine()) != null) {
-				if (!outLine.equals("")) {
-					shelly.getConsole().print(outLine + "\n", Color.BLUE);
+		public void run() {
+			String errorLine = "";
+		//	BufferedReader shellErrorReader = shelly.getShellErrorReader();
+			try {
+				while ((errorLine = shellErrorReader.readLine()) != null) {
+					console.print(errorLine + "\n", Color.RED);
 				}
-				shelly.getConsole().print("> ", Color.BLUE);
+			} catch (IOException exception) {
+				exception.printStackTrace();
 			}
-		} catch (IOException exception) {
-			exception.printStackTrace();
 		}
-		
 	}
-	
+
+	class ShellToConsole implements Runnable {
+
+		// private ShellWrapper shelly;
+		//
+		// public ShellToConsole(ShellWrapper shelly){
+		// this.shelly = shelly;
+		// }
+
+		public void run() {
+			// BufferedReader shellInputReader = shelly.getShellInputReader();
+
+			String outLine = "";
+
+			console.print("Hello!\n", Color.GREEN);
+			console.print(outLine + "\n> ", Color.BLUE);
+			try { // reads from the shell and outputs to console
+					// shellWriter.write("echo Hello!\n");
+				while ((outLine = shellInputReader.readLine()) != null) {
+					if (!outLine.equals("")) {
+						console.print(outLine + "\n", Color.BLUE);
+					}
+					console.print("> ", Color.BLUE);
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+
+		}
+	}
+
 }

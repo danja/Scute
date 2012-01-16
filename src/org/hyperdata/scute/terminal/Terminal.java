@@ -53,7 +53,5 @@ public class Terminal {
 		//new Thread(shelly.).start();
 		System.out.println("terminal.start");
 		shelly.start();
-		new Thread(new ShellToConsole(shelly)).start();
-		new Thread(new ShellErr(shelly)).start();
 	}
 }
