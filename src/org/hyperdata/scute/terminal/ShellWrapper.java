@@ -30,6 +30,8 @@ public class ShellWrapper {
 
 	private boolean keepAlive = true;
 	private boolean stopped = false;
+	
+	private boolean didOutput = false;
 
 	public ShellWrapper(JConsole console) {
 		this.console = console;
@@ -108,14 +110,53 @@ public class ShellWrapper {
 							&& keepAlive) {
 						shellWriter.write(line + "\n");
 						shellWriter.flush();
+				//		if(!didOutput){
+						console.print(Terminal.prompt, Color.BLUE);
+//						}
+//						didOutput = false;
 					}
 				} catch (IOException exception) {
 					exception.printStackTrace();
 				}
-				System.out.println("ShellInput dropped through");
+			//	System.out.println("ShellInput dropped through");
 				initPipes();
 			}
 			shellWriter.close();
+		}
+	}
+	
+	class ShellOutput implements Runnable {
+
+		public void run() {
+
+			String outLine = "";
+
+			console.print(Terminal.greeting, Color.GREEN);
+			console.print(outLine + Terminal.prompt, Color.BLUE);
+			while (keepAlive) {
+				try { // reads from the shell and outputs to console
+					while ((outLine = shellInputReader.readLine()) != null
+							&& keepAlive) {
+						//if (!outLine.equals("")) {
+							console.print(outLine + "\n", Color.BLUE);
+							console.print(Terminal.prompt, Color.BLUE);
+						//	didOutput = true;
+						//}
+						// console.print("> ", Color.BLUE);
+					}
+				} catch (IOException exception) {
+					exception.printStackTrace();
+				}
+				// System.out.println("ShellOutput dropped through");
+				initPipes();
+				console.print(Terminal.prompt, Color.BLUE);
+			}
+			try {
+				shellInputReader.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+
 		}
 	}
 
@@ -134,7 +175,7 @@ public class ShellWrapper {
 				} catch (IOException exception) {
 					exception.printStackTrace();
 				}
-				System.out.println("ShellError dropped through");
+			//	System.out.println("ShellError dropped through");
 				initPipes();
 			}
 			try {
@@ -142,38 +183,6 @@ public class ShellWrapper {
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-		}
-	}
-
-	class ShellOutput implements Runnable {
-
-		public void run() {
-
-			String outLine = "";
-
-			console.print(Terminal.greeting, Color.GREEN);
-			console.print(outLine + Terminal.prompt, Color.BLUE);
-			while (keepAlive) {
-				try { // reads from the shell and outputs to console
-					while ((outLine = shellInputReader.readLine()) != null
-							&& keepAlive) {
-						//if (!outLine.equals("")) {
-							console.print(outLine + "\n", Color.BLUE);
-						//}
-						// console.print("> ", Color.BLUE);
-					}
-				} catch (IOException exception) {
-					exception.printStackTrace();
-				}
-				System.out.println("ShellOutput dropped through");
-				initPipes();
-			}
-			try {
-				shellInputReader.close();
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-
 		}
 	}
 
