@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.terminal;
+package org.hyperdata.scute.main;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,9 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import org.hdesktop.swingx.*;
-import org.hdesktop.swingx.MultiSplitLayout.Leaf;
-import org.hdesktop.swingx.MultiSplitLayout.*;
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
+
+import org.hyperdata.scute.terminal.Terminal;
+
+//import org.hdesktop.swingx.*;
+//import org.hdesktop.swingx.MultiSplitLayout.Leaf;
+//import org.hdesktop.swingx.MultiSplitLayout.*;
 
 /**
  * @author danny

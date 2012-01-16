@@ -7,9 +7,13 @@ import java.awt.CardLayout;
 
 import javax.swing.JScrollPane;
 
-import org.hdesktop.swingx.JXTaskPane;
-import org.hdesktop.swingx.JXTaskPaneContainer;
-import org.hdesktop.swingx.JXTitledPanel;
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.action.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
+//
+//import org.hdesktop.swingx.JXTaskPane;
+//import org.hdesktop.swingx.JXTaskPaneContainer;
+//import org.hdesktop.swingx.JXTitledPanel;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 

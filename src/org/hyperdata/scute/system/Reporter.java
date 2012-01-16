@@ -5,9 +5,12 @@ package org.hyperdata.scute.system;
 
 import javax.swing.JOptionPane;
 
-import org.hdesktop.swingx.error.ErrorInfo;
-import org.hdesktop.swingx.error.ErrorReporter;
+//import org.hdesktop.swingx.error.ErrorInfo;
+//import org.hdesktop.swingx.error.ErrorReporter;
 
+import org.jdesktop.swingx.error.*;
+import org.jdesktop.swingx.action.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 /**
  * @author danny
  *

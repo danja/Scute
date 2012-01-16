@@ -5,7 +5,9 @@ package org.hyperdata.scute.cards;
 
 import java.awt.event.ActionEvent;
 
-import org.hdesktop.swingx.action.AbstractActionExt;
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.action.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 
 final class ChangeEditorPanelAction extends
 		AbstractActionExt {

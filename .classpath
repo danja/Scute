@@ -28,7 +28,6 @@
 	<classpathentry kind="lib" path="lib/jena/wstx-asl-3.2.9.jar"/>
 	<classpathentry kind="lib" path="lib/jena/xercesImpl-2.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/jena/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/Filters.jar"/>
 	<classpathentry kind="lib" path="lib/http/commons-codec-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/http/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/http/httpclient-4.1.jar"/>
@@ -37,5 +36,10 @@
 	<classpathentry kind="lib" path="lib/http/httpmime-4.1.jar"/>
 	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/misc/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="lib/misc/Filters.jar"/>
+	<classpathentry kind="lib" path="lib/misc/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/swingx/swingx-beaninfo-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/swingx/swingx-core-1.6.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

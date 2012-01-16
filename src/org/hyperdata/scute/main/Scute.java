@@ -28,12 +28,16 @@ import javax.swing.plaf.TabbedPaneUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.Document;
 
-import org.hdesktop.swingx.JXMultiSplitPane;
-import org.hdesktop.swingx.JXTitledPanel;
-import org.hdesktop.swingx.MultiSplitLayout;
-import org.hdesktop.swingx.MultiSplitLayout.Divider;
-import org.hdesktop.swingx.MultiSplitLayout.Leaf;
-import org.hdesktop.swingx.MultiSplitLayout.Split;
+//import org.hdesktop.swingx.JXMultiSplitPane;
+//import org.hdesktop.swingx.JXTitledPanel;
+//import org.hdesktop.swingx.MultiSplitLayout;
+//import org.hdesktop.swingx.MultiSplitLayout.Divider;
+//import org.hdesktop.swingx.MultiSplitLayout.Leaf;
+//import org.hdesktop.swingx.MultiSplitLayout.Split;
+
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.action.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 
 import org.hyperdata.resources.scute.ScuteIcons;
 import org.hyperdata.scute.autosave.AutoSave;

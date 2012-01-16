@@ -1,0 +1,6 @@
+Turtle editing
+Turtle + RDF/XML save/load
+Turtle <-> RDF/XML conversion
+remove store configs
+post-to-store : SPARQL, Talis changesets
+

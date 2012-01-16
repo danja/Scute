@@ -14,8 +14,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.hdesktop.swingx.JXPanel;
-import org.hdesktop.swingx.JXTitledPanel;
+//import org.hdesktop.swingx.JXPanel;
+//import org.hdesktop.swingx.JXTitledPanel;
+
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 
 public class CardsPanel extends JPanel implements MouseListener {
 

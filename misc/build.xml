@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<project name="Scute" default="jar" basedir="../">
+
+	<!-- PROPERTIES -->
+	<!--property name="libs.home" value="/java"/ -->
+	<!-- TODO get this dynamically? -->
+	<property name="creator.name" value="Danny Ayers" />
+	<property name="dist.name" value="scute" />
+	<property name="install.file" value="Scute.jar" />
+	<property name="package.filename" value="Scute.jar" />
+	<property name="main.class" value="org.hyperdata.scute.main.Scute" />
+
+	<!-- directory paths -->
+	<property name="root.dir" value="../" />
+
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src" />
+	<property name="data.dir" value="data" />
+	<property name="doc.dir" value="doc" />
+	<property name="etc.dir" value="etc" />
+	<property name="temp.dir" value="temp" />
+
+	<!-- property name="resources.dir" value="${src.dir}/org/hyperdata/resources/" / -->
+
+	<!-- do not commit me, oh my darling... -->
+	<property name="classes.dir" value="classes" />
+	<property name="javadoc.dir" value="${doc.dir}/javadoc" />
+	<!-- property name="zipfile" value="${dist.name}.zip"/ -->
+	<property name="dist.dir" value="dist/${dist.name}" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<!-- compiler flags -->
+	<property name="compile.debug" value="false" />
+	<property name="compile.version" value="1.5" />
+
+
+
+	<!-- CLEAN -->
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${classes.dir}" />
+		<delete dir="${javadoc.dir}" />
+		<delete file="${package.filename}" />
+	</target>
+
+	<!-- INIT -->
+	<target name="init" depends="clean">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${javadoc.dir}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+
+	<!-- BUILD -->
+	<target name="build" depends="init, compile, jar" />
+
+	<!-- TEST -->
+	<!-- target name="test" depends="build, junit-tests" / tests? -->
+
+	<!--
+    <target name="junit-tests" depends="build">   
+    <junit haltonfailure="yes" printsummary="withOutAndErr" >
+          <classpath>
+             <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+              </fileset> 
+            <fileset dir="${libaux.dir}">
+                              <include name="**/*.jar"/>
+                        </fileset>  
+          </classpath>   
+      <test name="org.hyperdata.agency.AllTests" haltonfailure="yes" outfile="result">
+        <formatter type="plain"/>
+      </test>
+    </junit>   
+     </target> 
+     -->
+
+	<!-- EYEBALL -->
+	<!-- target name="test" depends="build">
+        <junit haltonfailure="true" fork="yes" printsummary="no">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="*jar"/>
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <test name="com.hp.hpl.jena.eyeball.test.EyeballTestAll"/>
+        </junit>
+    </target -->
+
+
+	<!-- COMPILE -->
+	<target name="compile">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${compile.debug}" classpathref="classpath" source="${compile.version}" includeantruntime="false" />
+	</target>
+
+
+	<!--
+	<path id="build-classpath">
+    <fileset dir="${dist}/lib">
+        <include name="*.jar"/>
+    </fileset>
+</path>
+<manifestclasspath property="lib.list" jarfile="${dist}/lib/myprog.jar">
+    <classpath refid="build-classpath"/>
+</manifestclasspath>
+<jar jarfile="${dist}/lib/myprog.jar"
+     basedir="${build}"
+     includes="com/my/prog/**" >
+    <manifest>
+        <attribute name="Main-Class" value="com.my.prog.MyProg"/>
+        <attribute name="Class-Path" value="${lib.list}"/>
+    </manifest>
+</jar>
+	
+	-->
+
+	<!-- SCUTE JAR -->
+	<target name="jar" depends="clean, init, compile">
+		<property name="version.num" value="0.50" />
+		<buildnumber file="build.num" />
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
+
+		<pathconvert property="manifest.libs" pathsep=":">
+			<mapper>
+				<chainedmapper>
+					<!-- remove absolute path -->
+					<flattenmapper />
+
+					<!-- add lib/ prefix -->
+					<!-- globmapper from="*" to="lib/*" / -->
+				</chainedmapper>
+			</mapper>
+			<path>
+
+				<!-- lib.home contains all jar files,   
+                                        in several subdirectories -->
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+				</fileset>
+			</path>
+		</pathconvert>
+
+		<manifest file="MANIFEST.MF">
+			<attribute name="Built-By" value="${creator.name}" />
+			<attribute name="Main-Class" value="${main.class}" />
+			<attribute name="Implementation-Version" value="${version.num}-b${build.number}" />
+			<attribute name="Class-Path" value="${manifest.libs}" />
+		</manifest>
+
+		<!-- fileset dir="${src.dir}" includes="com/idea/resources/*/*.gif"/ -->
+
+		<jar destfile="${package.filename}" basedir="${classes.dir}" includes="**/*.class" excludes="**/*Test*" manifest="MANIFEST.MF" index="true">
+			<!-- remind me again what index does..? -->
+
+			<!-- other dependencies, here .gif images -->
+
+			<zipfileset dir="${src.dir}" encoding="UTF-8">
+				<include name="**/*.gif" />
+			</zipfileset>
+
+
+			<!-- other dependencies, here .jar libs, // prefix="lib/" prefix is the target dir in the jar -->
+
+			<zipfileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</zipfileset>
+		</jar>
+
+		<!-- for checking only -->
+		<delete dir="/home/danny/temp" />
+		<mkdir dir="/home/danny/temp" />
+		<mkdir dir="/home/danny/temp/jarcontents" />
+		<copy file="Scute.jar" todir="/home/danny/temp/" />
+		<unjar src="/home/danny/temp/Scute.jar" dest="/home/danny/temp/jarcontents/" />
+	</target>
+
+
+	<!-- excluding dependency libs - keep for dist? -->
+	<target name="jarold">
+		<jar jarfile="${lib.dir}/${dist.name}.jar" basedir="${classes.dir}">
+			<fileset dir="${src.dir}" includes="com/idea/resources/*/*.gif" />
+			<fileset dir="." includes="etc/*" />
+		</jar>
+	</target>
+
+	<!-- UNJAR for checking contents of jars -->
+	<target name="unjar" depends="init, jar">
+		<delete dir="${temp.dir}" />
+		<mkdir dir="${temp.dir}" />
+		<unjar src="${package.filename}" dest="${temp.dir}" />
+	</target>
+
+	<!-- INSTALLER executable jar -->
+	<target name="installer" description="creates executable jar">
+
+		<delete dir="${temp.dir}" />
+		<mkdir dir="${temp.dir}" />
+
+		<copy todir="${temp.dir}">
+			<fileset dir="${doc.dir}" includes="**/*" />
+			<fileset dir="${data.dir}" includes="**/*" />
+		</copy>
+
+		<unjar dest="${temp.dir}">
+			<fileset dir="lib.dir"> <!-- or patternset? -->
+				<include name="**/*" />
+			</fileset>
+		</unjar>
+
+
+		<jar destfile="${install.file}">
+	    <fileset dir="${temp.dir}" includes="**/*" />
+	    <classes dir="${classes.dir}" /><!-- Scute classes -->
+	    <!-- lib dir="path/to/lib/dir" / -->
+			<manifest file="MANIFEST.MF">
+				<attribute name="Built-By" value="${creator.name}" />
+				<attribute name="Main-Class" value="${main.class}" />
+				<attribute name="Implementation-Version" value="${version.num}-b${build.number}" />
+				<attribute name="Class-Path" value="${manifest.libs}" />
+			</manifest>
+	  </jar>
+
+	  <delete dir="${temp.dir}" />
+	</target>
+
+	
+	<!-- MANIFEST.RDF -->
+	<!-- TODO apply to this XML to generate a manifest.rdf 
+	(probably XSLT 1.0 instead)
+		<target name="manifest.rdf">
+			<xslt in="./build.xml" out="ant.rdf"
+				style="ant2rdf.xsl" force="true">
+				<classpath location="/home/ap/saxon/saxon8.jar" />
+			</xslt>
+		</target>
+	-->
+
+	<!-- JAVADOC -->
+	<target name="javadoc" depends="init" description="make javadoc">
+        <javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}" packagenames="*" classpathref="classpath" additionalparam="-breakiterator -link http://jena.sourceforge.net/javadoc/ com.hp.hpl.jena -link http://jena.sourceforge.net/ARQ/javadoc/ com.hp.hpl.query -link http://java.sun.com/j2se/1.4.2/docs/api/ java" />
+    </target>
+	
+	<!-- DIST -->
+    <target name="dist" depends="init, build, jar, javadoc">
+        <!-- mkdir dir="${dist.root}"/ -->
+        <mkdir dir="${dist.dir}" />
+        <copy todir="${dist.dir}" file="README.txt" />
+        <copy todir="${dist.dir}/${dist.name}" file="${etc.dir}/editor.sh" />
+        <copy todir="${dist.dir}/${dist.name}" file="${etc.dir}/rdftree.sh" />
+        <copy todir="${dist.dir}" file="build.xml" />
+        <copy todir="${dist.dir}/src">
+            <fileset dir="${src.dir}" includes="**" />
+        </copy>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="${lib.dir}" includes="**" />
+        </copy>
+        <copy todir="${dist.dir}/doc">
+            <fileset dir="${doc.dir}" includes="**" />
+        </copy>
+        <copy todir="${dist.dir}/etc">
+            <fileset dir="${etc.dir}" includes="**" />
+        </copy>
+    	<!-- 
+    	
+    	scute-dist_version_date.zip
+    	
+        <zip zipfile="${dist.zipfile}">
+            <fileset dir="${dist.root}" includes="${dist.name}/**"/>
+        </zip>
+    	-->
+    	<!-- plus tar.gz plus self-extracting jar -->
+    </target>
+	
+	<target name="test-install"><!-- FIXME implement test-install -->
+	<!-- create temp dir -->
+	<!-- download latest Scute.jar -->
+		<!-- get src="http://ant.apache.org/" dest="help/index.html"/ -->
+	<!-- compare downloaded Scute.jar with local copy -->
+	<!-- run it! -->
+	</target>
+
+	<target name="http-tests"><!-- FIXME implement http-tests -->
+		<!-- run a bunch of HTTP method calls to confirm functionality of headless build -->
+	</target>
+
+</project>

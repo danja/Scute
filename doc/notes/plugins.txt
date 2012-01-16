@@ -1,0 +1,26 @@
+Possible way of doing plugins:
+
+make a HTTP API (Jetty?)
+
+backed by dedicated class containing API methods
+
+--------------
+
+API methods
+===========
+create new doc (set of cards)
+get all open docs
+get current doc
+add plugin (+menu item, callback)
+
+--------------
+
+first plugin
+Term Finder
+===========
+get all URIs in current doc
+check which are *not* registered in vocabs
+check which 404
+...lookup sindice?
+generate vocab doc
+

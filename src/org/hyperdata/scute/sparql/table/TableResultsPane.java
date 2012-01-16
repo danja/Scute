@@ -15,7 +15,10 @@ import javax.swing.table.TableModel;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-import org.hdesktop.swingx.JXTable;
+//import org.hdesktop.swingx.JXTable;
+import org.jdesktop.swingx.*;
+import org.jdesktop.swingx.action.*;
+import org.jdesktop.swingx.MultiSplitLayout.*;
 
 /**
  * @author danny

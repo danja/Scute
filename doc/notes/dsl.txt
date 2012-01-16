@@ -1,0 +1,29 @@
+[important application : building complex datasets that are beyond individual queries (maybe because of timeout) ]
+
+check Henry's graph nav language in Clerezza
+
+SPARQL query chains
+
+g1 = resultOf( CONSTRUCT {} WHERE {} )
+g2 = resultOf( CONSTRUCT {} WHERE {} )
+
+SELECT {} WHERE { g1 & g2 }
+
+just give them names?
+
+want caching - so unless query has changed, result is simple lookup
+lazy evaluation
+
+q1 = """CONSTRUCT {} WHERE {}"""
+endpoint = <http://example.org/sparql>
+
+g1 = graph(endpoint, q1)
+g2 = graph(endpoint2, q2)
+
+r = """SELECT {} WHERE { x1 & x2 }""" with g1, g2
+ 
+view = xslt(r, html)
+
+print view
+
+
