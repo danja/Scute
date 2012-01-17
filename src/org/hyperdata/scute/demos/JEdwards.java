@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyperdata.scute.main;
+package org.hyperdata.scute.demos;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

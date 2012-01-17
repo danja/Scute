@@ -28,6 +28,9 @@ import javax.swing.plaf.TabbedPaneUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.Document;
 
+import com.nilo.plaf.nimrod.NimRODLookAndFeel;
+import com.nilo.plaf.nimrod.NimRODTheme;
+
 //import org.hdesktop.swingx.JXMultiSplitPane;
 //import org.hdesktop.swingx.JXTitledPanel;
 //import org.hdesktop.swingx.MultiSplitLayout;
@@ -89,6 +92,22 @@ public class Scute extends ModelContainer implements TreeSelectionListener, Scut
 	 *            the arguments
 	 */
 	public static void main(String[] args) {
+		
+		
+		// need to add a chooser
+		try {
+//			UIManager.setLookAndFeel( // is ugly on this machine!!
+//			        UIManager.getSystemLookAndFeelClassName());
+			// better than default
+		//	UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			NimRODTheme nt = new NimRODTheme( "./Scute.theme");
+			NimRODLookAndFeel nf = new NimRODLookAndFeel();
+			nf.setCurrentTheme( nt);
+			UIManager.setLookAndFeel( nf);
+		} catch (Exception exception) {
+			// ignore
+		} 
+		
 		String homeDir = "";
 		for (int i = 0; i < args.length; i++){
 			if(args[i].equals("--home")){

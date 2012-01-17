@@ -170,7 +170,7 @@ public class ShellWrapper {
 							&& keepAlive) {
 						console.print(errorLine + "\n", Color.RED);
 					}
-					System.out.println("dropped out of err");
+				//	System.out.println("dropped out of err");
 
 				} catch (IOException exception) {
 					exception.printStackTrace();

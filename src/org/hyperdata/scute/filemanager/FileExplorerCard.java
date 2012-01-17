@@ -42,27 +42,30 @@ public class FileExplorerCard extends Card implements FileReference {
 	
 	public FileExplorerCard(String startPath) {
 		super(new BorderLayout());
+		
 		FilesTreeModel treeModel = new FilesTreeModel(startPath);
-		DirListModel directoryModel = new DirListModel((File) treeModel.getRoot());
-		JList dirList = new JList(directoryModel);
+	//	DirListModel directoryModel = new DirListModel((File) treeModel.getRoot());
+		
+	//	JList dirList = new JList(directoryModel);
 
-		ListItemRenderer renderer = new ListItemRenderer();
-		dirList.setCellRenderer(renderer);
+	//	ListItemRenderer renderer = new ListItemRenderer();
+	//	dirList.setCellRenderer(renderer);
 
 		FilesTreePanel fileTree = new FilesTreePanel(treeModel);
 		
-		fileTree.getTree().addTreeSelectionListener(new TreeListener(this,directoryModel));
-		fileTree.getTree().setSelectionRow(0);
+	//	fileTree.getTree().addTreeSelectionListener(new TreeListener(this,directoryModel));
+	//	fileTree.getTree().setSelectionRow(0);
 		
-		ListMouseListener listMouseListener = new ListMouseListener(this, fileTree.getTree());
-		dirList.addMouseListener(listMouseListener);
+	//	ListMouseListener listMouseListener = new ListMouseListener(this, fileTree.getTree());
+	//	dirList.addMouseListener(listMouseListener);
 		
 		JScrollPane treeScroller = new JScrollPane(fileTree);
-		JScrollPane listScroller = new JScrollPane(dirList);
+	//	JScrollPane listScroller = new JScrollPane(dirList);
 		treeScroller.setMinimumSize(new Dimension(5, 0));
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroller, listScroller);
-		splitPane.setContinuousLayout(true);
-		add(splitPane, BorderLayout.CENTER);
+	//	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroller, listScroller);
+	//	splitPane.setContinuousLayout(true);
+	//	add(splitPane, BorderLayout.CENTER);
+		add(treeScroller, BorderLayout.CENTER);
 		add(getButtonBar(), BorderLayout.SOUTH);
 	}
 	
