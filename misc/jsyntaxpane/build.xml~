@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<project name="NimROD Look and Feel" default="hazjar" basedir=".">
+
+<target name="clean">
+	<delete dir="bin" />
+	<delete dir="dist" />
+</target>
+	
+<target name="setup">
+  <mkdir dir="bin/com/nilo/plaf/nimrod/icons" />
+  <mkdir dir="dist" />
+	
+  <copy todir="bin/com/nilo/plaf/nimrod/icons/">
+    <fileset dir="src/com/nilo/plaf/nimrod/icons/" >
+      <include name="**/*.png" />
+    </fileset>
+  </copy>
+</target>
+	
+<target name="compile" depends="clean, setup"><!-- danja added clean -->
+  <javac srcdir="src" destdir="bin"/>
+</target>
+
+<target name="hazjar" depends="compile">
+  <manifest file="manifest.mf">
+    <attribute name="Main-Class" value="com.nilo.plaf.nimrod.NimRODMain"/>
+  </manifest>
+  
+  <jar jarfile="../nrlf.jar" basedir="bin" manifest="manifest.mf"/>
+</target>
+
+</project>

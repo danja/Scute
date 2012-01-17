@@ -15,7 +15,9 @@ import java.io.FileInputStream;
 
 import java.io.InputStream;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 
@@ -28,27 +30,21 @@ import org.hyperdata.scute.system.Log;
 import org.hyperdata.scute.source.*;
 
 /**
- * The Class SourceDemo.
- * 
- * FIXME finish
  */
-public class SourceDemo extends EditorPane {
 
+import jsyntaxpane.*;
+
+public class SourceDemo {
+
+	
 	public SourceDemo(String syntax) {
-		super(syntax);
-		setFilename("./temp.txt");
-		setFont(new Font("Monospaced", Font.PLAIN, 12)); 
-		setEditorKit(new ScuteEditorKit("SPARQL"));
+	//	super(syntax);
+	//	setFilename("./temp.txt");
+	
+
 	}
 
-	/* (non-Javadoc) 
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-	 */
-	@Override
-	public void stateChanged(ChangeEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	/**
 	 * The main method.
@@ -59,12 +55,20 @@ public class SourceDemo extends EditorPane {
 	public static void main(String[] args) {
 
 	//	final String filename = "./data/sample2.ttl";
-SourceDemo sd = new SourceDemo("Turtle");
+// SourceDemo sd = new SourceDemo("Turtle");
+
+JEditorPane editorPane = new JEditorPane();
+JScrollPane sp = new JScrollPane(editorPane);
+
+editorPane.setFont(new Font("Monospaced", Font.PLAIN, 12)); 
+// setEditorKit(new ScuteEditorKit("SPARQL"));
+jsyntaxpane.DefaultSyntaxKit.initKit();
+editorPane.setContentType("text/sparql");
 
 		// TODO show source window!!
 
 		final JFrame frame = new JFrame();
-		frame.getContentPane().add(sd);
+		frame.getContentPane().add(sp);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	//	frame.pack();
 		frame.setSize(500, 500);

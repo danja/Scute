@@ -1,0 +1,16 @@
+nrlf.jar is a very slightly modified version of:
+
+NimROD Look & Feel
+by Nilo J. González, nimrodlf@gmail.com
+
+this is released under a LGPL license, see: 
+
+http://personales.ya.com/nimrod/licencia-en.html
+
+CHANGES
+changes in source are marked "danja"
+the background "bubble" in trees TreePelotilla.png has been replaced by a transparent image
+in the source these icons have been changed to much smaller, plain circles
+
+build using nimrod_lfsrc/build.xml
+
