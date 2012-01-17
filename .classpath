@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="lib/misc/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/swingx/swingx-beaninfo-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/swingx/swingx-core-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/plaf/nrlf.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
