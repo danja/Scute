@@ -40,16 +40,12 @@ import jsyntaxpane.*;
 
 public class SourceDemo {
 
-	
 	public SourceDemo(String syntax) {
-	//	super(syntax);
-	//	setFilename("./temp.txt");
-	
+		// super(syntax);
+		// setFilename("./temp.txt");
 
 	}
 
-
-	
 	/**
 	 * The main method.
 	 * 
@@ -59,31 +55,30 @@ public class SourceDemo {
 	public static void main(String[] args) {
 
 		try {
-//			UIManager.setLookAndFeel( // is ugly on this machine!!
-//			        UIManager.getSystemLookAndFeelClassName());
+			// UIManager.setLookAndFeel( // is ugly on this machine!!
+			// UIManager.getSystemLookAndFeelClassName());
 			// better than default
-		//	UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-			NimRODTheme nt = new NimRODTheme( "./Scute.theme");
+			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			NimRODTheme nt = new NimRODTheme("./Scute.theme");
 			NimRODLookAndFeel nf = new NimRODLookAndFeel();
-			nf.setCurrentTheme( nt);
-			UIManager.setLookAndFeel( nf);
+			nf.setCurrentTheme(nt);
+			UIManager.setLookAndFeel(nf);
 		} catch (Exception exception) {
 			// ignore
-		} 
-		
-	//	final String filename = "./data/sample2.ttl";
- 
-		SourceEditor editor = new SourceEditor();
-jsyntaxpane.DefaultSyntaxKit.initKit();
-editor.setContentType("text/sparql");
+		}
 
+		// final String filename = "./data/sample2.ttl";
+
+		SourceEditor editor = new SourceEditor();
+		jsyntaxpane.DefaultSyntaxKit.initKit();
+		editor.setContentType("text/sparql");
 
 		final JFrame frame = new JFrame("Source Demo");
 		frame.getContentPane().add(editor.getScrollPane());
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	//	frame.pack();
+		// frame.pack();
 		frame.setSize(500, 500);
-		frame.setLocation(100,100);
+		frame.setLocation(100, 100);
 		frame.setVisible(true);
 	}
 }

@@ -4,6 +4,8 @@
 package org.hyperdata.scute.filemanager;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,6 +33,10 @@ public class FileComparator implements Comparator<File> {
 		String filename2 = file2.getName(); 
 		return filename1.compareToIgnoreCase(filename2);
 	}
+	
+	public static String[] getSortedChildrenNames(File directory) {
+		return getSortedChildrenNames(directory, null);
+	}
 
 	/**
 	 * Sorts directory children
@@ -41,15 +47,29 @@ public class FileComparator implements Comparator<File> {
 	 * @return an array of children names
 	 * 
 	 */
-	public static String[] getSortedChildrenNames(File directory) {
+	public static String[] getSortedChildrenNames(File directory, FileFilter filter) {
 	
 		List<File> files = getSortedChildren(directory);
+		if(filter != null){
+			files = filter(files, filter);
+		}
 		String[] sorted = new String[files.size()];
 		
 		for(int i=0;i<files.size();i++){
 			sorted[i] = files.get(i).getName();
 		}	
 		return sorted;
+	}
+	
+	public static List<File> filter(List<File> files, FileFilter filter){
+		List<File> filteredFiles = new ArrayList<File>();
+		for(int i=0;i<files.size();i++){ // inefficient but who cares..?
+			File file = files.get(i);
+			if(filter.accept(file)){
+				filteredFiles.add(file);
+			}
+		}
+		return filteredFiles;
 	}
 	
 	public static List<File> getSortedChildren(File directory) {

@@ -55,16 +55,8 @@ public class ExploreEditDemo {
 		treeMouseListener.attach(fileExplorerPane.getTree(), editorPane);
 	}
 
-	/**
-	 * @return
-	 */
 	private void initEditor() {
 		editorPane = new SourceEditor();
-//		editorScrollPane = new JScrollPane(editorPane);
-//
-//		editorPane.setFont(new Font("Monospaced", Font.PLAIN, 12));
-
-		// setEditorKit(new ScuteEditorKit("SPARQL"));
 		jsyntaxpane.DefaultSyntaxKit.initKit();
 		editorPane.setContentType("text/sparql");
 	}
@@ -80,10 +72,6 @@ public class ExploreEditDemo {
 	public void centerSplit() {
 		left.setWeight(0.5);
 		right.setWeight(0.5);
-		// Dimension d = contentPanel.getSize();
-		// editorPane.setPreferredSize(new Dimension(d.width/2, d.height));
-		// fileExplorerCard.setPreferredSize(new Dimension(d.width/2,
-		// d.height));
 	}
 
 	private void initLayout() {
@@ -117,7 +105,6 @@ public class ExploreEditDemo {
 			UIManager.setLookAndFeel(nf);
 		} catch (Exception exception) {
 			// ignore
-			exception.printStackTrace();
 		}
 		JFrame frame = new JFrame("File Explorer");
 

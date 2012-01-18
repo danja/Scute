@@ -11,6 +11,8 @@
 package org.hyperdata.scute.filemanager;
 
 import java.io.File;
+import java.io.FileFilter;
+
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -51,8 +53,15 @@ public class FilesTreeModel extends DefaultTreeModel {
 	@Override
 	public Object getChild(Object parent, int index) {
 		File directory = (File) parent;
-		String[] children = FileComparator.getSortedChildrenNames(directory);
+		String[] children;
+		children = FileComparator.getSortedChildrenNames(directory, filter);
 		return new File(directory, children[index]);
+	}
+	
+	private FileFilter filter = new DefaultFileFilter();
+
+	public void setFilter(FileFilter filter){
+		this.filter  = filter;
 	}
 
 	/*
@@ -64,6 +73,9 @@ public class FilesTreeModel extends DefaultTreeModel {
 	public int getChildCount(Object parent) {
 		File fileItem = (File) parent;
 		if (fileItem.isDirectory()) {
+			if(filter != null){
+			return fileItem.listFiles(filter).length;
+			}
 			String[] children = fileItem.list();
 			return children.length;
 		} else {
@@ -88,7 +100,12 @@ public class FilesTreeModel extends DefaultTreeModel {
 	private boolean hasSubdirectories(File file) {
 		if (file.isFile())
 			return false; // shouldn't be needed
-		File[] children = file.listFiles();
+		File[] children;
+		if(filter != null){
+			children = file.listFiles(filter);
+		}else {
+		children = file.listFiles();
+		}
 		for (int i = 0; i < children.length; i++) {
 			if (children[i].isDirectory())
 				return true;
@@ -106,7 +123,7 @@ public class FilesTreeModel extends DefaultTreeModel {
 	public int getIndexOfChild(Object parent, Object child) {
 		File directory = (File) parent;
 		File fileItem = (File) child;
-		String[] children = FileComparator.getSortedChildrenNames(directory);
+		String[] children = FileComparator.getSortedChildrenNames(directory, filter);
 		int result = -1;
 
 		for (int i = 0; i < children.length; ++i) {
