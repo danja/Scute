@@ -5,6 +5,7 @@ package org.hyperdata.scute.demos.temp;
 
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -36,6 +37,7 @@ public class SourceEditor extends JEditorPane implements FileReference {
 	 */
 	@Override
 	public void setCurrentFile(File file) {
+		System.out.println("setting file "+file);
 		String url = "file:///" + file.getAbsolutePath();
 		URL newURL = null;
 		try {
@@ -47,7 +49,12 @@ public class SourceEditor extends JEditorPane implements FileReference {
 		if (loadedURL != null && loadedURL.sameFile(newURL)) {
 			return;
 		}
-
+		// maybe display "Loading..."
+		 try {
+			setPage(url);
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	/*

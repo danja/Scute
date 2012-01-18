@@ -37,6 +37,6 @@ System.out.println(treePath);
 if(treePath == null) return;
 File file = (File)treePath.getLastPathComponent();
 if(file.isDirectory()) return;
-
+target.setCurrentFile(file);
     }
 }
