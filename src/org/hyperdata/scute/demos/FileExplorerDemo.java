@@ -24,22 +24,17 @@ public class FileExplorerDemo {
 
 	public static void main(String[] argv) {
 		try {
-//			UIManager.setLookAndFeel(
-//			        UIManager.getSystemLookAndFeelClassName());
-		//	UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-			
-	//		NimRODTheme nt = new NimRODTheme( new URL( "http://personales.ya.com/nimrod/data/Burdeos.theme"));
-		
-			NimRODTheme nt = new NimRODTheme( "./Snow.theme");
+			NimRODTheme nt = new NimRODTheme("./Scute.theme");
 			NimRODLookAndFeel nf = new NimRODLookAndFeel();
-			nf.setCurrentTheme( nt);
-			UIManager.setLookAndFeel( nf);
-			
-			// UIManager.setLookAndFeel( new com.nilo.plaf.nimrod.NimRODLookAndFeel());
+			nf.setCurrentTheme(nt);
+			UIManager.setLookAndFeel(nf);
+
+			// UIManager.setLookAndFeel( new
+			// com.nilo.plaf.nimrod.NimRODLookAndFeel());
 		} catch (Exception exception) {
 			// ignore
 			exception.printStackTrace();
-		} 
+		}
 		JFrame frame = new JFrame("File Explorer");
 
 		frame.addWindowListener(new WindowAdapter() {
@@ -51,7 +46,7 @@ public class FileExplorerDemo {
 
 		frame.getContentPane().add(
 				new FileExplorerCard(System.getProperty("user.home")));
-frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setSize(400, 400);
 		frame.pack();
 		frame.setVisible(true);

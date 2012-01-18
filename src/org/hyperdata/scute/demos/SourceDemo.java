@@ -18,11 +18,14 @@ import java.io.InputStream;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.nilo.plaf.nimrod.NimRODLookAndFeel;
+import com.nilo.plaf.nimrod.NimRODTheme;
 
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.syntax.ScuteEditorKit;
@@ -54,6 +57,19 @@ public class SourceDemo {
 	 */
 	public static void main(String[] args) {
 
+		try {
+//			UIManager.setLookAndFeel( // is ugly on this machine!!
+//			        UIManager.getSystemLookAndFeelClassName());
+			// better than default
+		//	UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			NimRODTheme nt = new NimRODTheme( "./Scute.theme");
+			NimRODLookAndFeel nf = new NimRODLookAndFeel();
+			nf.setCurrentTheme( nt);
+			UIManager.setLookAndFeel( nf);
+		} catch (Exception exception) {
+			// ignore
+		} 
+		
 	//	final String filename = "./data/sample2.ttl";
 // SourceDemo sd = new SourceDemo("Turtle");
 
@@ -65,7 +81,6 @@ editorPane.setFont(new Font("Monospaced", Font.PLAIN, 12));
 jsyntaxpane.DefaultSyntaxKit.initKit();
 editorPane.setContentType("text/sparql");
 
-		// TODO show source window!!
 
 		final JFrame frame = new JFrame();
 		frame.getContentPane().add(sp);

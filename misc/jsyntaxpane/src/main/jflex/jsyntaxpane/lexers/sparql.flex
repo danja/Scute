@@ -1,3 +1,5 @@
+/* see also https://github.com/mattnathan/sparql4idea */
+
 /* --------------------------Usercode Section------------------------ */
 
 package jsyntaxpane.lexers;

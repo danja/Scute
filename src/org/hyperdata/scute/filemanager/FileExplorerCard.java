@@ -66,7 +66,8 @@ public class FileExplorerCard extends Card implements FileReference {
 	//	splitPane.setContinuousLayout(true);
 	//	add(splitPane, BorderLayout.CENTER);
 		add(treeScroller, BorderLayout.CENTER);
-		add(getButtonBar(), BorderLayout.SOUTH);
+		
+		// add(getButtonBar(), BorderLayout.SOUTH); // integrate better
 	}
 	
 //	public File getSelected(){
