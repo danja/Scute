@@ -90,6 +90,8 @@ NIL = "("{WS}*")"
 WS = [\x20\x09\x0D\x0A]
 ANON = "["{WS}*"]"
 
+Bnode = BLANK_NODE_LABEL | ANON
+
 PN_CHARS_BASE = [A-Za-z\u00C0-\u00D6\u00DB-\u00F6\u00f8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]
 PN_CHARS_U = {PN_CHARS_BASE}|"_"
 VARNAME = ( {PN_CHARS_U} | [0-9] ) ( {PN_CHARS_U} | [0-9\u00B7\u0300-\u036F\u203F-\u2040] )*
@@ -198,36 +200,18 @@ Reserved =
    "#".*                  	{ return token(TokenType.COMMENT); }
 
   /* whitespace */
-  {WhiteSpace}+                  { /* skip */ }
+  {WS}+                  { /* skip */ }
 
   /* identifiers */
-  {Identifier}                   { return token(TokenType.IDENTIFIER); }
+  {IRI_REF}                   { return token(TokenType.IDENTIFIER); }
 
+  {Bnode}                   { return token(TokenType.TYPE); }
+
+ {PNAME_LN}	 { return token(TokenType.TYPE2); }
+
+{PNAME_NS}	 { return token(TokenType.TYPE3); }
 }
 
-<DQ_STRING> {
-  {StringCharacter}+             { tokenLength += yylength(); }
-  \"\"                           { tokenLength += 2; }
-  \\.                            { tokenLength += 2; }
-  {LineTerminator}               { yybegin(YYINITIAL);  }
-  \"                             {
-                                     yybegin(YYINITIAL);
-                                     // length also includes the trailing quote
-                                     return token(TokenType.STRING, tokenStart, tokenLength + 1);
-                                 }
-}
-
-<SQ_STRING> {
-  {SingleCharacter}+             { tokenLength += yylength(); }
-  \'\'                           { tokenLength += 2; }
-  \\.                            { tokenLength += 2; }
-  {LineTerminator}               { yybegin(YYINITIAL);  }
-  \'                             {
-                                     yybegin(YYINITIAL);
-                                     // length also includes the trailing quote
-                                     return token(TokenType.STRING, tokenStart, tokenLength + 1);
-                                 }
-}
 
 /* error fallback */
 .|\n                             {  }

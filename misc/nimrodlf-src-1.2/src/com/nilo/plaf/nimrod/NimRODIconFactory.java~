@@ -751,10 +751,11 @@ public class NimRODIconFactory implements Serializable {
       g2D.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       
       g2D.setColor( NimRODLookAndFeel.getFocusColor());
-      g2D.fillOval( 6,6, 10,10);
+      g2D.fillOval( 6,6, 6,6);
       //      g2D.fillOval( 2,2, 14,14); danja
 
       g2D.setColor( NimRODLookAndFeel.getBlack());
+g2D.fillOval( 8,8, 2,2);
 //      g2D.drawLine( 11,11, 7,7); danja
 //      g2D.drawLine( 11,11, 7,11);
 //      g2D.drawLine( 11,11, 11,7);
@@ -795,12 +796,13 @@ public class NimRODIconFactory implements Serializable {
       g2D.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       
       g2D.setColor( NimRODLookAndFeel.getFocusColor());
-      g2D.fillOval( 2,2, 14,14);
+     // g2D.fillOval( 2,2, 14,14); danja
+      g2D.fillOval( 6,6, 6,6);
       
       g2D.setColor( NimRODLookAndFeel.getBlack());
-      g2D.drawLine( 10,10, 6,6);
-      g2D.drawLine( 6,6, 6,10);
-      g2D.drawLine( 6,6, 10,6);
+//      g2D.drawLine( 10,10, 6,6);
+//      g2D.drawLine( 6,6, 6,10);
+//      g2D.drawLine( 6,6, 10,6);
       
       Icon icono = UIManager.getIcon( "Tree.PelotillaIcon");
       icono.paintIcon( c, g, 0,0);
