@@ -25,6 +25,8 @@ import org.jdesktop.swingx.MultiSplitLayout.Divider;
 import org.jdesktop.swingx.MultiSplitLayout.Leaf;
 import org.jdesktop.swingx.MultiSplitLayout.Split;
 
+import org.hyperdata.scute.demos.temp.SourceEditor;
+import org.hyperdata.scute.demos.temp.FileTreeMouseListener;
 import org.hyperdata.scute.filemanager.FileExplorerCard;
 
 /**
@@ -36,7 +38,7 @@ public class ExploreEditDemo {
 	JPanel contentPanel;
 	private Leaf left;
 	private Leaf right;
-	private JEditorPane editorPane;
+	private SourceEditor editorPane;
 	private FileExplorerCard fileExplorerPane;
 	private JScrollPane editorScrollPane;
 
@@ -46,18 +48,21 @@ public class ExploreEditDemo {
 		initEditor();
 
 		contentPanel.add(fileExplorerPane, "left");
-		contentPanel.add(editorPane, "right");
+		contentPanel.add(editorPane.getScrollPane(), "right");
 		centerSplit();
+		
+		FileTreeMouseListener treeMouseListener = new FileTreeMouseListener();
+		treeMouseListener.attach(fileExplorerPane.getTree(), editorPane);
 	}
 
 	/**
 	 * @return
 	 */
 	private void initEditor() {
-		editorPane = new JEditorPane();
-		editorScrollPane = new JScrollPane(editorPane);
-
-		editorPane.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		editorPane = new SourceEditor();
+//		editorScrollPane = new JScrollPane(editorPane);
+//
+//		editorPane.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
 		// setEditorKit(new ScuteEditorKit("SPARQL"));
 		jsyntaxpane.DefaultSyntaxKit.initKit();

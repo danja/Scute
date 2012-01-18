@@ -19,6 +19,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
 
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.filemanager.actions.SendToSparqlAction;
@@ -39,6 +41,7 @@ public class FileExplorerCard extends Card implements FileReference {
 	}
 
 	private File currentFile;
+	private FilesTreePanel fileTree;
 	
 	public FileExplorerCard(String startPath) {
 		super(new BorderLayout());
@@ -51,7 +54,7 @@ public class FileExplorerCard extends Card implements FileReference {
 	//	ListItemRenderer renderer = new ListItemRenderer();
 	//	dirList.setCellRenderer(renderer);
 
-		FilesTreePanel fileTree = new FilesTreePanel(treeModel);
+		fileTree = new FilesTreePanel(treeModel);
 		
 	//	fileTree.getTree().addTreeSelectionListener(new TreeListener(this,directoryModel));
 	//	fileTree.getTree().setSelectionRow(0);
@@ -69,6 +72,14 @@ public class FileExplorerCard extends Card implements FileReference {
 		
 		// add(getButtonBar(), BorderLayout.SOUTH); // integrate better
 	}
+	
+    public void addTreeSelectionListener(TreeSelectionListener listener){
+    	fileTree.addTreeSelectionListener(listener);
+    }
+    
+    public JTree getTree(){
+    	return fileTree.getTree();
+    }
 	
 //	public File getSelected(){
 //		return null;

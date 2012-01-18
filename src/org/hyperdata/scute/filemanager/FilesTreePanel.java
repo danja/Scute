@@ -14,6 +14,9 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeSelectionModel;
+
 import java.io.File;
 
 
@@ -33,6 +36,9 @@ public class FilesTreePanel extends JPanel {
         this( new FilesTreeModel(startPath) );
     }
 
+    public void addTreeSelectionListener(TreeSelectionListener listener){
+    	tree.addTreeSelectionListener(listener);
+    }
     /**
      * Instantiates a new file system tree panel.
      *
@@ -48,6 +54,8 @@ public class FilesTreePanel extends JPanel {
             }
         };
 
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        
         //tree.setLargeModel( true );        
         tree.setRootVisible(false);
         tree.setShowsRootHandles(true);
