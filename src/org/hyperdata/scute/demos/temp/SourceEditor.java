@@ -58,9 +58,10 @@ public class SourceEditor extends JEditorPane implements FileReference {
 //				 		setPage(url); // SETPAGE BUGGERS UP SYNTAX HIGHLIGHTING
 			
 			try {
+				// System.out.println("SETTING");
 				setText(readFileAsString(file));
+				setContentType(Mime.getType(file.getName()));
 			} catch (IOException exception) {
-				// TODO Auto-generated catch block
 				exception.printStackTrace();
 			}
 	}

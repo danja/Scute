@@ -20,7 +20,7 @@ import org.jdesktop.swingx.MultiSplitLayout.Divider;
 import org.jdesktop.swingx.MultiSplitLayout.Leaf;
 import org.jdesktop.swingx.MultiSplitLayout.Split;
 
-import org.hyperdata.scute.demos.temp.FileTreeMouseListener;
+import org.hyperdata.scute.demos.temp.FileTreeSelectionListener;
 import org.hyperdata.scute.demos.temp.SourceEditor;
 import org.hyperdata.scute.filemanager.FileExplorerCard;
 import org.hyperdata.scute.terminal.Terminal;
@@ -54,7 +54,7 @@ public class JEdwards {
 		msp.add(fileExplorerPane, "topLeft");
 		msp.add(editorPane.getScrollPane(), "middle");
 
-		FileTreeMouseListener treeMouseListener = new FileTreeMouseListener();
+		FileTreeSelectionListener treeMouseListener = new FileTreeSelectionListener();
 		treeMouseListener.attach(fileExplorerPane.getTree(), editorPane);
 
 		JFrame f = new JFrame("JEdwards");
