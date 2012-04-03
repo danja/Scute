@@ -36,7 +36,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	private Action closeAction;
 	
 	/** The editor. */
-	private final FilesInterface editor;
+	private final FilesInterface editor; // FilesModelInterface
 
 	/** The exit action. */
 	private Action exitAction;
@@ -65,7 +65,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 	 * @param editor
 	 *            the editor
 	 */
-	public FileUI(FilesInterface editor) {
+	public FileUI(FilesInterface editor) { // FilesModelInterface
 		this.editor = editor;
 		createActions();
 
@@ -131,7 +131,8 @@ public class FileUI implements KeyListener { // implements ActionListener
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				editor.newModel();
+			//	editor.newModel();
+				editor.newFile();
 			}
 		};
 		openAction = new AbstractAction("Open", GeneralIcons.openIcon) {
@@ -280,7 +281,7 @@ public class FileUI implements KeyListener { // implements ActionListener
 			return;
 		switch (event.getKeyCode()) {
 		case KeyEvent.VK_N:
-			editor.newModel();
+			editor.newFile();
 			break;
 		case KeyEvent.VK_S:
 			editor.save();

@@ -1,4 +1,5 @@
-/dist
-/temp
-/build.num
+dist
+temp
+build.num
+classes
 *.class

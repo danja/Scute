@@ -109,7 +109,8 @@ public class ModelContainer implements Runnable {
 	}
 
 	public void storeNamedModel() {
-		System.out.println("STORE MODEL - implement me!");
+		System.out.println("STORE MODEL (only file bit in use) - implement me!");
+		saveModelToFile();
 	}
 
 	public void loadNamedModel() {

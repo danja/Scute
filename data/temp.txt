@@ -20,3 +20,8 @@ SELECT DISTINCT *  WHERE {
 # ?pc ?p ?district .
 }
 
+
+x:Test rdfs:label "Test" .
+
+<http://hyperdata.org/projects/Seki> a :Project ;
+foaf:maker <http://danny.ayers.name/index.rdf#me> .

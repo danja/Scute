@@ -63,7 +63,7 @@ public class TurtleView extends HighlighterView {
 		commonPatternMap.put(Pattern.compile(LITERAL_PATTERN), Color.GRAY);
 		commonPatternMap.put(Pattern.compile(LONG_LITERAL_PATTERN), Color.GRAY);
 		commonPatternMap.put(Pattern.compile(BNODE_PATTERN), Color.CYAN);
-		commonPatternMap.put(Pattern.compile(NODE_PATTERN), Color.BLUE);
+		commonPatternMap.put(Pattern.compile(NODE_PATTERN), Color.RED);
 		commonPatternMap.put(Pattern.compile(SQUARE_BRACKETS_PATTERN), Color.BLUE);
 		commonPatternMap.put(Pattern.compile(CURLY_BRACKETS_PATTERN), Color.BLUE);
 		

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import org.hyperdata.scute.cards.Card;
 import org.hyperdata.scute.cards.CardsPanel;
+import org.hyperdata.scute.demos.ExploreEditDemo;
 import org.hyperdata.scute.rdf.ModelContainer;
 import org.hyperdata.scute.source.TextContainer;
 import org.hyperdata.scute.system.panels.LogPane;
@@ -36,6 +37,13 @@ public class IO implements FilesInterface {
 		// this.frame = frame;
 		this.modelContainer = modelContainer;
 		this.cardsPanel = cardsPanel;
+	}
+
+	/**
+	 * @param exploreEditDemo
+	 */
+	public IO(ExploreEditDemo exploreEditDemo) {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -186,7 +194,7 @@ public class IO implements FilesInterface {
 	 * @see org.hyperdata.scute.swing.ToolsInterface#newModel()
 	 */
 	@Override
-	public void newModel() {
+	public void newFile() {
 		// TODO Auto-generated method stub
 
 	}

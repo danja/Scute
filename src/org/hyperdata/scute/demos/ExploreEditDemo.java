@@ -3,18 +3,13 @@
  */
 package org.hyperdata.scute.demos;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import com.nilo.plaf.nimrod.NimRODLookAndFeel;
 import com.nilo.plaf.nimrod.NimRODTheme;
@@ -28,6 +23,8 @@ import org.jdesktop.swingx.MultiSplitLayout.Split;
 import org.hyperdata.scute.demos.temp.SourceEditor;
 import org.hyperdata.scute.demos.temp.FileTreeSelectionListener;
 import org.hyperdata.scute.filemanager.FileExplorerCard;
+import org.hyperdata.scute.toolbars.file.FileUI;
+import org.hyperdata.scute.toolbars.file.IO;
 
 /**
  * @author danny
@@ -35,30 +32,50 @@ import org.hyperdata.scute.filemanager.FileExplorerCard;
  */
 public class ExploreEditDemo {
 
-	JPanel contentPanel;
+	private JPanel outerPanel;
+	private FileExplorerCard fileExplorerPane; // left-hand panel
+	
+	private JPanel editorPanel; // right-hand panel
+	private JToolBar fileToolBar;
+	private JScrollPane editorScrollPane;
+	private SourceEditor editor;
+	
 	private Leaf left;
 	private Leaf right;
-	private SourceEditor editorPane;
-	private FileExplorerCard fileExplorerPane;
-	private JScrollPane editorScrollPane;
+	
+	private IO io;
+	private FileUI fileUI;
 
 	public ExploreEditDemo() {
 		initLayout();
 		initFileExplorer();
 		initEditor();
-
-		contentPanel.add(fileExplorerPane, "left");
-		contentPanel.add(editorPane.getScrollPane(), "right");
+		initToolBar();
+		
+		outerPanel.add(fileExplorerPane, "left");
+		
+		editorPanel = new JPanel(new BorderLayout());
+		editorPanel.add(editor.getScrollPane(), BorderLayout.CENTER);
+		editorPanel.add(fileToolBar, BorderLayout.NORTH);
+		outerPanel.add(editorPanel, "right");
 		centerSplit();
 		
 		FileTreeSelectionListener treeMouseListener = new FileTreeSelectionListener();
-		treeMouseListener.attach(fileExplorerPane.getTree(), editorPane);
+		treeMouseListener.attach(fileExplorerPane.getTree(), editor);
 	}
 
 	private void initEditor() {
-		editorPane = new SourceEditor();
+		editor = new SourceEditor();
 		jsyntaxpane.DefaultSyntaxKit.initKit();
-		editorPane.setContentType("text/sparql");
+		editor.setContentType("text/sparql");
+	}
+	
+	private void initToolBar(){
+		io = new IO(this);
+		fileUI = new FileUI(io);
+// 		toolsPanel.add(fileUI.getToolBar());
+		fileToolBar = new JToolBar();
+		fileToolBar.add(fileUI.getToolBar());
 	}
 
 	/**
@@ -75,6 +92,7 @@ public class ExploreEditDemo {
 	}
 
 	private void initLayout() {
+		
 		Split outer = new Split();
 		outer.setRowLayout(true);
 
@@ -83,16 +101,16 @@ public class ExploreEditDemo {
 
 		outer.setChildren(left, new Divider(), right);
 
-		contentPanel = new JXMultiSplitPane();
+		outerPanel = new JXMultiSplitPane();
 		MultiSplitLayout layout = new MultiSplitLayout(outer);
-		contentPanel.setLayout(layout);
+		outerPanel.setLayout(layout);
 	}
 
 	/**
 	 * @return the contentPanel
 	 */
-	public JPanel getContentPanel() {
-		return this.contentPanel;
+	public JPanel getOuterPanel() {
+		return this.outerPanel;
 	}
 
 	// ///////////////////////////////////////////////////////////////
@@ -109,7 +127,7 @@ public class ExploreEditDemo {
 		JFrame frame = new JFrame("File Explorer");
 
 		ExploreEditDemo eed = new ExploreEditDemo();
-		frame.getContentPane().add(eed.getContentPanel());
+		frame.getContentPane().add(eed.getOuterPanel());
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setSize(600, 600);
 		// frame.pack();

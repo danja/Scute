@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import org.hyperdata.scute.main.Config;
 import org.hyperdata.scute.toolbars.file.FilesInterface;
+import org.hyperdata.scute.toolbars.file.FilesModelInterface;
 
 /**
  * @author danny
