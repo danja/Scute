@@ -39,7 +39,7 @@ public class SourceEditor extends JEditorPane implements FileReference {
 	 * File)
 	 */
 	@Override
-	public void setCurrentFile(File file) {
+	public void setCurrentFile(final File file) {
 //		System.out.println("setting file "+file);
 //		final String url = "file:///" + file.getAbsolutePath();
 //		URL newURL = null;
@@ -56,18 +56,55 @@ public class SourceEditor extends JEditorPane implements FileReference {
 //		jsyntaxpane.DefaultSyntaxKit.initKit();
 //    	setContentType("text/sparql"); // change according to file type
 //				 		setPage(url); // SETPAGE BUGGERS UP SYNTAX HIGHLIGHTING
+
+				String text;
+				try {
+					jsyntaxpane.DefaultSyntaxKit.initKit();
+					text = readFileAsString(file);
+					setText(text);
+					
+					setContentType(Mime.getType(file.getName()));
+				} catch (IOException exception) {
+					// TODO Auto-generated catch block
+					exception.printStackTrace();
+				}
+
+//		System.out.println("trying URL");
+//				// jsyntaxpane.DefaultSyntaxKit.initKit();
+//				
+//				final String url = "file:///" + file.getAbsolutePath();
+//				URL newURL = null;
+//				try {
+//					newURL = new URL(url);
+//				} catch (MalformedURLException exception) {
+//					exception.printStackTrace();
+//				}
+//				URL loadedURL = getPage();
+//				if (loadedURL != null && loadedURL.sameFile(newURL)) {
+//					return;
+//				}
+//				try {
+//					
+//					jsyntaxpane.DefaultSyntaxKit.initKit();
+//					setContentType(Mime.getType(file.getName()));
+//					setPage(newURL);
+//					//System.out.println("SETTING type "+Mime.getType(file.getName()));
+//				} catch (IOException exception) {
+//					// TODO Auto-generated catch block
+//					exception.printStackTrace();
+//				}
+					
+			//	validate();
+				
 			
-			try {
-				// System.out.println("SETTING");
-				setText(readFileAsString(file));
-				setContentType(Mime.getType(file.getName()));
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
+//			} catch (IOException exception) {
+//				exception.printStackTrace();
+//			}
 	}
 	
 	   private static String readFileAsString(File file)
 			    throws java.io.IOException{
+		  
 			        StringBuffer fileData = new StringBuffer(1000);
 			        BufferedReader reader = new BufferedReader(
 			                new FileReader(file));

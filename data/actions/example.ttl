@@ -1,0 +1,5 @@
+[
+:subjectActions stuff:SubjectActions ;
+:propertyActions stuff:PropertyActions ;
+:objectActions stuff:ObjectActions .
+]

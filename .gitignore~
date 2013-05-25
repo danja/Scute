@@ -1,0 +1,4 @@
+/dist
+/temp
+/build.num
+*.class

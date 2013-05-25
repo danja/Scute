@@ -69,6 +69,7 @@ public class JEdwards {
 		editorPane = new SourceEditor();
 		jsyntaxpane.DefaultSyntaxKit.initKit();
 		editorPane.setContentType("text/sparql");
+	//	editorPane.setText("TEXT");
 	}
 
 	/**

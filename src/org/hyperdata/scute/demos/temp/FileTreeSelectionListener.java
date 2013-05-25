@@ -30,7 +30,7 @@ public class FileTreeSelectionListener implements TreeSelectionListener {
 
 		File file = (File) tree.getLastSelectedPathComponent();
 
-		if (file == null)
+		if ((file == null) || (file.isDirectory()))
 			return;
 		
 		target.setCurrentFile(file);

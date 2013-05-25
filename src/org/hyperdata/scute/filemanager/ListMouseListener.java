@@ -31,17 +31,20 @@ public class ListMouseListener implements MouseListener {
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
 	@Override
-	public void mouseClicked(MouseEvent event) {
-
+	public void mouseClicked(MouseEvent event) { // is this getting called?
+		System.out.println("mouse clicked");
 		JList list = (JList) event.getSource();
 		File file = (File) list.getSelectedValue();
-		fileReference.setCurrentFile(file);
+		
 		if(event.getClickCount() == 2) {
 			if(file.isDirectory()){
 				TreePath path = tree.getAnchorSelectionPath() ;
 				TreePath newPath =	path.pathByAddingChild(file);
 				tree.setSelectionPath(newPath);
+				return;
 			}
+			System.out.println("setting file");
+			fileReference.setCurrentFile(file);
 		}
 		
 	}
